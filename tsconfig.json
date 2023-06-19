@@ -24,12 +24,5 @@
     "types": ["@types/jest"]
   },
   "include": ["./src"],
-  "exclude": ["dist", "**/node_modules/*"],
-  
-  "references": [
-    {
-      "path":"../react-ui"
-    }
-   
-  ]
+  "exclude": ["dist", "**/node_modules/*"]
 }
