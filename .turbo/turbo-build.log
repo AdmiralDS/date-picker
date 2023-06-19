@@ -1,0 +1,11 @@
+
+> @admiral-ds/date-picker@1.0.0 build
+> rollup -c
+
+(node:3572) ExperimentalWarning: Import assertions are not a stable feature of the JavaScript language. Avoid relying on their current behavior and syntax as those might change in a future version of Node.js.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3572) ExperimentalWarning: Importing JSON modules is an experimental feature and might change at any time
+[36m
+[1msrc/index.ts[22m → [1mdist/index.cjs.js, dist/index.esm.js[22m...[39m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript: outputToFilesystem option is defaulting to true.[39m[22m
+[32mcreated [1mdist/index.cjs.js, dist/index.esm.js[22m in [1m2.2s[22m[39m
