@@ -5,13 +5,13 @@ import styled, { css, ThemeProvider } from 'styled-components';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import type { Theme } from '@admiral-ds/react-ui';
 import { ALL_BORDER_RADIUS_VALUES } from '@admiral-ds/react-ui';
-import { Calendar5 } from '#src/index';
+import { Calendar } from '#src/index';
 import type { Calendar5ViewMode } from '#src/index';
 import { DAY_BORDER_RADIUS, DayCellWrapper } from '#src/index';
 
 export default {
   title: 'Admiral-2.1/CalendarTry',
-  component: Calendar5,
+  component: Calendar,
   parameters: {
     docs: {
       source: {
@@ -55,7 +55,7 @@ export default {
       control: { type: 'radio' },
     },
   },
-} as ComponentMeta<typeof Calendar5>;
+} as ComponentMeta<typeof Calendar>;
 
 const Separator = styled.div`
   height: 20px;
@@ -77,7 +77,7 @@ const highlightSundays = (date: Dayjs) => {
   return undefined;
 };
 
-const Template1: ComponentStory<typeof Calendar5> = (args) => {
+const Template1: ComponentStory<typeof Calendar> = (args) => {
   function swapBorder(theme: Theme): Theme {
     theme.shape.borderRadiusKind = (args as any).themeBorderKind || theme.shape.borderRadiusKind;
     return theme;
@@ -186,7 +186,7 @@ const Template1: ComponentStory<typeof Calendar5> = (args) => {
   return (
     <ThemeProvider theme={swapBorder}>
       <div style={{ display: 'flex' }}>
-        <Calendar5
+        <Calendar
           doubleView={args.doubleView}
           rangePicker={args.rangePicker}
           pickerType={args.pickerType}
@@ -206,7 +206,7 @@ const Template1: ComponentStory<typeof Calendar5> = (args) => {
   );
 };
 
-const Template2: ComponentStory<typeof Calendar5> = (args) => {
+const Template2: ComponentStory<typeof Calendar> = (args) => {
   function swapBorder(theme: Theme): Theme {
     theme.shape.borderRadiusKind = (args as any).themeBorderKind || theme.shape.borderRadiusKind;
     return theme;
@@ -319,7 +319,7 @@ const Template2: ComponentStory<typeof Calendar5> = (args) => {
   return (
     <ThemeProvider theme={swapBorder}>
       <div style={{ display: 'flex' }}>
-        <Calendar5
+        <Calendar
           doubleView={args.doubleView}
           rangePicker={args.rangePicker}
           pickerType={args.pickerType}

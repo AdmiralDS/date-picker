@@ -216,7 +216,7 @@ const DoubleCalendarTry = React.forwardRef<HTMLDivElement, CalendarWidgetTryProp
   },
 );
 
-export const Calendar5 = React.forwardRef<HTMLDivElement, Calendar5Props>(
+export const Calendar = React.forwardRef<HTMLDivElement, Calendar5Props>(
   ({ doubleView = false, rangePicker = false, ...props }, ref) => {
     // активная дата, на которой сейчас ховер
     const [activeDate, setActiveDate] = React.useState<Dayjs | undefined>(undefined);
