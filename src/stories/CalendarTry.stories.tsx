@@ -2,17 +2,15 @@ import * as React from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import styled, { css, ThemeProvider } from 'styled-components';
-import { withDesign } from 'storybook-addon-designs';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import type { Theme } from '@admiral-ds/react-ui';
 import { ALL_BORDER_RADIUS_VALUES } from '@admiral-ds/react-ui';
-import { Calendar5 } from '@admiral-ds/date-picker';
-import type { Calendar5ViewMode } from '@admiral-ds/date-picker';
-import { DAY_BORDER_RADIUS, DayCellWrapper } from '@admiral-ds/date-picker';
+import { Calendar5 } from '#src/index';
+import type { Calendar5ViewMode } from '#src/index';
+import { DAY_BORDER_RADIUS, DayCellWrapper } from '#src/index';
 
 export default {
   title: 'Admiral-2.1/CalendarTry',
-  decorators: [withDesign],
   component: Calendar5,
   parameters: {
     docs: {

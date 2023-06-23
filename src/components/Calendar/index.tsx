@@ -2,6 +2,7 @@ import * as React from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import styled from 'styled-components';
 
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
@@ -12,6 +13,7 @@ import { CalendarWidgetTry } from './CalendarWidget';
 import { yearsRange } from './utils';
 
 dayjs.extend(isSameOrBefore);
+dayjs.extend(isSameOrAfter);
 
 export * from './constants';
 export * from './CalendarContent/DayCell';
