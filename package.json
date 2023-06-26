@@ -20,7 +20,7 @@
     "build": "rollup -c",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "lint": "eslint './src/**/*.{js,jsx,ts,tsx}' --quiet --fix"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --quiet --fix"
   },
   "keywords": [
     "AdmiralDS",
