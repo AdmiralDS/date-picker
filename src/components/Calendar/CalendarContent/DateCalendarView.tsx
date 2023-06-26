@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import type { Dayjs } from 'dayjs';
 
 import { DayNames } from './DayNames';

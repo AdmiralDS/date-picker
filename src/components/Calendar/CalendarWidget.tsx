@@ -5,8 +5,7 @@ import 'dayjs/locale/ru';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 import styled, { useTheme } from 'styled-components';
 
-import { LIGHT_THEME } from '@admiral-ds/react-ui';
-import { typography } from '@admiral-ds/react-ui';
+import { LIGHT_THEME, typography } from '@admiral-ds/react-ui';
 
 import { DayCell } from './CalendarContent/DayCell';
 import { Panel } from './Panel/Panel';
