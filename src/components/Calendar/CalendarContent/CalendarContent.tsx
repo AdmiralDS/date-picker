@@ -1,6 +1,7 @@
-import * as React from 'react';
+import { ReactNode } from 'react';
 import type { Dayjs } from 'dayjs';
 import type { Calendar5ViewMode } from '../constants';
+
 import { YearsCalendarView } from './YearsCalendarView';
 import { MonthsCalendarView } from './MonthsCalendarView';
 import { DateCalendarView } from './DateCalendarView';
@@ -8,7 +9,7 @@ import { DateCalendarView } from './DateCalendarView';
 export interface CalendarContentProps {
   viewMode: Calendar5ViewMode;
   date: Dayjs;
-  renderCell: (date: Dayjs) => React.ReactNode;
+  renderCell: (date: Dayjs) => ReactNode;
   onMouseLeave: () => void;
 }
 export const CalendarContent = ({ viewMode, date, renderCell, onMouseLeave }: CalendarContentProps) => {

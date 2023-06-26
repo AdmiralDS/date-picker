@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { typography } from '@admiral-ds/react-ui';
+
 import { rangeHighlightMixin } from './styled';
 
 export const CellWrapper = styled.div<{

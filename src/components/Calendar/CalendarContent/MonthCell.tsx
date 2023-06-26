@@ -1,12 +1,12 @@
-import * as React from 'react';
 import type { MouseEvent } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import styled from 'styled-components';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
+
 import { YEAR_BORDER_RADIUS, YearCellWrapper } from './YearCell';
 // TODO Этот импорт нужно перенести
-import { capitalizeFirstLetter } from '#src/components/Calendar/constants';
+import { capitalizeFirstLetter } from '../utils';
 import { MONTHS_IN_ROW } from '../constants';
 
 export interface MonthCellProps {

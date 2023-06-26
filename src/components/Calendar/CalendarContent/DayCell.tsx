@@ -1,10 +1,13 @@
-import * as React from 'react';
 import type { MouseEvent } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import styled from 'styled-components';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
+import isBetween from 'dayjs/plugin/isBetween';
+
 import { CellWrapper } from './CellWrapper';
+
+dayjs.extend(isBetween);
 
 const DAY_SIZE = 36;
 const DAY_PADDING = '8px 0';

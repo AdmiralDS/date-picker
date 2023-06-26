@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useState} from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import styled, { ThemeProvider } from 'styled-components';
@@ -18,17 +18,17 @@ export const CustomCalendarTemplate = (props: Calendar5Props) => {
     return theme;
   }
 
-  const [viewMode2, setViewMode2] = React.useState<Calendar5ViewMode>('DATES');
-  const [selected2, setSelected2] = React.useState<Dayjs>(dayjs());
-  const [viewDate2, setViewDate2] = React.useState<Dayjs>(selected2);
-  const [activeDate2, setActiveDate2] = React.useState<Dayjs | undefined>(undefined);
+  const [viewMode2, setViewMode2] = useState<Calendar5ViewMode>('DATES');
+  const [selected2, setSelected2] = useState<Dayjs>(dayjs());
+  const [viewDate2, setViewDate2] = useState<Dayjs>(selected2);
+  const [activeDate2, setActiveDate2] = useState<Dayjs | undefined>(undefined);
 
   const resetDateStates2 = () => {
     setSelected2(dayjs());
     //setStartDate2(undefined);
     //setEndDate2(undefined);
   };
-  React.useEffect(() => {
+  useEffect(() => {
     switch (props.pickerType) {
       case 'DATE_MONTH_YEAR':
         setViewMode2('DATES');
@@ -43,7 +43,7 @@ export const CustomCalendarTemplate = (props: Calendar5Props) => {
     //resetDateStates2();
   }, [props.pickerType]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     //resetDateStates2();
   }, [props.rangePicker]);
 

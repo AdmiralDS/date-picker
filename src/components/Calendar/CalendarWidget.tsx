@@ -1,11 +1,13 @@
-import * as React from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 import styled, { useTheme } from 'styled-components';
+
 import { LIGHT_THEME } from '@admiral-ds/react-ui';
 import { typography } from '@admiral-ds/react-ui';
+
 import { DayCell } from './CalendarContent/DayCell';
 import { Panel } from './Panel/Panel';
 import type { DateValidator } from './validator';
@@ -79,7 +81,7 @@ export interface CalendarWidgetTryProps {
   };
 }
 
-export const CalendarWidgetTry = React.forwardRef<HTMLDivElement, CalendarWidgetTryProps>(
+export const CalendarWidgetTry = forwardRef<HTMLDivElement, CalendarWidgetTryProps>(
   (
     {
       viewMode = 'DATES',
@@ -129,7 +131,7 @@ export const CalendarWidgetTry = React.forwardRef<HTMLDivElement, CalendarWidget
       return current.locale(currentLocale || 'ru');
     };
     const theme = useTheme() || LIGHT_THEME;
-    const [currentLocale, setCurrentLocale] = React.useState<string>();
+    const [currentLocale, setCurrentLocale] = useState<string>();
 
     const defineLocale = userLocale || theme.currentLocale;
     if (currentLocale !== defineLocale) {
@@ -140,18 +142,18 @@ export const CalendarWidgetTry = React.forwardRef<HTMLDivElement, CalendarWidget
         });
     }
 
-    const [innerViewDate, setInnerViewDate] = React.useState<Dayjs>(getInitialViewDate());
+    const [innerViewDate, setInnerViewDate] = useState<Dayjs>(getInitialViewDate());
     const finalViewDate = viewDate ?? innerViewDate;
 
     const clearActiveDate = () => onActiveDateChange(undefined);
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (onViewDateChange) {
         onViewDateChange(innerViewDate);
       }
     }, [innerViewDate]);
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (currentLocale) {
         setInnerViewDate(finalViewDate.locale(currentLocale));
       }

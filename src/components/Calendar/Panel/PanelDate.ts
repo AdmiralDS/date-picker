@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+
 import { typography, TooltipHoc } from '@admiral-ds/react-ui';
 
 const YEAR_MONTH_HEIGHT = '32px';

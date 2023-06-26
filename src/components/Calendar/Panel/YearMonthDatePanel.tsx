@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { MonthWithTooltip, PanelDate, YearWithTooltip } from './PanelDate';
 import { capitalizeFirstLetter, differenceMonths, differenceYears } from '../utils';
 import type { YearMonthDatePanelProps } from './interfaces';

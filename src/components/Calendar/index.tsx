@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
@@ -32,7 +32,7 @@ export interface Calendar5Props
   doubleView?: boolean;
 }
 
-const SingleCalendarTry = React.forwardRef<HTMLDivElement, CalendarWidgetTryProps>(({ ...props }, ref) => {
+const SingleCalendarTry = forwardRef<HTMLDivElement, CalendarWidgetTryProps>(({ ...props }, ref) => {
   return (
     <CalendarWrapper ref={ref}>
       <CalendarWidgetTry {...props} />
@@ -40,7 +40,7 @@ const SingleCalendarTry = React.forwardRef<HTMLDivElement, CalendarWidgetTryProp
   );
 });
 
-const DoubleCalendarTry = React.forwardRef<HTMLDivElement, CalendarWidgetTryProps>(
+const DoubleCalendarTry = forwardRef<HTMLDivElement, CalendarWidgetTryProps>(
   (
     {
       rangePicker = false,
@@ -135,19 +135,19 @@ const DoubleCalendarTry = React.forwardRef<HTMLDivElement, CalendarWidgetTryProp
       return increaseDate(getInitialViewDateLeft());
     };
 
-    const [viewDateLeft, setViewDateLeft] = React.useState<Dayjs>(getInitialViewDateLeft());
-    const [viewDateRight, setViewDateRight] = React.useState<Dayjs>(getInitialViewDateRight());
+    const [viewDateLeft, setViewDateLeft] = useState<Dayjs>(getInitialViewDateLeft());
+    const [viewDateRight, setViewDateRight] = useState<Dayjs>(getInitialViewDateRight());
 
     const handleViewDateLeftChange = (date: Dayjs) => setViewDateLeft(date);
     const handleViewDateRightChange = (date: Dayjs) => setViewDateRight(date);
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (dateRightIsSameOrBefore(viewDateLeft, viewDateRight)) {
         setViewDateRight(increaseDate(viewDateLeft));
       }
     }, [viewDateLeft]);
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (dateLeftIsSameOrAfter(viewDateLeft, viewDateRight)) {
         setViewDateLeft(decreaseDate(viewDateRight));
       }
@@ -164,12 +164,12 @@ const DoubleCalendarTry = React.forwardRef<HTMLDivElement, CalendarWidgetTryProp
           return 'DATES';
       }
     };
-    const [viewModeLeft, setViewModeLeft] = React.useState<Calendar5ViewMode>(getInitialViewMode(pickerType));
-    const [viewModeRight, setViewModeRight] = React.useState<Calendar5ViewMode>(getInitialViewMode(pickerType));
+    const [viewModeLeft, setViewModeLeft] = useState<Calendar5ViewMode>(getInitialViewMode(pickerType));
+    const [viewModeRight, setViewModeRight] = useState<Calendar5ViewMode>(getInitialViewMode(pickerType));
 
     const handleViewModeLeftChange = (viewMode: Calendar5ViewMode) => setViewModeLeft(viewMode);
     const handleViewModeRightChange = (viewMode: Calendar5ViewMode) => setViewModeRight(viewMode);
-    React.useEffect(() => {
+    useEffect(() => {
       switch (pickerType) {
         case 'DATE_MONTH_YEAR':
           setViewModeLeft('DATES');
@@ -216,10 +216,10 @@ const DoubleCalendarTry = React.forwardRef<HTMLDivElement, CalendarWidgetTryProp
   },
 );
 
-export const Calendar = React.forwardRef<HTMLDivElement, Calendar5Props>(
+export const Calendar = forwardRef<HTMLDivElement, Calendar5Props>(
   ({ doubleView = false, rangePicker = false, ...props }, ref) => {
     // активная дата, на которой сейчас ховер
-    const [activeDate, setActiveDate] = React.useState<Dayjs | undefined>(undefined);
+    const [activeDate, setActiveDate] = useState<Dayjs | undefined>(undefined);
     const handleActiveDateChange = (date: Dayjs | undefined) => setActiveDate(date);
     const clearActiveDate = () => setActiveDate(undefined);
 

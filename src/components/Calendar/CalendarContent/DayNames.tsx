@@ -1,6 +1,7 @@
 import type { Dayjs } from 'dayjs';
 import styled from 'styled-components';
 import { typography } from '@admiral-ds/react-ui';
+
 import { capitalizeFirstLetter, getDayNamesList } from '../utils';
 
 interface DayNamesProps {

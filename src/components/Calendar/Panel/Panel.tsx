@@ -1,5 +1,7 @@
 import { useTheme } from 'styled-components';
+
 import { LIGHT_THEME, type Theme } from '@admiral-ds/react-ui';
+
 import { PanelWrapper } from './PanelWrapper';
 import { YearMonthDatePanel } from './YearMonthDatePanel';
 import { YearMonthPanel } from './YearMonthPanel';
