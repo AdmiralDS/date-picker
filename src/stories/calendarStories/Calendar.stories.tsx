@@ -1,15 +1,15 @@
 import * as React from 'react';
-import type { ComponentMeta, ComponentStory } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 
 import { ALL_BORDER_RADIUS_VALUES } from '@admiral-ds/react-ui';
 
 import { Calendar } from '@admiral-ds/date-picker';
-import { SimpleCalendarTemplate } from "#src/stories/calendarStories/templates/SimpleCalendarTemplate";
-import { CustomCalendarTemplate } from "#src/stories/calendarStories/templates/CustomCalendarTemplate";
+import { SimpleCalendarTemplate } from './templates/SimpleCalendarTemplate';
+import { CustomCalendarTemplate } from './templates/CustomCalendarTemplate';
 
 // Imports of text sources
-import SimpleCalendarTemplateRaw from '!!raw-loader!./templates/SimpleCalendarTemplate';
-import CustomCalendarTemplateRaw from '!!raw-loader!./templates/CustomCalendarTemplate';
+import SimpleCalendarTemplateRaw from './templates/SimpleCalendarTemplate?raw';
+import CustomCalendarTemplateRaw from './templates/CustomCalendarTemplate?raw';
 
 export default {
   title: 'Admiral-2.1/Calendar',
@@ -57,11 +57,9 @@ export default {
       control: { type: 'radio' },
     },
   },
-} as ComponentMeta<typeof Calendar>;
+} as Meta<typeof Calendar>;
 
-const SimpleCalendarStory: ComponentStory<typeof Calendar> = (props) => (
-  <SimpleCalendarTemplate {...props} />
-);
+const SimpleCalendarStory: StoryFn<typeof Calendar> = (props) => <SimpleCalendarTemplate {...props} />;
 
 export const SimpleCalendar = SimpleCalendarStory.bind({});
 SimpleCalendar.parameters = {
@@ -73,9 +71,7 @@ SimpleCalendar.parameters = {
 };
 SimpleCalendar.storyName = 'Simple.';
 
-const CustomCalendarStory: ComponentStory<typeof Calendar> = (props) => (
-  <CustomCalendarTemplate {...props} />
-);
+const CustomCalendarStory: StoryFn<typeof Calendar> = (props) => <CustomCalendarTemplate {...props} />;
 
 export const CustomCalendar = CustomCalendarStory.bind({});
 CustomCalendar.parameters = {
