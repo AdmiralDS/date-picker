@@ -1,10 +1,10 @@
 import type { MouseEvent } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import type { Calendar5ViewMode, Picker5TypeMode } from '../constants';
+import type { CalendarViewMode, PickerTypeMode } from '../constants';
 
 export interface BaseContentProps {
-  viewMode: Calendar5ViewMode;
+  viewMode: CalendarViewMode;
   date: Dayjs;
   minDate?: Dayjs;
   maxDate?: Dayjs;
@@ -33,7 +33,7 @@ interface MonthsCallbacks {
 }
 
 export interface PanelProps extends Omit<BaseContentProps, 'locale'>, YearsCallbacks, MonthsCallbacks {
-  pickerType: Picker5TypeMode;
+  pickerType: PickerTypeMode;
   userLocale?: string;
   locale?: {
     backwardText?: string;

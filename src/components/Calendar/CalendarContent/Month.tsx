@@ -2,11 +2,11 @@ import type { ReactNode } from 'react';
 import type { Dayjs } from 'dayjs';
 
 import { Week } from './Week';
-import type { Calendar5ViewMode } from '../constants';
+import type { CalendarViewMode } from '../constants';
 
 export interface MonthProps {
   date: Dayjs;
-  renderCell: (date: Dayjs, viewMode: Calendar5ViewMode) => ReactNode;
+  renderCell: (date: Dayjs, viewMode: CalendarViewMode) => ReactNode;
   onMouseLeave: () => void;
 }
 

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 import { DEFAULT_YEAR_COUNT } from './constants';
-import type { Calendar5ViewMode, Picker5TypeMode } from './constants';
+import type { CalendarViewMode, PickerTypeMode } from './constants';
 import type { CalendarWidgetTryProps } from './CalendarWidget';
 import { CalendarWidgetTry } from './CalendarWidget';
 import { yearsRange } from './utils';
@@ -27,7 +27,7 @@ const CalendarWrapper = styled.div`
   ${(props) => props.theme.shadow['Shadow 08']}
 `;
 
-export interface Calendar5Props
+export interface CalendarProps
   extends Omit<CalendarWidgetTryProps, 'onActiveDateChange' | 'onDateMouseEnter' | 'onDateMouseLeave'> {
   doubleView?: boolean;
 }
@@ -153,7 +153,7 @@ const DoubleCalendarTry = forwardRef<HTMLDivElement, CalendarWidgetTryProps>(
       }
     }, [viewDateRight]);
 
-    const getInitialViewMode = (pickerType: Picker5TypeMode): Calendar5ViewMode => {
+    const getInitialViewMode = (pickerType: PickerTypeMode): CalendarViewMode => {
       switch (pickerType) {
         case 'YEAR':
           return 'YEARS';
@@ -164,11 +164,11 @@ const DoubleCalendarTry = forwardRef<HTMLDivElement, CalendarWidgetTryProps>(
           return 'DATES';
       }
     };
-    const [viewModeLeft, setViewModeLeft] = useState<Calendar5ViewMode>(getInitialViewMode(pickerType));
-    const [viewModeRight, setViewModeRight] = useState<Calendar5ViewMode>(getInitialViewMode(pickerType));
+    const [viewModeLeft, setViewModeLeft] = useState<CalendarViewMode>(getInitialViewMode(pickerType));
+    const [viewModeRight, setViewModeRight] = useState<CalendarViewMode>(getInitialViewMode(pickerType));
 
-    const handleViewModeLeftChange = (viewMode: Calendar5ViewMode) => setViewModeLeft(viewMode);
-    const handleViewModeRightChange = (viewMode: Calendar5ViewMode) => setViewModeRight(viewMode);
+    const handleViewModeLeftChange = (viewMode: CalendarViewMode) => setViewModeLeft(viewMode);
+    const handleViewModeRightChange = (viewMode: CalendarViewMode) => setViewModeRight(viewMode);
     useEffect(() => {
       switch (pickerType) {
         case 'DATE_MONTH_YEAR':
@@ -216,7 +216,7 @@ const DoubleCalendarTry = forwardRef<HTMLDivElement, CalendarWidgetTryProps>(
   },
 );
 
-export const Calendar = forwardRef<HTMLDivElement, Calendar5Props>(
+export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
   ({ doubleView = false, rangePicker = false, ...props }, ref) => {
     // активная дата, на которой сейчас ховер
     const [activeDate, setActiveDate] = useState<Dayjs | undefined>(undefined);

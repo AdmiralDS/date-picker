@@ -11,7 +11,7 @@ import { DayCell } from './CalendarContent/DayCell';
 import { Panel } from './Panel/Panel';
 import type { DateValidator } from './validator';
 import { YearCell } from './CalendarContent/YearCell';
-import type { Calendar5ViewMode, Picker5TypeMode } from './constants';
+import type { CalendarViewMode, PickerTypeMode } from './constants';
 import { MonthCell } from './CalendarContent/MonthCell';
 import { DEFAULT_YEAR_COUNT } from './constants';
 import { YearsCalendarView } from './CalendarContent/YearsCalendarView';
@@ -24,7 +24,7 @@ const MONTHS_VIEW_PADDING = '20px 12px 4px';
 const DAYS_VIEW_PADDING = '20px 12px 12px';
 
 export const CalendarWidgetWrapper = styled.div<{
-  viewMode: Calendar5ViewMode;
+  viewMode: CalendarViewMode;
 }>`
   position: relative;
   box-sizing: border-box;
@@ -43,9 +43,9 @@ export const CalendarWidgetWrapper = styled.div<{
 `;
 
 export interface CalendarWidgetTryProps {
-  viewMode?: Calendar5ViewMode;
-  onViewModeChange: (viewMode: Calendar5ViewMode) => void;
-  pickerType?: Picker5TypeMode;
+  viewMode?: CalendarViewMode;
+  onViewModeChange: (viewMode: CalendarViewMode) => void;
+  pickerType?: PickerTypeMode;
   rangePicker?: boolean;
   viewDate?: Dayjs;
   activeDate?: Dayjs;

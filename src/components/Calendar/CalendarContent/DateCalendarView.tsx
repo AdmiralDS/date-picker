@@ -3,11 +3,11 @@ import type { Dayjs } from 'dayjs';
 
 import { DayNames } from './DayNames';
 import { Month } from './Month';
-import type { Calendar5ViewMode } from '../constants';
+import type { CalendarViewMode } from '../constants';
 
 export interface DateCalendarProps {
   date: Dayjs;
-  renderCell: (date: Dayjs, viewMode: Calendar5ViewMode) => ReactNode;
+  renderCell: (date: Dayjs, viewMode: CalendarViewMode) => ReactNode;
   onMouseLeave: () => void;
 }
 

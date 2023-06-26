@@ -2,13 +2,13 @@ import type { ReactNode } from 'react';
 import type { Dayjs } from 'dayjs';
 import styled from 'styled-components';
 
-import type { Calendar5ViewMode } from '../constants';
+import type { CalendarViewMode } from '../constants';
 
 export const DAY_NUMBERS = [0, 1, 2, 3, 4, 5, 6];
 
 export interface WeekProps {
   weekStartDate: Dayjs;
-  renderCell: (date: Dayjs, viewMode: Calendar5ViewMode) => ReactNode;
+  renderCell: (date: Dayjs, viewMode: CalendarViewMode) => ReactNode;
 }
 
 const WeekWrapper = styled.div`

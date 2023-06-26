@@ -6,7 +6,7 @@ import { css, ThemeProvider } from 'styled-components';
 import type { Theme } from '@admiral-ds/react-ui';
 
 import { Calendar } from '@admiral-ds/date-picker';
-import type { Calendar5Props, Calendar5ViewMode } from '@admiral-ds/date-picker';
+import type { CalendarProps, CalendarViewMode } from '@admiral-ds/date-picker';
 
 const weekendMixin = css<{ disabled?: boolean }>`
   color: ${(p) => (p.disabled ? p.theme.color['Error/Error 30'] : p.theme.color['Error/Error 60 Main'])};
@@ -19,13 +19,13 @@ const highlightSundays = (date: Dayjs) => {
   return undefined;
 };
 
-export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, ...props }: Calendar5Props) => {
+export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, ...props }: CalendarProps) => {
   function swapBorder(theme: Theme): Theme {
     theme.shape.borderRadiusKind = (props as any).themeBorderKind || theme.shape.borderRadiusKind;
     return theme;
   }
 
-  const [viewMode1, setViewMode1] = useState<Calendar5ViewMode>('DATES');
+  const [viewMode1, setViewMode1] = useState<CalendarViewMode>('DATES');
   const [selected1, setSelected1] = useState<Dayjs>(dayjs());
   const [startDate1, setStartDate1] = useState<Dayjs | undefined>(undefined);
   const [endDate1, setEndDate1] = useState<Dayjs | undefined>(undefined);
@@ -123,7 +123,7 @@ export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, 
     }
   };
 
-  const handleViewModeChange1 = (viewMode: Calendar5ViewMode) => setViewMode1(viewMode);
+  const handleViewModeChange1 = (viewMode: CalendarViewMode) => setViewMode1(viewMode);
 
   return (
     <ThemeProvider theme={swapBorder}>

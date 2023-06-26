@@ -6,19 +6,19 @@ import styled, { ThemeProvider } from 'styled-components';
 import type { Theme } from '@admiral-ds/react-ui';
 
 import { Calendar, DAY_BORDER_RADIUS, DayCellWrapper } from '@admiral-ds/date-picker';
-import type { Calendar5Props, Calendar5ViewMode } from '@admiral-ds/date-picker';
+import type { CalendarProps, CalendarViewMode } from '@admiral-ds/date-picker';
 
 const StyledDay = styled(DayCellWrapper)`
   color: ${(p) => (p.disabled ? p.theme.color['Neutral/Neutral 10'] : p.theme.color['Error/Error 60 Main'])};
 `;
 
-export const CustomCalendarTemplate = (props: Calendar5Props) => {
+export const CustomCalendarTemplate = (props: CalendarProps) => {
   function swapBorder(theme: Theme): Theme {
     theme.shape.borderRadiusKind = (props as any).themeBorderKind || theme.shape.borderRadiusKind;
     return theme;
   }
 
-  const [viewMode2, setViewMode2] = useState<Calendar5ViewMode>('DATES');
+  const [viewMode2, setViewMode2] = useState<CalendarViewMode>('DATES');
   const [selected2, setSelected2] = useState<Dayjs>(dayjs());
   const [viewDate2, setViewDate2] = useState<Dayjs>(selected2);
   const [activeDate2, setActiveDate2] = useState<Dayjs | undefined>(undefined);
@@ -120,7 +120,7 @@ export const CustomCalendarTemplate = (props: Calendar5Props) => {
     setViewDate2(date);
   };
 
-  const handleViewModeChange2 = (viewMode: Calendar5ViewMode) => setViewMode2(viewMode);
+  const handleViewModeChange2 = (viewMode: CalendarViewMode) => setViewMode2(viewMode);
 
   return (
     <ThemeProvider theme={swapBorder}>
