@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
@@ -54,9 +55,9 @@ export interface CalendarWidgetTryProps {
   endDate?: Dayjs;
   minDate?: Dayjs;
   maxDate?: Dayjs;
-  renderDateCell?: (date: Dayjs) => React.ReactNode;
-  renderMonthCell?: (date: Dayjs) => React.ReactNode;
-  renderYearCell?: (date: Dayjs) => React.ReactNode;
+  renderDateCell?: (date: Dayjs) => ReactNode;
+  renderMonthCell?: (date: Dayjs) => ReactNode;
+  renderYearCell?: (date: Dayjs) => ReactNode;
   validator?: DateValidator;
   onViewDateChange?: (date: Dayjs) => void;
   onActiveDateChange: (date: Dayjs | undefined) => void;

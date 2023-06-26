@@ -1,3 +1,4 @@
+import type { MouseEvent } from 'react';
 import { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
@@ -107,8 +108,8 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
         isRangeEnd={false}
         isRowStart={false}
         isRowEnd={false}
-        onMouseEnter={(e: React.MouseEvent) => !disabled && handleDayMouseEnter2(date, e)}
-        onMouseLeave={(e: React.MouseEvent) => !disabled && handleDayMouseLeave2(date, e)}
+        onMouseEnter={(e: MouseEvent) => !disabled && handleDayMouseEnter2(date, e)}
+        onMouseLeave={(e: MouseEvent) => !disabled && handleDayMouseLeave2(date, e)}
         borderRadius={DAY_BORDER_RADIUS}
       >
         {date.date()}
