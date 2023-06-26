@@ -3,14 +3,15 @@ import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import styled, { css, ThemeProvider } from 'styled-components';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import type { Theme } from '@admiral-ds/react-ui';
 import { ALL_BORDER_RADIUS_VALUES } from '@admiral-ds/react-ui';
-import { Calendar } from '#src/index';
-import type { Calendar5ViewMode } from '#src/index';
-import { DAY_BORDER_RADIUS, DayCellWrapper } from '#src/index';
+
+import { Calendar, DAY_BORDER_RADIUS, DayCellWrapper } from '@admiral-ds/date-picker';
+import type { Calendar5ViewMode } from '@admiral-ds/date-picker';
 
 export default {
-  title: 'Admiral-2.1/CalendarTry',
+  title: 'Admiral-2.1/Calendar',
   component: Calendar,
   parameters: {
     docs: {
