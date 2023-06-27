@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 
 import { YEAR_BORDER_RADIUS, YearCellWrapper } from './YearCell';
-// TODO Этот импорт нужно перенести
 import { capitalizeFirstLetter } from '../utils';
 import { MONTHS_IN_ROW } from '../constants';
 
