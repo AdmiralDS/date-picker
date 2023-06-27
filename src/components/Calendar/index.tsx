@@ -8,8 +8,8 @@ import styled from 'styled-components';
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 import { DEFAULT_YEAR_COUNT } from './constants';
 import type { CalendarViewMode, PickerTypeMode } from './constants';
-import type { CalendarWidgetTryProps } from './CalendarWidget';
-import { CalendarWidgetTry } from './CalendarWidget';
+import type { CalendarWidgetProps } from './CalendarWidget';
+import { CalendarWidget } from './CalendarWidget';
 import { yearsRange } from './utils';
 
 dayjs.extend(isSameOrBefore);
@@ -28,19 +28,19 @@ const CalendarWrapper = styled.div`
 `;
 
 export interface CalendarProps
-  extends Omit<CalendarWidgetTryProps, 'onActiveDateChange' | 'onDateMouseEnter' | 'onDateMouseLeave'> {
+  extends Omit<CalendarWidgetProps, 'onActiveDateChange' | 'onDateMouseEnter' | 'onDateMouseLeave'> {
   doubleView?: boolean;
 }
 
-const SingleCalendarTry = forwardRef<HTMLDivElement, CalendarWidgetTryProps>(({ ...props }, ref) => {
+const SingleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(({ ...props }, ref) => {
   return (
     <CalendarWrapper ref={ref}>
-      <CalendarWidgetTry {...props} />
+      <CalendarWidget {...props} />
     </CalendarWrapper>
   );
 });
 
-const DoubleCalendarTry = forwardRef<HTMLDivElement, CalendarWidgetTryProps>(
+const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
   (
     {
       rangePicker = false,
@@ -189,7 +189,7 @@ const DoubleCalendarTry = forwardRef<HTMLDivElement, CalendarWidgetTryProps>(
 
     return (
       <CalendarWrapper ref={ref}>
-        <CalendarWidgetTry
+        <CalendarWidget
           {...calendarWidgetProps}
           viewDate={viewDateLeft}
           activeDate={activeDate}
@@ -200,7 +200,7 @@ const DoubleCalendarTry = forwardRef<HTMLDivElement, CalendarWidgetTryProps>(
           onDateMouseLeave={onDateMouseLeave}
           onActiveDateChange={onActiveDateChange}
         />
-        <CalendarWidgetTry
+        <CalendarWidget
           {...calendarWidgetProps}
           viewDate={viewDateRight}
           activeDate={activeDate}
@@ -230,7 +230,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       clearActiveDate();
     };
     return doubleView && rangePicker ? (
-      <DoubleCalendarTry
+      <DoubleCalendar
         {...props}
         activeDate={activeDate}
         onActiveDateChange={handleActiveDateChange}
@@ -240,7 +240,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
         ref={ref}
       />
     ) : (
-      <SingleCalendarTry
+      <SingleCalendar
         {...props}
         activeDate={activeDate}
         onActiveDateChange={handleActiveDateChange}

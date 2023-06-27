@@ -43,7 +43,7 @@ export const CalendarWidgetWrapper = styled.div<{
   color: ${({ theme }) => theme.color['Neutral/Neutral 90']};
 `;
 
-export interface CalendarWidgetTryProps {
+export interface CalendarWidgetProps {
   viewMode?: CalendarViewMode;
   onViewModeChange: (viewMode: CalendarViewMode) => void;
   pickerType?: PickerTypeMode;
@@ -81,7 +81,7 @@ export interface CalendarWidgetTryProps {
   };
 }
 
-export const CalendarWidgetTry = forwardRef<HTMLDivElement, CalendarWidgetTryProps>(
+export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
   (
     {
       viewMode = 'DATES',
