@@ -22,8 +22,8 @@ export const Panel = ({
   onYearsViewHide,
 }: PanelProps) => {
   const theme: Theme = useTheme() || LIGHT_THEME;
-  const defineLocale = userLocale || theme.currentLocale;
-  const currentLocale = locale || theme.locales[defineLocale].calendar;
+  const definedLocale = userLocale || theme.currentLocale;
+  const currentLocale = locale || theme.locales[definedLocale === 'ru' ? 'ru' : 'en'].calendar;
   const monthsView = viewMode === 'MONTHS';
   const yearsView = viewMode === 'YEARS';
 

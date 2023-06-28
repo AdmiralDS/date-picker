@@ -4,10 +4,14 @@ import { ALL_BORDER_RADIUS_VALUES } from '@admiral-ds/react-ui';
 
 import { Calendar } from '@admiral-ds/date-picker';
 import { SimpleCalendarTemplate } from './templates/SimpleCalendarTemplate';
+import { CustomThemeLocaleCalendarTemplate } from './templates/CustomThemeLocaleCalendarTemplate';
+import { UserLocaleCalendarTemplate } from './templates/UserLocaleCalendarTemplate';
 import { CustomCalendarTemplate } from './templates/CustomCalendarTemplate';
 
 // Imports of text sources
 import SimpleCalendarTemplateRaw from './templates/SimpleCalendarTemplate?raw';
+import CustomThemeLocaleCalendarTemplateRaw from './templates/CustomThemeLocaleCalendarTemplate?raw';
+import UserLocaleCalendarTemplateRaw from './templates/UserLocaleCalendarTemplate?raw';
 import CustomCalendarTemplateRaw from './templates/CustomCalendarTemplate?raw';
 
 export default {
@@ -69,6 +73,49 @@ SimpleCalendar.parameters = {
   },
 };
 SimpleCalendar.storyName = 'Simple.';
+
+const CustomThemeLocaleCalendarStory: StoryFn<typeof Calendar> = (props) => (
+  <CustomThemeLocaleCalendarTemplate {...props} />
+);
+
+export const CustomThemeLocaleCalendar = CustomThemeLocaleCalendarStory.bind({});
+CustomThemeLocaleCalendar.parameters = {
+  docs: {
+    source: {
+      code: CustomThemeLocaleCalendarTemplateRaw,
+    },
+    description: {
+      story: `Пользователь может использовать любую локаль, не ограничиваясь русской или английской. Для 
+      этого в объект theme.locales добавляется соответсвующий ключ, значением которого является объект типа Locale.
+      Данный объект содержит в себе перечисление текстовых констант для компонентов библиотеки, а также содержит
+      свойство firstDayOfWeek. Свойство firstDayOfWeek (значение св-ва - число от 0 до 6) обозначает, 
+      с какого дня начинается неделя для данной локали, где 0 - это воскресенье. Также необходимо прописать импорт 
+      необходимой локали из библиотеки Dayjs (import 'dayjs/locale/[необходимая локаль]', 
+      https://day.js.org/docs/en/i18n/loading-into-nodejs).`,
+    },
+  },
+};
+CustomThemeLocaleCalendar.storyName = 'Пример с немецкой локалью, заданной через theme.locales.';
+
+const UserLocaleCalendarStory: StoryFn<typeof Calendar> = (props) => <UserLocaleCalendarTemplate {...props} />;
+
+export const UserLocaleCalendar = UserLocaleCalendarStory.bind({});
+UserLocaleCalendar.parameters = {
+  docs: {
+    source: {
+      code: UserLocaleCalendarTemplateRaw,
+    },
+    description: {
+      story: `В некоторых случаях может быть необходимо изменить значения текстовых констант только для данного компонента. 
+        Для этого есть специальный параметр locale - объект, в котором можно задать альтернативные значения текстовых 
+        констант, отличные от тех, что заданы в theme.locales. Текстовая константа, заданная через пропс locale компонента 
+        имеет больший приоритет, чем та же константа, заданная в theme.locale. Также необходимо прописать импорт необходимой 
+        локали из библиотеки Dayjs  (import 'dayjs/locale/[необходимая локаль]', 
+        https://day.js.org/docs/en/i18n/loading-into-nodejs).`,
+    },
+  },
+};
+UserLocaleCalendar.storyName = 'Пример с испанской локалью, заданной через props.locale.';
 
 const CustomCalendarStory: StoryFn<typeof Calendar> = (props) => <CustomCalendarTemplate {...props} />;
 

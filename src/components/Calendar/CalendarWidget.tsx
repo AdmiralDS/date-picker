@@ -131,16 +131,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       return current.locale(currentLocale || 'ru');
     };
     const theme = useTheme() || LIGHT_THEME;
-    const [currentLocale, setCurrentLocale] = useState<string>();
-
-    const defineLocale = userLocale || theme.currentLocale;
-    if (currentLocale !== defineLocale) {
-      import(`dayjs/locale/${defineLocale}.js`)
-        .then(() => setCurrentLocale(defineLocale))
-        .catch(() => {
-          setCurrentLocale('ru');
-        });
-    }
+    const currentLocale = userLocale || theme.currentLocale || 'ru';
 
     const [innerViewDate, setInnerViewDate] = useState<Dayjs>(getInitialViewDate());
     const finalViewDate = viewDate ?? innerViewDate;
