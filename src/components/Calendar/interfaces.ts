@@ -6,12 +6,25 @@ import type { CalendarViewMode, PickerTypeMode } from '@admiral-ds/date-picker';
 import type { DateValidator } from '#src/components/Calendar/validator';
 
 export interface ViewModeProps {
+  /** Экран выбора дат, месяцев, лет */
   viewModeName?: CalendarViewMode;
+  /** Режим отображения по умолчанию */
   defaultViewModeName?: CalendarViewMode;
+  /** Коллбэк на переключение экрана */
   onViewModeNameChange?: (viewMode: CalendarViewMode) => void;
 }
 
+export interface RenderCellsProp {
+  /** Позволяет кастомизировать отображение дат */
+  renderDateCell?: (date: Dayjs) => ReactNode;
+  /** Позволяет кастомизировать отображение месяцев */
+  renderMonthCell?: (date: Dayjs) => ReactNode;
+  /** Позволяет кастомизировать отображение лет */
+  renderYearCell?: (date: Dayjs) => ReactNode;
+}
+
 export interface CalendarWidgetProps {
+  /** Управление экраном выбора дат */
   viewMode?: ViewModeProps;
   pickerType?: PickerTypeMode;
   rangePicker?: boolean;
@@ -22,12 +35,8 @@ export interface CalendarWidgetProps {
   endDate?: Dayjs;
   minDate?: Dayjs;
   maxDate?: Dayjs;
-  //---------------------------
-  //объединить в объект render
-  renderDateCell?: (date: Dayjs) => ReactNode;
-  renderMonthCell?: (date: Dayjs) => ReactNode;
-  renderYearCell?: (date: Dayjs) => ReactNode;
-  //---------------------------
+  /** Функции для кастомного отображения дат, месяцев и лет */
+  renderCell?: RenderCellsProp;
   validator?: DateValidator;
   onViewDateChange?: (date: Dayjs) => void;
   onActiveDateChange: (date: Dayjs | undefined) => void;

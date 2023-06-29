@@ -54,9 +54,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       endDate,
       minDate,
       maxDate,
-      renderDateCell,
-      renderMonthCell,
-      renderYearCell,
+      renderCell = {},
       validator,
       disabledDate,
       isHiddenDate,
@@ -90,6 +88,8 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       return current.locale(currentLocale || 'ru');
     };
     const { viewModeName = 'DATES', defaultViewModeName, onViewModeNameChange } = viewMode;
+    const { renderDateCell, renderMonthCell, renderYearCell } = renderCell;
+
     const theme = useTheme() || LIGHT_THEME;
     const currentLocale = userLocale || theme.currentLocale || 'ru';
 

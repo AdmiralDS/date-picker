@@ -134,7 +134,7 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
           selected={selected2}
           onSelectMonth={handleMonthClick2}
           onSelectYear={handleYearClick2}
-          renderDateCell={customRenderDay}
+          renderCell={{ renderDateCell: customRenderDay }}
           onViewDateChange={handleViewDateChange2}
           userLocale="en"
         />
