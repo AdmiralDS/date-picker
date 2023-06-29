@@ -30,10 +30,10 @@ export const UserLocaleCalendarTemplate = ({ rangePicker = false, doubleView = f
     backwardText: 'Atrás',
     forwardText: 'Adelante',
     nextMonthText: 'El mes que viene',
-    previousMonthText: 'Mes anterior',
-    returnText: 'Devolver',
-    selectYearText: 'Seleccionar año',
-    selectMonthText: 'Seleccionar mes',
+    previousMonthText: 'El mes anterior',
+    returnText: 'Salir',
+    selectYearText: 'Seleccionar un año',
+    selectMonthText: 'Seleccionar un mes',
   };
 
   const [viewMode1, setViewMode1] = useState<CalendarViewMode>('DATES');
