@@ -130,8 +130,7 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
           doubleView={props.doubleView}
           rangePicker={props.rangePicker}
           pickerType={props.pickerType}
-          viewMode={viewMode2}
-          onViewModeChange={handleViewModeChange2}
+          viewMode={{ viewModeName: viewMode2, onViewModeNameChange: handleViewModeChange2 }}
           selected={selected2}
           onSelectMonth={handleMonthClick2}
           onSelectYear={handleYearClick2}

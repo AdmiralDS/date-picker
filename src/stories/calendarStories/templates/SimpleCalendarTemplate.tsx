@@ -132,8 +132,7 @@ export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, 
           doubleView={doubleView}
           rangePicker={rangePicker}
           pickerType={props.pickerType}
-          viewMode={viewMode1}
-          onViewModeChange={handleViewModeChange1}
+          viewMode={{ viewModeName: viewMode1, onViewModeNameChange: handleViewModeChange1 }}
           selected={selected1}
           startDate={startDate1}
           endDate={endDate1}
