@@ -1,23 +1,21 @@
-import type { ReactNode } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 import styled, { useTheme } from 'styled-components';
 
 import { LIGHT_THEME, typography } from '@admiral-ds/react-ui';
 
 import { DayCell } from './CalendarContent/DayCell';
 import { Panel } from './Panel/Panel';
-import type { DateValidator } from './validator';
 import { YearCell } from './CalendarContent/YearCell';
-import type { CalendarViewMode, PickerTypeMode } from './constants';
+import type { CalendarViewMode } from './constants';
 import { MonthCell } from './CalendarContent/MonthCell';
 import { DEFAULT_YEAR_COUNT } from './constants';
 import { YearsCalendarView } from './CalendarContent/YearsCalendarView';
 import { MonthsCalendarView } from './CalendarContent/MonthsCalendarView';
 import { DateCalendarView } from './CalendarContent/DateCalendarView';
+import type { CalendarWidgetProps } from './interfaces';
 
 const CALENDAR_WIDTH = 284;
 const YEARS_VIEW_PADDING = '20px 12px 16px';
@@ -43,49 +41,10 @@ export const CalendarWidgetWrapper = styled.div<{
   color: ${({ theme }) => theme.color['Neutral/Neutral 90']};
 `;
 
-export interface CalendarWidgetProps {
-  viewMode?: CalendarViewMode;
-  onViewModeChange: (viewMode: CalendarViewMode) => void;
-  pickerType?: PickerTypeMode;
-  rangePicker?: boolean;
-  viewDate?: Dayjs;
-  activeDate?: Dayjs;
-  selected?: Dayjs;
-  startDate?: Dayjs;
-  endDate?: Dayjs;
-  minDate?: Dayjs;
-  maxDate?: Dayjs;
-  renderDateCell?: (date: Dayjs) => ReactNode;
-  renderMonthCell?: (date: Dayjs) => ReactNode;
-  renderYearCell?: (date: Dayjs) => ReactNode;
-  validator?: DateValidator;
-  onViewDateChange?: (date: Dayjs) => void;
-  onActiveDateChange: (date: Dayjs | undefined) => void;
-  onDateMouseEnter: (date: Dayjs, _: any) => void;
-  onDateMouseLeave: () => void;
-  onSelectDate?: (date: Dayjs) => void;
-  onSelectMonth?: (date: Dayjs) => void;
-  onSelectYear?: (date: Dayjs) => void;
-  disabledDate?: (date: Dayjs) => boolean;
-  isHiddenDate?: (date: Dayjs) => boolean;
-  highlightSpecialDay?: (date: Dayjs) => FlattenInterpolation<ThemeProps<DefaultTheme>> | undefined;
-  userLocale?: string;
-  locale?: {
-    backwardText?: string;
-    forwardText?: string;
-    nextMonthText?: string;
-    previousMonthText?: string;
-    returnText?: string;
-    selectYearText?: string;
-    selectMonthText?: string;
-  };
-}
-
 export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
   (
     {
-      viewMode = 'DATES',
-      onViewModeChange,
+      viewMode = {},
       pickerType = 'DATE_MONTH_YEAR',
       rangePicker = false,
       viewDate,
@@ -130,6 +89,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       }
       return current.locale(currentLocale || 'ru');
     };
+    const { viewModeName = 'DATES', defaultViewModeName, onViewModeNameChange } = viewMode;
     const theme = useTheme() || LIGHT_THEME;
     const currentLocale = userLocale || theme.currentLocale || 'ru';
 
@@ -171,12 +131,12 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           break;
         case 'MONTH_YEAR':
           clearActiveDate();
-          onViewModeChange?.('MONTHS');
+          onViewModeNameChange?.('MONTHS');
           break;
         default:
         case 'DATE_MONTH_YEAR':
           clearActiveDate();
-          onViewModeChange?.('DATES');
+          onViewModeNameChange?.('DATES');
           break;
       }
       onSelectYear && onSelectYear(date);
@@ -190,12 +150,12 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           break;
         case 'MONTH_YEAR':
           setInnerViewDate(date);
-          onViewModeChange?.('MONTHS');
+          onViewModeNameChange?.('MONTHS');
           break;
         default:
         case 'DATE_MONTH_YEAR':
           clearActiveDate();
-          onViewModeChange?.('DATES');
+          onViewModeNameChange?.('DATES');
           break;
       }
       onSelectMonth && onSelectMonth(date);
@@ -253,32 +213,32 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const decreaseMonth = () => setInnerViewDate(finalViewDate.subtract(1, 'month'));
 
     const increaseYear = () =>
-      setInnerViewDate(finalViewDate.add(viewMode === 'YEARS' ? DEFAULT_YEAR_COUNT : 1, 'year'));
+      setInnerViewDate(finalViewDate.add(viewModeName === 'YEARS' ? DEFAULT_YEAR_COUNT : 1, 'year'));
     const decreaseYear = () =>
-      setInnerViewDate(finalViewDate.subtract(viewMode === 'YEARS' ? DEFAULT_YEAR_COUNT : 1, 'year'));
+      setInnerViewDate(finalViewDate.subtract(viewModeName === 'YEARS' ? DEFAULT_YEAR_COUNT : 1, 'year'));
 
     const handleYearsViewShow = () => {
-      onViewModeChange('YEARS');
+      onViewModeNameChange?.('YEARS');
       //onViewYearSelect && onViewYearSelect();
     };
     const handleYearsViewHide = () => {
       if (pickerType === 'DATE_MONTH_YEAR') {
-        onViewModeChange('DATES');
+        onViewModeNameChange?.('DATES');
         clearActiveDate();
       } else if (pickerType === 'MONTH_YEAR') {
-        onViewModeChange('MONTHS');
+        onViewModeNameChange?.('MONTHS');
         clearActiveDate();
       }
       //onViewYearSelect && onViewYearSelect();
     };
 
     const handleMonthsViewShow = () => {
-      onViewModeChange('MONTHS');
+      onViewModeNameChange?.('MONTHS');
       //onViewMonthSelect && onViewMonthSelect();
     };
     const handleMonthsViewHide = () => {
       if (pickerType === 'DATE_MONTH_YEAR') {
-        onViewModeChange('DATES');
+        onViewModeNameChange?.('DATES');
         clearActiveDate();
       }
       //onViewMonthSelect && onViewMonthSelect();
@@ -287,13 +247,13 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const renderPanel = () => {
       return (
         <Panel
-          viewMode={viewMode}
+          viewMode={viewModeName}
           pickerType={pickerType}
           date={finalViewDate}
           userLocale={currentLocale}
           locale={locale}
-          onNext={viewMode === 'DATES' ? increaseMonth : increaseYear}
-          onPrevious={viewMode === 'DATES' ? decreaseMonth : decreaseYear}
+          onNext={viewModeName === 'DATES' ? increaseMonth : increaseYear}
+          onPrevious={viewModeName === 'DATES' ? decreaseMonth : decreaseYear}
           onMonthsViewShow={handleMonthsViewShow}
           onMonthsViewHide={handleMonthsViewHide}
           onYearsViewShow={handleYearsViewShow}
@@ -302,7 +262,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       );
     };
     const renderContent = () => {
-      switch (viewMode) {
+      switch (viewModeName) {
         case 'YEARS':
           return (
             <YearsCalendarView
@@ -332,7 +292,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     };
 
     return currentLocale ? (
-      <CalendarWidgetWrapper ref={ref} viewMode={viewMode}>
+      <CalendarWidgetWrapper ref={ref} viewMode={viewModeName}>
         {renderPanel()}
         {renderContent()}
       </CalendarWidgetWrapper>

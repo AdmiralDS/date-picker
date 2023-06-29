@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 import { DEFAULT_YEAR_COUNT } from './constants';
 import type { CalendarViewMode, PickerTypeMode } from './constants';
-import type { CalendarWidgetProps } from './CalendarWidget';
+import type { CalendarWidgetProps } from './interfaces';
 import { CalendarWidget } from './CalendarWidget';
 import { yearsRange } from './utils';
 
@@ -51,7 +51,6 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       selected,
       minDate,
       maxDate,
-      onViewModeChange,
       onActiveDateChange,
       onDateMouseEnter,
       onDateMouseLeave,
@@ -194,8 +193,7 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           viewDate={viewDateLeft}
           activeDate={activeDate}
           onViewDateChange={handleViewDateLeftChange}
-          viewMode={viewModeLeft}
-          onViewModeChange={handleViewModeLeftChange}
+          viewMode={{ viewModeName: viewModeLeft, onViewModeNameChange: handleViewModeLeftChange }}
           onDateMouseEnter={onDateMouseEnter}
           onDateMouseLeave={onDateMouseLeave}
           onActiveDateChange={onActiveDateChange}
@@ -205,8 +203,7 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           viewDate={viewDateRight}
           activeDate={activeDate}
           onViewDateChange={handleViewDateRightChange}
-          viewMode={viewModeRight}
-          onViewModeChange={handleViewModeRightChange}
+          viewMode={{ viewModeName: viewModeRight, onViewModeNameChange: handleViewModeRightChange }}
           onDateMouseEnter={onDateMouseEnter}
           onDateMouseLeave={onDateMouseLeave}
           onActiveDateChange={onActiveDateChange}
