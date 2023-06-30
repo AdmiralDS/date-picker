@@ -37,12 +37,19 @@ export interface CalendarLocaleProps {
   localeName?: string;
   /** Текстовые константы, используемые в компоненте */
   localeText?: {
+    /** Надпись (тултип) для кнопки со стрелкой, ведущей вперед */
     backwardText?: string;
+    /** Надпись (тултип) для кнопки со стрелкой, ведущей назад */
     forwardText?: string;
+    /** Надпись (тултип) для кнопки со стрелкой, ведущей к следующему месяцу */
     nextMonthText?: string;
+    /** Надпись (тултип) для кнопки со стрелкой ведущей, к предыдущему месяцу */
     previousMonthText?: string;
+    /** Надпись (тултип) для кнопки возврата  */
     returnText?: string;
+    /** Надпись (тултип) для кнопки, открывающей панель выбора года */
     selectYearText?: string;
+    /** Надпись (тултип) для кнопки, открывающей панель выбора месяца */
     selectMonthText?: string;
   };
 }
@@ -50,26 +57,48 @@ export interface CalendarLocaleProps {
 export interface CalendarWidgetProps {
   /** Управление экраном выбора дат */
   viewMode?: ViewModeProps;
+  /** Выбор только года, месяца или полной даты */
   pickerType?: PickerTypeMode;
+  /** Режим выбора диапазона дат */
   rangePicker?: boolean;
+  /** Дата для отображения на экране */
   viewDate?: Dayjs;
+  /** Коллбэк на изменение даты отображения на экране */
+  onViewDateChange?: (date: Dayjs) => void;
+  /** Активная дата (hover) */
   activeDate?: Dayjs;
+  /** Коллбэк на изменение активной даты */
+  onActiveDateChange: (date: Dayjs | undefined) => void;
+  /** Коллбэк для установки активной даты */
+  onDateMouseEnter: (date: Dayjs, _: any) => void;
+  /** Коллбэк для сброса активной даты при выходе за пределы области дат */
+  onDateMouseLeave: () => void;
+  /** Выбранное значение даты */
   selected?: Dayjs;
+  /** Коллбэк при выборе числа/месяца/года */
+  onSelectCell?: OnSelectCellProps;
+  /** Начальная дата диапазона */
   startDate?: Dayjs;
+  /** Конечная дата диапазона */
   endDate?: Dayjs;
+  /** Минимально возможная для выбора дата */
   minDate?: Dayjs;
+  /** Максимально возможная для выбора дата */
   maxDate?: Dayjs;
   /** Функции для кастомного отображения дат, месяцев и лет */
   renderCell?: RenderCellsProp;
+  /** Предоставляет функции проверки корректности даты, возможности её выбора в календаре.
+   *  Если возвращаемое значение не 'null', то дата считается некорректной, а возвращаемое
+   *  функцией значение является текстом ошибки
+   */
   validator?: DateValidator;
-  onViewDateChange?: (date: Dayjs) => void;
-  onActiveDateChange: (date: Dayjs | undefined) => void;
-  onDateMouseEnter: (date: Dayjs, _: any) => void;
-  onDateMouseLeave: () => void;
-  /** Коллбэк при выборе числа/месяца/года */
-  onSelectCell?: OnSelectCellProps;
+  /** Функция фильтрации даты. Если функция возвращает false для конкретного дня,
+   * то этот день будет задизейблен и его нельзя будет выбрать
+   */
   disabledDate?: (date: Dayjs) => boolean;
+  /** Функция отображения даты на текущем экране */
   isHiddenDate?: (date: Dayjs) => boolean;
+  /** Позволяет добавлять стили на необходимые даты */
   highlightSpecialDay?: (date: Dayjs) => FlattenInterpolation<ThemeProps<DefaultTheme>> | undefined;
   /** Объект локализации - позволяет перезадать текстовые константы, используемые в компоненте,
    * по умолчанию значения констант берутся из темы в соответствии с параметром currentLocale, заданном в теме
