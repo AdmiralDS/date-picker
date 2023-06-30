@@ -60,9 +60,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       isHiddenDate,
       highlightSpecialDay,
       userLocale,
-      onSelectDate,
-      onSelectMonth,
-      onSelectYear,
+      onSelectCell = {},
       onViewDateChange,
       onActiveDateChange,
       onDateMouseEnter,
@@ -89,6 +87,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     };
     const { viewModeName = 'DATES', defaultViewModeName, onViewModeNameChange } = viewMode;
     const { renderDateCell, renderMonthCell, renderYearCell } = renderCell;
+    const { onSelectDate, onSelectMonth, onSelectYear } = onSelectCell;
 
     const theme = useTheme() || LIGHT_THEME;
     const currentLocale = userLocale || theme.currentLocale || 'ru';

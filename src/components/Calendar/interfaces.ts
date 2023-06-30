@@ -23,6 +23,15 @@ export interface RenderCellsProp {
   renderYearCell?: (date: Dayjs) => ReactNode;
 }
 
+export interface OnSelectCellProps {
+  /** Коллбэк при выборе числа */
+  onSelectDate?: (date: Dayjs) => void;
+  /** Коллбэк при выборе месяца */
+  onSelectMonth?: (date: Dayjs) => void;
+  /** Коллбэк при выборе года */
+  onSelectYear?: (date: Dayjs) => void;
+}
+
 export interface CalendarWidgetProps {
   /** Управление экраном выбора дат */
   viewMode?: ViewModeProps;
@@ -42,9 +51,8 @@ export interface CalendarWidgetProps {
   onActiveDateChange: (date: Dayjs | undefined) => void;
   onDateMouseEnter: (date: Dayjs, _: any) => void;
   onDateMouseLeave: () => void;
-  onSelectDate?: (date: Dayjs) => void;
-  onSelectMonth?: (date: Dayjs) => void;
-  onSelectYear?: (date: Dayjs) => void;
+  /** Коллбэк при выборе числа/месяца/года */
+  onSelectCell?: OnSelectCellProps;
   disabledDate?: (date: Dayjs) => boolean;
   isHiddenDate?: (date: Dayjs) => boolean;
   highlightSpecialDay?: (date: Dayjs) => FlattenInterpolation<ThemeProps<DefaultTheme>> | undefined;
