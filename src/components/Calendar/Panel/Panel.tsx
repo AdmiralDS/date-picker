@@ -12,8 +12,7 @@ export const Panel = ({
   viewMode,
   pickerType,
   date,
-  userLocale,
-  locale,
+  locale = {},
   onNext,
   onPrevious,
   onMonthsViewShow,
@@ -21,9 +20,13 @@ export const Panel = ({
   onYearsViewShow,
   onYearsViewHide,
 }: PanelProps) => {
+  const { localeName, localeText } = locale;
   const theme: Theme = useTheme() || LIGHT_THEME;
-  const definedLocale = userLocale || theme.currentLocale;
-  const currentLocale = locale || theme.locales[definedLocale === 'ru' ? 'ru' : 'en'].calendar;
+  const definedLocaleName = localeName || theme.currentLocale;
+  const currentLocaleText =
+    localeText ||
+    (theme.locales[definedLocaleName] && theme.locales[definedLocaleName].calendar) ||
+    theme.locales['en'].calendar;
   const monthsView = viewMode === 'MONTHS';
   const yearsView = viewMode === 'YEARS';
 
@@ -33,7 +36,7 @@ export const Panel = ({
         <YearMonthDatePanel
           viewMode={viewMode}
           date={date}
-          locale={currentLocale}
+          localeText={currentLocaleText}
           onNext={onNext}
           onPrevious={onPrevious}
           onMonthsViewShow={onMonthsViewShow}
@@ -46,7 +49,7 @@ export const Panel = ({
         <YearMonthPanel
           viewMode={viewMode}
           date={date}
-          locale={currentLocale}
+          localeText={currentLocaleText}
           onNext={onNext}
           onPrevious={onPrevious}
           onYearsViewShow={onYearsViewShow}
@@ -54,7 +57,13 @@ export const Panel = ({
         />
       )}
       {pickerType === 'YEAR' && (
-        <YearPanel viewMode={viewMode} date={date} locale={currentLocale} onNext={onNext} onPrevious={onPrevious} />
+        <YearPanel
+          viewMode={viewMode}
+          date={date}
+          localeText={currentLocaleText}
+          onNext={onNext}
+          onPrevious={onPrevious}
+        />
       )}
     </PanelWrapper>
   );

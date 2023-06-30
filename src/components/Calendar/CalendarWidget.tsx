@@ -59,23 +59,22 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       disabledDate,
       isHiddenDate,
       highlightSpecialDay,
-      userLocale,
       onSelectCell = {},
       onViewDateChange,
       onActiveDateChange,
       onDateMouseEnter,
       onDateMouseLeave,
-      locale,
+      locale = {},
     },
     ref,
   ) => {
     const getInitialViewDate = (): Dayjs => {
       const current = dayjs();
       if (viewDate) {
-        return viewDate.locale(currentLocale || 'ru');
+        return viewDate.locale(currentLocaleName || 'ru');
       }
       if (selected) {
-        return selected.locale(currentLocale || 'ru');
+        return selected.locale(currentLocaleName || 'ru');
       }
       if (minDate && current.isBefore(minDate)) {
         return minDate;
@@ -83,14 +82,15 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       if (maxDate && current.isAfter(maxDate)) {
         return maxDate;
       }
-      return current.locale(currentLocale || 'ru');
+      return current.locale(currentLocaleName || 'ru');
     };
     const { viewModeName = 'DATES', defaultViewModeName, onViewModeNameChange } = viewMode;
     const { renderDateCell, renderMonthCell, renderYearCell } = renderCell;
     const { onSelectDate, onSelectMonth, onSelectYear } = onSelectCell;
+    const { localeName, localeText } = locale;
 
     const theme = useTheme() || LIGHT_THEME;
-    const currentLocale = userLocale || theme.currentLocale || 'ru';
+    const currentLocaleName = localeName || theme.currentLocale || 'ru';
 
     const [innerViewDate, setInnerViewDate] = useState<Dayjs>(getInitialViewDate());
     const finalViewDate = viewDate ?? innerViewDate;
@@ -104,10 +104,10 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     }, [innerViewDate]);
 
     useEffect(() => {
-      if (currentLocale) {
-        setInnerViewDate(finalViewDate.locale(currentLocale));
+      if (currentLocaleName) {
+        setInnerViewDate(finalViewDate.locale(currentLocaleName));
       }
-    }, [currentLocale]);
+    }, [currentLocaleName]);
 
     const handleAreaMouseLeave = () => {
       clearActiveDate();
@@ -249,7 +249,6 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           viewMode={viewModeName}
           pickerType={pickerType}
           date={finalViewDate}
-          userLocale={currentLocale}
           locale={locale}
           onNext={viewModeName === 'DATES' ? increaseMonth : increaseYear}
           onPrevious={viewModeName === 'DATES' ? decreaseMonth : decreaseYear}
@@ -290,7 +289,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       }
     };
 
-    return currentLocale ? (
+    return currentLocaleName ? (
       <CalendarWidgetWrapper ref={ref} viewMode={viewModeName}>
         {renderPanel()}
         {renderContent()}

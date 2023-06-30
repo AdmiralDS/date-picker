@@ -2,13 +2,15 @@ import type { MouseEvent } from 'react';
 import type { Dayjs } from 'dayjs';
 
 import type { CalendarViewMode, PickerTypeMode } from '../constants';
+import type { CalendarLocaleProps } from '#src/components/Calendar/interfaces';
 
 export interface BaseContentProps {
   viewMode: CalendarViewMode;
   date: Dayjs;
   minDate?: Dayjs;
   maxDate?: Dayjs;
-  locale: {
+  /** Текстовые константы, используемые в компоненте */
+  localeText: {
     backwardText?: string;
     forwardText?: string;
     nextMonthText?: string;
@@ -32,18 +34,12 @@ interface MonthsCallbacks {
   onMonthsViewHide(event: MouseEvent<HTMLDivElement>): void;
 }
 
-export interface PanelProps extends Omit<BaseContentProps, 'locale'>, YearsCallbacks, MonthsCallbacks {
+export interface PanelProps extends Omit<BaseContentProps, 'localeText'>, YearsCallbacks, MonthsCallbacks {
   pickerType: PickerTypeMode;
-  userLocale?: string;
-  locale?: {
-    backwardText?: string;
-    forwardText?: string;
-    nextMonthText?: string;
-    previousMonthText?: string;
-    returnText?: string;
-    selectYearText?: string;
-    selectMonthText?: string;
-  };
+  /** Объект локализации - позволяет перезадать текстовые константы, используемые в компоненте,
+   * по умолчанию значения констант берутся из темы в соответствии с параметром currentLocale, заданном в теме
+   **/
+  locale?: CalendarLocaleProps;
 }
 
 export interface YearMonthDatePanelProps extends BaseContentProps, YearsCallbacks, MonthsCallbacks {}

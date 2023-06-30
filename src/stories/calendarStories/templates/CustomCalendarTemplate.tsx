@@ -136,7 +136,7 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
           onSelectYear={handleYearClick2}
           renderCell={{ renderDateCell: customRenderDay }}
           onViewDateChange={handleViewDateChange2}
-          userLocale="en"
+          locale={{ localeName: 'en' }}
         />
       </div>
     </ThemeProvider>

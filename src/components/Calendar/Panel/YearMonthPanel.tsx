@@ -8,7 +8,7 @@ export const YearMonthPanel = ({
   date,
   minDate,
   maxDate,
-  locale,
+  localeText,
   onNext,
   onPrevious,
   onYearsViewShow,
@@ -31,12 +31,12 @@ export const YearMonthPanel = ({
           disabled={false}
           type={'left'}
           onMouseDown={onPrevious}
-          renderContent={() => locale.backwardText}
+          renderContent={() => localeText.backwardText}
         />
       )}
       <PanelDate>
         <YearWithTooltip
-          renderContent={() => (yearsView ? locale.returnText : locale.selectYearText)}
+          renderContent={() => (yearsView ? localeText.returnText : localeText.selectYearText)}
           view={yearsView}
           onMouseDown={yearMouseDownHandle}
         >
@@ -48,7 +48,7 @@ export const YearMonthPanel = ({
           disabled={false}
           type={'right'}
           onMouseDown={onNext}
-          renderContent={() => locale.forwardText}
+          renderContent={() => localeText.forwardText}
         />
       )}
     </>

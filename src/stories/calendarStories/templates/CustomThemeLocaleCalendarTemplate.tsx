@@ -202,7 +202,7 @@ export const CustomThemeLocaleCalendarTemplate = ({
           onSelectMonth={handleMonthClick1}
           onSelectYear={rangePicker ? handleYearRangeClick1 : handleYearClick1}
           highlightSpecialDay={highlightSundays}
-          userLocale="de"
+          locale={{ localeName: 'de' }}
         />
       </div>
     </ThemeProvider>

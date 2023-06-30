@@ -32,6 +32,21 @@ export interface OnSelectCellProps {
   onSelectYear?: (date: Dayjs) => void;
 }
 
+export interface CalendarLocaleProps {
+  /** Название локали */
+  localeName?: string;
+  /** Текстовые константы, используемые в компоненте */
+  localeText?: {
+    backwardText?: string;
+    forwardText?: string;
+    nextMonthText?: string;
+    previousMonthText?: string;
+    returnText?: string;
+    selectYearText?: string;
+    selectMonthText?: string;
+  };
+}
+
 export interface CalendarWidgetProps {
   /** Управление экраном выбора дат */
   viewMode?: ViewModeProps;
@@ -56,14 +71,8 @@ export interface CalendarWidgetProps {
   disabledDate?: (date: Dayjs) => boolean;
   isHiddenDate?: (date: Dayjs) => boolean;
   highlightSpecialDay?: (date: Dayjs) => FlattenInterpolation<ThemeProps<DefaultTheme>> | undefined;
-  userLocale?: string;
-  locale?: {
-    backwardText?: string;
-    forwardText?: string;
-    nextMonthText?: string;
-    previousMonthText?: string;
-    returnText?: string;
-    selectYearText?: string;
-    selectMonthText?: string;
-  };
+  /** Объект локализации - позволяет перезадать текстовые константы, используемые в компоненте,
+   * по умолчанию значения констант берутся из темы в соответствии с параметром currentLocale, заданном в теме
+   **/
+  locale?: CalendarLocaleProps;
 }

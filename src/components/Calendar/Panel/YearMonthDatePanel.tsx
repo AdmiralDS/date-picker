@@ -8,7 +8,7 @@ export const YearMonthDatePanel = ({
   date,
   minDate,
   maxDate,
-  locale,
+  localeText,
   onNext,
   onPrevious,
   onMonthsViewShow,
@@ -41,19 +41,19 @@ export const YearMonthDatePanel = ({
           disabled={false}
           type={'left'}
           onMouseDown={onPrevious}
-          renderContent={() => (yearsView ? locale.backwardText : locale.previousMonthText)}
+          renderContent={() => (yearsView ? localeText.backwardText : localeText.previousMonthText)}
         />
       )}
       <PanelDate>
         <MonthWithTooltip
-          renderContent={() => (monthsView ? locale.returnText : locale.selectMonthText)}
+          renderContent={() => (monthsView ? localeText.returnText : localeText.selectMonthText)}
           view={monthsView}
           onMouseDown={monthMouseDownHandle}
         >
           {capitalizeFirstLetter(date.format('MMMM'))}
         </MonthWithTooltip>
         <YearWithTooltip
-          renderContent={() => (yearsView ? locale.returnText : locale.selectYearText)}
+          renderContent={() => (yearsView ? localeText.returnText : localeText.selectYearText)}
           view={yearsView}
           onMouseDown={yearMouseDownHandle}
         >
@@ -65,7 +65,7 @@ export const YearMonthDatePanel = ({
           disabled={false}
           type={'right'}
           onMouseDown={onNext}
-          renderContent={() => (yearsView ? locale.forwardText : locale.nextMonthText)}
+          renderContent={() => (yearsView ? localeText.forwardText : localeText.nextMonthText)}
         />
       )}
     </>
