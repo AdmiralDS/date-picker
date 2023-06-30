@@ -147,9 +147,11 @@ export const UserLocaleCalendarTemplate = ({ rangePicker = false, doubleView = f
           selected={selected1}
           startDate={startDate1}
           endDate={endDate1}
-          onSelectDate={handleDayClick1}
-          onSelectMonth={handleMonthClick1}
-          onSelectYear={rangePicker ? handleYearRangeClick1 : handleYearClick1}
+          onSelectCell={{
+            onSelectDate: handleDayClick1,
+            onSelectMonth: handleMonthClick1,
+            onSelectYear: rangePicker ? handleYearRangeClick1 : handleYearClick1,
+          }}
           highlightSpecialDay={highlightSundays}
           locale={{ localeName: 'es', localeText: customLocale }}
         />

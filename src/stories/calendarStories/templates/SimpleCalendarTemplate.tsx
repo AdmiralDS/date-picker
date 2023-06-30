@@ -136,9 +136,11 @@ export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, 
           selected={selected1}
           startDate={startDate1}
           endDate={endDate1}
-          onSelectDate={handleDayClick1}
-          onSelectMonth={handleMonthClick1}
-          onSelectYear={rangePicker ? handleYearRangeClick1 : handleYearClick1}
+          onSelectCell={{
+            onSelectDate: handleDayClick1,
+            onSelectMonth: handleMonthClick1,
+            onSelectYear: rangePicker ? handleYearRangeClick1 : handleYearClick1,
+          }}
           //disabledDate={filterDate}
           highlightSpecialDay={highlightSundays}
         />
