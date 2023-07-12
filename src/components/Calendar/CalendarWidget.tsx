@@ -100,7 +100,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
 
     useEffect(() => {
       if (onViewDateChange) {
-        onViewDateChange(innerViewDate);
+        onViewDateChange(innerViewDate.format('YYYY-MM-DDTHH:mm:ss'));
       }
     }, [innerViewDate]);
 

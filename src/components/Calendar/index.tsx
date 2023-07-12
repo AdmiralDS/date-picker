@@ -137,8 +137,8 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const [viewDateLeft, setViewDateLeft] = useState<Dayjs>(getInitialViewDateLeft());
     const [viewDateRight, setViewDateRight] = useState<Dayjs>(getInitialViewDateRight());
 
-    const handleViewDateLeftChange = (date: Dayjs) => setViewDateLeft(date);
-    const handleViewDateRightChange = (date: Dayjs) => setViewDateRight(date);
+    const handleViewDateLeftChange = (date: string) => setViewDateLeft(dayjs(date));
+    const handleViewDateRightChange = (date: string) => setViewDateRight(dayjs(date));
 
     useEffect(() => {
       if (dateRightIsSameOrBefore(viewDateLeft, viewDateRight)) {

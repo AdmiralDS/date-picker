@@ -64,7 +64,7 @@ export interface CalendarWidgetProps {
   /** Дата для отображения на экране в формате "YYYY-MM-DDT12:00:00 */
   viewDate?: string;
   /** Коллбэк на изменение даты отображения на экране */
-  onViewDateChange?: (date: Dayjs) => void;
+  onViewDateChange?: (date: string) => void;
   /** Активная дата (hover) */
   activeDate?: Dayjs;
   /** Коллбэк на изменение активной даты */
