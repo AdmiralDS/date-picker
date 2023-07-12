@@ -61,8 +61,8 @@ export interface CalendarWidgetProps {
   pickerType?: PickerTypeMode;
   /** Режим выбора диапазона дат */
   rangePicker?: boolean;
-  /** Дата для отображения на экране */
-  viewDate?: Dayjs;
+  /** Дата для отображения на экране в формате "YYYY-MM-DDT12:00:00 */
+  viewDate?: string;
   /** Коллбэк на изменение даты отображения на экране */
   onViewDateChange?: (date: Dayjs) => void;
   /** Активная дата (hover) */

@@ -190,7 +190,7 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       <CalendarWrapper ref={ref}>
         <CalendarWidget
           {...calendarWidgetProps}
-          viewDate={viewDateLeft}
+          viewDate={viewDateLeft.format('YYYY-MM-DDTHH:mm:ss')}
           activeDate={activeDate}
           onViewDateChange={handleViewDateLeftChange}
           viewMode={{ viewModeName: viewModeLeft, onViewModeNameChange: handleViewModeLeftChange }}
@@ -200,7 +200,7 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
         />
         <CalendarWidget
           {...calendarWidgetProps}
-          viewDate={viewDateRight}
+          viewDate={viewDateRight.format('YYYY-MM-DDTHH:mm:ss')}
           activeDate={activeDate}
           onViewDateChange={handleViewDateRightChange}
           viewMode={{ viewModeName: viewModeRight, onViewModeNameChange: handleViewModeRightChange }}

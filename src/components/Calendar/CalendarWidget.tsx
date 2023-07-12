@@ -47,13 +47,13 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       viewMode = {},
       pickerType = 'DATE_MONTH_YEAR',
       rangePicker = false,
-      viewDate,
       activeDate,
       selected,
       startDate,
       endDate,
       minDate,
       maxDate,
+      viewDate: viewDateString,
       renderCell = {},
       validator,
       disabledDate,
@@ -68,6 +68,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     },
     ref,
   ) => {
+    const viewDate = dayjs(viewDateString);
     const getInitialViewDate = (): Dayjs => {
       const current = dayjs();
       if (viewDate) {
