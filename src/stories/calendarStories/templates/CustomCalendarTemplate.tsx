@@ -117,8 +117,8 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
     );
   };
 
-  const handleViewDateChange2 = (date: Dayjs) => {
-    setViewDate2(date);
+  const handleViewDateChange2 = (date: string) => {
+    setViewDate2(dayjs(date));
   };
 
   const handleViewModeChange2 = (viewMode: CalendarViewMode) => setViewMode2(viewMode);
