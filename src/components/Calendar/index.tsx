@@ -10,7 +10,7 @@ import { DEFAULT_YEAR_COUNT } from './constants';
 import type { CalendarViewMode, PickerTypeMode } from './constants';
 import type { CalendarWidgetProps } from './interfaces';
 import { CalendarWidget } from './CalendarWidget';
-import { yearsRange } from './utils';
+import { dateStringToDayjs, dayjsDateToString, yearsRange } from './utils';
 
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
@@ -48,7 +48,7 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       viewMode,
       viewDate,
       activeDate,
-      selected,
+      selected: selectedDateString,
       minDate,
       maxDate,
       onActiveDateChange,
@@ -62,11 +62,12 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       viewMode,
       pickerType,
       rangePicker,
-      selected,
+      selectedDateString,
       minDate,
       maxDate,
       ...props,
     } as Record<string, any>;
+    const selected = dateStringToDayjs(selectedDateString);
 
     const getInitialViewDateLeft = (): Dayjs => {
       const current = dayjs();
@@ -134,20 +135,20 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       return increaseDate(getInitialViewDateLeft());
     };
 
-    const [viewDateLeft, setViewDateLeft] = useState<Dayjs>(getInitialViewDateLeft());
-    const [viewDateRight, setViewDateRight] = useState<Dayjs>(getInitialViewDateRight());
+    const [viewDateLeft, setViewDateLeft] = useState<Dayjs | undefined>(getInitialViewDateLeft());
+    const [viewDateRight, setViewDateRight] = useState<Dayjs | undefined>(getInitialViewDateRight());
 
-    const handleViewDateLeftChange = (date: string) => setViewDateLeft(dayjs(date));
-    const handleViewDateRightChange = (date: string) => setViewDateRight(dayjs(date));
+    const handleViewDateLeftChange = (date: string) => setViewDateLeft(dateStringToDayjs(date));
+    const handleViewDateRightChange = (date: string) => setViewDateRight(dateStringToDayjs(date));
 
     useEffect(() => {
-      if (dateRightIsSameOrBefore(viewDateLeft, viewDateRight)) {
+      if (viewDateLeft && viewDateRight && dateRightIsSameOrBefore(viewDateLeft, viewDateRight)) {
         setViewDateRight(increaseDate(viewDateLeft));
       }
     }, [viewDateLeft]);
 
     useEffect(() => {
-      if (dateLeftIsSameOrAfter(viewDateLeft, viewDateRight)) {
+      if (viewDateLeft && viewDateRight && dateLeftIsSameOrAfter(viewDateLeft, viewDateRight)) {
         setViewDateLeft(decreaseDate(viewDateRight));
       }
     }, [viewDateRight]);
@@ -190,7 +191,7 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       <CalendarWrapper ref={ref}>
         <CalendarWidget
           {...calendarWidgetProps}
-          viewDate={viewDateLeft.format('YYYY-MM-DDTHH:mm:ss')}
+          viewDate={viewDateLeft && dayjsDateToString(viewDateLeft)}
           activeDate={activeDate}
           onViewDateChange={handleViewDateLeftChange}
           viewMode={{ viewModeName: viewModeLeft, onViewModeNameChange: handleViewModeLeftChange }}
@@ -200,7 +201,7 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
         />
         <CalendarWidget
           {...calendarWidgetProps}
-          viewDate={viewDateRight.format('YYYY-MM-DDTHH:mm:ss')}
+          viewDate={viewDateRight && dayjsDateToString(viewDateRight)}
           activeDate={activeDate}
           onViewDateChange={handleViewDateRightChange}
           viewMode={{ viewModeName: viewModeRight, onViewModeNameChange: handleViewModeRightChange }}

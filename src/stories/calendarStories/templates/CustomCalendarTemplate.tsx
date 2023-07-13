@@ -8,6 +8,7 @@ import type { Theme } from '@admiral-ds/react-ui';
 
 import { Calendar, DAY_BORDER_RADIUS, DayCellWrapper } from '@admiral-ds/date-picker';
 import type { CalendarProps, CalendarViewMode } from '@admiral-ds/date-picker';
+import { dateStringToDayjs, dayjsDateToString } from '#src/components/Calendar/utils';
 
 const StyledDay = styled(DayCellWrapper)`
   color: ${(p) => (p.disabled ? p.theme.color['Neutral/Neutral 10'] : p.theme.color['Error/Error 60 Main'])};
@@ -53,23 +54,32 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
     //return date.isSame(dayjs(), 'date');
   };
 
-  const handleDayClick2 = (date: Dayjs) => {
-    console.log(`click on ${date.format('DD MMM YYYY')}`);
-    setSelected2(date);
-    setViewDate2(date);
-  };
-
-  const handleMonthClick2 = (date: Dayjs) => {
-    if (props.pickerType === 'MONTH_YEAR') {
+  const handleDayClick2 = (dateString: string) => {
+    const date = dateStringToDayjs(dateString);
+    if (date) {
+      console.log(`click on ${date.format('DD MMM YYYY')}`);
       setSelected2(date);
       setViewDate2(date);
     }
   };
 
-  const handleYearClick2 = (date: Dayjs) => {
+  const handleMonthClick2 = (dateString: string) => {
+    if (props.pickerType === 'MONTH_YEAR') {
+      const date = dateStringToDayjs(dateString);
+      if (date) {
+        setSelected2(date);
+        setViewDate2(date);
+      }
+    }
+  };
+
+  const handleYearClick2 = (dateString: string) => {
     if (props.pickerType === 'YEAR') {
-      setSelected2(date);
-      setViewDate2(date);
+      const date = dateStringToDayjs(dateString);
+      if (date) {
+        setSelected2(date);
+        setViewDate2(date);
+      }
     }
   };
 
@@ -102,7 +112,7 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
         selected={date.isSame(selected2, 'date')}
         disabled={disabled}
         outsideMonth={!date.isSame(viewDate2, 'month')}
-        onClick={() => !filterDate(date) && handleDayClick2(date)}
+        onClick={() => !filterDate(date) && handleDayClick2(dayjsDateToString(date))}
         isActiveDate={!!activeDate2 && date.isSame(activeDate2, 'date')}
         isRangeStart={false}
         isRangeEnd={false}
@@ -131,7 +141,7 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
           rangePicker={props.rangePicker}
           pickerType={props.pickerType}
           viewMode={{ viewModeName: viewMode2, onViewModeNameChange: handleViewModeChange2 }}
-          selected={selected2}
+          selected={dayjsDateToString(selected2)}
           onSelectCell={{ onSelectMonth: handleMonthClick2, onSelectYear: handleYearClick2 }}
           renderCell={{ renderDateCell: customRenderDay }}
           onViewDateChange={handleViewDateChange2}

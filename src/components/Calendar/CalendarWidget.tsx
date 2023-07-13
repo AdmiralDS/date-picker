@@ -1,3 +1,4 @@
+import type { MouseEvent } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
@@ -16,6 +17,7 @@ import { YearsCalendarView } from './CalendarContent/YearsCalendarView';
 import { MonthsCalendarView } from './CalendarContent/MonthsCalendarView';
 import { DateCalendarView } from './CalendarContent/DateCalendarView';
 import type { CalendarWidgetProps } from './interfaces';
+import { dateStringToDayjs, dayjsDateToString } from './utils';
 
 const CALENDAR_WIDTH = 284;
 const YEARS_VIEW_PADDING = '20px 12px 16px';
@@ -49,7 +51,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       rangePicker = false,
       viewDate: viewDateString,
       activeDate: activeDateString,
-      selected,
+      selected: selectedDateString,
       startDate,
       endDate,
       minDate,
@@ -68,8 +70,9 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     },
     ref,
   ) => {
-    const viewDate = dayjs(viewDateString);
-    const activeDate = dayjs(activeDateString);
+    const viewDate = dateStringToDayjs(viewDateString);
+    const activeDate = dateStringToDayjs(activeDateString);
+    const selected = dateStringToDayjs(selectedDateString);
     const getInitialViewDate = (): Dayjs => {
       const current = dayjs();
       if (viewDate) {
@@ -101,7 +104,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
 
     useEffect(() => {
       if (onViewDateChange) {
-        onViewDateChange(innerViewDate.format('YYYY-MM-DDTHH:mm:ss'));
+        onViewDateChange(dayjsDateToString(innerViewDate));
       }
     }, [innerViewDate]);
 
@@ -140,7 +143,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           onViewModeNameChange?.('DATES');
           break;
       }
-      onSelectYear && onSelectYear(date);
+      onSelectYear && onSelectYear(dayjsDateToString(date));
     };
 
     const handleMonthClick = (date: Dayjs) => {
@@ -159,11 +162,15 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           onViewModeNameChange?.('DATES');
           break;
       }
-      onSelectMonth && onSelectMonth(date);
+      onSelectMonth && onSelectMonth(dayjsDateToString(date));
     };
 
     const handleDateMouseEnter = (date: Dayjs, event: MouseEvent<HTMLDivElement>) => {
-      onDateMouseEnter(date.format('YYYY-MM-DDTHH:mm:ss'), event);
+      onDateMouseEnter(dayjsDateToString(date), event);
+    };
+
+    const handleSelectDate = (date: Dayjs) => {
+      onSelectDate?.(dayjsDateToString(date));
     };
 
     const defaultRenderDateCell = (date: Dayjs) => {
@@ -176,7 +183,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           selected={!rangePicker ? selected : undefined}
           activeDate={activeDate}
           disabled={disabledDate?.(date)}
-          onSelectDate={onSelectDate}
+          onSelectDate={handleSelectDate}
           isHidden={isHiddenDate?.(date) || defaultIsHidden(date)}
           highlightSpecialDate={highlightSpecialDay}
           onMouseEnter={handleDateMouseEnter}

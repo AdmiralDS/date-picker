@@ -25,11 +25,11 @@ export interface RenderCellsProp {
 
 export interface OnSelectCellProps {
   /** Коллбэк при выборе числа */
-  onSelectDate?: (date: Dayjs) => void;
+  onSelectDate?: (date: string) => void;
   /** Коллбэк при выборе месяца */
-  onSelectMonth?: (date: Dayjs) => void;
+  onSelectMonth?: (date: string) => void;
   /** Коллбэк при выборе года */
-  onSelectYear?: (date: Dayjs) => void;
+  onSelectYear?: (date: string) => void;
 }
 
 export interface CalendarLocaleProps {
@@ -73,8 +73,8 @@ export interface CalendarWidgetProps {
   onDateMouseEnter: (date: string, _: any) => void;
   /** Коллбэк для сброса активной даты при выходе за пределы области дат */
   onDateMouseLeave: () => void;
-  /** Выбранное значение даты */
-  selected?: Dayjs;
+  /** Выбранное значение даты в формате "YYYY-MM-DDT12:00:00 */
+  selected?: string;
   /** Коллбэк при выборе числа/месяца/года */
   onSelectCell?: OnSelectCellProps;
   /** Начальная дата диапазона */

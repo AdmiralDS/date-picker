@@ -8,6 +8,14 @@ dayjs.extend(localeData);
 dayjs.extend(CustomParseFormat);
 //dayjs.extend(isBetween);
 
+export const dateStringToDayjs = (dateString?: string) => {
+  return dateString !== undefined ? dayjs(dateString) : undefined;
+};
+
+export const dayjsDateToString = (date: Dayjs) => {
+  return date.format('YYYY-MM-DDTHH:mm:ss');
+};
+
 export const capitalizeFirstLetter = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 
 export const getDayNamesList = (locale: string): string[] => {
