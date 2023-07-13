@@ -216,11 +216,11 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
 export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
   ({ doubleView = false, rangePicker = false, ...props }, ref) => {
     // активная дата, на которой сейчас ховер
-    const [activeDate, setActiveDate] = useState<Dayjs | undefined>(undefined);
-    const handleActiveDateChange = (date: Dayjs | undefined) => setActiveDate(date);
+    const [activeDate, setActiveDate] = useState<string | undefined>(undefined);
+    const handleActiveDateChange = (date: string | undefined) => setActiveDate(date);
     const clearActiveDate = () => setActiveDate(undefined);
 
-    const handleDateMouseEnter = (date: Dayjs, _: any) => {
+    const handleDateMouseEnter = (date: string, _: any) => {
       setActiveDate(date);
     };
     const handleAreaMouseLeave = () => {

@@ -47,13 +47,13 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       viewMode = {},
       pickerType = 'DATE_MONTH_YEAR',
       rangePicker = false,
-      activeDate,
+      viewDate: viewDateString,
+      activeDate: activeDateString,
       selected,
       startDate,
       endDate,
       minDate,
       maxDate,
-      viewDate: viewDateString,
       renderCell = {},
       validator,
       disabledDate,
@@ -69,6 +69,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     ref,
   ) => {
     const viewDate = dayjs(viewDateString);
+    const activeDate = dayjs(activeDateString);
     const getInitialViewDate = (): Dayjs => {
       const current = dayjs();
       if (viewDate) {
@@ -161,6 +162,10 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       onSelectMonth && onSelectMonth(date);
     };
 
+    const handleDateMouseEnter = (date: Dayjs, event: MouseEvent<HTMLDivElement>) => {
+      onDateMouseEnter(date.format('YYYY-MM-DDTHH:mm:ss'), event);
+    };
+
     const defaultRenderDateCell = (date: Dayjs) => {
       return (
         <DayCell
@@ -174,7 +179,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           onSelectDate={onSelectDate}
           isHidden={isHiddenDate?.(date) || defaultIsHidden(date)}
           highlightSpecialDate={highlightSpecialDay}
-          onMouseEnter={onDateMouseEnter}
+          onMouseEnter={handleDateMouseEnter}
         />
       );
     };
@@ -189,7 +194,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           selected={!rangePicker ? selected : undefined}
           onSelectMonth={handleMonthClick}
           disabled={!!validator?.invalidMonth(date.month(), date.year())}
-          onMouseEnter={onDateMouseEnter}
+          onMouseEnter={handleDateMouseEnter}
         />
       );
     };
@@ -204,7 +209,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           selected={!rangePicker ? selected : undefined}
           onSelectYear={handleYearClick}
           disabled={!!validator?.invalidYear(date.year())}
-          onMouseEnter={onDateMouseEnter}
+          onMouseEnter={handleDateMouseEnter}
         />
       );
     };

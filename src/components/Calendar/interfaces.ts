@@ -65,12 +65,12 @@ export interface CalendarWidgetProps {
   viewDate?: string;
   /** Коллбэк на изменение даты отображения на экране */
   onViewDateChange?: (date: string) => void;
-  /** Активная дата (hover) */
-  activeDate?: Dayjs;
+  /** Активная дата (hover) в формате "YYYY-MM-DDT12:00:00 */
+  activeDate?: string;
   /** Коллбэк на изменение активной даты */
-  onActiveDateChange: (date: Dayjs | undefined) => void;
+  onActiveDateChange: (date: string | undefined) => void;
   /** Коллбэк для установки активной даты */
-  onDateMouseEnter: (date: Dayjs, _: any) => void;
+  onDateMouseEnter: (date: string, _: any) => void;
   /** Коллбэк для сброса активной даты при выходе за пределы области дат */
   onDateMouseLeave: () => void;
   /** Выбранное значение даты */
