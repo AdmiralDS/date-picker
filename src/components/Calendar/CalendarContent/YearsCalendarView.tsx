@@ -1,27 +1,24 @@
-import type { ReactNode } from 'react';
-import type { Dayjs } from 'dayjs';
-
-import { yearsRange } from '../utils';
+import { dateStringToDayjs, dayjsDateToString, yearsRange } from '../utils';
 import { DEFAULT_YEAR_COUNT } from '../constants';
+import type { YearsCalendarViewProps } from './interfaces';
 
-export interface YearsCalendarViewProps {
-  date: Dayjs;
-  renderCell: (date: Dayjs) => ReactNode;
-  onMouseLeave: () => void;
-}
+export const YearsCalendarView = ({ date: dateString, renderCell, onMouseLeave, locale }: YearsCalendarViewProps) => {
+  const date = dateStringToDayjs(dateString, locale);
+  if (!date) return <></>;
 
-export const YearsCalendarView = ({ date, renderCell, onMouseLeave }: YearsCalendarViewProps) => {
   const { start, end } = yearsRange(date, DEFAULT_YEAR_COUNT);
   const years = Array(end - start + 1)
     .fill(0)
     .map((_, index) => start + index);
 
   return (
-    <div onMouseLeave={onMouseLeave}>
-      {years.map((year) => {
-        const yearStart = date.set('year', year).startOf('year');
-        return renderCell(yearStart);
-      })}
-    </div>
+    date && (
+      <div onMouseLeave={onMouseLeave}>
+        {years.map((year) => {
+          const yearStart = date.set('year', year).startOf('year');
+          return renderCell(dayjsDateToString(yearStart));
+        })}
+      </div>
+    )
   );
 };

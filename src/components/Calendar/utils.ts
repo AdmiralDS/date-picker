@@ -8,8 +8,10 @@ dayjs.extend(localeData);
 dayjs.extend(CustomParseFormat);
 //dayjs.extend(isBetween);
 
-export const dateStringToDayjs = (dateString?: string) => {
-  return dateString !== undefined ? dayjs(dateString) : undefined;
+export const dateStringToDayjs = (dateString?: string, locale?: string) => {
+  if (dateString === undefined) return undefined;
+  if (locale) return dayjs(dateString).locale(locale);
+  return dayjs(dateString);
 };
 
 export const dayjsDateToString = (date: Dayjs) => {

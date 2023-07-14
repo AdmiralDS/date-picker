@@ -21,68 +21,71 @@ const highlightSundays = (date: Dayjs) => {
   return undefined;
 };
 
+const deLocale: Locale = {
+  /** Число от 0 до 6, где 0 - это воскресенье */
+  firstDayOfWeek: 1,
+  badge: {
+    amountAriaLabel: 'Anzahl',
+  },
+  calendar: {
+    backwardText: 'Zurück',
+    forwardText: 'Vorwärts',
+    nextMonthText: 'Nächster Monat',
+    previousMonthText: 'Vorheriger Monat',
+    returnText: 'Zurück sein',
+    selectYearText: 'Wahl des Jahres',
+    selectMonthText: 'Monatsauswahl',
+  },
+  fileInput: {
+    metricUnits: ['Kb', 'Mb', 'Gb'],
+  },
+  groupActionsPane: {
+    inputPlaceholder: 'In der Tabelle suchen',
+  },
+  hint: {
+    closeButtonAriaLabel: 'Tipp schließen',
+  },
+  modal: {
+    closeButtonAriaLabel: 'Modales Fenster schließen',
+  },
+  paginationOne: {
+    itemsPerPageText: 'Einträge pro Seite:',
+    pageSelectLabel: (page: number, totalPages: number) => `Seite ${page} von ${totalPages}`,
+    pageSizeSelectLabel: (pageSize: number, total: number) => `Einträge ${pageSize} von ${total}`,
+    itemRangeText: (min: number, max: number, total: number) => `${min}–${max} einträge von ${total}`,
+    pageRangeText: (total: number) => `von ${total} ${total === 1 ? 'Seite' : 'Seiten'}`,
+    backwardText: 'Vorherige Seite, auswählen',
+    forwardText: 'Nächste Seite, auswählen',
+  },
+  paginationTwo: {
+    inputPlaceholder: '№ Seiten',
+    itemRangeText: (min: number, max: number, total: number) => `${min}–${max} einträge von ${total}`,
+  },
+  progressStepper: {
+    renderNextStepName: (stepName: string) => `Weiter - ${stepName}`,
+    stepName: ['schritt', 'schritte'],
+    progressText: (activeStepNumber: number, stepsAmount: number, stepNamePlural: string) =>
+      `${activeStepNumber} von ${stepsAmount} ${stepNamePlural}`,
+  },
+  select: {
+    emptyMessage: 'Keine Zufälle',
+  },
+  suggestInput: {
+    emptyMessage: 'Keine Zufälle',
+  },
+  table: {
+    emptyMessage: 'Keine Zufälle',
+  },
+};
+
+const customThemeLocaleName = 'de';
+
 export const CustomThemeLocaleCalendarTemplate = ({
   rangePicker = false,
   doubleView = false,
   ...props
 }: CalendarProps) => {
   function setDeLocale(theme: Theme): Theme {
-    const deLocale: Locale = {
-      /** Число от 0 до 6, где 0 - это воскресенье */
-      firstDayOfWeek: 1,
-      badge: {
-        amountAriaLabel: 'Anzahl',
-      },
-      calendar: {
-        backwardText: 'Zurück',
-        forwardText: 'Vorwärts',
-        nextMonthText: 'Nächster Monat',
-        previousMonthText: 'Vorheriger Monat',
-        returnText: 'Zurück sein',
-        selectYearText: 'Wahl des Jahres',
-        selectMonthText: 'Monatsauswahl',
-      },
-      fileInput: {
-        metricUnits: ['Kb', 'Mb', 'Gb'],
-      },
-      groupActionsPane: {
-        inputPlaceholder: 'In der Tabelle suchen',
-      },
-      hint: {
-        closeButtonAriaLabel: 'Tipp schließen',
-      },
-      modal: {
-        closeButtonAriaLabel: 'Modales Fenster schließen',
-      },
-      paginationOne: {
-        itemsPerPageText: 'Einträge pro Seite:',
-        pageSelectLabel: (page: number, totalPages: number) => `Seite ${page} von ${totalPages}`,
-        pageSizeSelectLabel: (pageSize: number, total: number) => `Einträge ${pageSize} von ${total}`,
-        itemRangeText: (min: number, max: number, total: number) => `${min}–${max} einträge von ${total}`,
-        pageRangeText: (total: number) => `von ${total} ${total === 1 ? 'Seite' : 'Seiten'}`,
-        backwardText: 'Vorherige Seite, auswählen',
-        forwardText: 'Nächste Seite, auswählen',
-      },
-      paginationTwo: {
-        inputPlaceholder: '№ Seiten',
-        itemRangeText: (min: number, max: number, total: number) => `${min}–${max} einträge von ${total}`,
-      },
-      progressStepper: {
-        renderNextStepName: (stepName: string) => `Weiter - ${stepName}`,
-        stepName: ['schritt', 'schritte'],
-        progressText: (activeStepNumber: number, stepsAmount: number, stepNamePlural: string) =>
-          `${activeStepNumber} von ${stepsAmount} ${stepNamePlural}`,
-      },
-      select: {
-        emptyMessage: 'Keine Zufälle',
-      },
-      suggestInput: {
-        emptyMessage: 'Keine Zufälle',
-      },
-      table: {
-        emptyMessage: 'Keine Zufälle',
-      },
-    };
     const newTheme = { ...theme, currentLocale: 'de', locales: { ...theme.locales, de: deLocale } };
     newTheme.shape.borderRadiusKind = (props as any).themeBorderKind || theme.shape.borderRadiusKind;
     return newTheme;
@@ -124,7 +127,7 @@ export const CustomThemeLocaleCalendarTemplate = ({
   };
 
   const handleDayClick1 = (dateString: string) => {
-    const date = dateStringToDayjs(dateString);
+    const date = dateStringToDayjs(dateString, customThemeLocaleName);
     if (date) {
       console.log(`click on ${date.format('DD MMM YYYY')}`);
       if (rangePicker) {
@@ -148,7 +151,7 @@ export const CustomThemeLocaleCalendarTemplate = ({
 
   const handleMonthClick1 = (dateString: string) => {
     if (props.pickerType === 'MONTH_YEAR') {
-      const date = dateStringToDayjs(dateString);
+      const date = dateStringToDayjs(dateString, customThemeLocaleName);
       if (date) {
         if (rangePicker) {
           if (!startDate1) {
@@ -172,7 +175,7 @@ export const CustomThemeLocaleCalendarTemplate = ({
 
   const handleYearClick1 = (dateString: string) => {
     if (props.pickerType === 'YEAR') {
-      const date = dateStringToDayjs(dateString);
+      const date = dateStringToDayjs(dateString, customThemeLocaleName);
       if (date) {
         setSelected1(date);
       }
@@ -180,7 +183,7 @@ export const CustomThemeLocaleCalendarTemplate = ({
   };
   const handleYearRangeClick1 = (dateString: string) => {
     if (props.pickerType === 'YEAR') {
-      const date = dateStringToDayjs(dateString);
+      const date = dateStringToDayjs(dateString, customThemeLocaleName);
       if (date) {
         if (!startDate1) {
           setStartDate1(date);
@@ -217,7 +220,7 @@ export const CustomThemeLocaleCalendarTemplate = ({
             onSelectYear: rangePicker ? handleYearRangeClick1 : handleYearClick1,
           }}
           highlightSpecialDay={highlightSundays}
-          locale={{ localeName: 'de' }}
+          locale={{ localeName: customThemeLocaleName }}
         />
       </div>
     </ThemeProvider>

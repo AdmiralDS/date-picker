@@ -20,6 +20,8 @@ const highlightSundays = (date: Dayjs) => {
   return undefined;
 };
 
+const simpleTemplateLocaleName = 'ru';
+
 export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, ...props }: CalendarProps) => {
   function swapBorder(theme: Theme): Theme {
     theme.shape.borderRadiusKind = (props as any).themeBorderKind || theme.shape.borderRadiusKind;
@@ -62,7 +64,7 @@ export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, 
   };
 
   const handleDayClick1 = (dateString: string) => {
-    const date = dateStringToDayjs(dateString);
+    const date = dateStringToDayjs(dateString, simpleTemplateLocaleName);
     if (date) {
       console.log(`click on ${date.format('DD MMM YYYY')}`);
       if (rangePicker) {
@@ -86,7 +88,7 @@ export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, 
 
   const handleMonthClick1 = (dateString: string) => {
     if (props.pickerType === 'MONTH_YEAR') {
-      const date = dateStringToDayjs(dateString);
+      const date = dateStringToDayjs(dateString, simpleTemplateLocaleName);
       if (date) {
         if (rangePicker) {
           if (!startDate1) {
@@ -110,7 +112,7 @@ export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, 
 
   const handleYearClick1 = (dateString: string) => {
     if (props.pickerType === 'YEAR') {
-      const date = dateStringToDayjs(dateString);
+      const date = dateStringToDayjs(dateString, simpleTemplateLocaleName);
       if (date) {
         setSelected1(date);
       }
@@ -118,7 +120,7 @@ export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, 
   };
   const handleYearRangeClick1 = (dateString: string) => {
     if (props.pickerType === 'YEAR') {
-      const date = dateStringToDayjs(dateString);
+      const date = dateStringToDayjs(dateString, simpleTemplateLocaleName);
       if (date) {
         if (!startDate1) {
           setStartDate1(date);

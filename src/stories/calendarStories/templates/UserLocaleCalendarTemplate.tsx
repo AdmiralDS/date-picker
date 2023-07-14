@@ -21,6 +21,8 @@ const highlightSundays = (date: Dayjs) => {
   return undefined;
 };
 
+const userLocaleName = 'es';
+
 export const UserLocaleCalendarTemplate = ({ rangePicker = false, doubleView = false, ...props }: CalendarProps) => {
   function swapBorder(theme: Theme): Theme {
     theme.shape.borderRadiusKind = (props as any).themeBorderKind || theme.shape.borderRadiusKind;
@@ -73,7 +75,7 @@ export const UserLocaleCalendarTemplate = ({ rangePicker = false, doubleView = f
   };
 
   const handleDayClick1 = (dateString: string) => {
-    const date = dateStringToDayjs(dateString);
+    const date = dateStringToDayjs(dateString, userLocaleName);
     if (date) {
       console.log(`click on ${date.format('DD MMM YYYY')}`);
       if (rangePicker) {
@@ -97,7 +99,7 @@ export const UserLocaleCalendarTemplate = ({ rangePicker = false, doubleView = f
 
   const handleMonthClick1 = (dateString: string) => {
     if (props.pickerType === 'MONTH_YEAR') {
-      const date = dateStringToDayjs(dateString);
+      const date = dateStringToDayjs(dateString, userLocaleName);
       if (date) {
         if (rangePicker) {
           if (!startDate1) {
@@ -121,7 +123,7 @@ export const UserLocaleCalendarTemplate = ({ rangePicker = false, doubleView = f
 
   const handleYearClick1 = (dateString: string) => {
     if (props.pickerType === 'YEAR') {
-      const date = dateStringToDayjs(dateString);
+      const date = dateStringToDayjs(dateString, userLocaleName);
       if (date) {
         setSelected1(date);
       }
@@ -129,7 +131,7 @@ export const UserLocaleCalendarTemplate = ({ rangePicker = false, doubleView = f
   };
   const handleYearRangeClick1 = (dateString: string) => {
     if (props.pickerType === 'YEAR') {
-      const date = dateStringToDayjs(dateString);
+      const date = dateStringToDayjs(dateString, userLocaleName);
       if (date) {
         if (!startDate1) {
           setStartDate1(date);
@@ -166,7 +168,7 @@ export const UserLocaleCalendarTemplate = ({ rangePicker = false, doubleView = f
             onSelectYear: rangePicker ? handleYearRangeClick1 : handleYearClick1,
           }}
           highlightSpecialDay={highlightSundays}
-          locale={{ localeName: 'es', localeText: customLocale }}
+          locale={{ localeName: userLocaleName, localeText: customLocale }}
         />
       </div>
     </ThemeProvider>

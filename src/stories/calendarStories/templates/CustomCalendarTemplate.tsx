@@ -14,6 +14,8 @@ const StyledDay = styled(DayCellWrapper)`
   color: ${(p) => (p.disabled ? p.theme.color['Neutral/Neutral 10'] : p.theme.color['Error/Error 60 Main'])};
 `;
 
+const customCalendarTemplateLocale = 'en';
+
 export const CustomCalendarTemplate = (props: CalendarProps) => {
   function swapBorder(theme: Theme): Theme {
     theme.shape.borderRadiusKind = (props as any).themeBorderKind || theme.shape.borderRadiusKind;
@@ -55,7 +57,7 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
   };
 
   const handleDayClick2 = (dateString: string) => {
-    const date = dateStringToDayjs(dateString);
+    const date = dateStringToDayjs(dateString, customCalendarTemplateLocale);
     if (date) {
       console.log(`click on ${date.format('DD MMM YYYY')}`);
       setSelected2(date);
@@ -65,7 +67,7 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
 
   const handleMonthClick2 = (dateString: string) => {
     if (props.pickerType === 'MONTH_YEAR') {
-      const date = dateStringToDayjs(dateString);
+      const date = dateStringToDayjs(dateString, customCalendarTemplateLocale);
       if (date) {
         setSelected2(date);
         setViewDate2(date);
@@ -75,7 +77,7 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
 
   const handleYearClick2 = (dateString: string) => {
     if (props.pickerType === 'YEAR') {
-      const date = dateStringToDayjs(dateString);
+      const date = dateStringToDayjs(dateString, customCalendarTemplateLocale);
       if (date) {
         setSelected2(date);
         setViewDate2(date);
@@ -90,7 +92,10 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
     setActiveDate2(undefined);
   };
 
-  const customRenderDay = (date: Dayjs) => {
+  const customRenderDay = (dateString: string) => {
+    const date = dateStringToDayjs(dateString, customCalendarTemplateLocale);
+    if (!date) return <></>;
+
     const disabled = filterDate(date);
     /*// ранее выбранный диапазон
     const inRange = !!startDate && !!endDate && date.isBetween(startDate, endDate, 'date', '[]');
@@ -145,7 +150,7 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
           onSelectCell={{ onSelectMonth: handleMonthClick2, onSelectYear: handleYearClick2 }}
           renderCell={{ renderDateCell: customRenderDay }}
           onViewDateChange={handleViewDateChange2}
-          locale={{ localeName: 'en' }}
+          locale={{ localeName: customCalendarTemplateLocale }}
         />
       </div>
     </ThemeProvider>

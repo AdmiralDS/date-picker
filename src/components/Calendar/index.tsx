@@ -67,7 +67,7 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       maxDate,
       ...props,
     } as Record<string, any>;
-    const selected = dateStringToDayjs(selectedDateString);
+    const selected = dateStringToDayjs(selectedDateString, props.locale?.localeName);
 
     const getInitialViewDateLeft = (): Dayjs => {
       const current = dayjs();
@@ -138,8 +138,10 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const [viewDateLeft, setViewDateLeft] = useState<Dayjs | undefined>(getInitialViewDateLeft());
     const [viewDateRight, setViewDateRight] = useState<Dayjs | undefined>(getInitialViewDateRight());
 
-    const handleViewDateLeftChange = (date: string) => setViewDateLeft(dateStringToDayjs(date));
-    const handleViewDateRightChange = (date: string) => setViewDateRight(dateStringToDayjs(date));
+    const handleViewDateLeftChange = (date: string) =>
+      setViewDateLeft(dateStringToDayjs(date, props.locale?.localeName));
+    const handleViewDateRightChange = (date: string) =>
+      setViewDateRight(dateStringToDayjs(date, props.locale?.localeName));
 
     useEffect(() => {
       if (viewDateLeft && viewDateRight && dateRightIsSameOrBefore(viewDateLeft, viewDateRight)) {

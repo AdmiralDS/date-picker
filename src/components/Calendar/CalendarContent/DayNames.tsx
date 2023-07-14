@@ -1,12 +1,8 @@
-import type { Dayjs } from 'dayjs';
 import styled from 'styled-components';
 import { typography } from '@admiral-ds/react-ui';
 
-import { capitalizeFirstLetter, getDayNamesList } from '../utils';
-
-interface DayNamesProps {
-  date: Dayjs;
-}
+import { capitalizeFirstLetter, dateStringToDayjs, getDayNamesList } from '../utils';
+import type { DayNamesProps } from './interfaces';
 
 const DAY_NAME_SIZE = '36px';
 const DAY_NAME_MARGIN_BOTTOM = '4px';
@@ -24,7 +20,10 @@ const DayNameWrapper = styled.div`
   box-sizing: border-box;
 `;
 
-export const DayNames = ({ date }: DayNamesProps) => {
+export const DayNames = ({ date: dateString, locale }: DayNamesProps) => {
+  const date = dateStringToDayjs(dateString, locale);
+  if (!date) return <></>;
+
   const dayNamesList = getDayNamesList(date.locale());
   return (
     <div>

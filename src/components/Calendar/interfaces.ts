@@ -16,11 +16,11 @@ export interface ViewModeProps {
 
 export interface RenderCellsProp {
   /** Позволяет кастомизировать отображение дат */
-  renderDateCell?: (date: Dayjs) => ReactNode;
+  renderDateCell?: (date: string) => ReactNode;
   /** Позволяет кастомизировать отображение месяцев */
-  renderMonthCell?: (date: Dayjs) => ReactNode;
+  renderMonthCell?: (date: string) => ReactNode;
   /** Позволяет кастомизировать отображение лет */
-  renderYearCell?: (date: Dayjs) => ReactNode;
+  renderYearCell?: (date: string) => ReactNode;
 }
 
 export interface OnSelectCellProps {

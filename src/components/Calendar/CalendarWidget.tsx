@@ -70,16 +70,21 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     },
     ref,
   ) => {
-    const viewDate = dateStringToDayjs(viewDateString);
-    const activeDate = dateStringToDayjs(activeDateString);
-    const selected = dateStringToDayjs(selectedDateString);
+    const theme = useTheme() || LIGHT_THEME;
+
+    const { localeName, localeText } = locale;
+    const currentLocaleName = localeName || theme.currentLocale || 'ru';
+
+    const viewDate = dateStringToDayjs(viewDateString, currentLocaleName);
+    const activeDate = dateStringToDayjs(activeDateString, currentLocaleName);
+    const selected = dateStringToDayjs(selectedDateString, currentLocaleName);
     const getInitialViewDate = (): Dayjs => {
       const current = dayjs();
       if (viewDate) {
-        return viewDate.locale(currentLocaleName || 'ru');
+        return viewDate.locale(currentLocaleName);
       }
       if (selected) {
-        return selected.locale(currentLocaleName || 'ru');
+        return selected.locale(currentLocaleName);
       }
       if (minDate && current.isBefore(minDate)) {
         return minDate;
@@ -87,15 +92,11 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       if (maxDate && current.isAfter(maxDate)) {
         return maxDate;
       }
-      return current.locale(currentLocaleName || 'ru');
+      return current.locale(currentLocaleName);
     };
     const { viewModeName = 'DATES', defaultViewModeName, onViewModeNameChange } = viewMode;
     const { renderDateCell, renderMonthCell, renderYearCell } = renderCell;
     const { onSelectDate, onSelectMonth, onSelectYear } = onSelectCell;
-    const { localeName, localeText } = locale;
-
-    const theme = useTheme() || LIGHT_THEME;
-    const currentLocaleName = localeName || theme.currentLocale || 'ru';
 
     const [innerViewDate, setInnerViewDate] = useState<Dayjs>(getInitialViewDate());
     const finalViewDate = viewDate ?? innerViewDate;
@@ -173,51 +174,60 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       onSelectDate?.(dayjsDateToString(date));
     };
 
-    const defaultRenderDateCell = (date: Dayjs) => {
+    const defaultRenderDateCell = (dateString: string) => {
+      const date = dateStringToDayjs(dateString, currentLocaleName);
       return (
-        <DayCell
-          key={date.valueOf()}
-          date={date}
-          startDate={rangePicker ? startDate : undefined}
-          endDate={rangePicker ? endDate : undefined}
-          selected={!rangePicker ? selected : undefined}
-          activeDate={activeDate}
-          disabled={disabledDate?.(date)}
-          onSelectDate={handleSelectDate}
-          isHidden={isHiddenDate?.(date) || defaultIsHidden(date)}
-          highlightSpecialDate={highlightSpecialDay}
-          onMouseEnter={handleDateMouseEnter}
-        />
+        date && (
+          <DayCell
+            key={date.valueOf()}
+            date={date}
+            startDate={rangePicker ? startDate : undefined}
+            endDate={rangePicker ? endDate : undefined}
+            selected={!rangePicker ? selected : undefined}
+            activeDate={activeDate}
+            disabled={disabledDate?.(date)}
+            onSelectDate={handleSelectDate}
+            isHidden={isHiddenDate?.(date) || defaultIsHidden(date)}
+            highlightSpecialDate={highlightSpecialDay}
+            onMouseEnter={handleDateMouseEnter}
+          />
+        )
       );
     };
-    const defaultRenderMonthCell = (date: Dayjs) => {
+    const defaultRenderMonthCell = (dateString: string) => {
+      const date = dateStringToDayjs(dateString, currentLocaleName);
       return (
-        <MonthCell
-          key={date.valueOf()}
-          date={date}
-          activeDate={activeDate}
-          startDate={rangePicker && pickerType === 'MONTH_YEAR' ? startDate : undefined}
-          endDate={rangePicker && pickerType === 'MONTH_YEAR' ? endDate : undefined}
-          selected={!rangePicker ? selected : undefined}
-          onSelectMonth={handleMonthClick}
-          disabled={!!validator?.invalidMonth(date.month(), date.year())}
-          onMouseEnter={handleDateMouseEnter}
-        />
+        date && (
+          <MonthCell
+            key={date.valueOf()}
+            date={date}
+            activeDate={activeDate}
+            startDate={rangePicker && pickerType === 'MONTH_YEAR' ? startDate : undefined}
+            endDate={rangePicker && pickerType === 'MONTH_YEAR' ? endDate : undefined}
+            selected={!rangePicker ? selected : undefined}
+            onSelectMonth={handleMonthClick}
+            disabled={!!validator?.invalidMonth(date.month(), date.year())}
+            onMouseEnter={handleDateMouseEnter}
+          />
+        )
       );
     };
-    const defaultRenderYearCell = (date: Dayjs) => {
+    const defaultRenderYearCell = (dateString: string) => {
+      const date = dateStringToDayjs(dateString, currentLocaleName);
       return (
-        <YearCell
-          key={date.valueOf()}
-          date={date}
-          activeDate={activeDate}
-          startDate={rangePicker && pickerType === 'YEAR' ? startDate : undefined}
-          endDate={rangePicker && pickerType === 'YEAR' ? endDate : undefined}
-          selected={!rangePicker ? selected : undefined}
-          onSelectYear={handleYearClick}
-          disabled={!!validator?.invalidYear(date.year())}
-          onMouseEnter={handleDateMouseEnter}
-        />
+        date && (
+          <YearCell
+            key={date.valueOf()}
+            date={date}
+            activeDate={activeDate}
+            startDate={rangePicker && pickerType === 'YEAR' ? startDate : undefined}
+            endDate={rangePicker && pickerType === 'YEAR' ? endDate : undefined}
+            selected={!rangePicker ? selected : undefined}
+            onSelectYear={handleYearClick}
+            disabled={!!validator?.invalidYear(date.year())}
+            onMouseEnter={handleDateMouseEnter}
+          />
+        )
       );
     };
 
@@ -277,26 +287,29 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
         case 'YEARS':
           return (
             <YearsCalendarView
-              date={finalViewDate}
+              date={dayjsDateToString(finalViewDate)}
               renderCell={renderYearCell || defaultRenderYearCell}
               onMouseLeave={handleAreaMouseLeave}
+              locale={currentLocaleName}
             />
           );
         case 'MONTHS':
           return (
             <MonthsCalendarView
-              date={finalViewDate}
+              date={dayjsDateToString(finalViewDate)}
               renderCell={renderMonthCell || defaultRenderMonthCell}
               onMouseLeave={handleAreaMouseLeave}
+              locale={currentLocaleName}
             />
           );
         case 'DATES':
         default:
           return (
             <DateCalendarView
-              date={finalViewDate}
+              date={dayjsDateToString(finalViewDate)}
               renderCell={renderDateCell || defaultRenderDateCell}
               onMouseLeave={handleAreaMouseLeave}
+              locale={currentLocaleName}
             />
           );
       }
