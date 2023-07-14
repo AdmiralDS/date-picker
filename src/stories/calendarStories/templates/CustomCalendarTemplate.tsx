@@ -51,9 +51,9 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
     //resetDateStates2();
   }, [props.rangePicker]);
 
-  const filterDate = (date: Dayjs) => {
-    return date.date() < 7;
-    //return date.isSame(dayjs(), 'date');
+  const filterDate = (dateString: string) => {
+    const date = dateStringToDayjs(dateString, customCalendarTemplateLocale);
+    return date && date.date() < 7;
   };
 
   const handleDayClick2 = (dateString: string) => {
@@ -96,7 +96,7 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
     const date = dateStringToDayjs(dateString, customCalendarTemplateLocale);
     if (!date) return <></>;
 
-    const disabled = filterDate(date);
+    const disabled = filterDate(dayjsDateToString(date));
     /*// ранее выбранный диапазон
     const inRange = !!startDate && !!endDate && date.isBetween(startDate, endDate, 'date', '[]');
     const rangeStart = !!startDate && date.isSame(startDate, 'date');
@@ -117,7 +117,7 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
         selected={date.isSame(selected2, 'date')}
         disabled={disabled}
         outsideMonth={!date.isSame(viewDate2, 'month')}
-        onClick={() => !filterDate(date) && handleDayClick2(dayjsDateToString(date))}
+        onClick={() => !disabled && handleDayClick2(dayjsDateToString(date))}
         isActiveDate={!!activeDate2 && date.isSame(activeDate2, 'date')}
         isRangeStart={false}
         isRangeEnd={false}

@@ -58,9 +58,9 @@ export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, 
     resetDateStates1();
   }, [rangePicker]);
 
-  const filterDate = (date: Dayjs) => {
-    return date.date() < 7;
-    //return date.isSame(dayjs(), 'date');
+  const filterDate = (dateString: string) => {
+    const date = dateStringToDayjs(dateString, simpleTemplateLocaleName);
+    return date && date.date() < 7;
   };
 
   const handleDayClick1 = (dateString: string) => {
