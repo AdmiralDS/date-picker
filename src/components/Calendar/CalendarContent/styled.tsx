@@ -24,7 +24,7 @@ export const rangeHighlightMixin = css<{
         right: 0;
         top: 0;
         bottom: 0;
-        background: ${inSelectingRange ? theme.color['Opacity/Focus'] : theme.color['Opacity/Hover']};
+        background: ${theme.color['Opacity/Hover']};
         ${
           (isRangeStart && isRowStart) || (isRangeStart && isRowEnd) || (isRangeStart && !isRowEnd && !isRowStart)
             ? `border-top-left-radius: ${borderRadius};
