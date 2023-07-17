@@ -120,8 +120,9 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       onDateMouseLeave();
     };
 
-    const defaultIsHidden = (date: Dayjs) => {
-      return !date.isSame(finalViewDate, 'month');
+    const defaultIsHidden = (dateString: string) => {
+      const date = dateStringToDayjs(dateString, currentLocaleName);
+      return date && !date.isSame(finalViewDate, 'month');
     };
 
     const changeYear = (year: number) => setInnerViewDate(finalViewDate.year(year));
@@ -185,9 +186,9 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
             endDate={rangePicker ? endDate : undefined}
             selected={!rangePicker ? selected : undefined}
             activeDate={activeDate}
-            disabled={disabledDate?.(dayjsDateToString(date))}
+            disabled={disabledDate?.(dateString)}
             onSelectDate={handleSelectDate}
-            isHidden={isHiddenDate?.(date) || defaultIsHidden(date)}
+            isHidden={isHiddenDate?.(dateString) || !!defaultIsHidden(dateString)}
             highlightSpecialDate={highlightSpecialDay}
             onMouseEnter={handleDateMouseEnter}
           />

@@ -95,9 +95,9 @@ export interface CalendarWidgetProps {
   /** Функция фильтрации даты. Если функция возвращает false для конкретного дня,
    * то этот день будет задизейблен и его нельзя будет выбрать
    */
-  disabledDate?: (date: Dayjs) => boolean;
+  disabledDate?: (date: string) => boolean;
   /** Функция отображения даты на текущем экране */
-  isHiddenDate?: (date: Dayjs) => boolean;
+  isHiddenDate?: (date: string) => boolean;
   /** Позволяет добавлять стили на необходимые даты */
   highlightSpecialDay?: (date: Dayjs) => FlattenInterpolation<ThemeProps<DefaultTheme>> | undefined;
   /** Объект локализации - позволяет перезадать текстовые константы, используемые в компоненте,

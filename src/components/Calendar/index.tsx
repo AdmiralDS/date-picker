@@ -171,6 +171,7 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
 
     const handleViewModeLeftChange = (viewMode: CalendarViewMode) => setViewModeLeft(viewMode);
     const handleViewModeRightChange = (viewMode: CalendarViewMode) => setViewModeRight(viewMode);
+
     useEffect(() => {
       switch (pickerType) {
         case 'DATE_MONTH_YEAR':
