@@ -49,9 +49,9 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       viewMode = {},
       pickerType = 'DATE_MONTH_YEAR',
       rangePicker = false,
-      viewDate: viewDateString,
-      activeDate: activeDateString,
-      selected: selectedDateString,
+      viewDate,
+      activeDate,
+      selected,
       startDate,
       endDate,
       minDate,
@@ -75,16 +75,20 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const { localeName, localeText } = locale;
     const currentLocaleName = localeName || theme.currentLocale || 'ru';
 
-    const viewDate = dateStringToDayjs(viewDateString, currentLocaleName);
-    const activeDate = dateStringToDayjs(activeDateString, currentLocaleName);
-    const selected = dateStringToDayjs(selectedDateString, currentLocaleName);
+    const viewDateInner = dateStringToDayjs(viewDate, currentLocaleName);
+    const activeDateInner = dateStringToDayjs(activeDate, currentLocaleName);
+    const selectedInner = dateStringToDayjs(selected, currentLocaleName);
+    /*const startDate = dateStringToDayjs(startDateString, currentLocaleName);
+    const endDate = dateStringToDayjs(endDateString, currentLocaleName);
+    const minDate = dateStringToDayjs(minDateString, currentLocaleName);
+    const maxDate = dateStringToDayjs(maxDateString, currentLocaleName);*/
     const getInitialViewDate = (): Dayjs => {
       const current = dayjs();
-      if (viewDate) {
-        return viewDate.locale(currentLocaleName);
+      if (viewDateInner) {
+        return viewDateInner.locale(currentLocaleName);
       }
-      if (selected) {
-        return selected.locale(currentLocaleName);
+      if (selectedInner) {
+        return selectedInner.locale(currentLocaleName);
       }
       if (minDate && current.isBefore(minDate)) {
         return minDate;
@@ -99,7 +103,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const { onSelectDate, onSelectMonth, onSelectYear } = onSelectCell;
 
     const [innerViewDate, setInnerViewDate] = useState<Dayjs>(getInitialViewDate());
-    const finalViewDate = viewDate ?? innerViewDate;
+    const finalViewDate = viewDateInner ?? innerViewDate;
 
     const clearActiveDate = () => onActiveDateChange(undefined);
 
@@ -184,8 +188,8 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
             date={date}
             startDate={rangePicker ? startDate : undefined}
             endDate={rangePicker ? endDate : undefined}
-            selected={!rangePicker ? selected : undefined}
-            activeDate={activeDate}
+            selected={!rangePicker ? selectedInner : undefined}
+            activeDate={activeDateInner}
             disabled={disabledDate?.(dateString)}
             onSelectDate={handleSelectDate}
             isHidden={isHiddenDate?.(dateString) || !!defaultIsHidden(dateString)}
@@ -202,10 +206,10 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           <MonthCell
             key={date.valueOf()}
             date={date}
-            activeDate={activeDate}
+            activeDate={activeDateInner}
             startDate={rangePicker && pickerType === 'MONTH_YEAR' ? startDate : undefined}
             endDate={rangePicker && pickerType === 'MONTH_YEAR' ? endDate : undefined}
-            selected={!rangePicker ? selected : undefined}
+            selected={!rangePicker ? selectedInner : undefined}
             onSelectMonth={handleMonthClick}
             disabled={!!validator?.invalidMonth(date.month(), date.year())}
             onMouseEnter={handleDateMouseEnter}
@@ -220,10 +224,10 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           <YearCell
             key={date.valueOf()}
             date={date}
-            activeDate={activeDate}
+            activeDate={activeDateInner}
             startDate={rangePicker && pickerType === 'YEAR' ? startDate : undefined}
             endDate={rangePicker && pickerType === 'YEAR' ? endDate : undefined}
-            selected={!rangePicker ? selected : undefined}
+            selected={!rangePicker ? selectedInner : undefined}
             onSelectYear={handleYearClick}
             disabled={!!validator?.invalidYear(date.year())}
             onMouseEnter={handleDateMouseEnter}
