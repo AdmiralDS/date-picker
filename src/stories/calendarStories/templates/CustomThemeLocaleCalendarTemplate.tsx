@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { css, ThemeProvider } from 'styled-components';
@@ -201,7 +201,12 @@ export const CustomThemeLocaleCalendarTemplate = ({
     }
   };
 
-  const handleViewModeChangeInner = (viewMode: CalendarViewMode) => setViewModeInner(viewMode);
+  const handleViewModeChangeInner = useCallback((viewMode: CalendarViewMode) => setViewModeInner(viewMode), []);
+
+  const viewModeMemo = useMemo(
+    () => ({ viewModeName: viewModeInner, onViewModeNameChange: handleViewModeChangeInner }),
+    [viewModeInner, handleViewModeChangeInner],
+  );
 
   return (
     <ThemeProvider theme={setDeLocale}>
@@ -210,7 +215,7 @@ export const CustomThemeLocaleCalendarTemplate = ({
           doubleView={doubleView}
           rangePicker={rangePicker}
           pickerType={props.pickerType}
-          viewMode={{ viewModeName: viewModeInner, onViewModeNameChange: handleViewModeChangeInner }}
+          viewMode={viewModeMemo}
           selected={dayjsDateToString(selectedInner)}
           startDate={startDateInner}
           endDate={endDateInner}

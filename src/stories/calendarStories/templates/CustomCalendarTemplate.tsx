@@ -1,5 +1,5 @@
 import type { MouseEvent } from 'react';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import styled, { ThemeProvider } from 'styled-components';
@@ -136,7 +136,12 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
     setViewDateInner(dayjs(date));
   };
 
-  const handleViewModeChangeInner = (viewMode: CalendarViewMode) => setViewModeInner(viewMode);
+  const handleViewModeChangeInner = useCallback((viewMode: CalendarViewMode) => setViewModeInner(viewMode), []);
+
+  const viewModeMemo = useMemo(
+    () => ({ viewModeName: viewModeInner, onViewModeNameChange: handleViewModeChangeInner }),
+    [viewModeInner, handleViewModeChangeInner],
+  );
 
   const viewDateMemo = useMemo(() => ({ onViewDateChange: handleViewDateChangeInner }), [handleViewDateChangeInner]);
 
@@ -147,7 +152,7 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
           doubleView={props.doubleView}
           rangePicker={props.rangePicker}
           pickerType={props.pickerType}
-          viewMode={{ viewModeName: viewModeInner, onViewModeNameChange: handleViewModeChangeInner }}
+          viewMode={viewModeMemo}
           selected={dayjsDateToString(selectedInner)}
           onSelectCell={{ onSelectMonth: handleMonthClickInner, onSelectYear: handleYearClickInner }}
           renderCell={{ renderDateCell: customRenderDay }}
