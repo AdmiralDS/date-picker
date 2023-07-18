@@ -50,7 +50,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       pickerType = 'DATE_MONTH_YEAR',
       rangePicker = false,
       viewDate = {},
-      activeDate,
+      activeDate = {},
       selected,
       startDate,
       endDate,
@@ -62,7 +62,6 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       isHiddenDate,
       highlightSpecialDay,
       onSelectCell = {},
-      onActiveDateChange,
       onDateMouseEnter,
       onDateMouseLeave,
       locale = {},
@@ -76,11 +75,12 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
 
     const { viewModeName = 'DATES', defaultViewModeName, onViewModeNameChange } = viewMode;
     const { viewDateValue, defaultViewDateValue, onViewDateChange } = viewDate;
+    const { activeDateValue, defaultActiveDateValue, onActiveDateChange } = activeDate;
     const { renderDateCell, renderMonthCell, renderYearCell } = renderCell;
     const { onSelectDate, onSelectMonth, onSelectYear } = onSelectCell;
 
     const viewDateValueInner = dateStringToDayjs(viewDateValue, currentLocaleName);
-    const activeDateInner = dateStringToDayjs(activeDate, currentLocaleName);
+    const activeDateInner = dateStringToDayjs(activeDateValue, currentLocaleName);
     const selectedInner = dateStringToDayjs(selected, currentLocaleName);
     /*const startDate = dateStringToDayjs(startDateString, currentLocaleName);
     const endDate = dateStringToDayjs(endDateString, currentLocaleName);
@@ -106,7 +106,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const [innerViewDate, setInnerViewDate] = useState<Dayjs>(getInitialViewDate());
     const finalViewDate = viewDateValueInner ?? innerViewDate;
 
-    const clearActiveDate = () => onActiveDateChange(undefined);
+    const clearActiveDate = () => onActiveDateChange?.('');
 
     useEffect(() => {
       if (onViewDateChange) {

@@ -63,6 +63,15 @@ export interface ViewDateProps {
   onViewDateChange?: (date: string) => void;
 }
 
+export interface ActiveDateProps {
+  /** Активная дата (hover) в формате "YYYY-MM-DDT12:00:00 */
+  activeDateValue?: string;
+  /** Активная дата (hover) по умолчанию в формате "YYYY-MM-DDT12:00:00 */
+  defaultActiveDateValue?: string;
+  /** Коллбэк на изменение активной даты */
+  onActiveDateChange?: (date: string) => void;
+}
+
 export interface CalendarWidgetProps {
   /** Управление экраном выбора дат */
   viewMode?: ViewModeProps;
@@ -73,9 +82,7 @@ export interface CalendarWidgetProps {
   /** Дата для отображения на экране в формате "YYYY-MM-DDT12:00:00 */
   viewDate?: ViewDateProps;
   /** Активная дата (hover) в формате "YYYY-MM-DDT12:00:00 */
-  activeDate?: string;
-  /** Коллбэк на изменение активной даты */
-  onActiveDateChange: (date: string | undefined) => void;
+  activeDate?: ActiveDateProps;
   /** Коллбэк для установки активной даты */
   onDateMouseEnter: (date: string, _: any) => void;
   /** Коллбэк для сброса активной даты при выходе за пределы области дат */

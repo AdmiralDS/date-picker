@@ -51,7 +51,6 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       selected: selectedDateString,
       minDate,
       maxDate,
-      onActiveDateChange,
       onDateMouseEnter,
       onDateMouseLeave,
       ...props
@@ -227,7 +226,6 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           viewMode={viewModeLeftMemo}
           onDateMouseEnter={onDateMouseEnter}
           onDateMouseLeave={onDateMouseLeave}
-          onActiveDateChange={onActiveDateChange}
         />
         <CalendarWidget
           {...calendarWidgetProps}
@@ -236,7 +234,6 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           viewMode={viewModeRightMemo}
           onDateMouseEnter={onDateMouseEnter}
           onDateMouseLeave={onDateMouseLeave}
-          onActiveDateChange={onActiveDateChange}
         />
       </CalendarWrapper>
     );
@@ -247,8 +244,12 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
   ({ doubleView = false, rangePicker = false, ...props }, ref) => {
     // активная дата, на которой сейчас ховер
     const [activeDate, setActiveDate] = useState<string | undefined>(undefined);
-    const handleActiveDateChange = (date: string | undefined) => setActiveDate(date);
+    const handleActiveDateChange = useCallback((date: string | undefined) => setActiveDate(date), []);
     const clearActiveDate = () => setActiveDate(undefined);
+    const activeDateMemo = useMemo(
+      () => ({ activeDateValue: activeDate, onActiveDateChange: handleActiveDateChange }),
+      [activeDate, handleActiveDateChange],
+    );
 
     const handleDateMouseEnter = (date: string, _: any) => {
       setActiveDate(date);
@@ -259,8 +260,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
     return doubleView && rangePicker ? (
       <DoubleCalendar
         {...props}
-        activeDate={activeDate}
-        onActiveDateChange={handleActiveDateChange}
+        activeDate={activeDateMemo}
         onDateMouseEnter={handleDateMouseEnter}
         onDateMouseLeave={handleAreaMouseLeave}
         rangePicker={rangePicker}
@@ -269,8 +269,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
     ) : (
       <SingleCalendar
         {...props}
-        activeDate={activeDate}
-        onActiveDateChange={handleActiveDateChange}
+        activeDate={activeDateMemo}
         onDateMouseEnter={handleDateMouseEnter}
         onDateMouseLeave={handleAreaMouseLeave}
         rangePicker={rangePicker}
