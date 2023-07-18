@@ -39,34 +39,34 @@ export const UserLocaleCalendarTemplate = ({ rangePicker = false, doubleView = f
     selectMonthText: 'Seleccionar un mes',
   };
 
-  const [viewMode1, setViewMode1] = useState<CalendarViewMode>('DATES');
-  const [selected1, setSelected1] = useState<Dayjs>(dayjs());
-  const [startDate1, setStartDate1] = useState<Dayjs | undefined>(undefined);
-  const [endDate1, setEndDate1] = useState<Dayjs | undefined>(undefined);
+  const [viewModeInner, setViewModeInner] = useState<CalendarViewMode>('DATES');
+  const [selectedInner, setSelectedInner] = useState<Dayjs>(dayjs());
+  const [startDateInner, setStartDateInner] = useState<Dayjs | undefined>(undefined);
+  const [endDateInner, setEndDateInner] = useState<Dayjs | undefined>(undefined);
 
-  const resetDateStates1 = () => {
-    setSelected1(dayjs());
-    setStartDate1(undefined);
-    setEndDate1(undefined);
+  const resetDateStatesInner = () => {
+    setSelectedInner(dayjs());
+    setStartDateInner(undefined);
+    setEndDateInner(undefined);
   };
 
   useEffect(() => {
     switch (props.pickerType) {
       case 'DATE_MONTH_YEAR':
-        setViewMode1('DATES');
+        setViewModeInner('DATES');
         break;
       case 'MONTH_YEAR':
-        setViewMode1('MONTHS');
+        setViewModeInner('MONTHS');
         break;
       case 'YEAR':
-        setViewMode1('YEARS');
+        setViewModeInner('YEARS');
         break;
     }
-    resetDateStates1();
+    resetDateStatesInner();
   }, [props.pickerType]);
 
   useEffect(() => {
-    resetDateStates1();
+    resetDateStatesInner();
   }, [rangePicker]);
 
   const filterDate = (date: Dayjs) => {
@@ -74,82 +74,82 @@ export const UserLocaleCalendarTemplate = ({ rangePicker = false, doubleView = f
     //return date.isSame(dayjs(), 'date');
   };
 
-  const handleDayClick1 = (dateString: string) => {
+  const handleDayClickInner = (dateString: string) => {
     const date = dateStringToDayjs(dateString, userLocaleName);
     if (date) {
       console.log(`click on ${date.format('DD MMM YYYY')}`);
       if (rangePicker) {
-        if (!startDate1) {
-          setStartDate1(date);
+        if (!startDateInner) {
+          setStartDateInner(date);
         } else {
-          if (!endDate1) {
-            if (date.isAfter(startDate1)) {
-              setEndDate1(date);
+          if (!endDateInner) {
+            if (date.isAfter(startDateInner)) {
+              setEndDateInner(date);
             }
           } else {
-            setStartDate1(date);
-            setEndDate1(undefined);
+            setStartDateInner(date);
+            setEndDateInner(undefined);
           }
         }
       } else {
-        setSelected1(date);
+        setSelectedInner(date);
       }
     }
   };
 
-  const handleMonthClick1 = (dateString: string) => {
+  const handleMonthClickInner = (dateString: string) => {
     if (props.pickerType === 'MONTH_YEAR') {
       const date = dateStringToDayjs(dateString, userLocaleName);
       if (date) {
         if (rangePicker) {
-          if (!startDate1) {
-            setStartDate1(date);
+          if (!startDateInner) {
+            setStartDateInner(date);
           } else {
-            if (!endDate1) {
-              if (date.isAfter(startDate1)) {
-                setEndDate1(date);
+            if (!endDateInner) {
+              if (date.isAfter(startDateInner)) {
+                setEndDateInner(date);
               }
             } else {
-              setStartDate1(date);
-              setEndDate1(undefined);
+              setStartDateInner(date);
+              setEndDateInner(undefined);
             }
           }
         } else {
-          setSelected1(date);
+          setSelectedInner(date);
         }
       }
     }
   };
 
-  const handleYearClick1 = (dateString: string) => {
+  const handleYearClickInner = (dateString: string) => {
     if (props.pickerType === 'YEAR') {
       const date = dateStringToDayjs(dateString, userLocaleName);
       if (date) {
-        setSelected1(date);
+        setSelectedInner(date);
       }
     }
   };
-  const handleYearRangeClick1 = (dateString: string) => {
+  const handleYearRangeClickInner = (dateString: string) => {
     if (props.pickerType === 'YEAR') {
       const date = dateStringToDayjs(dateString, userLocaleName);
       if (date) {
-        if (!startDate1) {
-          setStartDate1(date);
+        if (!startDateInner) {
+          setStartDateInner(date);
         } else {
-          if (!endDate1) {
-            if (date.isAfter(startDate1)) {
-              setEndDate1(date);
+          if (!endDateInner) {
+            if (date.isAfter(startDateInner)) {
+              setEndDateInner(date);
             }
           } else {
-            setStartDate1(date);
-            setEndDate1(undefined);
+            setStartDateInner(date);
+            setEndDateInner(undefined);
           }
         }
       }
     }
   };
 
-  const handleViewModeChange1 = (viewMode: CalendarViewMode) => setViewMode1(viewMode);
+  const handleViewModeChangeInner = (viewMode: CalendarViewMode) => setViewModeInner(viewMode);
 
   return (
     <ThemeProvider theme={swapBorder}>
@@ -158,14 +158,14 @@ export const UserLocaleCalendarTemplate = ({ rangePicker = false, doubleView = f
           doubleView={doubleView}
           rangePicker={rangePicker}
           pickerType={props.pickerType}
-          viewMode={{ viewModeName: viewMode1, onViewModeNameChange: handleViewModeChange1 }}
-          selected={dayjsDateToString(selected1)}
-          startDate={startDate1}
-          endDate={endDate1}
+          viewMode={{ viewModeName: viewModeInner, onViewModeNameChange: handleViewModeChangeInner }}
+          selected={dayjsDateToString(selectedInner)}
+          startDate={startDateInner}
+          endDate={endDateInner}
           onSelectCell={{
-            onSelectDate: handleDayClick1,
-            onSelectMonth: handleMonthClick1,
-            onSelectYear: rangePicker ? handleYearRangeClick1 : handleYearClick1,
+            onSelectDate: handleDayClickInner,
+            onSelectMonth: handleMonthClickInner,
+            onSelectYear: rangePicker ? handleYearRangeClickInner : handleYearClickInner,
           }}
           highlightSpecialDay={highlightSundays}
           locale={{ localeName: userLocaleName, localeText: customLocale }}
