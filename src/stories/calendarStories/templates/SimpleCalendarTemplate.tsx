@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { css, ThemeProvider } from 'styled-components';
@@ -138,7 +138,12 @@ export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, 
     }
   };
 
-  const handleViewModeChange1 = (viewMode: CalendarViewMode) => setViewMode1(viewMode);
+  const handleViewModeChange1 = useCallback((viewMode: CalendarViewMode) => setViewMode1(viewMode), []);
+
+  const viewModeMemo = useMemo(
+    () => ({ viewModeName: viewMode1, onViewModeNameChange: handleViewModeChange1 }),
+    [viewMode1, handleViewModeChange1],
+  );
 
   return (
     <ThemeProvider theme={swapBorder}>
@@ -147,7 +152,7 @@ export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, 
           doubleView={doubleView}
           rangePicker={rangePicker}
           pickerType={props.pickerType}
-          viewMode={{ viewModeName: viewMode1, onViewModeNameChange: handleViewModeChange1 }}
+          viewMode={viewModeMemo}
           selected={selected1.format('YYYY-MM-DDTHH:mm:ss')}
           startDate={startDate1}
           endDate={endDate1}

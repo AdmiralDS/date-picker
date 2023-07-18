@@ -1,5 +1,5 @@
 import type { MouseEvent } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import styled, { ThemeProvider } from 'styled-components';
@@ -22,33 +22,33 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
     return theme;
   }
 
-  const [viewMode2, setViewMode2] = useState<CalendarViewMode>('DATES');
-  const [selected2, setSelected2] = useState<Dayjs>(dayjs());
-  const [viewDate2, setViewDate2] = useState<Dayjs>(selected2);
-  const [activeDate2, setActiveDate2] = useState<Dayjs | undefined>(undefined);
+  const [viewModeInner, setViewModeInner] = useState<CalendarViewMode>('DATES');
+  const [selectedInner, setSelectedInner] = useState<Dayjs>(dayjs());
+  const [viewDateInner, setViewDateInner] = useState<Dayjs>(selectedInner);
+  const [activeDateInner, setActiveDateInner] = useState<Dayjs | undefined>(undefined);
 
-  const resetDateStates2 = () => {
-    setSelected2(dayjs());
-    //setStartDate2(undefined);
-    //setEndDate2(undefined);
+  const resetDateStatesInner = () => {
+    setSelectedInner(dayjs());
+    //setStartDateInner(undefined);
+    //setEndDateInner(undefined);
   };
   useEffect(() => {
     switch (props.pickerType) {
       case 'DATE_MONTH_YEAR':
-        setViewMode2('DATES');
+        setViewModeInner('DATES');
         break;
       case 'MONTH_YEAR':
-        setViewMode2('MONTHS');
+        setViewModeInner('MONTHS');
         break;
       case 'YEAR':
-        setViewMode2('YEARS');
+        setViewModeInner('YEARS');
         break;
     }
-    //resetDateStates2();
+    //resetDateStatesInner();
   }, [props.pickerType]);
 
   useEffect(() => {
-    //resetDateStates2();
+    //resetDateStatesInner();
   }, [props.rangePicker]);
 
   const filterDate = (dateString: string) => {
@@ -56,40 +56,40 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
     return date && date.date() < 7;
   };
 
-  const handleDayClick2 = (dateString: string) => {
+  const handleDayClickInner = (dateString: string) => {
     const date = dateStringToDayjs(dateString, customCalendarTemplateLocale);
     if (date) {
       console.log(`click on ${date.format('DD MMM YYYY')}`);
-      setSelected2(date);
-      setViewDate2(date);
+      setSelectedInner(date);
+      setViewDateInner(date);
     }
   };
 
-  const handleMonthClick2 = (dateString: string) => {
+  const handleMonthClickInner = (dateString: string) => {
     if (props.pickerType === 'MONTH_YEAR') {
       const date = dateStringToDayjs(dateString, customCalendarTemplateLocale);
       if (date) {
-        setSelected2(date);
-        setViewDate2(date);
+        setSelectedInner(date);
+        setViewDateInner(date);
       }
     }
   };
 
-  const handleYearClick2 = (dateString: string) => {
+  const handleYearClickInner = (dateString: string) => {
     if (props.pickerType === 'YEAR') {
       const date = dateStringToDayjs(dateString, customCalendarTemplateLocale);
       if (date) {
-        setSelected2(date);
-        setViewDate2(date);
+        setSelectedInner(date);
+        setViewDateInner(date);
       }
     }
   };
 
-  const handleDayMouseEnter2 = (date: Dayjs, _: any) => {
-    setActiveDate2(date);
+  const handleDayMouseEnterInner = (date: Dayjs, _: any) => {
+    setActiveDateInner(date);
   };
-  const handleDayMouseLeave2 = (date: Dayjs, _: any) => {
-    setActiveDate2(undefined);
+  const handleDayMouseLeaveInner = (date: Dayjs, _: any) => {
+    setActiveDateInner(undefined);
   };
 
   const customRenderDay = (dateString: string) => {
@@ -114,17 +114,17 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
       <StyledDay
         key={date.valueOf()}
         today={date.isSame(dayjs(), 'date')}
-        selected={date.isSame(selected2, 'date')}
+        selected={date.isSame(selectedInner, 'date')}
         disabled={disabled}
-        outsideMonth={!date.isSame(viewDate2, 'month')}
-        onClick={() => !disabled && handleDayClick2(dayjsDateToString(date))}
-        isActiveDate={!!activeDate2 && date.isSame(activeDate2, 'date')}
+        outsideMonth={!date.isSame(viewDateInner, 'month')}
+        onClick={() => !disabled && handleDayClickInner(dayjsDateToString(date))}
+        isActiveDate={!!activeDateInner && date.isSame(activeDateInner, 'date')}
         isRangeStart={false}
         isRangeEnd={false}
         isRowStart={false}
         isRowEnd={false}
-        onMouseEnter={(e: MouseEvent) => !disabled && handleDayMouseEnter2(date, e)}
-        onMouseLeave={(e: MouseEvent) => !disabled && handleDayMouseLeave2(date, e)}
+        onMouseEnter={(e: MouseEvent) => !disabled && handleDayMouseEnterInner(date, e)}
+        onMouseLeave={(e: MouseEvent) => !disabled && handleDayMouseLeaveInner(date, e)}
         borderRadius={DAY_BORDER_RADIUS}
       >
         {date.date()}
@@ -132,11 +132,13 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
     );
   };
 
-  const handleViewDateChange2 = (date: string) => {
-    setViewDate2(dayjs(date));
+  const handleViewDateChangeInner = (date: string) => {
+    setViewDateInner(dayjs(date));
   };
 
-  const handleViewModeChange2 = (viewMode: CalendarViewMode) => setViewMode2(viewMode);
+  const handleViewModeChangeInner = (viewMode: CalendarViewMode) => setViewModeInner(viewMode);
+
+  const viewDateMemo = useMemo(() => ({ onViewDateChange: handleViewDateChangeInner }), [handleViewDateChangeInner]);
 
   return (
     <ThemeProvider theme={swapBorder}>
@@ -145,11 +147,11 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
           doubleView={props.doubleView}
           rangePicker={props.rangePicker}
           pickerType={props.pickerType}
-          viewMode={{ viewModeName: viewMode2, onViewModeNameChange: handleViewModeChange2 }}
-          selected={dayjsDateToString(selected2)}
-          onSelectCell={{ onSelectMonth: handleMonthClick2, onSelectYear: handleYearClick2 }}
+          viewMode={{ viewModeName: viewModeInner, onViewModeNameChange: handleViewModeChangeInner }}
+          selected={dayjsDateToString(selectedInner)}
+          onSelectCell={{ onSelectMonth: handleMonthClickInner, onSelectYear: handleYearClickInner }}
           renderCell={{ renderDateCell: customRenderDay }}
-          onViewDateChange={handleViewDateChange2}
+          viewDate={viewDateMemo}
           locale={{ localeName: customCalendarTemplateLocale }}
         />
       </div>

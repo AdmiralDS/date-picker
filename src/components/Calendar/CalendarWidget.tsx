@@ -49,7 +49,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       viewMode = {},
       pickerType = 'DATE_MONTH_YEAR',
       rangePicker = false,
-      viewDate,
+      viewDate = {},
       activeDate,
       selected,
       startDate,
@@ -62,7 +62,6 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       isHiddenDate,
       highlightSpecialDay,
       onSelectCell = {},
-      onViewDateChange,
       onActiveDateChange,
       onDateMouseEnter,
       onDateMouseLeave,
@@ -75,7 +74,12 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const { localeName, localeText } = locale;
     const currentLocaleName = localeName || theme.currentLocale || 'ru';
 
-    const viewDateInner = dateStringToDayjs(viewDate, currentLocaleName);
+    const { viewModeName = 'DATES', defaultViewModeName, onViewModeNameChange } = viewMode;
+    const { viewDateValue, defaultViewDateValue, onViewDateChange } = viewDate;
+    const { renderDateCell, renderMonthCell, renderYearCell } = renderCell;
+    const { onSelectDate, onSelectMonth, onSelectYear } = onSelectCell;
+
+    const viewDateValueInner = dateStringToDayjs(viewDateValue, currentLocaleName);
     const activeDateInner = dateStringToDayjs(activeDate, currentLocaleName);
     const selectedInner = dateStringToDayjs(selected, currentLocaleName);
     /*const startDate = dateStringToDayjs(startDateString, currentLocaleName);
@@ -84,8 +88,8 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const maxDate = dateStringToDayjs(maxDateString, currentLocaleName);*/
     const getInitialViewDate = (): Dayjs => {
       const current = dayjs();
-      if (viewDateInner) {
-        return viewDateInner.locale(currentLocaleName);
+      if (viewDateValueInner) {
+        return viewDateValueInner.locale(currentLocaleName);
       }
       if (selectedInner) {
         return selectedInner.locale(currentLocaleName);
@@ -98,12 +102,9 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       }
       return current.locale(currentLocaleName);
     };
-    const { viewModeName = 'DATES', defaultViewModeName, onViewModeNameChange } = viewMode;
-    const { renderDateCell, renderMonthCell, renderYearCell } = renderCell;
-    const { onSelectDate, onSelectMonth, onSelectYear } = onSelectCell;
 
     const [innerViewDate, setInnerViewDate] = useState<Dayjs>(getInitialViewDate());
-    const finalViewDate = viewDateInner ?? innerViewDate;
+    const finalViewDate = viewDateValueInner ?? innerViewDate;
 
     const clearActiveDate = () => onActiveDateChange(undefined);
 
