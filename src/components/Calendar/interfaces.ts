@@ -54,7 +54,7 @@ export interface CalendarLocaleProps {
   };
 }
 
-export interface ViewDate {
+export interface ViewDateProps {
   /** Дата для отображения на экране в формате "YYYY-MM-DDT12:00:00 */
   viewDateValue?: string;
   /** Дата для отображения на экране по умолчанию в формате "YYYY-MM-DDT12:00:00 */
@@ -71,7 +71,7 @@ export interface CalendarWidgetProps {
   /** Режим выбора диапазона дат */
   rangePicker?: boolean;
   /** Дата для отображения на экране в формате "YYYY-MM-DDT12:00:00 */
-  viewDate?: ViewDate;
+  viewDate?: ViewDateProps;
   /** Активная дата (hover) в формате "YYYY-MM-DDT12:00:00 */
   activeDate?: string;
   /** Коллбэк на изменение активной даты */
