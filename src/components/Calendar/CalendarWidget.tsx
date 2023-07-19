@@ -240,10 +240,11 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const increaseMonth = () => setInnerViewDate(finalViewDate.add(1, 'month'));
     const decreaseMonth = () => setInnerViewDate(finalViewDate.subtract(1, 'month'));
 
-    const increaseYear = () =>
-      setInnerViewDate(finalViewDate.add(viewModeName === 'YEARS' ? DEFAULT_YEAR_COUNT : 1, 'year'));
-    const decreaseYear = () =>
-      setInnerViewDate(finalViewDate.subtract(viewModeName === 'YEARS' ? DEFAULT_YEAR_COUNT : 1, 'year'));
+    const increaseYear = () => setInnerViewDate(finalViewDate.add(1, 'year'));
+    const decreaseYear = () => setInnerViewDate(finalViewDate.subtract(1, 'year'));
+
+    const increaseYears = () => setInnerViewDate(finalViewDate.add(DEFAULT_YEAR_COUNT, 'year'));
+    const decreaseYears = () => setInnerViewDate(finalViewDate.subtract(DEFAULT_YEAR_COUNT, 'year'));
 
     const handleYearsViewShow = () => {
       onViewModeNameChange?.('YEARS');
@@ -279,8 +280,10 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           pickerType={pickerType}
           date={finalViewDate}
           locale={locale}
-          onNext={viewModeName === 'DATES' ? increaseMonth : increaseYear}
-          onPrevious={viewModeName === 'DATES' ? decreaseMonth : decreaseYear}
+          onNext={viewModeName === 'DATES' ? increaseMonth : viewModeName === 'MONTHS' ? increaseYear : increaseYears}
+          onPrevious={
+            viewModeName === 'DATES' ? decreaseMonth : viewModeName === 'MONTHS' ? decreaseYear : decreaseYears
+          }
           onMonthsViewShow={handleMonthsViewShow}
           onMonthsViewHide={handleMonthsViewHide}
           onYearsViewShow={handleYearsViewShow}

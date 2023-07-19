@@ -100,7 +100,7 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const dateRightIsSameOrBefore = (dateLeft: Dayjs, dateRight: Dayjs) => {
       switch (pickerType) {
         case 'YEAR':
-          return compareYearsRange(dateLeft, dateRight) <= 0;
+          return compareYearsRange(dateLeft, dateRight) >= 0;
         case 'MONTH_YEAR':
           return dateRight.isSameOrBefore(dateLeft, 'year');
         case 'DATE_MONTH_YEAR':
@@ -150,13 +150,13 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       if (viewDateLeft && viewDateRight && dateRightIsSameOrBefore(viewDateLeft, viewDateRight)) {
         setViewDateRight(increaseDate(viewDateLeft));
       }
-    }, [viewDateLeft]);
+    }, [viewDateLeft, pickerType]);
 
     useEffect(() => {
       if (viewDateLeft && viewDateRight && dateLeftIsSameOrAfter(viewDateLeft, viewDateRight)) {
         setViewDateLeft(decreaseDate(viewDateRight));
       }
-    }, [viewDateRight]);
+    }, [viewDateRight, pickerType]);
 
     const getInitialViewMode = (pickerType: PickerTypeMode): CalendarViewMode => {
       switch (pickerType) {
