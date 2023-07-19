@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
@@ -137,14 +137,13 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const [viewDateLeft, setViewDateLeft] = useState<Dayjs | undefined>(getInitialViewDateLeft());
     const [viewDateRight, setViewDateRight] = useState<Dayjs | undefined>(getInitialViewDateRight());
 
-    const handleViewDateLeftChange = useCallback(
-      (date: string) => setViewDateLeft(dateStringToDayjs(date, props.locale?.localeName)),
-      [],
-    );
-    const handleViewDateRightChange = useCallback(
-      (date: string) => setViewDateRight(dateStringToDayjs(date, props.locale?.localeName)),
-      [],
-    );
+    const handleViewDateLeftChange = (date: string) => {
+      console.log(date);
+      setViewDateLeft(dateStringToDayjs(date, props.locale?.localeName));
+    };
+    const handleViewDateRightChange = (date: string) => {
+      setViewDateRight(dateStringToDayjs(date, props.locale?.localeName));
+    };
 
     useEffect(() => {
       if (viewDateLeft && viewDateRight && dateRightIsSameOrBefore(viewDateLeft, viewDateRight)) {
@@ -172,8 +171,8 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const [viewModeLeft, setViewModeLeft] = useState<CalendarViewMode>(getInitialViewMode(pickerType));
     const [viewModeRight, setViewModeRight] = useState<CalendarViewMode>(getInitialViewMode(pickerType));
 
-    const handleViewModeLeftChange = useCallback((viewMode: CalendarViewMode) => setViewModeLeft(viewMode), []);
-    const handleViewModeRightChange = useCallback((viewMode: CalendarViewMode) => setViewModeRight(viewMode), []);
+    const handleViewModeLeftChange = (viewMode: CalendarViewMode) => setViewModeLeft(viewMode);
+    const handleViewModeRightChange = (viewMode: CalendarViewMode) => setViewModeRight(viewMode);
 
     useEffect(() => {
       switch (pickerType) {
@@ -193,45 +192,27 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       //resetDateStates1();
     }, [pickerType]);
 
-    const viewDateLeftMemo = useMemo(
-      () => ({
-        viewDateValue: viewDateLeft && dayjsDateToString(viewDateLeft),
-        onViewDateChange: handleViewDateLeftChange,
-      }),
-      [viewDateLeft, handleViewDateLeftChange],
-    );
-    const viewDateRightMemo = useMemo(
-      () => ({
-        viewDateValue: viewDateRight && dayjsDateToString(viewDateRight),
-        onViewDateChange: handleViewDateRightChange,
-      }),
-      [viewDateRight, handleViewDateRightChange],
-    );
-
-    const viewModeLeftMemo = useMemo(
-      () => ({ viewModeName: viewModeLeft, onViewModeNameChange: handleViewModeLeftChange }),
-      [viewModeLeft, handleViewModeLeftChange],
-    );
-    const viewModeRightMemo = useMemo(
-      () => ({ viewModeName: viewModeRight, onViewModeNameChange: handleViewModeRightChange }),
-      [viewModeRight, handleViewModeRightChange],
-    );
-
     return (
       <CalendarWrapper ref={ref}>
         <CalendarWidget
           {...calendarWidgetProps}
-          viewDate={viewDateLeftMemo}
+          viewDate={{
+            viewDateValue: viewDateLeft && dayjsDateToString(viewDateLeft),
+            onViewDateChange: handleViewDateLeftChange,
+          }}
           activeDate={activeDate}
-          viewMode={viewModeLeftMemo}
+          viewMode={{ viewModeName: viewModeLeft, onViewModeNameChange: handleViewModeLeftChange }}
           onDateMouseEnter={onDateMouseEnter}
           onDateMouseLeave={onDateMouseLeave}
         />
         <CalendarWidget
           {...calendarWidgetProps}
-          viewDate={viewDateRightMemo}
+          viewDate={{
+            viewDateValue: viewDateRight && dayjsDateToString(viewDateRight),
+            onViewDateChange: handleViewDateRightChange,
+          }}
           activeDate={activeDate}
-          viewMode={viewModeRightMemo}
+          viewMode={{ viewModeName: viewModeRight, onViewModeNameChange: handleViewModeRightChange }}
           onDateMouseEnter={onDateMouseEnter}
           onDateMouseLeave={onDateMouseLeave}
         />
@@ -244,12 +225,8 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
   ({ doubleView = false, rangePicker = false, ...props }, ref) => {
     // активная дата, на которой сейчас ховер
     const [activeDate, setActiveDate] = useState<string | undefined>(undefined);
-    const handleActiveDateChange = useCallback((date: string | undefined) => setActiveDate(date), []);
+    const handleActiveDateChange = (date: string | undefined) => setActiveDate(date);
     const clearActiveDate = () => setActiveDate(undefined);
-    const activeDateMemo = useMemo(
-      () => ({ activeDateValue: activeDate, onActiveDateChange: handleActiveDateChange }),
-      [activeDate, handleActiveDateChange],
-    );
 
     const handleDateMouseEnter = (date: string, _: any) => {
       setActiveDate(date);
@@ -260,7 +237,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
     return doubleView && rangePicker ? (
       <DoubleCalendar
         {...props}
-        activeDate={activeDateMemo}
+        activeDate={{ activeDateValue: activeDate, onActiveDateChange: handleActiveDateChange }}
         onDateMouseEnter={handleDateMouseEnter}
         onDateMouseLeave={handleAreaMouseLeave}
         rangePicker={rangePicker}
@@ -269,7 +246,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
     ) : (
       <SingleCalendar
         {...props}
-        activeDate={activeDateMemo}
+        activeDate={{ activeDateValue: activeDate, onActiveDateChange: handleActiveDateChange }}
         onDateMouseEnter={handleDateMouseEnter}
         onDateMouseLeave={handleAreaMouseLeave}
         rangePicker={rangePicker}

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { css, ThemeProvider } from 'styled-components';
@@ -7,7 +7,7 @@ import type { Theme } from '@admiral-ds/react-ui';
 
 import { Calendar } from '@admiral-ds/date-picker';
 import type { CalendarProps, CalendarViewMode } from '@admiral-ds/date-picker';
-import { dateStringToDayjs } from '#src/components/Calendar/utils';
+import { dateStringToDayjs, dayjsDateToString } from '#src/components/Calendar/utils';
 
 const weekendMixin = css<{ disabled?: boolean }>`
   color: ${(p) => (p.disabled ? p.theme.color['Error/Error 30'] : p.theme.color['Error/Error 60 Main'])};
@@ -138,12 +138,7 @@ export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, 
     }
   };
 
-  const handleViewModeChangeInner = useCallback((viewMode: CalendarViewMode) => setViewModeInner(viewMode), []);
-
-  const viewModeMemo = useMemo(
-    () => ({ viewModeName: viewModeInner, onViewModeNameChange: handleViewModeChangeInner }),
-    [viewModeInner, handleViewModeChangeInner],
-  );
+  const handleViewModeChangeInner = (viewMode: CalendarViewMode) => setViewModeInner(viewMode);
 
   return (
     <ThemeProvider theme={swapBorder}>
@@ -152,13 +147,13 @@ export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, 
           doubleView={doubleView}
           rangePicker={rangePicker}
           pickerType={props.pickerType}
-          viewMode={viewModeMemo}
           selected={selectedInner.format('YYYY-MM-DDTHH:mm:ss')}
           startDate={startDateInner}
           endDate={endDateInner}
           /*startDate={startDate1?.format('YYYY-MM-DDTHH:mm:ss')}
           endDate={endDate1?.format('YYYY-MM-DDTHH:mm:ss')}*/
           onSelectCell={{
+          viewMode={{ viewModeName: viewModeInner, onViewModeNameChange: handleViewModeChangeInner }}
             onSelectDate: handleDayClickInner,
             onSelectMonth: handleMonthClickInner,
             onSelectYear: rangePicker ? handleYearRangeClickInner : handleYearClickInner,

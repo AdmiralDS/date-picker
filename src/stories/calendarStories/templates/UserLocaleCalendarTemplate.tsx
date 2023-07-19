@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { css, ThemeProvider } from 'styled-components';
@@ -149,12 +149,7 @@ export const UserLocaleCalendarTemplate = ({ rangePicker = false, doubleView = f
     }
   };
 
-  const handleViewModeChangeInner = useCallback((viewMode: CalendarViewMode) => setViewModeInner(viewMode), []);
-
-  const viewModeMemo = useMemo(
-    () => ({ viewModeName: viewModeInner, onViewModeNameChange: handleViewModeChangeInner }),
-    [viewModeInner, handleViewModeChangeInner],
-  );
+  const handleViewModeChangeInner = (viewMode: CalendarViewMode) => setViewModeInner(viewMode);
 
   return (
     <ThemeProvider theme={swapBorder}>
@@ -163,11 +158,11 @@ export const UserLocaleCalendarTemplate = ({ rangePicker = false, doubleView = f
           doubleView={doubleView}
           rangePicker={rangePicker}
           pickerType={props.pickerType}
-          viewMode={viewModeMemo}
           selected={dayjsDateToString(selectedInner)}
           startDate={startDateInner}
           endDate={endDateInner}
           onSelectCell={{
+          viewMode={{ viewModeName: viewModeInner, onViewModeNameChange: handleViewModeChangeInner }}
             onSelectDate: handleDayClickInner,
             onSelectMonth: handleMonthClickInner,
             onSelectYear: rangePicker ? handleYearRangeClickInner : handleYearClickInner,
