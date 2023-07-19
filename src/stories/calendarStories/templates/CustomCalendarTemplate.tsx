@@ -145,9 +145,13 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
           doubleView={props.doubleView}
           rangePicker={props.rangePicker}
           pickerType={props.pickerType}
-          selected={dayjsDateToString(selectedInner)}
-          onSelectCell={{ onSelectMonth: handleMonthClickInner, onSelectYear: handleYearClickInner }}
           viewMode={{ viewModeName: viewModeInner, onViewModeNameChange: handleViewModeChangeInner }}
+          selectedDate={{
+            selectedDateValue: dayjsDateToString(selectedInner),
+            onSelectDate: handleDayClickInner,
+            onSelectMonth: handleMonthClickInner,
+            onSelectYear: handleYearClickInner,
+          }}
           renderCell={{ renderDateCell: customRenderDay }}
           viewDate={{ onViewDateChange: handleViewDateChangeInner }}
           locale={{ localeName: customCalendarTemplateLocale }}

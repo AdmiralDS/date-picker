@@ -51,7 +51,7 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       rangePicker = false,
       viewDate = {},
       activeDate = {},
-      selected,
+      selectedDate = {},
       startDate,
       endDate,
       minDate,
@@ -61,7 +61,6 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       disabledDate,
       isHiddenDate,
       highlightSpecialDay,
-      onSelectCell = {},
       onDateMouseEnter,
       onDateMouseLeave,
       locale = {},
@@ -76,12 +75,12 @@ export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     const { viewModeName = 'DATES', defaultViewModeName, onViewModeNameChange } = viewMode;
     const { viewDateValue, defaultViewDateValue, onViewDateChange } = viewDate;
     const { activeDateValue, defaultActiveDateValue, onActiveDateChange } = activeDate;
+    const { selectedDateValue, defaultSelectedDateValue, onSelectDate, onSelectMonth, onSelectYear } = selectedDate;
     const { renderDateCell, renderMonthCell, renderYearCell } = renderCell;
-    const { onSelectDate, onSelectMonth, onSelectYear } = onSelectCell;
 
     const viewDateValueInner = dateStringToDayjs(viewDateValue, currentLocaleName);
     const activeDateInner = dateStringToDayjs(activeDateValue, currentLocaleName);
-    const selectedInner = dateStringToDayjs(selected, currentLocaleName);
+    const selectedInner = dateStringToDayjs(selectedDateValue, currentLocaleName);
     /*const startDate = dateStringToDayjs(startDateString, currentLocaleName);
     const endDate = dateStringToDayjs(endDateString, currentLocaleName);
     const minDate = dateStringToDayjs(minDateString, currentLocaleName);

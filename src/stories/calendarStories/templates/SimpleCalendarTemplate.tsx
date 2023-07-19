@@ -147,17 +147,15 @@ export const SimpleCalendarTemplate = ({ rangePicker = true, doubleView = true, 
           doubleView={doubleView}
           rangePicker={rangePicker}
           pickerType={props.pickerType}
-          selected={selectedInner.format('YYYY-MM-DDTHH:mm:ss')}
-          startDate={startDateInner}
-          endDate={endDateInner}
-          /*startDate={startDate1?.format('YYYY-MM-DDTHH:mm:ss')}
-          endDate={endDate1?.format('YYYY-MM-DDTHH:mm:ss')}*/
-          onSelectCell={{
           viewMode={{ viewModeName: viewModeInner, onViewModeNameChange: handleViewModeChangeInner }}
+          selectedDate={{
+            selectedDateValue: dayjsDateToString(selectedInner),
             onSelectDate: handleDayClickInner,
             onSelectMonth: handleMonthClickInner,
             onSelectYear: rangePicker ? handleYearRangeClickInner : handleYearClickInner,
           }}
+          startDate={startDateInner}
+          endDate={endDateInner}
           //disabledDate={filterDate}
           highlightSpecialDay={highlightSundays}
         />

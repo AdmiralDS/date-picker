@@ -48,7 +48,7 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       viewMode,
       viewDate,
       activeDate,
-      selected: selectedDateString,
+      selectedDate,
       minDate,
       maxDate,
       onDateMouseEnter,
@@ -61,12 +61,12 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       viewMode,
       pickerType,
       rangePicker,
-      selectedDateString,
+      selectedDate,
       minDate,
       maxDate,
       ...props,
     } as Record<string, any>;
-    const selected = dateStringToDayjs(selectedDateString, props.locale?.localeName);
+    const selected = dateStringToDayjs(selectedDate?.selectedDateValue, props.locale?.localeName);
 
     const getInitialViewDateLeft = (): Dayjs => {
       const current = dayjs();

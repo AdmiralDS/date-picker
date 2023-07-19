@@ -210,15 +210,15 @@ export const CustomThemeLocaleCalendarTemplate = ({
           doubleView={doubleView}
           rangePicker={rangePicker}
           pickerType={props.pickerType}
-          selected={dayjsDateToString(selectedInner)}
-          startDate={startDateInner}
-          endDate={endDateInner}
-          onSelectCell={{
           viewMode={{ viewModeName: viewModeInner, onViewModeNameChange: handleViewModeChangeInner }}
+          selectedDate={{
+            selectedDateValue: dayjsDateToString(selectedInner),
             onSelectDate: handleDayClickInner,
             onSelectMonth: handleMonthClickInner,
             onSelectYear: rangePicker ? handleYearRangeClickInner : handleYearClickInner,
           }}
+          startDate={startDateInner}
+          endDate={endDateInner}
           highlightSpecialDay={highlightSundays}
           locale={{ localeName: customThemeLocaleName }}
         />

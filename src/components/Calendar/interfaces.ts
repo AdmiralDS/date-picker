@@ -72,6 +72,19 @@ export interface ActiveDateProps {
   onActiveDateChange?: (date: string) => void;
 }
 
+export interface SelectedDateProps {
+  /** Выбранное значение даты в формате "YYYY-MM-DDT12:00:00" */
+  selectedDateValue?: string;
+  /** Выбранное значение даты по умолчанию в формате "YYYY-MM-DDT12:00:00" */
+  defaultSelectedDateValue?: string;
+  /** Коллбэк при выборе числа */
+  onSelectDate?: (date: string) => void;
+  /** Коллбэк при выборе месяца */
+  onSelectMonth?: (date: string) => void;
+  /** Коллбэк при выборе года */
+  onSelectYear?: (date: string) => void;
+}
+
 export interface CalendarWidgetProps {
   /** Управление экраном выбора дат */
   viewMode?: ViewModeProps;
@@ -87,11 +100,9 @@ export interface CalendarWidgetProps {
   onDateMouseEnter: (date: string, _: any) => void;
   /** Коллбэк для сброса активной даты при выходе за пределы области дат */
   onDateMouseLeave: () => void;
-  /** Выбранное значение даты в формате "YYYY-MM-DDT12:00:00 */
-  selected?: string;
-  /** Коллбэк при выборе числа/месяца/года */
-  onSelectCell?: OnSelectCellProps;
-  /** Начальная дата диапазона */
+  /** Выбранное значение даты в формате "YYYY-MM-DDT12:00:00" */
+  selectedDate?: SelectedDateProps;
+  /** Начальная дата диапазона в формате "YYYY-MM-DDT12:00:00" */
   startDate?: Dayjs;
   /** Конечная дата диапазона */
   endDate?: Dayjs;
