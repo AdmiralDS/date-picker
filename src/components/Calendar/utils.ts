@@ -10,8 +10,10 @@ dayjs.extend(CustomParseFormat);
 
 export const dateStringToDayjs = (dateString?: string, locale?: string) => {
   if (dateString === undefined) return undefined;
-  if (locale) return dayjs(dateString).locale(locale);
-  return dayjs(dateString);
+  const date = dayjs(dateString);
+  if (!date.isValid()) return undefined;
+  if (locale) return date.locale(locale);
+  return date;
 };
 
 export const dayjsDateToString = (date: Dayjs) => {
