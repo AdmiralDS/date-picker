@@ -16,14 +16,14 @@ const DatesOfMonthWrapper = styled.div`
   ${typography['Body/Body 2 Long']}
 `;
 
-export const DatesOfMonthWidget = ({ date, onClick }: DatesOfMonthProps) => {
+export const DatesOfMonthWidget = ({ date, onClick, cellState }: DatesOfMonthProps) => {
   const locale = 'ru';
   const localDate = dateStringToDayjs(date, locale) || dayjs().locale(locale);
 
   return (
     <DatesOfMonthWrapper onClick={onClick}>
       <Days locale={locale} />
-      <Dates date={localDate} />
+      <Dates date={localDate} cellState={cellState} />
     </DatesOfMonthWrapper>
   );
 };
