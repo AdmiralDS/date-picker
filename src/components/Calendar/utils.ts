@@ -20,6 +20,10 @@ export const dayjsDateToString = (date: Dayjs) => {
   return date.format('YYYY-MM-DDTHH:mm:ss');
 };
 
+export const setNoon = (date: Dayjs) => {
+  return date.hour(12).minute(0).second(0);
+};
+
 export const capitalizeFirstLetter = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 
 export const getDayNamesList = (locale: string): string[] => {

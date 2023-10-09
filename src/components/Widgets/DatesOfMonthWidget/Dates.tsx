@@ -7,6 +7,7 @@ import {
   DATES_WRAPPER_HEIGHT,
 } from '#src/components/Widgets/DatesOfMonthWidget/constants';
 import type { DatesProps } from '#src/components/Widgets/DatesOfMonthWidget/interfaces';
+import { dayjsDateToString, setNoon } from '#src/components/Calendar/utils';
 
 const DatesWrapper = styled.div`
   box-sizing: border-box;
@@ -29,9 +30,10 @@ export const Dates = ({ date }: DatesProps) => {
 
   const renderDates = () => {
     return Array.from(Array(DATES_ON_SCREEN).keys()).map((v) => {
-      const currentDate = firstDate.add(v, 'day');
+      const currentDate = setNoon(firstDate.add(v, 'day'));
       return (
         <DateCell
+          data-value={currentDate.toISOString()}
           $outsideMonth={date.month() != currentDate.month()}
           key={v + 1}
         >

@@ -20,7 +20,7 @@ const DayNameCell = styled.div`
 export const Days = ({ locale = 'ru' }: DaysProps) => {
   const dayNamesList = getDayNamesList(locale);
   const dayNames = dayNamesList.map((day) => (
-    <DayNameCell key={day}>
+    <DayNameCell data-value={day} key={day}>
       {capitalizeFirstLetter(day)}
     </DayNameCell>
   ));
