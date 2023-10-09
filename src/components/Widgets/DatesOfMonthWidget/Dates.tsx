@@ -26,15 +26,15 @@ const DateCell = styled.div<{ $outsideMonth: boolean }>`
 
 export const Dates = ({ date }: DatesProps) => {
   const firstDate = date.startOf('month').startOf('week');
-  const dates: number[] = [];
-  for (let i = 0; i < DATES_ON_SCREEN; i++) {
-    dates.push(i + 1);
-  }
+
   const renderDates = () => {
-    return dates.map((_, i) => {
-      const currentDate = firstDate.add(i, 'day');
+    return Array.from(Array(DATES_ON_SCREEN).keys()).map((v) => {
+      const currentDate = firstDate.add(v, 'day');
       return (
-        <DateCell $outsideMonth={date.month() != currentDate.month()} key={i + 1}>
+        <DateCell
+          $outsideMonth={date.month() != currentDate.month()}
+          key={v + 1}
+        >
           {currentDate.date()}
         </DateCell>
       );

@@ -19,9 +19,11 @@ const DayNameCell = styled.div`
 
 export const Days = ({ locale = 'ru' }: DaysProps) => {
   const dayNamesList = getDayNamesList(locale);
-  const renderDayNames = () => {
-    return dayNamesList.map((day) => <DayNameCell key={day}>{capitalizeFirstLetter(day)}</DayNameCell>);
-  };
+  const dayNames = dayNamesList.map((day) => (
+    <DayNameCell key={day}>
+      {capitalizeFirstLetter(day)}
+    </DayNameCell>
+  ));
 
-  return <DayNamesWrapper>{renderDayNames()}</DayNamesWrapper>;
+  return <DayNamesWrapper>{dayNames}</DayNamesWrapper>;
 };
