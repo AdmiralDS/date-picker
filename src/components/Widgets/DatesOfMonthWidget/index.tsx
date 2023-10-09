@@ -16,12 +16,12 @@ const DatesOfMonthWrapper = styled.div`
   ${typography['Body/Body 2 Long']}
 `;
 
-export const DatesOfMonthWidget = ({ date }: DatesOfMonthProps) => {
+export const DatesOfMonthWidget = ({ date, onClick }: DatesOfMonthProps) => {
   const locale = 'ru';
   const localDate = dateStringToDayjs(date, locale) || dayjs().locale(locale);
 
   return (
-    <DatesOfMonthWrapper>
+    <DatesOfMonthWrapper onClick={onClick}>
       <Days locale={locale} />
       <Dates date={localDate} />
     </DatesOfMonthWrapper>

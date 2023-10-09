@@ -1,8 +1,10 @@
+import type { MouseEventHandler } from 'react';
 import type { Dayjs } from 'dayjs';
 
 export interface DatesOfMonthProps {
   /** Дата в формате "YYYY-MM-DDT12:00:00 */
   date?: string;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
 export interface DatesProps {

@@ -5,6 +5,7 @@ import { DatesOfMonthWidget } from '#src/components/Widgets/DatesOfMonthWidget';
 import styled from 'styled-components';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/Widgets/DatesOfMonthWidget/constants';
 import { typography } from '@admiral-ds/react-ui';
+import type { MouseEventHandler } from 'react';
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,11 +23,14 @@ const MonthYear = styled.div`
 export const DatesOfMonthWidgetSimpleTemplate = (props: DatesOfMonthProps) => {
   const locale = 'ru';
   const date = dateStringToDayjs(props.date, locale) || dayjs().locale(locale);
+  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    console.log((e.target as HTMLDivElement).dataset.value);
+  };
 
   return (
     <Wrapper>
       <MonthYear>Дата: {capitalizeFirstLetter(date.format('D MMMM YYYY'))}</MonthYear>
-      <DatesOfMonthWidget {...props} />
+      <DatesOfMonthWidget {...props} onClick={handleClick} />
     </Wrapper>
   );
 };
