@@ -1,14 +1,9 @@
 import styled from 'styled-components';
-import dayjs from 'dayjs';
+import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 
-import {
-  CELL_PADDING,
-  CELL_SIZE,
-  DATES_ON_SCREEN,
-  DATES_WRAPPER_HEIGHT,
-} from '#src/components/Widgets/DatesOfMonthWidget/constants';
-import type { DatesProps } from '#src/components/Widgets/DatesOfMonthWidget/interfaces';
 import { dayjsDateToString, setNoon } from '#src/components/Calendar/utils';
+import { CELL_SIZE, DATES_ON_SCREEN, DATES_WRAPPER_HEIGHT } from '#src/components/Widgets/DatesOfMonthWidget/constants';
+import type { DatesProps } from '#src/components/Widgets/DatesOfMonthWidget/interfaces';
 
 const DatesWrapper = styled.div`
   box-sizing: border-box;
@@ -17,86 +12,42 @@ const DatesWrapper = styled.div`
   align-content: space-between;
   height: ${DATES_WRAPPER_HEIGHT}px;
 `;
-const DateCell = styled.div<{ $outsideMonth?: boolean }>`
+const DateCell = styled.div<{ $dateCellMixin: FlattenInterpolation<ThemeProps<DefaultTheme>> }>`
   box-sizing: border-box;
   text-align: center;
   width: ${CELL_SIZE}px;
   height: ${CELL_SIZE}px;
-  padding: ${CELL_PADDING};
-  color: ${(p) => p.theme.color['Neutral/Neutral 90']};
   cursor: pointer;
-  &[data-date-is-holiday] {
-    color: ${(p) => p.theme.color['Error/Error 60 Main']};
-  }
-  &[data-date-is-today='true'] {
-    padding: 7px 0;
-    border: 1px ${(p) => p.theme.color['Neutral/Neutral 90']} solid;
-    border-radius: 50%;
-  }
-  &:hover {
-    padding: 7px 0;
-    border: 1px ${(p) => p.theme.color['Primary/Primary 60 Main']} solid;
-    border-radius: 50%;
-  }
-  &[data-date-is-selected='true'] {
-    border-radius: 50%;
-    border: none;
-    background-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
-    color: ${(p) => p.theme.color['Special/Static White']};
-    &:hover {
-      padding: ${CELL_PADDING};
-      background-color: ${(p) => p.theme.color['Primary/Primary 70']};
-    }
-  }
-  &[data-date-is-disabled] {
-    border: none;
-    color: ${(p) => p.theme.color['Neutral/Neutral 30']};
-    background-color: ${(p) => p.theme.color['Special/Elevated BG']};
+
+  &[data-disabled='true'] {
     cursor: default;
-    padding: ${CELL_PADDING};
   }
-  &[data-date-is-holiday][data-date-is-disabled] {
-    border: none;
-    color: ${(p) => p.theme.color['Error/Error 30']};
-    background-color: ${(p) => p.theme.color['Special/Elevated BG']};
+  &[data-hidden='true'] {
     cursor: default;
-    padding: ${CELL_PADDING};
   }
-  &[data-date-is-outside-month='true'] {
-    border: none;
-    color: ${(p) => p.theme.color['Neutral/Neutral 20']};
-    background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-    cursor: default;
-    padding: ${CELL_PADDING};
-  }
-  &[data-date-is-hidden='true'] {
-    border: none;
-    color: ${(p) => p.theme.color['Special/Elevated BG']};
-    background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-    cursor: default;
-    padding: ${CELL_PADDING};
-  }
+  ${(p) => p.$dateCellMixin}
 `;
 
-export const Dates = ({ date, cellState }: DatesProps) => {
+export const Dates = ({ date, dateCellState, ...props }: DatesProps) => {
   const firstDate = date.startOf('month').startOf('week');
 
   const renderDates = () => {
     return Array.from(Array(DATES_ON_SCREEN).keys()).map((v) => {
       const currentDate = setNoon(firstDate.add(v, 'day'));
-      const cellType = cellState?.(dayjsDateToString(currentDate));
-      const outsideMonth = cellType && cellType.outsideMonth ? true : date.month() != currentDate.month();
+      const { selected, disabled, hidden, cellMixin, ...restCellStateProps } = dateCellState(
+        dayjsDateToString(currentDate),
+      );
 
       return (
         <DateCell
+          {...props}
+          {...restCellStateProps}
           key={v + 1}
+          $dateCellMixin={cellMixin}
           data-value={currentDate.toISOString()}
-          data-date-is-outside-month={outsideMonth ? true : undefined}
-          data-date-is-today={currentDate.isSame(dayjs(), 'date') ? true : undefined}
-          data-date-is-selected={!outsideMonth && cellType && cellType.selected ? true : undefined}
-          data-date-is-disabled={cellType && cellType.disabled ? true : undefined}
-          data-date-is-hidden={cellType && cellType.hidden ? true : undefined}
-          data-date-is-holiday={cellType && cellType.holiday ? true : undefined}
+          data-selected={selected ? true : undefined}
+          data-disabled={disabled ? true : undefined}
+          data-hidden={hidden ? true : undefined}
         >
           {currentDate.date()}
         </DateCell>
