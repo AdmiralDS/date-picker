@@ -7,10 +7,10 @@ import styled from 'styled-components';
 
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 import { DEFAULT_YEAR_COUNT } from './constants';
-import type { CalendarViewMode, PickerTypeMode } from './constants';
-import type { CalendarWidgetProps } from './interfaces';
-import { CalendarWidget } from './CalendarWidget';
-import { dateStringToDayjs, dayjsDateToString, yearsRange } from './utils';
+import type { CalendarOldViewMode, PickerTypeMode } from './constants';
+import type { CalendarWidgetOldProps } from './interfaces';
+import { CalendarWidgetOld } from './CalendarWidgetOld';
+import { dateStringToDayjs, dayjsDateToString, yearsRange } from '../utils';
 
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
@@ -18,7 +18,7 @@ dayjs.extend(isSameOrAfter);
 export * from './constants';
 export * from './CalendarContent/DayCell';
 
-const CalendarWrapper = styled.div`
+const CalendarOldWrapper = styled.div`
   flex: 0 0 auto;
   display: flex;
   overflow: hidden;
@@ -27,20 +27,20 @@ const CalendarWrapper = styled.div`
   ${(props) => props.theme.shadow['Shadow 08']}
 `;
 
-export interface CalendarProps
-  extends Omit<CalendarWidgetProps, 'onActiveDateChange' | 'onDateMouseEnter' | 'onDateMouseLeave'> {
+export interface CalendarOldProps
+  extends Omit<CalendarWidgetOldProps, 'onActiveDateChange' | 'onDateMouseEnter' | 'onDateMouseLeave'> {
   doubleView?: boolean;
 }
 
-const SingleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(({ ...props }, ref) => {
+const SingleCalendarOld = forwardRef<HTMLDivElement, CalendarWidgetOldProps>(({ ...props }, ref) => {
   return (
-    <CalendarWrapper ref={ref}>
-      <CalendarWidget {...props} />
-    </CalendarWrapper>
+    <CalendarOldWrapper ref={ref}>
+      <CalendarWidgetOld {...props} />
+    </CalendarOldWrapper>
   );
 });
 
-const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
+const DoubleCalendarOld = forwardRef<HTMLDivElement, CalendarWidgetOldProps>(
   (
     {
       rangePicker = false,
@@ -157,7 +157,7 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
       }
     }, [viewDateRight, pickerType]);
 
-    const getInitialViewMode = (pickerType: PickerTypeMode): CalendarViewMode => {
+    const getInitialViewMode = (pickerType: PickerTypeMode): CalendarOldViewMode => {
       switch (pickerType) {
         case 'YEAR':
           return 'YEARS';
@@ -168,11 +168,11 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           return 'DATES';
       }
     };
-    const [viewModeLeft, setViewModeLeft] = useState<CalendarViewMode>(getInitialViewMode(pickerType));
-    const [viewModeRight, setViewModeRight] = useState<CalendarViewMode>(getInitialViewMode(pickerType));
+    const [viewModeLeft, setViewModeLeft] = useState<CalendarOldViewMode>(getInitialViewMode(pickerType));
+    const [viewModeRight, setViewModeRight] = useState<CalendarOldViewMode>(getInitialViewMode(pickerType));
 
-    const handleViewModeLeftChange = (viewMode: CalendarViewMode) => setViewModeLeft(viewMode);
-    const handleViewModeRightChange = (viewMode: CalendarViewMode) => setViewModeRight(viewMode);
+    const handleViewModeLeftChange = (viewMode: CalendarOldViewMode) => setViewModeLeft(viewMode);
+    const handleViewModeRightChange = (viewMode: CalendarOldViewMode) => setViewModeRight(viewMode);
 
     useEffect(() => {
       switch (pickerType) {
@@ -193,8 +193,8 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
     }, [pickerType]);
 
     return (
-      <CalendarWrapper ref={ref}>
-        <CalendarWidget
+      <CalendarOldWrapper ref={ref}>
+        <CalendarWidgetOld
           {...calendarWidgetProps}
           viewDate={{
             viewDateValue: viewDateLeft && dayjsDateToString(viewDateLeft),
@@ -205,7 +205,7 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           onDateMouseEnter={onDateMouseEnter}
           onDateMouseLeave={onDateMouseLeave}
         />
-        <CalendarWidget
+        <CalendarWidgetOld
           {...calendarWidgetProps}
           viewDate={{
             viewDateValue: viewDateRight && dayjsDateToString(viewDateRight),
@@ -216,12 +216,12 @@ const DoubleCalendar = forwardRef<HTMLDivElement, CalendarWidgetProps>(
           onDateMouseEnter={onDateMouseEnter}
           onDateMouseLeave={onDateMouseLeave}
         />
-      </CalendarWrapper>
+      </CalendarOldWrapper>
     );
   },
 );
 
-export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
+export const CalendarOld = forwardRef<HTMLDivElement, CalendarOldProps>(
   ({ doubleView = false, rangePicker = false, ...props }, ref) => {
     // активная дата, на которой сейчас ховер
     const [activeDate, setActiveDate] = useState<string | undefined>(undefined);
@@ -235,7 +235,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       clearActiveDate();
     };
     return doubleView && rangePicker ? (
-      <DoubleCalendar
+      <DoubleCalendarOld
         {...props}
         activeDate={{ activeDateValue: activeDate, onActiveDateChange: handleActiveDateChange }}
         onDateMouseEnter={handleDateMouseEnter}
@@ -244,7 +244,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
         ref={ref}
       />
     ) : (
-      <SingleCalendar
+      <SingleCalendarOld
         {...props}
         activeDate={{ activeDateValue: activeDate, onActiveDateChange: handleActiveDateChange }}
         onDateMouseEnter={handleDateMouseEnter}

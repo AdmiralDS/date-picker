@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import type { WeekProps } from './interfaces';
-import { dateStringToDayjs, dayjsDateToString } from '../utils';
+import { dateStringToDayjs, dayjsDateToString } from '../../utils';
 
 export const DAY_NUMBERS = [0, 1, 2, 3, 4, 5, 6];
 

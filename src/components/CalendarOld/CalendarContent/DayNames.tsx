@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { typography } from '@admiral-ds/react-ui';
 
-import { capitalizeFirstLetter, dateStringToDayjs, getDayNamesList } from '../utils';
+import { capitalizeFirstLetter, dateStringToDayjs, getDayNamesList } from '../../utils';
 import type { DayNamesProps } from './interfaces';
 
 const DAY_NAME_SIZE = '36px';

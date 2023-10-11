@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 
-import { dayjsDateToString, setNoon } from '#src/components/Calendar/utils';
+import { dayjsDateToString, setNoon } from '#src/components/utils';
 import { CELL_SIZE, DATES_ON_SCREEN, DATES_WRAPPER_HEIGHT } from '#src/components/Widgets/DatesOfMonthWidget/constants';
 import type { DatesProps } from '#src/components/Widgets/DatesOfMonthWidget/interfaces';
 

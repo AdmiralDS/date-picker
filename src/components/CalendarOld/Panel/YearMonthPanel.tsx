@@ -1,6 +1,6 @@
 import { ButtonWithTooltip } from './PanelButton';
 import { PanelDate, YearWithTooltip } from './PanelDate';
-import { differenceYears } from '../utils';
+import { differenceYears } from '../../utils';
 import type { YearMonthPanelProps } from './interfaces';
 
 export const YearMonthPanel = ({

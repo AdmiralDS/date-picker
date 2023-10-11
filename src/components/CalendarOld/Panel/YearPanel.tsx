@@ -1,6 +1,6 @@
 import { ButtonWithTooltip } from './PanelButton';
 import { PanelDate, YearsRange } from './PanelDate';
-import { differenceYears, yearsRange } from '../utils';
+import { differenceYears, yearsRange } from '../../utils';
 import { DEFAULT_YEAR_COUNT } from '../constants';
 import type { BaseContentProps } from './interfaces';
 

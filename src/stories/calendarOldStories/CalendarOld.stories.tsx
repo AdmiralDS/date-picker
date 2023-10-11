@@ -2,21 +2,21 @@ import type { Meta, StoryFn } from '@storybook/react';
 
 import { ALL_BORDER_RADIUS_VALUES } from '@admiral-ds/react-ui';
 
-import { Calendar } from '@admiral-ds/date-picker';
-import { SimpleCalendarTemplate } from './templates/SimpleCalendarTemplate';
-import { CustomThemeLocaleCalendarTemplate } from './templates/CustomThemeLocaleCalendarTemplate';
-import { UserLocaleCalendarTemplate } from './templates/UserLocaleCalendarTemplate';
-import { CustomCalendarTemplate } from './templates/CustomCalendarTemplate';
+import { CalendarOld } from '@admiral-ds/date-picker';
+import { SimpleCalendarOldTemplate } from './templates/SimpleCalendarOldTemplate';
+import { CustomThemeLocaleCalendarOldTemplate } from './templates/CustomThemeLocaleCalendarOldTemplate';
+import { UserLocaleCalendarOldTemplate } from './templates/UserLocaleCalendarOldTemplate';
+import { CustomCalendarOldTemplate } from './templates/CustomCalendarOldTemplate';
 
 // Imports of text sources
-import SimpleCalendarTemplateRaw from './templates/SimpleCalendarTemplate?raw';
-import CustomThemeLocaleCalendarTemplateRaw from './templates/CustomThemeLocaleCalendarTemplate?raw';
-import UserLocaleCalendarTemplateRaw from './templates/UserLocaleCalendarTemplate?raw';
-import CustomCalendarTemplateRaw from './templates/CustomCalendarTemplate?raw';
+import SimpleCalendarOldTemplateRaw from './templates/SimpleCalendarOldTemplate?raw';
+import CustomThemeLocaleCalendarOldTemplateRaw from './templates/CustomThemeLocaleCalendarOldTemplate?raw';
+import UserLocaleCalendarOldTemplateRaw from './templates/UserLocaleCalendarOldTemplate?raw';
+import CustomCalendarOldTemplateRaw from './templates/CustomCalendarOldTemplate?raw';
 
 export default {
-  title: 'Admiral-2.1/Calendar',
-  component: Calendar,
+  title: 'Admiral-2.1/CalendarOld',
+  component: CalendarOld,
   parameters: {
     docs: {
       source: {
@@ -60,29 +60,29 @@ export default {
       control: { type: 'radio' },
     },
   },
-} as Meta<typeof Calendar>;
+} as Meta<typeof CalendarOld>;
 
-const SimpleCalendarStory: StoryFn<typeof Calendar> = (props) => <SimpleCalendarTemplate {...props} />;
+const SimpleCalendarOldStory: StoryFn<typeof CalendarOld> = (props) => <SimpleCalendarOldTemplate {...props} />;
 
-export const SimpleCalendar = SimpleCalendarStory.bind({});
-SimpleCalendar.parameters = {
+export const SimpleCalendarOld = SimpleCalendarOldStory.bind({});
+SimpleCalendarOld.parameters = {
   docs: {
     source: {
-      code: SimpleCalendarTemplateRaw,
+      code: SimpleCalendarOldTemplateRaw,
     },
   },
 };
-SimpleCalendar.storyName = 'Simple.';
+SimpleCalendarOld.storyName = 'Simple.';
 
-const CustomThemeLocaleCalendarStory: StoryFn<typeof Calendar> = (props) => (
-  <CustomThemeLocaleCalendarTemplate {...props} />
+const CustomThemeLocaleCalendarOldStory: StoryFn<typeof CalendarOld> = (props) => (
+  <CustomThemeLocaleCalendarOldTemplate {...props} />
 );
 
-export const CustomThemeLocaleCalendar = CustomThemeLocaleCalendarStory.bind({});
-CustomThemeLocaleCalendar.parameters = {
+export const CustomThemeLocaleCalendarOld = CustomThemeLocaleCalendarOldStory.bind({});
+CustomThemeLocaleCalendarOld.parameters = {
   docs: {
     source: {
-      code: CustomThemeLocaleCalendarTemplateRaw,
+      code: CustomThemeLocaleCalendarOldTemplateRaw,
     },
     description: {
       story: `Пользователь может использовать любую локаль, не ограничиваясь русской или английской. Для 
@@ -95,15 +95,15 @@ CustomThemeLocaleCalendar.parameters = {
     },
   },
 };
-CustomThemeLocaleCalendar.storyName = 'Пример с немецкой локалью, заданной через theme.locales.';
+CustomThemeLocaleCalendarOld.storyName = 'Пример с немецкой локалью, заданной через theme.locales.';
 
-const UserLocaleCalendarStory: StoryFn<typeof Calendar> = (props) => <UserLocaleCalendarTemplate {...props} />;
+const UserLocaleCalendarOldStory: StoryFn<typeof CalendarOld> = (props) => <UserLocaleCalendarOldTemplate {...props} />;
 
-export const UserLocaleCalendar = UserLocaleCalendarStory.bind({});
-UserLocaleCalendar.parameters = {
+export const UserLocaleCalendarOld = UserLocaleCalendarOldStory.bind({});
+UserLocaleCalendarOld.parameters = {
   docs: {
     source: {
-      code: UserLocaleCalendarTemplateRaw,
+      code: UserLocaleCalendarOldTemplateRaw,
     },
     description: {
       story: `В некоторых случаях может быть необходимо изменить значения текстовых констант только для данного компонента. 
@@ -115,16 +115,16 @@ UserLocaleCalendar.parameters = {
     },
   },
 };
-UserLocaleCalendar.storyName = 'Пример с испанской локалью, заданной через props.locale.';
+UserLocaleCalendarOld.storyName = 'Пример с испанской локалью, заданной через props.locale.';
 
-const CustomCalendarStory: StoryFn<typeof Calendar> = (props) => <CustomCalendarTemplate {...props} />;
+const CustomCalendarOldStory: StoryFn<typeof CalendarOld> = (props) => <CustomCalendarOldTemplate {...props} />;
 
-export const CustomCalendar = CustomCalendarStory.bind({});
-CustomCalendar.parameters = {
+export const CustomCalendarOld = CustomCalendarOldStory.bind({});
+CustomCalendarOld.parameters = {
   docs: {
     source: {
-      code: CustomCalendarTemplateRaw,
+      code: CustomCalendarOldTemplateRaw,
     },
   },
 };
-CustomCalendar.storyName = 'Custom.';
+CustomCalendarOld.storyName = 'Custom.';

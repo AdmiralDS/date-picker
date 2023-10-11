@@ -2,16 +2,16 @@ import type { Dayjs } from 'dayjs';
 import type { ReactNode } from 'react';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 
-import type { CalendarViewMode, PickerTypeMode } from '@admiral-ds/date-picker';
-import type { DateValidator } from '#src/components/Calendar/validator';
+import type { CalendarOldViewMode, PickerTypeMode } from '@admiral-ds/date-picker';
+import type { DateValidator } from '#src/components/CalendarOld/validator';
 
 export interface ViewModeProps {
   /** Экран выбора дат, месяцев, лет */
-  viewModeName?: CalendarViewMode;
+  viewModeName?: CalendarOldViewMode;
   /** Режим отображения по умолчанию */
-  defaultViewModeName?: CalendarViewMode;
+  defaultViewModeName?: CalendarOldViewMode;
   /** Коллбэк на переключение экрана */
-  onViewModeNameChange?: (viewMode: CalendarViewMode) => void;
+  onViewModeNameChange?: (viewMode: CalendarOldViewMode) => void;
 }
 
 export interface RenderCellsProp {
@@ -32,7 +32,7 @@ export interface OnSelectCellProps {
   onSelectYear?: (date: string) => void;
 }
 
-export interface CalendarLocaleProps {
+export interface CalendarLocaleOldProps {
   /** Название локали */
   localeName?: string;
   /** Текстовые константы, используемые в компоненте */
@@ -85,7 +85,7 @@ export interface SelectedDateProps {
   onSelectYear?: (date: string) => void;
 }
 
-export interface CalendarWidgetProps {
+export interface CalendarWidgetOldProps {
   /** Управление экраном выбора дат */
   viewMode?: ViewModeProps;
   /** Выбор только года, месяца или полной даты */
@@ -128,5 +128,5 @@ export interface CalendarWidgetProps {
   /** Объект локализации - позволяет перезадать текстовые константы, используемые в компоненте,
    * по умолчанию значения констант берутся из темы в соответствии с параметром currentLocale, заданном в теме
    **/
-  locale?: CalendarLocaleProps;
+  locale?: CalendarLocaleOldProps;
 }

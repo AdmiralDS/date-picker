@@ -10,14 +10,14 @@ import { LIGHT_THEME, typography } from '@admiral-ds/react-ui';
 import { DayCell } from './CalendarContent/DayCell';
 import { Panel } from './Panel/Panel';
 import { YearCell } from './CalendarContent/YearCell';
-import type { CalendarViewMode } from './constants';
+import type { CalendarOldViewMode } from './constants';
 import { MonthCell } from './CalendarContent/MonthCell';
 import { DEFAULT_YEAR_COUNT } from './constants';
 import { YearsCalendarView } from './CalendarContent/YearsCalendarView';
 import { MonthsCalendarView } from './CalendarContent/MonthsCalendarView';
 import { DateCalendarView } from './CalendarContent/DateCalendarView';
-import type { CalendarWidgetProps } from './interfaces';
-import { dateStringToDayjs, dayjsDateToString } from './utils';
+import type { CalendarWidgetOldProps } from './interfaces';
+import { dateStringToDayjs, dayjsDateToString } from '../utils';
 
 const CALENDAR_WIDTH = 284;
 const YEARS_VIEW_PADDING = '20px 12px 16px';
@@ -25,7 +25,7 @@ const MONTHS_VIEW_PADDING = '20px 12px 4px';
 const DAYS_VIEW_PADDING = '20px 12px 12px';
 
 export const CalendarWidgetWrapper = styled.div<{
-  viewMode: CalendarViewMode;
+  viewMode: CalendarOldViewMode;
 }>`
   position: relative;
   box-sizing: border-box;
@@ -43,7 +43,7 @@ export const CalendarWidgetWrapper = styled.div<{
   color: ${({ theme }) => theme.color['Neutral/Neutral 90']};
 `;
 
-export const CalendarWidget = forwardRef<HTMLDivElement, CalendarWidgetProps>(
+export const CalendarWidgetOld = forwardRef<HTMLDivElement, CalendarWidgetOldProps>(
   (
     {
       viewMode = {},

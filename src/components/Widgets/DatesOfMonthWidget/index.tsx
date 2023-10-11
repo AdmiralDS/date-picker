@@ -5,7 +5,7 @@ import 'dayjs/locale/ru';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { dateStringToDayjs } from '#src/components/Calendar/utils';
+import { dateStringToDayjs } from '#src/components/utils';
 import type { DatesOfMonthProps } from '#src/components/Widgets/DatesOfMonthWidget/interfaces';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/Widgets/DatesOfMonthWidget/constants';
 import { Days } from '#src/components/Widgets/DatesOfMonthWidget/Days';

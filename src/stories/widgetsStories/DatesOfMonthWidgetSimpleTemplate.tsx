@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { capitalizeFirstLetter, dateStringToDayjs } from '#src/components/Calendar/utils';
+import { capitalizeFirstLetter, dateStringToDayjs } from '#src/components/utils';
 import { DatesOfMonthWidget } from '#src/components/Widgets/DatesOfMonthWidget';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/Widgets/DatesOfMonthWidget/constants';
 import type { DatesOfMonthProps, CellStateProps } from '#src/components/Widgets/DatesOfMonthWidget/interfaces';

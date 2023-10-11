@@ -2,7 +2,7 @@ import type { Dayjs } from 'dayjs';
 
 import { Week } from './Week';
 import type { MonthProps } from './interfaces';
-import { dateStringToDayjs, dayjsDateToString } from '../utils';
+import { dateStringToDayjs, dayjsDateToString } from '../../utils';
 
 const FIXED_WEEK_COUNT = 6;
 

@@ -1,4 +1,4 @@
-import { dateStringToDayjs, dayjsDateToString, yearsRange } from '../utils';
+import { dateStringToDayjs, dayjsDateToString, yearsRange } from '../../utils';
 import { DEFAULT_YEAR_COUNT } from '../constants';
 import type { YearsCalendarViewProps } from './interfaces';
 

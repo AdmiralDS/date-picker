@@ -1,5 +1,5 @@
 import type { MonthsCalendarViewProps } from './interfaces';
-import { dateStringToDayjs, dayjsDateToString } from '../utils';
+import { dateStringToDayjs, dayjsDateToString } from '../../utils';
 
 const MONTH_NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 
-import { capitalizeFirstLetter, getDayNamesList } from '#src/components/Calendar/utils';
+import { capitalizeFirstLetter, getDayNamesList } from '#src/components/utils';
 import { CELL_SIZE } from '#src/components/Widgets/DatesOfMonthWidget/constants';
 import type { DaysProps } from '#src/components/Widgets/DatesOfMonthWidget/interfaces';
 

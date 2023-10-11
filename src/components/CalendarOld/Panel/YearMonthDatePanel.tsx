@@ -1,5 +1,5 @@
 import { MonthWithTooltip, PanelDate, YearWithTooltip } from './PanelDate';
-import { capitalizeFirstLetter, differenceMonths, differenceYears } from '../utils';
+import { capitalizeFirstLetter, differenceMonths, differenceYears } from '../../utils';
 import type { YearMonthDatePanelProps } from './interfaces';
 import { ButtonWithTooltip } from './PanelButton';
 

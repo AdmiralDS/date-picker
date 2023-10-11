@@ -1,11 +1,11 @@
 import type { MouseEvent } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import type { CalendarViewMode, PickerTypeMode } from '../constants';
-import type { CalendarLocaleProps } from '#src/components/Calendar/interfaces';
+import type { CalendarOldViewMode, PickerTypeMode } from '../constants';
+import type { CalendarLocaleOldProps } from '#src/components/CalendarOld/interfaces';
 
 export interface BaseContentProps {
-  viewMode: CalendarViewMode;
+  viewMode: CalendarOldViewMode;
   date: Dayjs;
   minDate?: Dayjs;
   maxDate?: Dayjs;
@@ -39,7 +39,7 @@ export interface PanelProps extends Omit<BaseContentProps, 'localeText'>, YearsC
   /** Объект локализации - позволяет перезадать текстовые константы, используемые в компоненте,
    * по умолчанию значения констант берутся из темы в соответствии с параметром currentLocale, заданном в теме
    **/
-  locale?: CalendarLocaleProps;
+  locale?: CalendarLocaleOldProps;
 }
 
 export interface YearMonthDatePanelProps extends BaseContentProps, YearsCallbacks, MonthsCallbacks {}

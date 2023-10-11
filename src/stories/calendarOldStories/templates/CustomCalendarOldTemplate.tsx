@@ -6,9 +6,9 @@ import styled, { ThemeProvider } from 'styled-components';
 
 import type { Theme } from '@admiral-ds/react-ui';
 
-import { Calendar, DAY_BORDER_RADIUS, DayCellWrapper } from '@admiral-ds/date-picker';
-import type { CalendarProps, CalendarViewMode } from '@admiral-ds/date-picker';
-import { dateStringToDayjs, dayjsDateToString } from '#src/components/Calendar/utils';
+import { CalendarOld, DAY_BORDER_RADIUS, DayCellWrapper } from '@admiral-ds/date-picker';
+import type { CalendarOldProps, CalendarOldViewMode } from '@admiral-ds/date-picker';
+import { dateStringToDayjs, dayjsDateToString } from '#src/components/utils';
 
 const StyledDay = styled(DayCellWrapper)`
   color: ${(p) => (p.disabled ? p.theme.color['Neutral/Neutral 10'] : p.theme.color['Error/Error 60 Main'])};
@@ -16,13 +16,13 @@ const StyledDay = styled(DayCellWrapper)`
 
 const customCalendarTemplateLocale = 'en';
 
-export const CustomCalendarTemplate = (props: CalendarProps) => {
+export const CustomCalendarOldTemplate = (props: CalendarOldProps) => {
   function swapBorder(theme: Theme): Theme {
     theme.shape.borderRadiusKind = (props as any).themeBorderKind || theme.shape.borderRadiusKind;
     return theme;
   }
 
-  const [viewModeInner, setViewModeInner] = useState<CalendarViewMode>('DATES');
+  const [viewModeInner, setViewModeInner] = useState<CalendarOldViewMode>('DATES');
   const [selectedInner, setSelectedInner] = useState<Dayjs>(dayjs());
   const [viewDateInner, setViewDateInner] = useState<Dayjs>(selectedInner);
   const [activeDateInner, setActiveDateInner] = useState<Dayjs | undefined>(undefined);
@@ -136,12 +136,12 @@ export const CustomCalendarTemplate = (props: CalendarProps) => {
     setViewDateInner(dayjs(date));
   };
 
-  const handleViewModeChangeInner = (viewMode: CalendarViewMode) => setViewModeInner(viewMode);
+  const handleViewModeChangeInner = (viewMode: CalendarOldViewMode) => setViewModeInner(viewMode);
 
   return (
     <ThemeProvider theme={swapBorder}>
       <div style={{ display: 'flex' }}>
-        <Calendar
+        <CalendarOld
           doubleView={props.doubleView}
           rangePicker={props.rangePicker}
           pickerType={props.pickerType}
