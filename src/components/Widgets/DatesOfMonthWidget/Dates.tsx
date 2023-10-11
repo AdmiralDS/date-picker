@@ -41,7 +41,7 @@ export const Dates = ({ date, dateCellState, ...props }: DatesProps) => {
       return (
         <DateCell
           {...restCellStateProps}
-          key={v + 1}
+          key={currentDate.toISOString()}
           $dateCellMixin={cellMixin}
           data-value={currentDate.toISOString()}
           data-selected={selected ? true : undefined}
