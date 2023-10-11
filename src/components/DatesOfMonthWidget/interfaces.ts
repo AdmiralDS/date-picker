@@ -19,7 +19,7 @@ export interface DateCellProps {
   dateCellState: (date: string) => CellStateProps;
 }
 
-export interface DatesOfMonthProps {
+export interface DatesOfMonthWidgetProps {
   /** Дата в формате "YYYY-MM-DDT12:00:00 */
   date?: string;
   locale?: string;

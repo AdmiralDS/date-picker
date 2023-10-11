@@ -9,7 +9,7 @@ import { typography } from '@admiral-ds/react-ui';
 import { capitalizeFirstLetter, dateStringToDayjs } from '#src/components/utils';
 import { DatesOfMonthWidget } from 'components/DatesOfMonthWidget';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
-import type { DatesOfMonthProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
+import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import {
   baseDateCellMixin,
   baseDayNameCellMixin,
@@ -67,7 +67,7 @@ const getDateCellDataAttributes = (
   };
 };
 
-export const DatesOfMonthWidgetSimpleTemplate = (props: DatesOfMonthProps) => {
+export const DatesOfMonthWidgetSimpleTemplate = (props: DatesOfMonthWidgetProps) => {
   const locale = 'ru';
   const date = dateStringToDayjs(props.date, locale) || dayjs().locale(locale);
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(locale).add(1, 'day'));
