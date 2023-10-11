@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   align-content: space-between;
   padding: 10px;
   width: ${DATES_OF_MONTH_WIDGET_WIDTH}px;
+  border: 1px ${(p) => p.theme.color['Neutral/Neutral 90']} solid;
 `;
 const MonthYear = styled.div`
   margin-bottom: 10px;

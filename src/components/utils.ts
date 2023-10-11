@@ -35,9 +35,16 @@ export const getDayNamesList = (locale: string): string[] => {
   });
 };
 
-export const getMonthNamesList = (locale: string, format: 'long' | 'short' = 'long'): string[] => {
+/*export const getMonthNamesList = (locale: string, format: 'long' | 'short' = 'long'): string[] => {
   const globalLocaleData = dayjs.localeData();
   return format === 'short' ? globalLocaleData.monthsShort() : globalLocaleData.months();
+};*/
+
+export const getMonthNamesList = (locale?: string, format: 'long' | 'short' = 'long') => {
+  const localisedDate = dayjs()
+    .locale(locale || 'ru')
+    .localeData();
+  return format === 'short' ? localisedDate.monthsShort() : localisedDate.months();
 };
 
 export const valid = (date: Dayjs | null): boolean => {
