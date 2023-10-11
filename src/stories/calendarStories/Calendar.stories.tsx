@@ -1,4 +1,7 @@
-/*import type { Meta } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
+
+import { Calendar } from '@admiral-ds/date-picker';
+import { CalendarSimpleTemplate } from '#src/stories/calendarStories/CalendarSimple.template';
 
 export default {
   title: 'Admiral-2.1/Calendar',
@@ -14,4 +17,11 @@ export default {
       url: 'https://www.figma.com/file/EGEGZsx8WhdxpmFKu8J41G/Admiral-2.1-UI-Kit?node-id=39%3A53407',
     },
   },
-} as Meta<typeof Calendar>;*/
+} as Meta<typeof Calendar>;
+
+const CalendarSimpleStory: StoryFn<typeof Calendar> = (props) => {
+  return <CalendarSimpleTemplate {...props} />;
+};
+
+export const CalendarSimple = CalendarSimpleStory.bind({});
+CalendarSimple.storyName = 'Calendar';
