@@ -24,11 +24,11 @@ export const Days = ({ locale, dayNameCellState, ...props }: DaysProps) => {
     const { cellMixin, ...restCellStateProps } = dayNameCellState(i);
 
     return (
-      <DayNameCell data-value={day} key={day} {...props} {...restCellStateProps} $dateCellMixin={cellMixin}>
+      <DayNameCell data-value={day} key={day} {...restCellStateProps} $dateCellMixin={cellMixin}>
         {capitalizeFirstLetter(day)}
       </DayNameCell>
     );
   });
 
-  return <DayNamesWrapper>{dayNames}</DayNamesWrapper>;
+  return <DayNamesWrapper {...props}>{dayNames}</DayNamesWrapper>;
 };

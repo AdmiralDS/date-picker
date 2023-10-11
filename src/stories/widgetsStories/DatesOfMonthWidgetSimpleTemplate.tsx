@@ -80,6 +80,7 @@ export const DatesOfMonthWidgetSimpleTemplate = (props: DatesOfMonthProps) => {
       setSelectedDate(clickedDate);
     }
   };
+
   const dateIsOutsideMonth = (dateCurrent?: Dayjs) => {
     return dateCurrent && dateCurrent.month() !== date.month();
   };
@@ -109,6 +110,7 @@ export const DatesOfMonthWidgetSimpleTemplate = (props: DatesOfMonthProps) => {
     const hidden = dateIsHidden(dateCurrent);
     const isHoliday = dateIsHoliday(dateCurrent);
     const isToday = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
+
     const cellMixin = getDateCellMixin(selected, disabled, hidden, isHoliday, isOutsideMonth, isToday);
     const dataAttributes = getDateCellDataAttributes(isHoliday, isOutsideMonth, isToday);
 

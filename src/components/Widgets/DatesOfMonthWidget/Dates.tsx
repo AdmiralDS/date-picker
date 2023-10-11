@@ -40,7 +40,6 @@ export const Dates = ({ date, dateCellState, ...props }: DatesProps) => {
 
       return (
         <DateCell
-          {...props}
           {...restCellStateProps}
           key={v + 1}
           $dateCellMixin={cellMixin}
@@ -55,5 +54,5 @@ export const Dates = ({ date, dateCellState, ...props }: DatesProps) => {
     });
   };
 
-  return <DatesWrapper>{renderDates()}</DatesWrapper>;
+  return <DatesWrapper {...props}>{renderDates()}</DatesWrapper>;
 };

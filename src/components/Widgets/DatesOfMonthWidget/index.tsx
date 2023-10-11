@@ -1,3 +1,4 @@
+import type { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
@@ -22,8 +23,18 @@ export const DatesOfMonthWidget = ({ date, onClick, ...props }: DatesOfMonthProp
   const { dayNameCellState } = props.dayNamesProps;
   const localDate = dateStringToDayjs(date, locale) || dayjs().locale(locale);
 
+  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    const target = e.target as HTMLDivElement;
+    if (target.dataset.disabled || target.dataset.hidden) {
+      console.log(`click on disabled or hidden`);
+      e.stopPropagation();
+      return;
+    }
+    onClick?.(e);
+  };
+
   return (
-    <DatesOfMonthWrapper onClick={onClick}>
+    <DatesOfMonthWrapper {...props} onClick={handleClick}>
       <Days locale={locale} dayNameCellState={dayNameCellState} />
       <Dates date={localDate} dateCellState={dateCellState} />
     </DatesOfMonthWrapper>
