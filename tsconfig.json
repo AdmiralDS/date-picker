@@ -13,6 +13,7 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
+    "allowJs": true,
     "checkJs": true,
     "target": "ESNext",
     "baseUrl": "./src",
