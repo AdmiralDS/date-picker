@@ -7,9 +7,9 @@ import styled from 'styled-components';
 import { typography } from '@admiral-ds/react-ui';
 
 import { capitalizeFirstLetter, dateStringToDayjs } from '#src/components/utils';
-import { DatesOfMonthWidget } from '#src/components/Widgets/DatesOfMonthWidget';
-import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/Widgets/DatesOfMonthWidget/constants';
-import type { DatesOfMonthProps, CellStateProps } from '#src/components/Widgets/DatesOfMonthWidget/interfaces';
+import { DatesOfMonthWidget } from 'components/DatesOfMonthWidget';
+import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
+import type { DatesOfMonthProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import {
   baseDateCellMixin,
   baseDayNameCellMixin,
@@ -21,7 +21,7 @@ import {
   selectedDateCellMixin,
   todayDateCellMixin,
   todayHolidayDateCellMixin,
-} from '#src/components/Widgets/DatesOfMonthWidget/mixins';
+} from '#src/components/DatesOfMonthWidget/mixins';
 
 const Wrapper = styled.div`
   display: flex;

@@ -6,10 +6,10 @@ import 'dayjs/locale/ru';
 import { typography } from '@admiral-ds/react-ui';
 
 import { dateStringToDayjs } from '#src/components/utils';
-import type { DatesOfMonthProps } from '#src/components/Widgets/DatesOfMonthWidget/interfaces';
-import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/Widgets/DatesOfMonthWidget/constants';
-import { Days } from '#src/components/Widgets/DatesOfMonthWidget/Days';
-import { Dates } from '#src/components/Widgets/DatesOfMonthWidget/Dates';
+import type { DatesOfMonthProps } from '#src/components/DatesOfMonthWidget/interfaces';
+import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
+import { Days } from '#src/components/DatesOfMonthWidget/Days';
+import { Dates } from '#src/components/DatesOfMonthWidget/Dates';
 
 const DatesOfMonthWrapper = styled.div`
   background-color: ${({ theme }) => theme.color['Special/Elevated BG']};

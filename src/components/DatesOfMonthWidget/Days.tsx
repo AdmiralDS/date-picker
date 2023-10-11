@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 
 import { capitalizeFirstLetter, getDayNamesList } from '#src/components/utils';
-import { CELL_SIZE } from '#src/components/Widgets/DatesOfMonthWidget/constants';
-import type { DaysProps } from '#src/components/Widgets/DatesOfMonthWidget/interfaces';
+import { CELL_SIZE } from '#src/components/DatesOfMonthWidget/constants';
+import type { DaysProps } from '#src/components/DatesOfMonthWidget/interfaces';
 
 const DayNamesWrapper = styled.div`
   box-sizing: border-box;

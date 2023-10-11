@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 
 import { dayjsDateToString, setNoon } from '#src/components/utils';
-import { CELL_SIZE, DATES_ON_SCREEN, DATES_WRAPPER_HEIGHT } from '#src/components/Widgets/DatesOfMonthWidget/constants';
-import type { DatesProps } from '#src/components/Widgets/DatesOfMonthWidget/interfaces';
+import { CELL_SIZE, DATES_ON_SCREEN, DATES_WRAPPER_HEIGHT } from '#src/components/DatesOfMonthWidget/constants';
+import type { DatesProps } from '#src/components/DatesOfMonthWidget/interfaces';
 
 const DatesWrapper = styled.div`
   box-sizing: border-box;

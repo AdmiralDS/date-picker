@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 import { typography } from '@admiral-ds/react-ui';
-import { CELL_PADDING } from '#src/components/Widgets/DatesOfMonthWidget/constants';
+import { CELL_PADDING } from '#src/components/DatesOfMonthWidget/constants';
 
 const baseCellMixin = css`
   padding: ${CELL_PADDING};
