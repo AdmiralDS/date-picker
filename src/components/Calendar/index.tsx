@@ -7,12 +7,11 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
-import { typography } from '@admiral-ds/react-ui';
-
-import { capitalizeFirstLetter, dateStringToDayjs, dayjsDateToString } from '#src/components/utils';
+import { dateStringToDayjs, dayjsDateToString, getDayjsDate } from '#src/components/utils';
 import type { CalendarProps } from '#src/components/Calendar/interfaces';
+import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/Calendar/constants';
+import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
-import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import {
   baseDateCellMixin,
@@ -31,17 +30,16 @@ dayjs.extend(LocalizedFormat);
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const Wrapper = styled.div`
+const CalendarWrapper = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   align-content: space-between;
-  padding: 10px;
-  width: ${DATES_OF_MONTH_WIDGET_WIDTH}px;
-`;
-const MonthYear = styled.div`
-  margin-bottom: 10px;
-  ${typography['Subtitle/Subtitle 2']}
+  padding-top: 20px;
+  width: ${CALENDAR_WIDTH}px;
+  height: ${CALENDAR_HEIGHT}px;
+  ${(p) => p.theme.shadow['Shadow 08']}
 `;
 
 const getDateCellMixin = (
@@ -83,10 +81,6 @@ export const Calendar = ({
   locale = 'ru',
   ...props
 }: CalendarProps) => {
-  console.log(`default date - ${defaultDate}`);
-  const getDayjsDate = (locale: string, timezone: string, dateString?: string) => {
-    return dateStringToDayjs(dateString)?.tz(timezone).locale(locale) || dayjs().locale(locale);
-  };
   const localeInner = locale || 'ru';
 
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
@@ -94,8 +88,6 @@ export const Calendar = ({
   );
   const [dateState, setDateState] = useState(getDayjsDate(localeInner, timezone, defaultDate));
   const dateInner = (date && getDayjsDate(localeInner, timezone, date)) || dateState;
-
-  //console.log(dateState.toISOString());
 
   const handleDateChange = (dateString: string) => {
     const dayjsDate = getDayjsDate(localeInner, timezone, dateString);
@@ -153,9 +145,26 @@ export const Calendar = ({
     return { cellMixin };
   };
 
+  const handleMonthNavigationPanelClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    const targetType = (e.target as HTMLButtonElement).dataset.direction;
+    switch (targetType) {
+      case 'left':
+        setDateState(dateInner.subtract(1, 'month'));
+        break;
+      case 'right':
+        setDateState(dateInner.add(1, 'month'));
+        break;
+    }
+  };
+
   return (
-    <Wrapper>
-      <MonthYear>Дата: {capitalizeFirstLetter(dateInner.format('D MMMM YYYY'))}</MonthYear>
+    <CalendarWrapper>
+      <MonthNavigationPanelWidget
+        date={dayjsDateToString(dateInner)}
+        locale={localeInner}
+        timezone={timezone}
+        onClick={handleMonthNavigationPanelClick}
+      />
       <DatesOfMonthWidget
         {...props}
         date={dayjsDateToString(dateInner)}
@@ -164,6 +173,6 @@ export const Calendar = ({
         dayNamesProps={{ dayNameCellState: getDayNameCellState }}
         datesProps={{ dateCellState: getDateCellState }}
       />
-    </Wrapper>
+    </CalendarWrapper>
   );
 };

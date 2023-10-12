@@ -16,6 +16,10 @@ export const dateStringToDayjs = (dateString?: string, locale?: string) => {
   return date;
 };
 
+export const getDayjsDate = (locale: string, timezone: string, dateString?: string) => {
+  return dateStringToDayjs(dateString)?.tz(timezone).locale(locale) || dayjs().locale(locale);
+};
+
 export const dayjsDateToString = (date: Dayjs) => {
   return date.toISOString();
 };

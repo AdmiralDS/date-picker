@@ -37,7 +37,7 @@ export default {
 } as Meta<typeof Calendar>;
 
 const CalendarSimpleStory: StoryFn<typeof Calendar> = (props) => {
-  return <CalendarSimpleTemplate {...props} defaultDate="2023-12-31T23:59:00Z" />;
+  return <CalendarSimpleTemplate {...props} />;
 };
 
 export const CalendarSimple = CalendarSimpleStory.bind({});
