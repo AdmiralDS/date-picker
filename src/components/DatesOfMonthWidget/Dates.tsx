@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 
-import { dayjsDateToString, setNoon } from '#src/components/utils';
+import { dayjsDateToString } from '#src/components/utils';
 import { CELL_SIZE, DATES_ON_SCREEN, DATES_WRAPPER_HEIGHT } from '#src/components/DatesOfMonthWidget/constants';
 import type { DatesProps } from '#src/components/DatesOfMonthWidget/interfaces';
 
@@ -33,7 +33,8 @@ export const Dates = ({ date, dateCellState, ...props }: DatesProps) => {
 
   const renderDates = () => {
     return Array.from(Array(DATES_ON_SCREEN).keys()).map((v) => {
-      const currentDate = setNoon(firstDate.add(v, 'day'));
+      //const currentDate = setNoon(firstDate.add(v, 'day'));
+      const currentDate = firstDate.add(v, 'day');
       const { selected, disabled, hidden, cellMixin, ...restCellStateProps } = dateCellState(
         dayjsDateToString(currentDate),
       );

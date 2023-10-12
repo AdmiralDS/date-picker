@@ -17,8 +17,7 @@ const DatesOfMonthWrapper = styled.div`
   ${typography['Body/Body 2 Long']}
 `;
 
-export const DatesOfMonthWidget = ({ date, onClick, ...props }: DatesOfMonthWidgetProps) => {
-  const locale = 'ru';
+export const DatesOfMonthWidget = ({ date, onClick, locale = 'ru', ...props }: DatesOfMonthWidgetProps) => {
   const { dateCellState } = props.datesProps;
   const { dayNameCellState } = props.dayNamesProps;
   const localDate = dateStringToDayjs(date, locale) || dayjs().locale(locale);

@@ -17,10 +17,27 @@ export default {
       url: 'https://www.figma.com/file/EGEGZsx8WhdxpmFKu8J41G/Admiral-2.1-UI-Kit?node-id=39%3A53407',
     },
   },
+  argTypes: {
+    date: {
+      control: { type: 'text' },
+    },
+    defaultDate: {
+      control: { type: 'text' },
+    },
+    onDateChange: {
+      control: false,
+    },
+    timezone: {
+      control: { type: 'text' },
+    },
+    locale: {
+      control: { type: 'text' },
+    },
+  },
 } as Meta<typeof Calendar>;
 
 const CalendarSimpleStory: StoryFn<typeof Calendar> = (props) => {
-  return <CalendarSimpleTemplate {...props} />;
+  return <CalendarSimpleTemplate {...props} defaultDate="2023-12-31T23:59:00Z" />;
 };
 
 export const CalendarSimple = CalendarSimpleStory.bind({});

@@ -20,7 +20,7 @@ export interface DateCellProps {
 }
 
 export interface DatesOfMonthWidgetProps {
-  /** Дата в формате "YYYY-MM-DDT12:00:00 */
+  /** Дата в формате ISO */
   date?: string;
   locale?: string;
   dayNamesProps: DayNameCellProps;

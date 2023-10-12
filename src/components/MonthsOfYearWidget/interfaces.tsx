@@ -10,7 +10,7 @@ export interface CellStateProps {
 }
 
 export interface MonthsOfYearWidgetProps {
-  /** Дата в формате "YYYY-MM-DDT12:00:00 */
+  /** Дата в формате ISO */
   date?: string;
   locale?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;

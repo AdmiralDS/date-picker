@@ -1,14 +1,17 @@
-import type { CalendarProps } from '#src/components/Calendar/interfaces';
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
+import styled from 'styled-components';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-import styled from 'styled-components';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { capitalizeFirstLetter, dateStringToDayjs } from '#src/components/utils';
-import { DatesOfMonthWidget } from 'components/DatesOfMonthWidget';
+import { capitalizeFirstLetter, dateStringToDayjs, dayjsDateToString } from '#src/components/utils';
+import type { CalendarProps } from '#src/components/Calendar/interfaces';
+import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import {
@@ -23,6 +26,10 @@ import {
   todayDateCellMixin,
   todayHolidayDateCellMixin,
 } from '#src/components/DatesOfMonthWidget/mixins';
+
+dayjs.extend(LocalizedFormat);
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const Wrapper = styled.div`
   display: flex;
@@ -68,10 +75,33 @@ const getDateCellDataAttributes = (
   };
 };
 
-export const Calendar = (props: CalendarProps) => {
-  const locale = 'ru';
-  const date = dateStringToDayjs(props.date, locale) || dayjs().locale(locale);
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(locale).add(1, 'day'));
+export const Calendar = ({
+  date,
+  defaultDate,
+  onDateChange,
+  timezone = Intl.DateTimeFormat().resolvedOptions().timeZone,
+  locale = 'ru',
+  ...props
+}: CalendarProps) => {
+  console.log(`default date - ${defaultDate}`);
+  const getDayjsDate = (locale: string, timezone: string, dateString?: string) => {
+    return dateStringToDayjs(dateString)?.tz(timezone).locale(locale) || dayjs().locale(locale);
+  };
+  const localeInner = locale || 'ru';
+
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
+    getDayjsDate(localeInner, timezone).add(1, 'day'),
+  );
+  const [dateState, setDateState] = useState(getDayjsDate(localeInner, timezone, defaultDate));
+  const dateInner = (date && getDayjsDate(localeInner, timezone, date)) || dateState;
+
+  //console.log(dateState.toISOString());
+
+  const handleDateChange = (dateString: string) => {
+    const dayjsDate = getDayjsDate(localeInner, timezone, dateString);
+    setDateState(dayjsDate);
+    onDateChange?.(dayjsDateToString(dayjsDate));
+  };
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
@@ -83,34 +113,34 @@ export const Calendar = (props: CalendarProps) => {
   };
 
   const dateIsOutsideMonth = (dateCurrent?: Dayjs) => {
-    return dateCurrent && dateCurrent.month() !== date.month();
+    return dateCurrent && dateCurrent.month() !== dateInner.month();
   };
   const dateIsDisabled = (dateCurrent?: Dayjs) => {
     return !!(
       dateCurrent &&
-      dateCurrent.month() === date.month() &&
+      dateCurrent.month() === dateInner.month() &&
       (dateCurrent.day() === 6 || dateCurrent.date() < 5)
     );
   };
   const dateIsHoliday = (dateCurrent?: Dayjs) => {
     return !!(
       dateCurrent &&
-      dateCurrent.month() === date.month() &&
-      (dateCurrent.day() === 6 || dateCurrent.day() === 0 || dateCurrent.isSame(dayjs().locale(locale), 'date'))
+      dateCurrent.month() === dateInner.month() &&
+      (dateCurrent.day() === 6 || dateCurrent.day() === 0 || dateCurrent.isSame(dayjs().locale(localeInner), 'date'))
     );
   };
   const dateIsHidden = (dateCurrent?: Dayjs) => {
-    return dateCurrent && dateCurrent.isAfter(date, 'month');
+    return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
   };
 
   const getDateCellState = (dateString: string): CellStateProps => {
-    const dateCurrent = dateStringToDayjs(dateString, locale);
+    const dateCurrent = dateStringToDayjs(dateString, localeInner);
     const selected = dateCurrent && dateCurrent.isSame(selectedDate, 'date');
     const disabled = dateIsDisabled(dateCurrent);
     const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
     const isHoliday = dateIsHoliday(dateCurrent);
-    const isToday = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
+    const isToday = dateCurrent && dateCurrent.isSame(dayjs().locale(localeInner), 'date');
 
     const cellMixin = getDateCellMixin(selected, disabled, hidden, isHoliday, isOutsideMonth, isToday);
     const dataAttributes = getDateCellDataAttributes(isHoliday, isOutsideMonth, isToday);
@@ -125,9 +155,11 @@ export const Calendar = (props: CalendarProps) => {
 
   return (
     <Wrapper>
-      <MonthYear>Дата: {capitalizeFirstLetter(date.format('D MMMM YYYY'))}</MonthYear>
+      <MonthYear>Дата: {capitalizeFirstLetter(dateInner.format('D MMMM YYYY'))}</MonthYear>
       <DatesOfMonthWidget
         {...props}
+        date={dayjsDateToString(dateInner)}
+        locale={localeInner}
         onClick={handleClick}
         dayNamesProps={{ dayNameCellState: getDayNameCellState }}
         datesProps={{ dateCellState: getDateCellState }}

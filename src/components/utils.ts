@@ -17,7 +17,7 @@ export const dateStringToDayjs = (dateString?: string, locale?: string) => {
 };
 
 export const dayjsDateToString = (date: Dayjs) => {
-  return date.format('YYYY-MM-DDTHH:mm:ss');
+  return date.toISOString();
 };
 
 export const setNoon = (date: Dayjs) => {

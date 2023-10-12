@@ -1,5 +1,11 @@
 export interface CalendarProps {
-  /** Дата в формате "YYYY-MM-DDT12:00:00 */
+  /** Дата в формате ISO */
   date?: string;
+  /** Дата по умолчанию в формате ISO */
+  defaultDate?: string;
+  onDateChange?: (dateString: string) => void;
   locale?: string;
+  /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
+   * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
+  timezone?: string;
 }
