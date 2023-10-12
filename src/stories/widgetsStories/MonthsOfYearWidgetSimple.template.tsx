@@ -10,6 +10,7 @@ import { capitalizeFirstLetter, dateStringToDayjs } from '#src/components/utils'
 import type { MonthsOfYearWidgetProps } from '#src/components/MonthsOfYearWidget/interfaces';
 import { MONTHS_OF_YEAR_WIDGET_WIDTH } from '#src/components/MonthsOfYearWidget/constants';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
+import { baseMonthCellMixin } from '#src/components/MonthsOfYearWidget/mixins';
 
 const Wrapper = styled.div`
   display: flex;
@@ -39,10 +40,15 @@ export const MonthsOfYearWidgetSimpleTemplate = (props: MonthsOfYearWidgetProps)
     }
   };
 
+  const getMonthCellState = (dateString: string) => {
+    const cellMixin = baseMonthCellMixin;
+    return { cellMixin };
+  };
+
   return (
     <Wrapper>
       <MonthYear>Дата: {capitalizeFirstLetter(date.format('D MMMM YYYY'))}</MonthYear>
-      <MonthsOfYearWidget {...props} onClick={handleClick} />
+      <MonthsOfYearWidget {...props} onClick={handleClick} monthCellState={getMonthCellState} />
     </Wrapper>
   );
 };
