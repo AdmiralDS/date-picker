@@ -145,8 +145,8 @@ export const Calendar = ({
     return { cellMixin };
   };
 
-  const handleMonthNavigationPanelClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    const targetType = (e.target as HTMLButtonElement).dataset.direction;
+  const handleMonthNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
+    const targetType = (e.target as HTMLElement).dataset.direction;
     switch (targetType) {
       case 'left':
         setDateState(dateInner.subtract(1, 'month'));

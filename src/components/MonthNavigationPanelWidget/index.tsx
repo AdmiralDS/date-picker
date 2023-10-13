@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import { getDayjsDate } from '#src/components/utils';
 import { CALENDAR_WIDTH } from '#src/components/Calendar/constants';
 import type { MonthNavigationPanelWidgetProps } from '#src/components/MonthNavigationPanelWidget/interfaces';
-import { NavigationPanelButton } from '#src/components/MonthNavigationPanelWidget/NavigationPanelButton';
 import { MonthYear } from '#src/components/MonthNavigationPanelWidget/MonthYear';
+import { IconPlacement } from '@admiral-ds/react-ui';
+import { ReactComponent as ChevronLeftOutline } from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg';
+import { ReactComponent as ChevronRightOutline } from '@admiral-ds/icons/build/system/ChevronRightOutline.svg';
 
 const MonthNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
@@ -19,16 +21,19 @@ export const MonthNavigationPanelWidget = ({
   date,
   timezone = Intl.DateTimeFormat().resolvedOptions().timeZone,
   locale = 'ru',
-  onClick,
   ...props
 }: MonthNavigationPanelWidgetProps) => {
   const dateInner = getDayjsDate(locale, timezone, date);
 
   return (
     <MonthNavigationPanelWrapper {...props}>
-      <NavigationPanelButton onClick={onClick} disabled={false} type="left" />
+      <IconPlacement dimension="lSmall" highlightFocus={false} data-direction="left">
+        <ChevronLeftOutline />
+      </IconPlacement>
       <MonthYear date={dateInner} />
-      <NavigationPanelButton onClick={onClick} disabled={false} type="right" />
+      <IconPlacement dimension="lSmall" highlightFocus={false} data-direction="right">
+        <ChevronRightOutline />
+      </IconPlacement>
     </MonthNavigationPanelWrapper>
   );
 };
