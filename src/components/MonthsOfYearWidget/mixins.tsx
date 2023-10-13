@@ -53,7 +53,7 @@ export const disabledHolidayMonthCellMixin = css`
   color: ${(p) => p.theme.color['Error/Error 30']};
 `;
 
-export const todayMonthCellMixin = css`
+export const currentMonthCellMixin = css`
   ${baseCellMixin};
   padding: 7px 0;
   color: ${(p) => p.theme.color['Neutral/Neutral 90']};
@@ -65,7 +65,7 @@ export const todayMonthCellMixin = css`
 `;
 
 export const todayHolidayMonthCellMixin = css`
-  ${todayMonthCellMixin};
+  ${currentMonthCellMixin};
   ${holidayMonthCellMixin};
   padding: 7px 0;
 `;
