@@ -76,15 +76,20 @@ export const Calendar = ({
   date,
   defaultDate,
   onDateChange,
+  selectedDate,
+  defaultSelectedDate,
+  onSelectedDateChange,
   timezone = Intl.DateTimeFormat().resolvedOptions().timeZone,
   locale = 'ru',
   ...props
 }: CalendarProps) => {
   const localeInner = locale || 'ru';
 
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
-    getDayjsDate(localeInner, timezone).add(1, 'day'),
+  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
+    defaultSelectedDate ? getDayjsDate(localeInner, timezone, defaultSelectedDate) : undefined,
   );
+  const selectedDateInner =
+    (selectedDate && dateStringToDayjs(selectedDate, localeInner, timezone)) || selectedDateState;
   const [dateState, setDateState] = useState(getDayjsDate(localeInner, timezone, defaultDate));
   const dateInner = (date && getDayjsDate(localeInner, timezone, date)) || dateState;
 
@@ -94,12 +99,18 @@ export const Calendar = ({
     onDateChange?.(dayjsDateToString(dayjsDate));
   };
 
+  const handleSelectedDateChange = (dateString: string) => {
+    const dayjsSelectedDate = dateStringToDayjs(dateString, localeInner, timezone);
+    setSelectedDateState(dayjsSelectedDate);
+    onSelectedDateChange?.(dateString);
+  };
+
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
-    const clickedDate = dateStringToDayjs(clickedCell);
+    const clickedDate = dateStringToDayjs(clickedCell, localeInner, timezone);
     if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
-      setSelectedDate(clickedDate);
+      handleSelectedDateChange(dayjsDateToString(clickedDate));
     }
   };
 
@@ -125,8 +136,8 @@ export const Calendar = ({
   };
 
   const getDateCellState = (dateString: string): CellStateProps => {
-    const dateCurrent = dateStringToDayjs(dateString, localeInner);
-    const selected = dateCurrent && dateCurrent.isSame(selectedDate, 'date');
+    const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
+    const selected = dateCurrent && dateCurrent.isSame(selectedDateInner, 'date');
     const disabled = dateIsDisabled(dateCurrent);
     const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
