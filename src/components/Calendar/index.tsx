@@ -39,7 +39,6 @@ const CalendarWrapper = styled.div`
   padding-top: 20px;
   width: ${CALENDAR_WIDTH}px;
   height: ${CALENDAR_HEIGHT}px;
-  ${(p) => p.theme.shadow['Shadow 08']}
 `;
 
 const getDateCellMixin = (
@@ -149,10 +148,10 @@ export const Calendar = ({
     const targetType = (e.target as HTMLElement).dataset.direction;
     switch (targetType) {
       case 'left':
-        setDateState(dateInner.subtract(1, 'month'));
+        handleDateChange(dayjsDateToString(dateInner.subtract(1, 'month')));
         break;
       case 'right':
-        setDateState(dateInner.add(1, 'month'));
+        handleDateChange(dayjsDateToString(dateInner.add(1, 'month')));
         break;
     }
   };

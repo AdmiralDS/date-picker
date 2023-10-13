@@ -2,6 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 
 import { Calendar } from '@admiral-ds/date-picker';
 import { CalendarSimpleTemplate } from '#src/stories/calendarStories/CalendarSimple.template';
+import { CalendarDoubleTemplate } from '#src/stories/calendarStories/CalendarDouble.template';
 
 export default {
   title: 'Admiral-2.1/Calendar',
@@ -39,6 +40,11 @@ export default {
 const CalendarSimpleStory: StoryFn<typeof Calendar> = (props) => {
   return <CalendarSimpleTemplate {...props} />;
 };
-
 export const CalendarSimple = CalendarSimpleStory.bind({});
-CalendarSimple.storyName = 'Calendar';
+CalendarSimple.storyName = 'CalendarSimple';
+
+const CalendarDoubleStory: StoryFn<typeof Calendar> = (props) => {
+  return <CalendarDoubleTemplate {...props} />;
+};
+export const CalendarDouble = CalendarDoubleStory.bind({});
+CalendarDouble.storyName = 'CalendarDouble';
