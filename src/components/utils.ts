@@ -8,10 +8,12 @@ dayjs.extend(localeData);
 dayjs.extend(CustomParseFormat);
 //dayjs.extend(isBetween);
 
-export const dateStringToDayjs = (dateString?: string, locale?: string) => {
+export const dateStringToDayjs = (dateString?: string, locale?: string, timezone?: string) => {
   if (dateString === undefined) return undefined;
   const date = dayjs(dateString);
   if (!date.isValid()) return undefined;
+  if (locale && timezone) return date.tz(timezone).locale(locale);
+  if (timezone) return date.tz(timezone);
   if (locale) return date.locale(locale);
   return date;
 };
