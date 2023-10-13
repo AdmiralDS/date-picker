@@ -1,11 +1,10 @@
 import type { MouseEventHandler } from 'react';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { dateStringToDayjs } from '#src/components/utils';
+import { getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import type { DatesOfMonthWidgetProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
 import { Days } from '#src/components/DatesOfMonthWidget/Days';
@@ -18,10 +17,16 @@ const DatesOfMonthWrapper = styled.div`
   ${typography['Body/Body 2 Long']}
 `;
 
-export const DatesOfMonthWidget = ({ date, onClick, locale = 'ru', ...props }: DatesOfMonthWidgetProps) => {
+export const DatesOfMonthWidget = ({
+  date,
+  onClick,
+  locale = 'ru',
+  timezone = getCurrentTimeZone(),
+  ...props
+}: DatesOfMonthWidgetProps) => {
   const { dateCellState } = props.datesProps;
   const { dayNameCellState } = props.dayNamesProps;
-  const localDate = dateStringToDayjs(date, locale) || dayjs().locale(locale);
+  const localDate = getDayjsDate(locale, timezone, date);
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;

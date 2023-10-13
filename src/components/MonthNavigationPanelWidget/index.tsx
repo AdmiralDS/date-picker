@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-import { getDayjsDate } from '#src/components/utils';
-import { CALENDAR_WIDTH } from '#src/components/Calendar/constants';
-import type { MonthNavigationPanelWidgetProps } from '#src/components/MonthNavigationPanelWidget/interfaces';
-import { MonthYear } from '#src/components/MonthNavigationPanelWidget/MonthYear';
 import { IconPlacement } from '@admiral-ds/react-ui';
 import { ReactComponent as ChevronLeftOutline } from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg';
 import { ReactComponent as ChevronRightOutline } from '@admiral-ds/icons/build/system/ChevronRightOutline.svg';
+
+import { getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
+import { CALENDAR_WIDTH } from '#src/components/Calendar/constants';
+import type { MonthNavigationPanelWidgetProps } from '#src/components/MonthNavigationPanelWidget/interfaces';
+import { MonthYear } from '#src/components/MonthNavigationPanelWidget/MonthYear';
 
 const MonthNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
@@ -19,7 +20,7 @@ const MonthNavigationPanelWrapper = styled.div`
 
 export const MonthNavigationPanelWidget = ({
   date,
-  timezone = Intl.DateTimeFormat().resolvedOptions().timeZone,
+  timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
 }: MonthNavigationPanelWidgetProps) => {

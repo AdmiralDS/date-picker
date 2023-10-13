@@ -23,6 +23,9 @@ export interface DatesOfMonthWidgetProps {
   /** Дата в формате ISO */
   date?: string;
   locale?: string;
+  /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
+   * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
+  timezone?: string;
   dayNamesProps: DayNameCellProps;
   datesProps: DateCellProps;
   onClick?: MouseEventHandler<HTMLDivElement>;

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { capitalizeFirstLetter, dateStringToDayjs } from '#src/components/utils';
+import { capitalizeFirstLetter, dateStringToDayjs, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import { DatesOfMonthWidget } from 'components/DatesOfMonthWidget';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
 import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
@@ -68,10 +68,16 @@ const getDateCellDataAttributes = (
   };
 };
 
-export const DatesOfMonthWidgetSimpleTemplate = (props: DatesOfMonthWidgetProps) => {
-  const locale = 'ru';
-  const date = dateStringToDayjs(props.date, locale) || dayjs().locale(locale);
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(locale).add(1, 'day'));
+export const DatesOfMonthWidgetSimpleTemplate = ({
+  date,
+  locale = 'ru',
+  timezone = getCurrentTimeZone(),
+  ...props
+}: DatesOfMonthWidgetProps) => {
+  const dateInner = getDayjsDate(locale, timezone, date);
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
+    dayjs().tz(timezone).locale(locale).add(1, 'day'),
+  );
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
@@ -83,20 +89,22 @@ export const DatesOfMonthWidgetSimpleTemplate = (props: DatesOfMonthWidgetProps)
   };
 
   const dateIsOutsideMonth = (dateCurrent?: Dayjs) => {
-    return dateCurrent && dateCurrent.month() !== date.month();
+    return dateCurrent && dateCurrent.month() !== dateInner.month();
   };
   const dateIsDisabled = (dateCurrent?: Dayjs) => {
     return !!(
       dateCurrent &&
-      dateCurrent.month() === date.month() &&
+      dateCurrent.month() === dateInner.month() &&
       (dateCurrent.day() === 6 || dateCurrent.date() < 5)
     );
   };
   const dateIsHoliday = (dateCurrent?: Dayjs) => {
     return !!(
       dateCurrent &&
-      dateCurrent.month() === date.month() &&
-      (dateCurrent.day() === 6 || dateCurrent.day() === 0 || dateCurrent.isSame(dayjs().locale(locale), 'date'))
+      dateCurrent.month() === dateInner.month() &&
+      (dateCurrent.day() === 6 ||
+        dateCurrent.day() === 0 ||
+        dateCurrent.isSame(dayjs().tz(timezone).locale(locale), 'date'))
     );
   };
   const dateIsHidden = (dateCurrent?: Dayjs) => {
@@ -104,13 +112,13 @@ export const DatesOfMonthWidgetSimpleTemplate = (props: DatesOfMonthWidgetProps)
   };
 
   const getDateCellState = (dateString: string): CellStateProps => {
-    const dateCurrent = dateStringToDayjs(dateString, locale);
+    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
     const selected = dateCurrent && dateCurrent.isSame(selectedDate, 'date');
     const disabled = dateIsDisabled(dateCurrent);
     const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
     const isHoliday = dateIsHoliday(dateCurrent);
-    const isToday = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
+    const isToday = dateCurrent && dateCurrent.isSame(dayjs().tz(timezone).locale(locale), 'date');
 
     const cellMixin = getDateCellMixin(selected, disabled, hidden, isHoliday, isOutsideMonth, isToday);
     const dataAttributes = getDateCellDataAttributes(isHoliday, isOutsideMonth, isToday);
@@ -125,7 +133,7 @@ export const DatesOfMonthWidgetSimpleTemplate = (props: DatesOfMonthWidgetProps)
 
   return (
     <Wrapper>
-      <MonthYear>Дата: {capitalizeFirstLetter(date.format('D MMMM YYYY'))}</MonthYear>
+      <MonthYear>Дата: {capitalizeFirstLetter(dateInner.format('D MMMM YYYY'))}</MonthYear>
       <DatesOfMonthWidget
         {...props}
         onClick={handleClick}

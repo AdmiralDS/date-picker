@@ -13,6 +13,9 @@ export interface MonthsOfYearWidgetProps {
   /** Дата в формате ISO */
   date?: string;
   locale?: string;
+  /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
+   * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
+  timezone?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
   monthCellState: (date: string) => CellStateProps;
 }

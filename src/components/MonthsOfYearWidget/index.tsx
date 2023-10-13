@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { dateStringToDayjs } from '#src/components/utils';
+import { getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import type { MonthsOfYearWidgetProps } from '#src/components/MonthsOfYearWidget/interfaces';
 import { MONTHS_OF_YEAR_WIDGET_WIDTH } from '#src/components/MonthsOfYearWidget/constants';
 import { Months } from '#src/components/MonthsOfYearWidget/Months';
@@ -15,9 +14,15 @@ const MonthsOfYearWrapper = styled.div`
   ${typography['Body/Body 2 Long']}
 `;
 
-export const MonthsOfYearWidget = ({ date, onClick, monthCellState, ...props }: MonthsOfYearWidgetProps) => {
-  const locale = 'ru';
-  const localDate = dateStringToDayjs(date, locale) || dayjs().locale(locale);
+export const MonthsOfYearWidget = ({
+  date,
+  locale = 'ru',
+  timezone = getCurrentTimeZone(),
+  onClick,
+  monthCellState,
+  ...props
+}: MonthsOfYearWidgetProps) => {
+  const localDate = getDayjsDate(locale, timezone, date);
 
   return (
     <MonthsOfYearWrapper {...props} onClick={onClick}>

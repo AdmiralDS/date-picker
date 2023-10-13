@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
 import { Calendar } from '@admiral-ds/date-picker';
+
+import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import type { CalendarProps } from '#src/components/Calendar/interfaces';
-import { dateStringToDayjs, dayjsDateToString, getDayjsDate } from '#src/components/utils';
 
 const DoubleCalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -18,7 +19,7 @@ export const CalendarDoubleTemplate = ({
   defaultDate,
   onDateChange,
   locale = 'ru',
-  timezone = Intl.DateTimeFormat().resolvedOptions().timeZone,
+  timezone = getCurrentTimeZone(),
   ...props
 }: CalendarProps) => {
   const [dateLeft, setDateLeft] = useState<Dayjs>(getDayjsDate(locale, timezone, defaultDate));

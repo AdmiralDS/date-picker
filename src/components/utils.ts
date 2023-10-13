@@ -8,6 +8,10 @@ dayjs.extend(localeData);
 dayjs.extend(CustomParseFormat);
 //dayjs.extend(isBetween);
 
+export const getCurrentTimeZone = () => {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
+};
+
 export const dateStringToDayjs = (dateString?: string, locale?: string, timezone?: string) => {
   if (dateString === undefined) return undefined;
   const date = dayjs(dateString);

@@ -7,7 +7,7 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
-import { dateStringToDayjs, dayjsDateToString, getDayjsDate } from '#src/components/utils';
+import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import type { CalendarProps } from '#src/components/Calendar/interfaces';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/Calendar/constants';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
@@ -79,7 +79,7 @@ export const Calendar = ({
   selectedDate,
   defaultSelectedDate,
   onSelectedDateChange,
-  timezone = Intl.DateTimeFormat().resolvedOptions().timeZone,
+  timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
 }: CalendarProps) => {
