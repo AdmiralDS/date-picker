@@ -2,14 +2,27 @@ import dayjs from 'dayjs';
 import type { Dayjs, ManipulateType } from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
 import CustomParseFormat from 'dayjs/plugin/customParseFormat';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 //import isBetween from 'dayjs/plugin/isBetween';
 
 dayjs.extend(localeData);
 dayjs.extend(CustomParseFormat);
+dayjs.extend(LocalizedFormat);
+dayjs.extend(utc);
+dayjs.extend(timezone);
 //dayjs.extend(isBetween);
 
 export const getCurrentTimeZone = () => {
   return Intl.DateTimeFormat().resolvedOptions().timeZone;
+};
+
+export const getCurrentDate = (locale?: string, timezone?: string) => {
+  if (locale && timezone) return dayjs().tz(timezone).locale(locale);
+  if (locale) return dayjs().locale(locale);
+  if (timezone) return dayjs().tz(timezone);
+  return dayjs();
 };
 
 export const dateStringToDayjs = (dateString?: string, locale?: string, timezone?: string) => {
