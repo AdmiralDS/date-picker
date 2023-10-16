@@ -23,7 +23,11 @@ const highlightSundays = (date: Dayjs) => {
 
 const userLocaleName = 'es';
 
-export const UserLocaleCalendarOldTemplate = ({ rangePicker = false, doubleView = false, ...props }: CalendarOldProps) => {
+export const UserLocaleCalendarOldTemplate = ({
+  rangePicker = false,
+  doubleView = false,
+  ...props
+}: CalendarOldProps) => {
   function swapBorder(theme: Theme): Theme {
     theme.shape.borderRadiusKind = (props as any).themeBorderKind || theme.shape.borderRadiusKind;
     return theme;
