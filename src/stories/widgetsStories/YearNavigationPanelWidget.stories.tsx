@@ -4,7 +4,7 @@ import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWi
 import { YearNavigationPanelWidgetSimpleTemplate } from '#src/stories/widgetsStories/YearNavigationPanelWidgetSimple.template';
 
 export default {
-  title: 'Admiral-2.1/Widgets/MonthsOfYear',
+  title: 'Admiral-2.1/Widgets/YearNavigationPanel',
   component: YearNavigationPanelWidget,
   parameters: {
     docs: {
