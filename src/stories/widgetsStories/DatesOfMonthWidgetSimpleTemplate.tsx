@@ -1,12 +1,17 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import styled from 'styled-components';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { capitalizeFirstLetter, dateStringToDayjs, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
+import {
+  capitalizeFirstLetter,
+  dateStringToDayjs,
+  getCurrentTimeZone,
+  getDayjsDate,
+  getCurrentDate,
+} from '#src/components/utils';
 import { DatesOfMonthWidget } from 'components/DatesOfMonthWidget';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
 import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
@@ -75,9 +80,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
   ...props
 }: DatesOfMonthWidgetProps) => {
   const dateInner = getDayjsDate(locale, timezone, date);
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
-    dayjs().tz(timezone).locale(locale).add(1, 'day'),
-  );
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(locale, timezone).add(1, 'day'));
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
@@ -104,7 +107,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
       dateCurrent.month() === dateInner.month() &&
       (dateCurrent.day() === 6 ||
         dateCurrent.day() === 0 ||
-        dateCurrent.isSame(dayjs().tz(timezone).locale(locale), 'date'))
+        dateCurrent.isSame(getCurrentDate(locale, timezone), 'date'))
     );
   };
   const dateIsHidden = (dateCurrent?: Dayjs) => {
@@ -118,7 +121,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
     const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
     const isHoliday = dateIsHoliday(dateCurrent);
-    const isToday = dateCurrent && dateCurrent.isSame(dayjs().tz(timezone).locale(locale), 'date');
+    const isToday = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'date');
 
     const cellMixin = getDateCellMixin(selected, disabled, hidden, isHoliday, isOutsideMonth, isToday);
     const dataAttributes = getDateCellDataAttributes(isHoliday, isOutsideMonth, isToday);

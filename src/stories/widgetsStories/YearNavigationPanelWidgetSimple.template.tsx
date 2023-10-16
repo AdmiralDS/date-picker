@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import type { MouseEventHandler } from 'react';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import { typography } from '@admiral-ds/react-ui';
-
-import { capitalizeFirstLetter, dateStringToDayjs, dayjsDateToString, getCurrentDate } from '#src/components/utils';
-import type { MonthsOfYearWidgetProps } from '#src/components/MonthsOfYearWidget/interfaces';
-import { MONTHS_OF_YEAR_WIDGET_WIDTH } from '#src/components/MonthsOfYearWidget/constants';
+import {
+  dateStringToDayjs,
+  dayjsDateToString,
+  getCurrentDate,
+  getCurrentTimeZone,
+  getDayjsDate,
+} from '#src/components/utils';
+import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/Calendar/constants';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import {
   baseMonthCellMixin,
@@ -17,31 +19,29 @@ import {
   hiddenMonthCellMixin,
   selectedMonthCellMixin,
 } from '#src/components/MonthsOfYearWidget/mixins';
+import type { YearNavigationPanelWidgetProps } from '#src/components/YearNavigationPanelWidget/interfaces';
+import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 
-const Wrapper = styled.div`
+const CalendarWrapper = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   align-content: space-between;
-  padding: 10px;
-  width: ${MONTHS_OF_YEAR_WIDGET_WIDTH}px;
-  border: 1px ${(p) => p.theme.color['Neutral/Neutral 90']} solid;
-`;
-const MonthYear = styled.div`
-  margin-bottom: 10px;
-  ${typography['Subtitle/Subtitle 2']}
+  padding-top: 20px;
+  width: ${CALENDAR_WIDTH}px;
+  height: ${CALENDAR_HEIGHT}px;
+  ${(p) => p.theme.shadow['Shadow 08']}
 `;
 
-export const MonthsOfYearWidgetSimpleTemplate = ({
-  date,
+export const YearNavigationPanelWidgetSimpleTemplate = ({
   locale = 'ru',
-  timezone,
-  onClick,
-  monthCellState,
+  timezone = getCurrentTimeZone(),
+  date,
   ...props
-}: MonthsOfYearWidgetProps) => {
-  const dateInner = dateStringToDayjs(date, locale) || dayjs().locale(locale);
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(locale).add(1, 'day'));
+}: YearNavigationPanelWidgetProps) => {
+  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, date));
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(locale, timezone).add(1, 'day'));
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
@@ -77,17 +77,40 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
     return { selected, cellMixin, ...dataAttributes };
   };
 
+  const handleDateChange = (dateString: string) => {
+    const dayjsDate = getDayjsDate(locale, timezone, dateString);
+    setDateState(dayjsDate);
+    //onDateChange?.(dayjsDateToString(dayjsDate));
+  };
+
+  const handleYearNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
+    const targetType = (e.target as HTMLElement).dataset.direction;
+    switch (targetType) {
+      case 'left':
+        handleDateChange(dayjsDateToString(dateState.subtract(1, 'year')));
+        break;
+      case 'right':
+        handleDateChange(dayjsDateToString(dateState.add(1, 'year')));
+        break;
+    }
+  };
+
   return (
-    <Wrapper>
-      <MonthYear>Дата: {capitalizeFirstLetter(dateInner.format('D MMMM YYYY'))}</MonthYear>
+    <CalendarWrapper>
+      <YearNavigationPanelWidget
+        date={dayjsDateToString(dateState)}
+        locale={locale}
+        timezone={timezone}
+        onClick={handleYearNavigationPanelClick}
+      />
       <MonthsOfYearWidget
         {...props}
-        date={dayjsDateToString(dateInner)}
+        date={dayjsDateToString(dateState)}
         locale={locale}
         timezone={timezone}
         onClick={handleClick}
         monthCellState={getMonthCellState}
       />
-    </Wrapper>
+    </CalendarWrapper>
   );
 };
