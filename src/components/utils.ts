@@ -35,8 +35,13 @@ export const dateStringToDayjs = (dateString?: string, locale?: string, timezone
   return date;
 };
 
-export const getDayjsDate = (locale: string, timezone: string, dateString?: string) => {
-  return dateStringToDayjs(dateString)?.tz(timezone).locale(locale) || dayjs().locale(locale);
+export const getDayjsDate = (locale?: string, timezone?: string, dateString?: string) => {
+  const localeInner = locale || 'ru';
+  const timezoneInner = timezone || getCurrentTimeZone();
+  return (
+    dateStringToDayjs(dateString)?.tz(timezoneInner).locale(localeInner) ||
+    dayjs().tz(timezoneInner).locale(localeInner)
+  );
 };
 
 export const dayjsDateToString = (date: Dayjs) => {
