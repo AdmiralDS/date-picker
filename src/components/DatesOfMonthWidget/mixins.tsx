@@ -1,30 +1,31 @@
 import { css } from 'styled-components';
 import { typography } from '@admiral-ds/react-ui';
-import { CELL_PADDING } from '#src/components/DatesOfMonthWidget/constants';
+import { DAY_CELL_PADDING } from '#src/components/DatesOfMonthWidget/constants';
 
 const baseCellMixin = css`
-  padding: ${CELL_PADDING};
+  padding: ${DAY_CELL_PADDING};
   ${typography['Body/Body 2 Long']}
   background-color: ${(p) => p.theme.color['Special/Elevated BG']};
+  border-radius: 50%;
+  border: 1px ${(p) => p.theme.color['Special/Elevated BG']} solid;
 `;
 
 export const baseDateCellMixin = css`
   ${baseCellMixin};
   color: ${(p) => p.theme.color['Neutral/Neutral 90']};
   &:hover {
-    padding: 7px 0;
-    border: 1px ${(p) => p.theme.color['Primary/Primary 60 Main']} solid;
-    border-radius: 50%;
+    border-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
   }
 `;
 
 export const selectedDateCellMixin = css`
   ${baseCellMixin};
   background-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
+  border-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
   color: ${(p) => p.theme.color['Special/Static White']};
-  border-radius: 50%;
   &:hover {
     background-color: ${(p) => p.theme.color['Primary/Primary 70']};
+    border-color: ${(p) => p.theme.color['Primary/Primary 70']};
   }
 `;
 
@@ -42,9 +43,7 @@ export const holidayDateCellMixin = css`
   ${baseCellMixin};
   color: ${(p) => p.theme.color['Error/Error 60 Main']};
   &:hover {
-    padding: 7px 0;
-    border: 1px ${(p) => p.theme.color['Primary/Primary 60 Main']} solid;
-    border-radius: 50%;
+    border-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
   }
 `;
 
@@ -55,10 +54,8 @@ export const disabledHolidayDateCellMixin = css`
 
 export const todayDateCellMixin = css`
   ${baseCellMixin};
-  padding: 7px 0;
   color: ${(p) => p.theme.color['Neutral/Neutral 90']};
-  border: 1px ${(p) => p.theme.color['Neutral/Neutral 90']} solid;
-  border-radius: 50%;
+  border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
   &:hover {
     border-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
   }
@@ -67,7 +64,7 @@ export const todayDateCellMixin = css`
 export const todayHolidayDateCellMixin = css`
   ${todayDateCellMixin};
   ${holidayDateCellMixin};
-  padding: 7px 0;
+  border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
 `;
 
 export const outsideMonthDateCellMixin = css`
