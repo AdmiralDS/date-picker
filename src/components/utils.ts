@@ -19,15 +19,15 @@ export const getCurrentTimeZone = () => {
 };
 
 export const getCurrentDate = (locale?: string, timezone?: string) => {
-  if (locale && timezone) return dayjs().tz(timezone).locale(locale);
-  if (locale) return dayjs().locale(locale);
-  if (timezone) return dayjs().tz(timezone);
-  return dayjs();
+  if (locale && timezone) return setNoon(dayjs().tz(timezone).locale(locale));
+  if (locale) return setNoon(dayjs().locale(locale));
+  if (timezone) return setNoon(dayjs().tz(timezone));
+  return setNoon(dayjs());
 };
 
 export const dateStringToDayjs = (dateString?: string, locale?: string, timezone?: string) => {
   if (dateString === undefined) return undefined;
-  const date = dayjs(dateString);
+  const date = setNoon(dayjs(dateString));
   if (!date.isValid()) return undefined;
   if (locale && timezone) return date.tz(timezone).locale(locale);
   if (timezone) return date.tz(timezone);
@@ -38,9 +38,9 @@ export const dateStringToDayjs = (dateString?: string, locale?: string, timezone
 export const getDayjsDate = (locale?: string, timezone?: string, dateString?: string) => {
   const localeInner = locale || 'ru';
   const timezoneInner = timezone || getCurrentTimeZone();
-  return (
+  return setNoon(
     dateStringToDayjs(dateString)?.tz(timezoneInner).locale(localeInner) ||
-    dayjs().tz(timezoneInner).locale(localeInner)
+      dayjs().tz(timezoneInner).locale(localeInner),
   );
 };
 
