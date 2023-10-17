@@ -73,6 +73,16 @@ export const outsideMonthDateCellMixin = css`
   color: ${(p) => p.theme.color['Neutral/Neutral 20']};
 `;
 
+export const rangeDateCellMixin = css`
+  background-color: transparent;
+  border-color: transparent;
+
+  &:hover {
+    background-color: ${(p) => p.theme.color['Special/Elevated BG']};
+    border-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
+  }
+`;
+
 export const baseDayNameCellMixin = css`
   ${baseCellMixin};
   cursor: default;
