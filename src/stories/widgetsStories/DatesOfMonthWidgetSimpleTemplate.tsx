@@ -24,8 +24,8 @@ import {
   holidayDateCellMixin,
   outsideMonthDateCellMixin,
   selectedDateCellMixin,
-  todayDateCellMixin,
-  todayHolidayDateCellMixin,
+  currentDateCellMixin,
+  currentDateHolidayDateCellMixin,
 } from '#src/components/DatesOfMonthWidget/mixins';
 
 const Wrapper = styled.div`
@@ -55,9 +55,9 @@ const getDateCellMixin = (
   if (disabled) return disabledDateCellMixin;
   if (isOutsideMonth) return outsideMonthDateCellMixin;
   if (selected) return selectedDateCellMixin;
-  if (isHoliday && isToday) return todayHolidayDateCellMixin;
+  if (isHoliday && isToday) return currentDateHolidayDateCellMixin;
   if (isHoliday) return holidayDateCellMixin;
-  if (isToday) return todayDateCellMixin;
+  if (isToday) return currentDateCellMixin;
   return baseDateCellMixin;
 };
 

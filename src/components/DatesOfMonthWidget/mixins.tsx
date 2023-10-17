@@ -52,7 +52,7 @@ export const disabledHolidayDateCellMixin = css`
   color: ${(p) => p.theme.color['Error/Error 30']};
 `;
 
-export const todayDateCellMixin = css`
+export const currentDateCellMixin = css`
   ${baseCellMixin};
   color: ${(p) => p.theme.color['Neutral/Neutral 90']};
   border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
@@ -61,8 +61,8 @@ export const todayDateCellMixin = css`
   }
 `;
 
-export const todayHolidayDateCellMixin = css`
-  ${todayDateCellMixin};
+export const currentDateHolidayDateCellMixin = css`
+  ${currentDateCellMixin};
   ${holidayDateCellMixin};
   border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
 `;
