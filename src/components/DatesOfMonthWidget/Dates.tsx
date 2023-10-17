@@ -18,6 +18,7 @@ import {
   currentDateCellMixin,
   currentDateHolidayDateCellMixin,
   rangeDateCellMixin,
+  rangeHolidayDateCellMixin,
 } from '#src/components/DatesOfMonthWidget/mixins';
 
 const DatesWrapper = styled.div`
@@ -97,7 +98,7 @@ export const Dates = ({ date, renderDateCell, ...props }: DatesProps) => {
   return <DatesWrapper {...props}>{renderDates()}</DatesWrapper>;
 };
 
-export interface DateCellProps extends HTMLAttributes<HTMLElement> {
+export interface DateCellProps extends HTMLAttributes<HTMLDivElement> {
   cellContent?: ReactNode;
   selected?: boolean;
   disabled?: boolean;
@@ -130,6 +131,7 @@ const getDateCellMixin = (
   if (disabled) return disabledDateCellMixin;
   if (isOutsideMonth) return outsideMonthDateCellMixin;
   if (selected || isRangeStart || isRangeEnd) return selectedDateCellMixin;
+  if (isInRange && isHoliday) return rangeHolidayDateCellMixin;
   if (isHoliday && isCurrentDay) return currentDateHolidayDateCellMixin;
   if (isHoliday) return holidayDateCellMixin;
   if (isCurrentDay) return currentDateCellMixin;
@@ -150,7 +152,7 @@ export const DefaultDateCell = ({
   isRangeEnd,
   isStartOfWeek,
   isEndOfWeek,
-  //className,
+  className,
   ...props
 }: DateCellProps) => {
   const cellMixin = getDateCellMixin(
@@ -167,15 +169,19 @@ export const DefaultDateCell = ({
     isEndOfWeek,
   );
   return (
-    <DateCellContainer
-      {...props}
-      data-selected={selected ? true : undefined}
-      data-disabled={disabled ? true : undefined}
-      data-hidden={hidden ? true : undefined}
-    >
+    <DateCellContainer className={className}>
       <LeftHalf $isVisible={!!isInRange || !!isRangeEnd} $isStartOfWeek={!!isStartOfWeek} />
       <RightHalf $isVisible={!!isInRange || !!isRangeStart} $isEndOfWeek={!!isEndOfWeek} />
-      <DateCell $dateCellMixin={cellMixin} $isInRange={isInRange} $isRangeStart={isRangeStart} $isRangeEnd={isRangeEnd}>
+      <DateCell
+        {...props}
+        data-selected={selected ? true : undefined}
+        data-disabled={disabled ? true : undefined}
+        data-hidden={hidden ? true : undefined}
+        $dateCellMixin={cellMixin}
+        $isInRange={isInRange}
+        $isRangeStart={isRangeStart}
+        $isRangeEnd={isRangeEnd}
+      >
         {cellContent}
       </DateCell>
     </DateCellContainer>

@@ -84,6 +84,11 @@ export const rangeDateCellMixin = css`
   }
 `;
 
+export const rangeHolidayDateCellMixin = css`
+  color: ${(p) => p.theme.color['Error/Error 60 Main']};
+  ${rangeDateCellMixin}
+`;
+
 export const baseDayNameCellMixin = css`
   ${baseCellMixin};
   cursor: default;
