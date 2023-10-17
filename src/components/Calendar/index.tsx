@@ -7,7 +7,13 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
-import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
+import {
+  dateStringToDayjs,
+  dayjsDateToString,
+  getCurrentTimeZone,
+  getDayjsDate,
+  outOfBounds,
+} from '#src/components/utils';
 import type { CalendarProps } from '#src/components/Calendar/interfaces';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/Calendar/constants';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
@@ -72,7 +78,13 @@ const getDateCellDataAttributes = (
   };
 };
 
+const getInitialDateRange = (dateRange?: [string, string], locale?: string, timezone?: string) => {
+  if (!dateRange || !dateRange[0] || !dateRange[1]) return undefined;
+  return [getDayjsDate(locale, timezone, dateRange[0]), getDayjsDate(locale, timezone, dateRange[1])];
+};
+
 export const Calendar = ({
+  dateRange,
   date,
   defaultDate,
   onDateChange,
@@ -85,6 +97,7 @@ export const Calendar = ({
 }: CalendarProps) => {
   const localeInner = locale || 'ru';
 
+  const [dateRangeState, setDateRangeState] = useState(getInitialDateRange(dateRange, localeInner, timezone));
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
     defaultSelectedDate ? getDayjsDate(localeInner, timezone, defaultSelectedDate) : undefined,
   );
@@ -135,10 +148,26 @@ export const Calendar = ({
     return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
   };
 
+  const dateIsInRange = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent || !dateRangeState) return false;
+    return dateCurrent.isBetween(dateRangeState[0], dateRangeState[1], 'date', '()');
+  };
+  const dateIsRangeStart = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent || !dateRangeState) return false;
+    return dateCurrent.isSame(dateRangeState[0], 'date');
+  };
+  const dateIsRangeEnd = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent || !dateRangeState) return false;
+    return dateCurrent.isSame(dateRangeState[1], 'date');
+  };
+
   const getDateCellState = (dateString: string): CellStateProps => {
     const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
     const selected = dateCurrent && dateCurrent.isSame(selectedDateInner, 'date');
     const disabled = dateIsDisabled(dateCurrent);
+    const isInRange = dateIsInRange(dateCurrent);
+    const isRangeStart = dateIsRangeStart(dateCurrent);
+    const isRangeEnd = dateIsRangeEnd(dateCurrent);
     const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
     const isHoliday = dateIsHoliday(dateCurrent);
@@ -147,7 +176,7 @@ export const Calendar = ({
     const cellMixin = getDateCellMixin(selected, disabled, hidden, isHoliday, isOutsideMonth, isToday);
     const dataAttributes = getDateCellDataAttributes(isHoliday, isOutsideMonth, isToday);
 
-    return { selected, disabled, hidden, cellMixin, ...dataAttributes };
+    return { selected, disabled, hidden, cellMixin, isInRange, isRangeStart, isRangeEnd, ...dataAttributes };
   };
 
   const getDayNameCellState = (dayNumber: number): CellStateProps => {

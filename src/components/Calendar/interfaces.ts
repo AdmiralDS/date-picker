@@ -1,4 +1,6 @@
 export interface CalendarProps {
+  /** Даты в формате ISO */
+  dateRange?: [string, string];
   /** Дата в формате ISO */
   date?: string;
   /** Дата по умолчанию в формате ISO */

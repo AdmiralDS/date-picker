@@ -7,6 +7,10 @@ export interface CellStateProps {
   disabled?: boolean;
   hidden?: boolean;
   cellMixin: FlattenInterpolation<ThemeProps<DefaultTheme>>;
+
+  isInRange?: boolean;
+  isRangeStart?: boolean;
+  isRangeEnd?: boolean;
 }
 
 export interface DayNameCellProps {
