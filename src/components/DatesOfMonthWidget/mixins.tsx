@@ -74,6 +74,7 @@ export const outsideMonthDateCellMixin = css`
 `;
 
 export const rangeDateCellMixin = css`
+  ${baseCellMixin};
   background-color: transparent;
   border-color: transparent;
 

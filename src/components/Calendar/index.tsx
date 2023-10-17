@@ -125,7 +125,7 @@ export const Calendar = ({
     return !!(
       dateCurrent &&
       dateCurrent.month() === dateInner.month() &&
-      (dateCurrent.day() === 6 || dateCurrent.date() < 5)
+      ((dateCurrent.day() === 6 && dateCurrent.date() !== 14) || dateCurrent.date() < 5)
     );
   };
   const dateIsHoliday = (dateCurrent?: Dayjs) => {
@@ -150,24 +150,6 @@ export const Calendar = ({
   const dateIsRangeEnd = (dateCurrent?: Dayjs) => {
     if (!dateCurrent || !dateRangeState) return false;
     return dateCurrent.isSame(dateRangeState[1], 'date');
-  };
-
-  const getDateCellState = (dateString: string): CellStateProps => {
-    const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
-    const selected = dateCurrent && dateCurrent.isSame(selectedDateInner, 'date');
-    const disabled = dateIsDisabled(dateCurrent);
-    const isInRange = dateIsInRange(dateCurrent);
-    const isRangeStart = dateIsRangeStart(dateCurrent);
-    const isRangeEnd = dateIsRangeEnd(dateCurrent);
-    const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
-    const hidden = dateIsHidden(dateCurrent);
-    const isHoliday = dateIsHoliday(dateCurrent);
-    const isToday = dateCurrent && dateCurrent.isSame(dayjs().locale(localeInner), 'date');
-
-    const cellMixin = getDateCellMixin(selected, disabled, hidden, isHoliday, isOutsideMonth, isToday);
-    const dataAttributes = getDateCellDataAttributes(dateCurrent?.toISOString(), isHoliday, isOutsideMonth, isToday);
-
-    return { selected, disabled, hidden, cellMixin, isInRange, isRangeStart, isRangeEnd, ...dataAttributes };
   };
 
   const getDayNameCellState = (dayNumber: number): CellStateProps => {
