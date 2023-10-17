@@ -1,4 +1,4 @@
-import type { MouseEventHandler } from 'react';
+import type { MouseEventHandler, ReactNode } from 'react';
 import type { Dayjs } from 'dayjs';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 
@@ -18,11 +18,6 @@ export interface DayNameCellProps {
   dayNameCellState: (dayNumber: number) => CellStateProps;
 }
 
-export interface DateCellProps {
-  onClick?: MouseEventHandler<HTMLDivElement>;
-  dateCellState: (date: string) => CellStateProps;
-}
-
 export interface DatesOfMonthWidgetProps {
   /** Дата в формате ISO */
   date?: string;
@@ -31,13 +26,13 @@ export interface DatesOfMonthWidgetProps {
    * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
   timezone?: string;
   dayNamesProps: DayNameCellProps;
-  datesProps: DateCellProps;
   onClick?: MouseEventHandler<HTMLDivElement>;
+  renderDateCell: (date: string) => ReactNode;
 }
 
 export interface DatesProps {
   date: Dayjs;
-  dateCellState: (date: string) => CellStateProps;
+  renderDateCell: (date: string) => ReactNode;
 }
 
 export interface DaysProps {

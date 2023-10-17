@@ -22,10 +22,11 @@ export const DatesOfMonthWidget = ({
   onClick,
   locale = 'ru',
   timezone = getCurrentTimeZone(),
+  dayNamesProps,
+  renderDateCell,
   ...props
 }: DatesOfMonthWidgetProps) => {
-  const { dateCellState } = props.datesProps;
-  const { dayNameCellState } = props.dayNamesProps;
+  const { dayNameCellState } = dayNamesProps;
   const localDate = getDayjsDate(locale, timezone, date);
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -41,7 +42,7 @@ export const DatesOfMonthWidget = ({
   return (
     <DatesOfMonthWrapper {...props} onClick={handleClick}>
       <Days locale={locale} dayNameCellState={dayNameCellState} />
-      <Dates date={localDate} dateCellState={dateCellState} />
+      <Dates date={localDate} renderDateCell={renderDateCell} />
     </DatesOfMonthWrapper>
   );
 };

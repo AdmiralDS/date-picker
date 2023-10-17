@@ -1,3 +1,7 @@
+import type { ReactNode } from 'react';
+
+import type { DateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
+
 export interface CalendarProps {
   /** Даты в формате ISO */
   dateRange?: [string, string];
@@ -13,4 +17,5 @@ export interface CalendarProps {
   /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
    * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
   timezone?: string;
+  renderDateCell?: (props: DateCellProps) => ReactNode;
 }

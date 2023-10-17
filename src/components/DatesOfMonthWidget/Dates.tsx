@@ -1,5 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
@@ -84,46 +84,14 @@ const DateCell = styled.div<{
   }
   ${(p) => p.$dateCellMixin}
 `;
-//${(p) => p.$isInRange && rangeDateCellMixin}
-//${(p) => (p.$isRangeStart || p.$isRangeEnd) && selectedDateCellMixin}
 
-export const Dates = ({ date, dateCellState, ...props }: DatesProps) => {
-  const firstDate = date.startOf('month').startOf('week');
+export const Dates = ({ date, renderDateCell, ...props }: DatesProps) => {
+  const firstDate = setNoon(date.startOf('month').startOf('week'));
 
   const renderDates = () => {
-    return Array.from(Array(DATES_ON_SCREEN).keys()).map((v) => {
-      //const currentDate = setNoon(firstDate.add(v, 'day'));
-      const currentDate = setNoon(firstDate.add(v, 'day'));
-      const { selected, disabled, hidden, cellMixin, isInRange, isRangeStart, isRangeEnd, ...restCellStateProps } =
-        dateCellState(dayjsDateToString(currentDate));
-
-      return (
-        <DateCellContainer key={currentDate.toISOString()}>
-          {/*{renderCell(currentDate)}*/}
-          <LeftHalf
-            $isVisible={!!isInRange || !!isRangeEnd}
-            $isStartOfWeek={currentDate.isSame(currentDate.startOf('week'), 'date')}
-          />
-          <RightHalf
-            $isVisible={!!isInRange || !!isRangeStart}
-            $isEndOfWeek={currentDate.isSame(currentDate.endOf('week'), 'date')}
-          />
-          <DateCell
-            {...restCellStateProps}
-            $dateCellMixin={cellMixin}
-            $isInRange={isInRange}
-            $isRangeStart={isRangeStart}
-            $isRangeEnd={isRangeEnd}
-            data-value={currentDate.toISOString()}
-            data-selected={selected ? true : undefined}
-            data-disabled={disabled ? true : undefined}
-            data-hidden={hidden ? true : undefined}
-          >
-            {currentDate.date()}
-          </DateCell>
-        </DateCellContainer>
-      );
-    });
+    return Array.from(Array(DATES_ON_SCREEN).keys()).map((v) =>
+      renderDateCell(dayjsDateToString(firstDate.add(v, 'day'))),
+    );
   };
 
   return <DatesWrapper {...props}>{renderDates()}</DatesWrapper>;
@@ -182,7 +150,6 @@ export const DefaultDateCell = ({
   isRangeEnd,
   isStartOfWeek,
   isEndOfWeek,
-  children,
   //className,
   ...props
 }: DateCellProps) => {
@@ -208,17 +175,9 @@ export const DefaultDateCell = ({
     >
       <LeftHalf $isVisible={!!isInRange || !!isRangeEnd} $isStartOfWeek={!!isStartOfWeek} />
       <RightHalf $isVisible={!!isInRange || !!isRangeStart} $isEndOfWeek={!!isEndOfWeek} />
-      <DateCell
-        $dateCellMixin={cellMixin}
-        $isInRange={isInRange}
-        $isRangeStart={isRangeStart}
-        $isRangeEnd={isRangeEnd}
-        //data-value={currentDate.toISOString()}
-      >
+      <DateCell $dateCellMixin={cellMixin} $isInRange={isInRange} $isRangeStart={isRangeStart} $isRangeEnd={isRangeEnd}>
         {cellContent}
       </DateCell>
     </DateCellContainer>
   );
 };
-
-//export const renderDefaultDateCell = (props: DateCellProps) => <DefaultDateCell {...props} />;

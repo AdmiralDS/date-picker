@@ -3,17 +3,8 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
 
-import {
-  dateStringToDayjs,
-  dayjsDateToString,
-  getCurrentTimeZone,
-  getDayjsDate,
-  outOfBounds,
-} from '#src/components/utils';
+import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import type { CalendarProps } from '#src/components/Calendar/interfaces';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/Calendar/constants';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
@@ -31,10 +22,8 @@ import {
   currentDateCellMixin,
   currentDateHolidayDateCellMixin,
 } from '#src/components/DatesOfMonthWidget/mixins';
-
-dayjs.extend(LocalizedFormat);
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import type { DateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
+import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates';
 
 const CalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -47,7 +36,7 @@ const CalendarWrapper = styled.div`
   height: ${CALENDAR_HEIGHT}px;
 `;
 
-const getDateCellMixin = (
+export const getDateCellMixin = (
   selected?: boolean,
   disabled?: boolean,
   hidden?: boolean,
@@ -67,14 +56,16 @@ const getDateCellMixin = (
 };
 
 const getDateCellDataAttributes = (
+  value?: string,
   isHoliday?: boolean,
   isOutsideMonth?: boolean,
-  isToday?: boolean,
+  isCurrentDay?: boolean,
 ): Record<string, any> => {
   return {
+    'data-value': value ? value : undefined,
     'data-is-holiday': isHoliday ? isHoliday : undefined,
     'data-is-outside-month': isOutsideMonth ? isOutsideMonth : undefined,
-    'data-is-today': isToday ? isToday : undefined,
+    'data-is-current-day': isCurrentDay ? isCurrentDay : undefined,
   };
 };
 
@@ -174,7 +165,7 @@ export const Calendar = ({
     const isToday = dateCurrent && dateCurrent.isSame(dayjs().locale(localeInner), 'date');
 
     const cellMixin = getDateCellMixin(selected, disabled, hidden, isHoliday, isOutsideMonth, isToday);
-    const dataAttributes = getDateCellDataAttributes(isHoliday, isOutsideMonth, isToday);
+    const dataAttributes = getDateCellDataAttributes(dateCurrent?.toISOString(), isHoliday, isOutsideMonth, isToday);
 
     return { selected, disabled, hidden, cellMixin, isInRange, isRangeStart, isRangeEnd, ...dataAttributes };
   };
@@ -195,6 +186,47 @@ export const Calendar = ({
         break;
     }
   };
+  const renderDefaultDateCell = (props: DateCellProps) => <DefaultDateCell {...props} />;
+  //useMemo
+  const renderDate = (dateString: string) => {
+    const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
+    if (!dateCurrent) return () => <></>;
+    const cellContent = dateCurrent.date();
+    const selected = dateCurrent && dateCurrent.isSame(selectedDateInner, 'date');
+    const disabled = dateIsDisabled(dateCurrent);
+    const hidden = dateIsHidden(dateCurrent);
+    const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(localeInner), 'date');
+    const isHoliday = dateIsHoliday(dateCurrent);
+    const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
+    const isInRange = dateIsInRange(dateCurrent);
+    const isRangeStart = dateIsRangeStart(dateCurrent);
+    const isRangeEnd = dateIsRangeEnd(dateCurrent);
+    const isStartOfWeek = dateCurrent.isSame(dateCurrent.startOf('week'), 'date');
+    const isEndOfWeek = dateCurrent.isSame(dateCurrent.endOf('week'), 'date');
+
+    const dataAttributes = getDateCellDataAttributes(
+      dateCurrent.toISOString(),
+      isHoliday,
+      isOutsideMonth,
+      isCurrentDay,
+    );
+
+    return renderDefaultDateCell({
+      cellContent,
+      selected,
+      disabled,
+      hidden,
+      isCurrentDay,
+      isHoliday,
+      isOutsideMonth,
+      isInRange,
+      isRangeStart,
+      isRangeEnd,
+      isStartOfWeek,
+      isEndOfWeek,
+      ...dataAttributes,
+    });
+  };
 
   return (
     <CalendarWrapper>
@@ -206,11 +238,11 @@ export const Calendar = ({
       />
       <DatesOfMonthWidget
         {...props}
+        renderDateCell={renderDate}
         date={dayjsDateToString(dateInner)}
         locale={localeInner}
         onClick={handleClick}
         dayNamesProps={{ dayNameCellState: getDayNameCellState }}
-        datesProps={{ dateCellState: getDateCellState }}
       />
     </CalendarWrapper>
   );
