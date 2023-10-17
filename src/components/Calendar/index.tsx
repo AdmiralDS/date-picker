@@ -118,6 +118,9 @@ export const Calendar = ({
     }
   };
 
+  const dateIsSelected = (dateCurrent?: Dayjs) => {
+    return dateCurrent && selectedDateInner && dateCurrent.isSame(selectedDateInner, 'date');
+  };
   const dateIsOutsideMonth = (dateCurrent?: Dayjs) => {
     return dateCurrent && dateCurrent.month() !== dateInner.month();
   };
@@ -168,13 +171,13 @@ export const Calendar = ({
         break;
     }
   };
-  const renderDefaultDateCell = (props: DateCellProps) => <DefaultDateCell {...props} />;
+
   //useMemo
   const renderDate = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
     if (!dateCurrent) return () => <></>;
     const cellContent = dateCurrent.date();
-    const selected = dateCurrent && dateCurrent.isSame(selectedDateInner, 'date');
+    const selected = dateIsSelected(dateCurrent);
     const disabled = dateIsDisabled(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
     const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(localeInner), 'date');
@@ -191,6 +194,9 @@ export const Calendar = ({
       isHoliday,
       isOutsideMonth,
       isCurrentDay,
+    );
+    const renderDefaultDateCell = (props: DateCellProps) => (
+      <DefaultDateCell key={dayjsDateToString(dateCurrent)} {...props} />
     );
 
     return renderDefaultDateCell({
