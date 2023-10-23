@@ -34,6 +34,13 @@ export const disabledDateCellMixin = css`
   color: ${(p) => p.theme.color['Neutral/Neutral 30']};
 `;
 
+export const rangeDisabledDateCellMixin = css`
+  ${baseCellMixin};
+  color: ${(p) => p.theme.color['Neutral/Neutral 30']};
+  background-color: transparent;
+  border-color: transparent;
+`;
+
 export const hiddenDateCellMixin = css`
   ${baseCellMixin};
   color: ${(p) => p.theme.color['Special/Elevated BG']};
@@ -49,6 +56,13 @@ export const holidayDateCellMixin = css`
 
 export const disabledHolidayDateCellMixin = css`
   ${baseCellMixin};
+  color: ${(p) => p.theme.color['Error/Error 30']};
+`;
+
+export const rangeDisabledHolidayDateCellMixin = css`
+  ${baseCellMixin};
+  background-color: transparent;
+  border-color: transparent;
   color: ${(p) => p.theme.color['Error/Error 30']};
 `;
 

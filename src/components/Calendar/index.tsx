@@ -128,13 +128,14 @@ export const Calendar = ({
     return !!(
       dateCurrent &&
       dateCurrent.month() === dateInner.month() &&
-      ((dateCurrent.day() === 6 && dateCurrent.date() !== 14) || dateCurrent.date() < 5)
+      (dateCurrent.day() === 6 || dateCurrent.date() < 5)
     );
   };
   const dateIsHoliday = (dateCurrent?: Dayjs) => {
     return !!(
       dateCurrent &&
       dateCurrent.month() === dateInner.month() &&
+      dateCurrent.date() !== 14 &&
       (dateCurrent.day() === 6 || dateCurrent.day() === 0 || dateCurrent.isSame(dayjs().locale(localeInner), 'date'))
     );
   };

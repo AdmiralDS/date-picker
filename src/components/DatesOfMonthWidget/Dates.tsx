@@ -19,6 +19,7 @@ import {
   currentDateHolidayDateCellMixin,
   rangeDateCellMixin,
   rangeHolidayDateCellMixin,
+  rangeDisabledHolidayDateCellMixin, rangeDisabledDateCellMixin,
 } from '#src/components/DatesOfMonthWidget/mixins';
 
 const DatesWrapper = styled.div`
@@ -127,6 +128,8 @@ const getDateCellMixin = (
   isEndOfWeek?: boolean,
 ) => {
   if (hidden) return hiddenDateCellMixin;
+  if (isInRange && disabled && isHoliday) return rangeDisabledHolidayDateCellMixin;
+  if (isInRange && disabled) return rangeDisabledDateCellMixin;
   if (disabled && isHoliday) return disabledHolidayDateCellMixin;
   if (disabled) return disabledDateCellMixin;
   if (isOutsideMonth) return outsideMonthDateCellMixin;
