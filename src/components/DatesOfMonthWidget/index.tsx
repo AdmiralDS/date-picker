@@ -40,9 +40,9 @@ export const DatesOfMonthWidget = ({
   };
 
   return (
-    <DatesOfMonthWrapper {...props} onClick={handleClick}>
+    <DatesOfMonthWrapper {...props} onClick={handleClick} data-container-type="datesOfMonthWrapper">
       <Days locale={locale} dayNameCellState={dayNameCellState} />
-      <Dates date={localDate} renderDateCell={renderDateCell} />
+      <Dates date={localDate} renderDateCell={renderDateCell} data-container-type="datesWrapper" />
     </DatesOfMonthWrapper>
   );
 };

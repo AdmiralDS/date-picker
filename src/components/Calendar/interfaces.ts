@@ -1,8 +1,8 @@
-import type { ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
 import type { DateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
 
-export interface CalendarProps {
+export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   /** Даты в формате ISO */
   dateRange?: [string, string];
   /** Дата в формате ISO */

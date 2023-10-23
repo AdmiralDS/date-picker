@@ -19,7 +19,8 @@ import {
   currentDateHolidayDateCellMixin,
   rangeDateCellMixin,
   rangeHolidayDateCellMixin,
-  rangeDisabledHolidayDateCellMixin, rangeDisabledDateCellMixin,
+  rangeDisabledHolidayDateCellMixin,
+  rangeDisabledDateCellMixin,
 } from '#src/components/DatesOfMonthWidget/mixins';
 
 const DatesWrapper = styled.div`
@@ -34,6 +35,17 @@ const DateCellContainer = styled.div`
   position: relative;
   width: ${CELL_SIZE}px;
   height: ${CELL_SIZE}px;
+  & > * {
+    pointer-events: none;
+  }
+  cursor: pointer;
+
+  &[data-disabled-cell='true'] {
+    cursor: default;
+  }
+  &[data-hidden-cell='true'] {
+    cursor: default;
+  }
 `;
 
 const LeftHalf = styled.div<{ $isVisible: boolean; $isStartOfWeek: boolean }>`
@@ -76,14 +88,6 @@ const DateCell = styled.div<{
   text-align: center;
   width: ${CELL_SIZE}px;
   height: ${CELL_SIZE}px;
-  cursor: pointer;
-
-  &[data-disabled='true'] {
-    cursor: default;
-  }
-  &[data-hidden='true'] {
-    cursor: default;
-  }
   ${(p) => p.$dateCellMixin}
 `;
 
@@ -96,7 +100,11 @@ export const Dates = ({ date, renderDateCell, ...props }: DatesProps) => {
     );
   };
 
-  return <DatesWrapper {...props}>{renderDates()}</DatesWrapper>;
+  return (
+    <DatesWrapper {...props} data-container-type="datesWrapper">
+      {renderDates()}
+    </DatesWrapper>
+  );
 };
 
 export interface DateCellProps extends HTMLAttributes<HTMLDivElement> {
@@ -172,19 +180,17 @@ export const DefaultDateCell = ({
     isEndOfWeek,
   );
   return (
-    <DateCellContainer className={className}>
+    <DateCellContainer
+      className={className}
+      {...props}
+      data-cell-type="dateCell"
+      data-selected-cell={selected ? true : undefined}
+      data-disabled-cell={disabled ? true : undefined}
+      data-hidden-cell={hidden ? true : undefined}
+    >
       <LeftHalf $isVisible={!!isInRange || !!isRangeEnd} $isStartOfWeek={!!isStartOfWeek} />
       <RightHalf $isVisible={!!isInRange || !!isRangeStart} $isEndOfWeek={!!isEndOfWeek} />
-      <DateCell
-        {...props}
-        data-selected={selected ? true : undefined}
-        data-disabled={disabled ? true : undefined}
-        data-hidden={hidden ? true : undefined}
-        $dateCellMixin={cellMixin}
-        $isInRange={isInRange}
-        $isRangeStart={isRangeStart}
-        $isRangeEnd={isRangeEnd}
-      >
+      <DateCell $dateCellMixin={cellMixin} $isInRange={isInRange} $isRangeStart={isRangeStart} $isRangeEnd={isRangeEnd}>
         {cellContent}
       </DateCell>
     </DateCellContainer>

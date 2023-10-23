@@ -1,4 +1,4 @@
-import type { MouseEventHandler, ReactNode } from 'react';
+import type { HTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 import type { Dayjs } from 'dayjs';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 
@@ -18,7 +18,7 @@ export interface DayNameCellProps {
   dayNameCellState: (dayNumber: number) => CellStateProps;
 }
 
-export interface DatesOfMonthWidgetProps {
+export interface DatesOfMonthWidgetProps extends HTMLAttributes<HTMLDivElement> {
   /** Дата в формате ISO */
   date?: string;
   locale?: string;

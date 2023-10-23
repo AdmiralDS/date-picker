@@ -99,8 +99,11 @@ export const Calendar = ({
   );
   const selectedDateInner =
     (selectedDate && dateStringToDayjs(selectedDate, localeInner, timezone)) || selectedDateState;
+
   const [dateState, setDateState] = useState(getDayjsDate(localeInner, timezone, defaultDate));
   const dateInner = (date && getDayjsDate(localeInner, timezone, date)) || dateState;
+
+  const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
 
   const handleDateChange = (dateString: string) => {
     const dayjsDate = getDayjsDate(localeInner, timezone, dateString);
@@ -120,6 +123,43 @@ export const Calendar = ({
     const clickedDate = dateStringToDayjs(clickedCell, localeInner, timezone);
     if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
       handleSelectedDateChange(dayjsDateToString(clickedDate));
+    }
+  };
+
+  const handleActiveDateChange = (dateString?: string) => {
+    const dayjsActiveDate = dateStringToDayjs(dateString, localeInner, timezone);
+    console.log(`set active ${dayjsActiveDate}`);
+    setActiveDateInner(dayjsActiveDate);
+  };
+  const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
+    const target = e.target as HTMLDivElement;
+    if (target.dataset.cellType === 'dateCell') {
+      const hoveredDate = dateStringToDayjs(target.dataset.value, localeInner, timezone);
+      if (hoveredDate) {
+        handleActiveDateChange(dayjsDateToString(hoveredDate));
+      }
+    }
+  };
+  const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
+    const target = e.target as HTMLDivElement;
+    if (target.dataset.cellType === 'dateCell') {
+      const hoveredDate = dateStringToDayjs(target.dataset.value, localeInner, timezone);
+      if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
+        handleActiveDateChange(dayjsDateToString(hoveredDate));
+      }
+      return;
+    }
+    if (target.dataset.containerType !== 'datesWrapper') {
+      if (activeDateInner) {
+        handleActiveDateChange(undefined);
+        return;
+      }
+    }
+  };
+  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (e) => {
+    const target = e.target as HTMLDivElement;
+    if (target.dataset.cellType !== 'dateCell' && target.dataset.containerType !== 'datesWrapper') {
+      handleActiveDateChange(undefined);
     }
   };
 
@@ -236,6 +276,9 @@ export const Calendar = ({
         date={dayjsDateToString(dateInner)}
         locale={localeInner}
         onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
         dayNamesProps={{ dayNameCellState: getDayNameCellState }}
       />
     </CalendarWrapper>
