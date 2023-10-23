@@ -91,6 +91,7 @@ export const rangeDateCellMixin = css`
   ${baseCellMixin};
   background-color: transparent;
   border-color: transparent;
+  color: ${(p) => p.theme.color['Neutral/Neutral 90']};
 
   &:hover {
     background-color: ${(p) => p.theme.color['Special/Elevated BG']};
