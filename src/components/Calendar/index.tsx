@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
+import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
+
 import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import type { CalendarProps } from '#src/components/Calendar/interfaces';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/Calendar/constants';
@@ -34,6 +36,9 @@ const CalendarWrapper = styled.div`
   padding-top: 20px;
   width: ${CALENDAR_WIDTH}px;
   height: ${CALENDAR_HEIGHT}px;
+  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
+  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
+  ${(p) => p.theme.shadow['Shadow 08']}
 `;
 
 export const getDateCellMixin = (

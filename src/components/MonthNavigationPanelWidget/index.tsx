@@ -16,6 +16,7 @@ const MonthNavigationPanelWrapper = styled.div`
   padding: 0 12px;
   display: flex;
   justify-content: space-between;
+  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
 `;
 
 export const MonthNavigationPanelWidget = ({
