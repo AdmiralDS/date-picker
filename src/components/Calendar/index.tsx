@@ -91,28 +91,25 @@ export const Calendar = ({
   locale = 'ru',
   ...props
 }: CalendarProps) => {
-  const localeInner = locale || 'ru';
-
-  const [dateRangeState, setDateRangeState] = useState(getInitialDateRange(dateRange, localeInner, timezone));
+  const [dateRangeState, setDateRangeState] = useState(getInitialDateRange(dateRange, locale, timezone));
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
-    defaultSelectedDate ? getDayjsDate(localeInner, timezone, defaultSelectedDate) : undefined,
+    defaultSelectedDate ? getDayjsDate(locale, timezone, defaultSelectedDate) : undefined,
   );
-  const selectedDateInner =
-    (selectedDate && dateStringToDayjs(selectedDate, localeInner, timezone)) || selectedDateState;
+  const selectedDateInner = (selectedDate && dateStringToDayjs(selectedDate, locale, timezone)) || selectedDateState;
 
-  const [dateState, setDateState] = useState(getDayjsDate(localeInner, timezone, defaultDate));
-  const dateInner = (date && getDayjsDate(localeInner, timezone, date)) || dateState;
+  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDate));
+  const dateInner = (date && getDayjsDate(locale, timezone, date)) || dateState;
 
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
 
   const handleDateChange = (dateString: string) => {
-    const dayjsDate = getDayjsDate(localeInner, timezone, dateString);
+    const dayjsDate = getDayjsDate(locale, timezone, dateString);
     setDateState(dayjsDate);
     onDateChange?.(dayjsDateToString(dayjsDate));
   };
 
   const handleSelectedDateChange = (dateString: string) => {
-    const dayjsSelectedDate = dateStringToDayjs(dateString, localeInner, timezone);
+    const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
     setSelectedDateState(dayjsSelectedDate);
     onSelectedDateChange?.(dateString);
   };
@@ -120,21 +117,21 @@ export const Calendar = ({
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
-    const clickedDate = dateStringToDayjs(clickedCell, localeInner, timezone);
+    const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
     if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
       handleSelectedDateChange(dayjsDateToString(clickedDate));
     }
   };
 
   const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, localeInner, timezone);
+    const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
     console.log(`set active ${dayjsActiveDate}`);
     setActiveDateInner(dayjsActiveDate);
   };
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, localeInner, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
       if (hoveredDate) {
         handleActiveDateChange(dayjsDateToString(hoveredDate));
       }
@@ -143,7 +140,7 @@ export const Calendar = ({
   const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, localeInner, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
       if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
         handleActiveDateChange(dayjsDateToString(hoveredDate));
       }
@@ -181,7 +178,7 @@ export const Calendar = ({
       dateCurrent &&
       dateCurrent.month() === dateInner.month() &&
       dateCurrent.date() !== 14 &&
-      (dateCurrent.day() === 6 || dateCurrent.day() === 0 || dateCurrent.isSame(dayjs().locale(localeInner), 'date'))
+      (dateCurrent.day() === 6 || dateCurrent.day() === 0 || dateCurrent.isSame(dayjs().locale(locale), 'date'))
     );
   };
   const dateIsHidden = (dateCurrent?: Dayjs) => {
@@ -220,13 +217,13 @@ export const Calendar = ({
 
   //useMemo
   const renderDate = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
+    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
     if (!dateCurrent) return () => <></>;
     const cellContent = dateCurrent.date();
     const selected = dateIsSelected(dateCurrent);
     const disabled = dateIsDisabled(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
-    const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(localeInner), 'date');
+    const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
     const isHoliday = dateIsHoliday(dateCurrent);
     const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
     const isInRange = dateIsInRange(dateCurrent);
@@ -266,7 +263,7 @@ export const Calendar = ({
     <CalendarWrapper>
       <MonthNavigationPanelWidget
         date={dayjsDateToString(dateInner)}
-        locale={localeInner}
+        locale={locale}
         timezone={timezone}
         onClick={handleMonthNavigationPanelClick}
       />
@@ -274,7 +271,7 @@ export const Calendar = ({
         {...props}
         renderDateCell={renderDate}
         date={dayjsDateToString(dateInner)}
-        locale={localeInner}
+        locale={locale}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
