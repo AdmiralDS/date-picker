@@ -8,7 +8,7 @@ import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 
 import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import type { DateCalendarProps } from '#src/components/DateCalendar/interfaces';
-import { DATE_CALENDAR_HEIGHT, DATE_CALENDAR_WIDTH } from '#src/components/DateCalendar/constants';
+import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
@@ -34,8 +34,8 @@ const DateCalendarWrapper = styled.div`
   align-items: center;
   align-content: space-between;
   padding-top: 20px;
-  width: ${DATE_CALENDAR_WIDTH}px;
-  height: ${DATE_CALENDAR_HEIGHT}px;
+  width: ${CALENDAR_WIDTH}px;
+  height: ${CALENDAR_HEIGHT}px;
   background-color: ${(p) => p.theme.color['Special/Elevated BG']};
   border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
   ${(p) => p.theme.shadow['Shadow 08']}

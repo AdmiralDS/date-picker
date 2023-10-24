@@ -5,12 +5,12 @@ import { IconPlacement, typography } from '@admiral-ds/react-ui';
 import { ReactComponent as ChevronLeftOutline } from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg';
 import { ReactComponent as ChevronRightOutline } from '@admiral-ds/icons/build/system/ChevronRightOutline.svg';
 
-import { DATE_CALENDAR_WIDTH } from '#src/components/DateCalendar/constants';
+import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 
 const YearNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
-  width: ${DATE_CALENDAR_WIDTH}PX;
+  width: ${CALENDAR_WIDTH}PX;
   height: 32px;
   padding: 0 12px;
   display: flex;
