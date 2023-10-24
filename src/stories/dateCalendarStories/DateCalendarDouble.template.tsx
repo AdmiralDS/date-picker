@@ -2,10 +2,10 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
-import { Calendar } from '@admiral-ds/date-picker';
+import { DateCalendar } from '@admiral-ds/date-picker';
 
 import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
-import type { CalendarProps } from '#src/components/Calendar/interfaces';
+import type { DateCalendarProps } from '#src/components/DateCalendar/interfaces';
 
 const DoubleCalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -14,14 +14,14 @@ const DoubleCalendarWrapper = styled.div`
   ${(p) => p.theme.shadow['Shadow 08']}
 `;
 
-export const CalendarDoubleTemplate = ({
+export const DateCalendarDoubleTemplate = ({
   date,
   defaultDate,
   onDateChange,
   locale = 'ru',
   timezone = getCurrentTimeZone(),
   ...props
-}: CalendarProps) => {
+}: DateCalendarProps) => {
   const [dateLeft, setDateLeft] = useState<Dayjs>(getDayjsDate(locale, timezone, defaultDate));
   const [dateRight, setDateRight] = useState<Dayjs>(dateLeft.add(1, 'month'));
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(undefined);
@@ -47,7 +47,7 @@ export const CalendarDoubleTemplate = ({
 
   return (
     <DoubleCalendarWrapper>
-      <Calendar
+      <DateCalendar
         {...props}
         date={dayjsDateToString(dateLeft)}
         locale={locale}
@@ -56,7 +56,7 @@ export const CalendarDoubleTemplate = ({
         selectedDate={selectedDate && dayjsDateToString(selectedDate)}
         onSelectedDateChange={handleSelectedDateChange}
       />
-      <Calendar
+      <DateCalendar
         {...props}
         date={dayjsDateToString(dateRight)}
         locale={locale}

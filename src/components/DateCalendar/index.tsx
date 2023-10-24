@@ -7,8 +7,8 @@ import type { Dayjs } from 'dayjs';
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 
 import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
-import type { CalendarProps } from '#src/components/Calendar/interfaces';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/Calendar/constants';
+import type { DateCalendarProps } from '#src/components/DateCalendar/interfaces';
+import { DATE_CALENDAR_HEIGHT, DATE_CALENDAR_WIDTH } from '#src/components/DateCalendar/constants';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
@@ -27,15 +27,15 @@ import {
 import type { DateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
 import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates';
 
-const CalendarWrapper = styled.div`
+const DateCalendarWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   align-content: space-between;
   padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
+  width: ${DATE_CALENDAR_WIDTH}px;
+  height: ${DATE_CALENDAR_HEIGHT}px;
   background-color: ${(p) => p.theme.color['Special/Elevated BG']};
   border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
   ${(p) => p.theme.shadow['Shadow 08']}
@@ -76,7 +76,7 @@ const getDateCellDataAttributes = (
   };
 };
 
-export const Calendar = ({
+export const DateCalendar = ({
   pickerType = 'datePicker',
   dateRange,
   defaultDateRange,
@@ -89,22 +89,24 @@ export const Calendar = ({
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
-}: CalendarProps) => {
-  const [dateRangeStartState, setDateRangeStartState] = useState(
+}: DateCalendarProps) => {
+  const [dateRangeFirstState, setDateRangeFirstState] = useState(
     dateStringToDayjs(defaultDateRange?.[0], locale, timezone),
   );
-  const [dateRangeEndState, setDateRangeEndState] = useState(
+  const [dateRangeSecondState, setDateRangeSecondState] = useState(
     dateStringToDayjs(defaultDateRange?.[1], locale, timezone),
   );
-  const dateRangeStartInner = (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[0])) || dateRangeStartState;
-  const dateRangeEndInner = (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[1])) || dateRangeEndState;
+  const dateRangeFirstInner = (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[0])) || dateRangeFirstState;
+  const dateRangeSecondInner =
+    (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[1])) || dateRangeSecondState;
+  //const dateRangeActiveEnd
   const handleDateRangeStart = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    setDateRangeStartState(dayjsDate);
+    setDateRangeFirstState(dayjsDate);
   };
   const handleDateRangeEnd = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    setDateRangeEndState(dayjsDate);
+    setDateRangeSecondState(dayjsDate);
   };
 
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
@@ -138,6 +140,21 @@ export const Calendar = ({
     if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
       if (pickerType === 'datePicker') {
         handleSelectedDateChange(dayjsDateToString(clickedDate));
+        return;
+      }
+      if (pickerType === 'rangePicker') {
+        if (dateRangeFirstInner && dateRangeSecondInner) {
+          setDateRangeFirstState(clickedDate);
+          return;
+        }
+        if (dateRangeFirstInner) {
+          setDateRangeSecondState(clickedDate);
+          return;
+        }
+        if (dateRangeSecondInner) {
+          return;
+        }
+        setDateRangeFirstState(clickedDate);
         return;
       }
     }
@@ -207,21 +224,21 @@ export const Calendar = ({
 
   const dateIsInRange = (dateCurrent?: Dayjs) => {
     if (!dateCurrent) return false;
-    if (dateRangeStartInner && dateRangeEndInner) {
-      return dateCurrent.isBetween(dateRangeStartInner, dateRangeEndInner, 'date', '()');
+    if (dateRangeFirstInner && dateRangeSecondInner) {
+      return dateCurrent.isBetween(dateRangeFirstInner, dateRangeSecondInner, 'date', '()');
     }
-    if (dateRangeStartInner && activeDateInner) {
-      return dateCurrent.isBetween(dateRangeStartInner, activeDateInner, 'date', '()');
+    if (dateRangeFirstInner && activeDateInner) {
+      return dateCurrent.isBetween(dateRangeFirstInner, activeDateInner, 'date', '()');
     }
     return false;
   };
   const dateIsRangeStart = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !dateRangeStartInner) return false;
-    return dateCurrent.isSame(dateRangeStartInner, 'date');
+    if (!dateCurrent || !dateRangeFirstInner) return false;
+    return dateCurrent.isSame(dateRangeFirstInner, 'date');
   };
   const dateIsRangeEnd = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !dateRangeEndInner) return false;
-    return dateCurrent.isSame(dateRangeEndInner, 'date');
+    if (!dateCurrent || !dateRangeSecondInner) return false;
+    return dateCurrent.isSame(dateRangeSecondInner, 'date');
   };
 
   const getDayNameCellState = (dayNumber: number): CellStateProps => {
@@ -289,7 +306,7 @@ export const Calendar = ({
   };
 
   return (
-    <CalendarWrapper>
+    <DateCalendarWrapper>
       <MonthNavigationPanelWidget
         date={dayjsDateToString(dateInner)}
         locale={locale}
@@ -307,6 +324,6 @@ export const Calendar = ({
         onMouseMove={handleMouseMove}
         dayNamesProps={{ dayNameCellState: getDayNameCellState }}
       />
-    </CalendarWrapper>
+    </DateCalendarWrapper>
   );
 };

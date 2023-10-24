@@ -5,13 +5,13 @@ import { ReactComponent as ChevronLeftOutline } from '@admiral-ds/icons/build/sy
 import { ReactComponent as ChevronRightOutline } from '@admiral-ds/icons/build/system/ChevronRightOutline.svg';
 
 import { getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
-import { CALENDAR_WIDTH } from '#src/components/Calendar/constants';
+import { DATE_CALENDAR_WIDTH } from '#src/components/DateCalendar/constants';
 import type { MonthNavigationPanelWidgetProps } from '#src/components/MonthNavigationPanelWidget/interfaces';
 import { MonthYear } from '#src/components/MonthNavigationPanelWidget/MonthYear';
 
 const MonthNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
-  width: ${CALENDAR_WIDTH}PX;
+  width: ${DATE_CALENDAR_WIDTH}PX;
   height: 32px;
   padding: 0 12px;
   display: flex;

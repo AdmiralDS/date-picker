@@ -10,7 +10,7 @@ import {
   getCurrentTimeZone,
   getDayjsDate,
 } from '#src/components/utils';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/Calendar/constants';
+import { DATE_CALENDAR_HEIGHT, DATE_CALENDAR_WIDTH } from '#src/components/DateCalendar/constants';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import {
   baseMonthCellMixin,
@@ -29,8 +29,8 @@ const CalendarWrapper = styled.div`
   align-items: center;
   align-content: space-between;
   padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
+  width: ${DATE_CALENDAR_WIDTH}px;
+  height: ${DATE_CALENDAR_HEIGHT}px;
   ${(p) => p.theme.shadow['Shadow 08']}
 `;
 
