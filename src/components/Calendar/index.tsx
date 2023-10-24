@@ -65,12 +65,14 @@ const getDateCellDataAttributes = (
   isHoliday?: boolean,
   isOutsideMonth?: boolean,
   isCurrentDay?: boolean,
+  isActive?: boolean,
 ): Record<string, any> => {
   return {
     'data-value': value ? value : undefined,
-    'data-is-holiday': isHoliday ? isHoliday : undefined,
-    'data-is-outside-month': isOutsideMonth ? isOutsideMonth : undefined,
-    'data-is-current-day': isCurrentDay ? isCurrentDay : undefined,
+    'data-is-holiday-cell': isHoliday ? isHoliday : undefined,
+    'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
+    'data-is-current-day-cell': isCurrentDay ? isCurrentDay : undefined,
+    'data-is-active-cell': isActive ? isActive : undefined,
   };
 };
 
@@ -255,12 +257,14 @@ export const Calendar = ({
     const isRangeEnd = dateIsRangeEnd(dateCurrent);
     const isStartOfWeek = dateCurrent.isSame(dateCurrent.startOf('week'), 'date');
     const isEndOfWeek = dateCurrent.isSame(dateCurrent.endOf('week'), 'date');
+    const isActive = activeDateInner?.isSame(dateCurrent, 'date');
 
     const dataAttributes = getDateCellDataAttributes(
       dateCurrent.toISOString(),
       isHoliday,
       isOutsideMonth,
       isCurrentDay,
+      isActive,
     );
     const renderDefaultDateCell = (props: DateCellProps) => (
       <DefaultDateCell key={dayjsDateToString(dateCurrent)} {...props} />
@@ -279,6 +283,7 @@ export const Calendar = ({
       isRangeEnd,
       isStartOfWeek,
       isEndOfWeek,
+      isActive,
       ...dataAttributes,
     });
   };

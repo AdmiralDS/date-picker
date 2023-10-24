@@ -80,6 +80,7 @@ const DateCell = styled.div<{
   $isInRange?: boolean;
   $isRangeStart?: boolean;
   $isRangeEnd?: boolean;
+  $isActive?: boolean;
 }>`
   position: absolute;
   top: 0;
@@ -120,6 +121,7 @@ export interface DateCellProps extends HTMLAttributes<HTMLDivElement> {
   isRangeEnd?: boolean;
   isStartOfWeek?: boolean;
   isEndOfWeek?: boolean;
+  isActive?: boolean;
 }
 
 const getDateCellMixin = (
@@ -134,6 +136,7 @@ const getDateCellMixin = (
   isRangeEnd?: boolean,
   isStartOfWeek?: boolean,
   isEndOfWeek?: boolean,
+  isActive?: boolean,
 ) => {
   if (hidden) return hiddenDateCellMixin;
   if (isInRange && disabled && isHoliday) return rangeDisabledHolidayDateCellMixin;
@@ -163,6 +166,7 @@ export const DefaultDateCell = ({
   isRangeEnd,
   isStartOfWeek,
   isEndOfWeek,
+  isActive,
   className,
   ...props
 }: DateCellProps) => {
@@ -190,7 +194,13 @@ export const DefaultDateCell = ({
     >
       <LeftHalf $isVisible={!!isInRange || !!isRangeEnd} $isStartOfWeek={!!isStartOfWeek} />
       <RightHalf $isVisible={!!isInRange || !!isRangeStart} $isEndOfWeek={!!isEndOfWeek} />
-      <DateCell $dateCellMixin={cellMixin} $isInRange={isInRange} $isRangeStart={isRangeStart} $isRangeEnd={isRangeEnd}>
+      <DateCell
+        $dateCellMixin={cellMixin}
+        $isInRange={isInRange}
+        $isRangeStart={isRangeStart}
+        $isRangeEnd={isRangeEnd}
+        $isActive={isActive}
+      >
         {cellContent}
       </DateCell>
     </DateCellContainer>
