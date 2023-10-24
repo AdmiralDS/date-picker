@@ -19,7 +19,7 @@ const DatesOfMonthWrapper = styled.div`
 
 export const DatesOfMonthWidget = ({
   date,
-  onClick,
+  //onClick,
   locale = 'ru',
   timezone = getCurrentTimeZone(),
   dayNamesProps,
@@ -29,7 +29,7 @@ export const DatesOfMonthWidget = ({
   const { dayNameCellState } = dayNamesProps;
   const localDate = getDayjsDate(locale, timezone, date);
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
+  /*const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.disabled || target.dataset.hidden) {
       console.log(`click on disabled or hidden`);
@@ -37,10 +37,10 @@ export const DatesOfMonthWidget = ({
       return;
     }
     onClick?.(e);
-  };
+  };*/
 
   return (
-    <DatesOfMonthWrapper {...props} onClick={handleClick} data-container-type="datesOfMonthWrapper">
+    <DatesOfMonthWrapper {...props} data-container-type="datesOfMonthWrapper">
       <Days locale={locale} dayNameCellState={dayNameCellState} />
       <Dates date={localDate} renderDateCell={renderDateCell} data-container-type="datesWrapper" />
     </DatesOfMonthWrapper>

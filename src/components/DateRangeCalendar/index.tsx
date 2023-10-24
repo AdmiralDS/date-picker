@@ -92,6 +92,7 @@ export const DateRangeCalendar = ({
   onDateChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
+  onClick,
   ...props
 }: DateRangeCalendarProps) => {
   const [dateRangeFirstState, setDateRangeFirstState] = useState(
@@ -128,23 +129,27 @@ export const DateRangeCalendar = ({
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
-    console.log(`click on ${clickedCell}`);
     const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
     if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
       if (dateRangeFirstInner && dateRangeSecondInner) {
         setDateRangeFirstState(clickedDate);
+        onClick?.(e);
         return;
       }
       if (dateRangeFirstInner) {
         setDateRangeSecondState(clickedDate);
+        onClick?.(e);
         return;
       }
       if (dateRangeSecondInner) {
+        onClick?.(e);
         return;
       }
       setDateRangeFirstState(clickedDate);
+      onClick?.(e);
       return;
     }
+    onClick?.(e);
   };
 
   const handleActiveDateChange = (dateString?: string) => {

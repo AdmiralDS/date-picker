@@ -93,6 +93,7 @@ export const DateCalendar = ({
   onSelectedDateChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
+  onClick,
   ...props
 }: DateCalendarProps) => {
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
@@ -121,12 +122,11 @@ export const DateCalendar = ({
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
-    console.log(`click on ${clickedCell}`);
     const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
     if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
       handleSelectedDateChange(dayjsDateToString(clickedDate));
-      return;
     }
+    onClick?.(e);
   };
 
   const handleActiveDateChange = (dateString?: string) => {
