@@ -1,0 +1,2 @@
+export const DATE_RANGE_CALENDAR_WIDTH = 284;
+export const DATE_RANGE_CALENDAR_HEIGHT = 356;

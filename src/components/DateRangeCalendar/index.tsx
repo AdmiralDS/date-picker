@@ -1,0 +1,329 @@
+import type { MouseEventHandler } from 'react';
+import { useState } from 'react';
+import styled from 'styled-components';
+import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
+
+import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
+
+import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
+import type { DateRangeCalendarProps } from '#src/components/DateRangeCalendar/interfaces';
+import { DATE_RANGE_CALENDAR_HEIGHT, DATE_RANGE_CALENDAR_WIDTH } from '#src/components/DateRangeCalendar/constants';
+import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
+import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
+import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
+import {
+  baseDateCellMixin,
+  baseDayNameCellMixin,
+  disabledDateCellMixin,
+  disabledHolidayDateCellMixin,
+  hiddenDateCellMixin,
+  holidayDateCellMixin,
+  outsideMonthDateCellMixin,
+  selectedDateCellMixin,
+  currentDateCellMixin,
+  currentDateHolidayDateCellMixin,
+} from '#src/components/DatesOfMonthWidget/mixins';
+import type { DateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
+import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates';
+
+const DateCalendarWrapper = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: space-between;
+  padding-top: 20px;
+  width: ${DATE_RANGE_CALENDAR_WIDTH}px;
+  height: ${DATE_RANGE_CALENDAR_HEIGHT}px;
+  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
+  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
+  ${(p) => p.theme.shadow['Shadow 08']}
+`;
+
+export const getDateCellMixin = (
+  selected?: boolean,
+  disabled?: boolean,
+  hidden?: boolean,
+  isHoliday?: boolean,
+  isOutsideMonth?: boolean,
+  isToday?: boolean,
+) => {
+  if (hidden) return hiddenDateCellMixin;
+  if (disabled && isHoliday) return disabledHolidayDateCellMixin;
+  if (disabled) return disabledDateCellMixin;
+  if (isOutsideMonth) return outsideMonthDateCellMixin;
+  if (selected) return selectedDateCellMixin;
+  if (isHoliday && isToday) return currentDateHolidayDateCellMixin;
+  if (isHoliday) return holidayDateCellMixin;
+  if (isToday) return currentDateCellMixin;
+  return baseDateCellMixin;
+};
+
+const getDateCellDataAttributes = (
+  value?: string,
+  isHoliday?: boolean,
+  isOutsideMonth?: boolean,
+  isCurrentDay?: boolean,
+  isActive?: boolean,
+): Record<string, any> => {
+  return {
+    'data-value': value ? value : undefined,
+    'data-is-holiday-cell': isHoliday ? isHoliday : undefined,
+    'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
+    'data-is-current-day-cell': isCurrentDay ? isCurrentDay : undefined,
+    'data-is-active-cell': isActive ? isActive : undefined,
+  };
+};
+
+export const DateRangeCalendar = ({
+  pickerType = 'datePicker',
+  dateRange,
+  defaultDateRange,
+  date,
+  defaultDate,
+  onDateChange,
+  selectedDate,
+  defaultSelectedDate,
+  onSelectedDateChange,
+  timezone = getCurrentTimeZone(),
+  locale = 'ru',
+  ...props
+}: DateRangeCalendarProps) => {
+  const [dateRangeFirstState, setDateRangeFirstState] = useState(
+    dateStringToDayjs(defaultDateRange?.[0], locale, timezone),
+  );
+  const [dateRangeSecondState, setDateRangeSecondState] = useState(
+    dateStringToDayjs(defaultDateRange?.[1], locale, timezone),
+  );
+  const dateRangeFirstInner = (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[0])) || dateRangeFirstState;
+  const dateRangeSecondInner =
+    (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[1])) || dateRangeSecondState;
+  //const dateRangeActiveEnd
+  const handleDateRangeStart = (dateString: string) => {
+    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    setDateRangeFirstState(dayjsDate);
+  };
+  const handleDateRangeEnd = (dateString: string) => {
+    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    setDateRangeSecondState(dayjsDate);
+  };
+
+  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
+    defaultSelectedDate ? dateStringToDayjs(defaultSelectedDate, locale, timezone) : undefined,
+  );
+  const selectedDateInner = (selectedDate && dateStringToDayjs(selectedDate, locale, timezone)) || selectedDateState;
+
+  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDate));
+  const dateInner = (date && getDayjsDate(locale, timezone, date)) || dateState;
+
+  const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
+
+  const handleDateChange = (dateString: string) => {
+    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    if (dayjsDate) {
+      setDateState(dayjsDate);
+      onDateChange?.(dateString);
+    }
+  };
+
+  const handleSelectedDateChange = (dateString: string) => {
+    const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
+    setSelectedDateState(dayjsSelectedDate);
+    onSelectedDateChange?.(dateString);
+  };
+
+  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    const clickedCell = (e.target as HTMLDivElement).dataset.value;
+    console.log(`click on ${clickedCell}`);
+    const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
+    if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
+      if (pickerType === 'datePicker') {
+        handleSelectedDateChange(dayjsDateToString(clickedDate));
+        return;
+      }
+      if (pickerType === 'rangePicker') {
+        if (dateRangeFirstInner && dateRangeSecondInner) {
+          setDateRangeFirstState(clickedDate);
+          return;
+        }
+        if (dateRangeFirstInner) {
+          setDateRangeSecondState(clickedDate);
+          return;
+        }
+        if (dateRangeSecondInner) {
+          return;
+        }
+        setDateRangeFirstState(clickedDate);
+        return;
+      }
+    }
+  };
+
+  const handleActiveDateChange = (dateString?: string) => {
+    const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
+    console.log(`set active ${dayjsActiveDate}`);
+    setActiveDateInner(dayjsActiveDate);
+  };
+  const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
+    const target = e.target as HTMLDivElement;
+    if (target.dataset.cellType === 'dateCell') {
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      if (hoveredDate) {
+        handleActiveDateChange(dayjsDateToString(hoveredDate));
+      }
+    }
+  };
+  const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
+    const target = e.target as HTMLDivElement;
+    if (target.dataset.cellType === 'dateCell') {
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
+        handleActiveDateChange(dayjsDateToString(hoveredDate));
+      }
+      return;
+    }
+    if (target.dataset.containerType !== 'datesWrapper') {
+      if (activeDateInner) {
+        handleActiveDateChange(undefined);
+        return;
+      }
+    }
+  };
+  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (e) => {
+    const target = e.target as HTMLDivElement;
+    if (target.dataset.cellType !== 'dateCell' && target.dataset.containerType !== 'datesWrapper') {
+      handleActiveDateChange(undefined);
+    }
+  };
+
+  const dateIsSelected = (dateCurrent?: Dayjs) => {
+    return dateCurrent && selectedDateInner && dateCurrent.isSame(selectedDateInner, 'date');
+  };
+  const dateIsOutsideMonth = (dateCurrent?: Dayjs) => {
+    return dateCurrent && dateCurrent.month() !== dateInner.month();
+  };
+  const dateIsDisabled = (dateCurrent?: Dayjs) => {
+    return !!(
+      dateCurrent &&
+      dateCurrent.month() === dateInner.month() &&
+      (dateCurrent.day() === 6 || dateCurrent.date() < 5)
+    );
+  };
+  const dateIsHoliday = (dateCurrent?: Dayjs) => {
+    return !!(
+      dateCurrent &&
+      dateCurrent.month() === dateInner.month() &&
+      dateCurrent.date() !== 14 &&
+      (dateCurrent.day() === 6 || dateCurrent.day() === 0 || dateCurrent.isSame(dayjs().locale(locale), 'date'))
+    );
+  };
+  const dateIsHidden = (dateCurrent?: Dayjs) => {
+    return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
+  };
+
+  const dateIsInRange = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent) return false;
+    if (dateRangeFirstInner && dateRangeSecondInner) {
+      return dateCurrent.isBetween(dateRangeFirstInner, dateRangeSecondInner, 'date', '()');
+    }
+    if (dateRangeFirstInner && activeDateInner) {
+      return dateCurrent.isBetween(dateRangeFirstInner, activeDateInner, 'date', '()');
+    }
+    return false;
+  };
+  const dateIsRangeStart = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent || !dateRangeFirstInner) return false;
+    return dateCurrent.isSame(dateRangeFirstInner, 'date');
+  };
+  const dateIsRangeEnd = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent || !dateRangeSecondInner) return false;
+    return dateCurrent.isSame(dateRangeSecondInner, 'date');
+  };
+
+  const getDayNameCellState = (dayNumber: number): CellStateProps => {
+    const cellMixin = baseDayNameCellMixin;
+    return { cellMixin };
+  };
+
+  const handleMonthNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
+    const targetType = (e.target as HTMLElement).dataset.direction;
+    switch (targetType) {
+      case 'left':
+        handleDateChange(dayjsDateToString(dateInner.subtract(1, 'month')));
+        break;
+      case 'right':
+        handleDateChange(dayjsDateToString(dateInner.add(1, 'month')));
+        break;
+    }
+  };
+
+  //useMemo
+  const renderDate = (dateString: string) => {
+    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
+    if (!dateCurrent) return () => <></>;
+    const cellContent = dateCurrent.date();
+    const selected = dateIsSelected(dateCurrent);
+    const disabled = dateIsDisabled(dateCurrent);
+    const hidden = dateIsHidden(dateCurrent);
+    const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
+    const isHoliday = dateIsHoliday(dateCurrent);
+    const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
+    const isInRange = dateIsInRange(dateCurrent);
+    const isRangeStart = dateIsRangeStart(dateCurrent);
+    const isRangeEnd = dateIsRangeEnd(dateCurrent);
+    const isStartOfWeek = dateCurrent.isSame(dateCurrent.startOf('week'), 'date');
+    const isEndOfWeek = dateCurrent.isSame(dateCurrent.endOf('week'), 'date');
+    const isActive = activeDateInner?.isSame(dateCurrent, 'date');
+
+    const dataAttributes = getDateCellDataAttributes(
+      dateCurrent.toISOString(),
+      isHoliday,
+      isOutsideMonth,
+      isCurrentDay,
+      isActive,
+    );
+    const renderDefaultDateCell = (props: DateCellProps) => (
+      <DefaultDateCell key={dayjsDateToString(dateCurrent)} {...props} />
+    );
+
+    return renderDefaultDateCell({
+      cellContent,
+      selected,
+      disabled,
+      hidden,
+      isCurrentDay,
+      isHoliday,
+      isOutsideMonth,
+      isInRange,
+      isRangeStart,
+      isRangeEnd,
+      isStartOfWeek,
+      isEndOfWeek,
+      isActive,
+      ...dataAttributes,
+    });
+  };
+
+  return (
+    <DateCalendarWrapper>
+      <MonthNavigationPanelWidget
+        date={dayjsDateToString(dateInner)}
+        locale={locale}
+        timezone={timezone}
+        onClick={handleMonthNavigationPanelClick}
+      />
+      <DatesOfMonthWidget
+        {...props}
+        renderDateCell={renderDate}
+        date={dayjsDateToString(dateInner)}
+        locale={locale}
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
+        dayNamesProps={{ dayNameCellState: getDayNameCellState }}
+      />
+    </DateCalendarWrapper>
+  );
+};
