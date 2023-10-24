@@ -77,15 +77,11 @@ const getDateCellDataAttributes = (
 };
 
 export const DateRangeCalendar = ({
-  pickerType = 'datePicker',
   dateRange,
   defaultDateRange,
   date,
   defaultDate,
   onDateChange,
-  selectedDate,
-  defaultSelectedDate,
-  onSelectedDateChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
@@ -109,11 +105,6 @@ export const DateRangeCalendar = ({
     setDateRangeSecondState(dayjsDate);
   };
 
-  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
-    defaultSelectedDate ? dateStringToDayjs(defaultSelectedDate, locale, timezone) : undefined,
-  );
-  const selectedDateInner = (selectedDate && dateStringToDayjs(selectedDate, locale, timezone)) || selectedDateState;
-
   const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDate));
   const dateInner = (date && getDayjsDate(locale, timezone, date)) || dateState;
 
@@ -127,36 +118,24 @@ export const DateRangeCalendar = ({
     }
   };
 
-  const handleSelectedDateChange = (dateString: string) => {
-    const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
-    setSelectedDateState(dayjsSelectedDate);
-    onSelectedDateChange?.(dateString);
-  };
-
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
     const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
     if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
-      if (pickerType === 'datePicker') {
-        handleSelectedDateChange(dayjsDateToString(clickedDate));
-        return;
-      }
-      if (pickerType === 'rangePicker') {
-        if (dateRangeFirstInner && dateRangeSecondInner) {
-          setDateRangeFirstState(clickedDate);
-          return;
-        }
-        if (dateRangeFirstInner) {
-          setDateRangeSecondState(clickedDate);
-          return;
-        }
-        if (dateRangeSecondInner) {
-          return;
-        }
+      if (dateRangeFirstInner && dateRangeSecondInner) {
         setDateRangeFirstState(clickedDate);
         return;
       }
+      if (dateRangeFirstInner) {
+        setDateRangeSecondState(clickedDate);
+        return;
+      }
+      if (dateRangeSecondInner) {
+        return;
+      }
+      setDateRangeFirstState(clickedDate);
+      return;
     }
   };
 
@@ -197,8 +176,10 @@ export const DateRangeCalendar = ({
     }
   };
 
+  // TODO: !!!
   const dateIsSelected = (dateCurrent?: Dayjs) => {
-    return dateCurrent && selectedDateInner && dateCurrent.isSame(selectedDateInner, 'date');
+    //return dateCurrent && selectedDateInner && dateCurrent.isSame(selectedDateInner, 'date');
+    return false;
   };
   const dateIsOutsideMonth = (dateCurrent?: Dayjs) => {
     return dateCurrent && dateCurrent.month() !== dateInner.month();

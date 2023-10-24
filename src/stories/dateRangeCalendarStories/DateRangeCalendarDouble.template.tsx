@@ -4,7 +4,7 @@ import type { Dayjs } from 'dayjs';
 
 import { DateRangeCalendar } from '#src/components/DateRangeCalendar';
 
-import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
+import { dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import type { DateRangeCalendarProps } from '#src/components/DateRangeCalendar/interfaces';
 
 const DoubleCalendarWrapper = styled.div`
@@ -24,7 +24,6 @@ export const DateRangeCalendarDoubleTemplate = ({
 }: DateRangeCalendarProps) => {
   const [dateLeft, setDateLeft] = useState<Dayjs>(getDayjsDate(locale, timezone, defaultDate));
   const [dateRight, setDateRight] = useState<Dayjs>(dateLeft.add(1, 'month'));
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(undefined);
 
   const handleLeftDateChange = (dateString: string) => {
     const dayjsDateLeft = getDayjsDate(locale, timezone, dateString);
@@ -41,10 +40,6 @@ export const DateRangeCalendarDoubleTemplate = ({
     }
   };
 
-  const handleSelectedDateChange = (dateString: string) => {
-    setSelectedDate(dateStringToDayjs(dateString, locale, timezone));
-  };
-
   return (
     <DoubleCalendarWrapper>
       <DateRangeCalendar
@@ -53,8 +48,6 @@ export const DateRangeCalendarDoubleTemplate = ({
         locale={locale}
         timezone={timezone}
         onDateChange={handleLeftDateChange}
-        selectedDate={selectedDate && dayjsDateToString(selectedDate)}
-        onSelectedDateChange={handleSelectedDateChange}
       />
       <DateRangeCalendar
         {...props}
@@ -62,8 +55,6 @@ export const DateRangeCalendarDoubleTemplate = ({
         locale={locale}
         timezone={timezone}
         onDateChange={handleRightDateChange}
-        selectedDate={selectedDate && dayjsDateToString(selectedDate)}
-        onSelectedDateChange={handleSelectedDateChange}
       />
     </DoubleCalendarWrapper>
   );
