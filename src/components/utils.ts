@@ -48,6 +48,11 @@ export const dayjsDateToString = (date: Dayjs) => {
   return date.toISOString();
 };
 
+export const dayjsStateToString = (date?: Dayjs) => {
+  if (!date) return undefined;
+  return dayjsDateToString(date);
+};
+
 export const setNoon = (date: Dayjs) => {
   return date.hour(12).minute(0).second(0);
 };
