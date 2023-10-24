@@ -77,9 +77,6 @@ const getDateCellDataAttributes = (
 };
 
 export const DateCalendar = ({
-  pickerType = 'datePicker',
-  dateRange,
-  defaultDateRange,
   date,
   defaultDate,
   onDateChange,
@@ -90,25 +87,6 @@ export const DateCalendar = ({
   locale = 'ru',
   ...props
 }: DateCalendarProps) => {
-  const [dateRangeFirstState, setDateRangeFirstState] = useState(
-    dateStringToDayjs(defaultDateRange?.[0], locale, timezone),
-  );
-  const [dateRangeSecondState, setDateRangeSecondState] = useState(
-    dateStringToDayjs(defaultDateRange?.[1], locale, timezone),
-  );
-  const dateRangeFirstInner = (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[0])) || dateRangeFirstState;
-  const dateRangeSecondInner =
-    (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[1])) || dateRangeSecondState;
-  //const dateRangeActiveEnd
-  const handleDateRangeStart = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    setDateRangeFirstState(dayjsDate);
-  };
-  const handleDateRangeEnd = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    setDateRangeSecondState(dayjsDate);
-  };
-
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
     defaultSelectedDate ? dateStringToDayjs(defaultSelectedDate, locale, timezone) : undefined,
   );
@@ -138,25 +116,8 @@ export const DateCalendar = ({
     console.log(`click on ${clickedCell}`);
     const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
     if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
-      if (pickerType === 'datePicker') {
-        handleSelectedDateChange(dayjsDateToString(clickedDate));
-        return;
-      }
-      if (pickerType === 'rangePicker') {
-        if (dateRangeFirstInner && dateRangeSecondInner) {
-          setDateRangeFirstState(clickedDate);
-          return;
-        }
-        if (dateRangeFirstInner) {
-          setDateRangeSecondState(clickedDate);
-          return;
-        }
-        if (dateRangeSecondInner) {
-          return;
-        }
-        setDateRangeFirstState(clickedDate);
-        return;
-      }
+      handleSelectedDateChange(dayjsDateToString(clickedDate));
+      return;
     }
   };
 
@@ -222,25 +183,6 @@ export const DateCalendar = ({
     return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
   };
 
-  const dateIsInRange = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent) return false;
-    if (dateRangeFirstInner && dateRangeSecondInner) {
-      return dateCurrent.isBetween(dateRangeFirstInner, dateRangeSecondInner, 'date', '()');
-    }
-    if (dateRangeFirstInner && activeDateInner) {
-      return dateCurrent.isBetween(dateRangeFirstInner, activeDateInner, 'date', '()');
-    }
-    return false;
-  };
-  const dateIsRangeStart = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !dateRangeFirstInner) return false;
-    return dateCurrent.isSame(dateRangeFirstInner, 'date');
-  };
-  const dateIsRangeEnd = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !dateRangeSecondInner) return false;
-    return dateCurrent.isSame(dateRangeSecondInner, 'date');
-  };
-
   const getDayNameCellState = (dayNumber: number): CellStateProps => {
     const cellMixin = baseDayNameCellMixin;
     return { cellMixin };
@@ -269,9 +211,6 @@ export const DateCalendar = ({
     const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
     const isHoliday = dateIsHoliday(dateCurrent);
     const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
-    const isInRange = dateIsInRange(dateCurrent);
-    const isRangeStart = dateIsRangeStart(dateCurrent);
-    const isRangeEnd = dateIsRangeEnd(dateCurrent);
     const isStartOfWeek = dateCurrent.isSame(dateCurrent.startOf('week'), 'date');
     const isEndOfWeek = dateCurrent.isSame(dateCurrent.endOf('week'), 'date');
     const isActive = activeDateInner?.isSame(dateCurrent, 'date');
@@ -295,9 +234,6 @@ export const DateCalendar = ({
       isCurrentDay,
       isHoliday,
       isOutsideMonth,
-      isInRange,
-      isRangeStart,
-      isRangeEnd,
       isStartOfWeek,
       isEndOfWeek,
       isActive,
