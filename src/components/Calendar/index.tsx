@@ -74,13 +74,10 @@ const getDateCellDataAttributes = (
   };
 };
 
-const getInitialDateRange = (dateRange?: [string, string], locale?: string, timezone?: string) => {
-  if (!dateRange || !dateRange[0] || !dateRange[1]) return undefined;
-  return [getDayjsDate(locale, timezone, dateRange[0]), getDayjsDate(locale, timezone, dateRange[1])];
-};
-
 export const Calendar = ({
+  pickerType = 'datePicker',
   dateRange,
+  defaultDateRange,
   date,
   defaultDate,
   onDateChange,
@@ -91,9 +88,25 @@ export const Calendar = ({
   locale = 'ru',
   ...props
 }: CalendarProps) => {
-  const [dateRangeState, setDateRangeState] = useState(getInitialDateRange(dateRange, locale, timezone));
+  const [dateRangeStartState, setDateRangeStartState] = useState(
+    dateStringToDayjs(defaultDateRange?.[0], locale, timezone),
+  );
+  const [dateRangeEndState, setDateRangeEndState] = useState(
+    dateStringToDayjs(defaultDateRange?.[1], locale, timezone),
+  );
+  const dateRangeStartInner = (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[0])) || dateRangeStartState;
+  const dateRangeEndInner = (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[1])) || dateRangeEndState;
+  const handleDateRangeStart = (dateString: string) => {
+    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    setDateRangeStartState(dayjsDate);
+  };
+  const handleDateRangeEnd = (dateString: string) => {
+    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    setDateRangeEndState(dayjsDate);
+  };
+
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
-    defaultSelectedDate ? getDayjsDate(locale, timezone, defaultSelectedDate) : undefined,
+    defaultSelectedDate ? dateStringToDayjs(defaultSelectedDate, locale, timezone) : undefined,
   );
   const selectedDateInner = (selectedDate && dateStringToDayjs(selectedDate, locale, timezone)) || selectedDateState;
 
@@ -103,9 +116,11 @@ export const Calendar = ({
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
 
   const handleDateChange = (dateString: string) => {
-    const dayjsDate = getDayjsDate(locale, timezone, dateString);
-    setDateState(dayjsDate);
-    onDateChange?.(dayjsDateToString(dayjsDate));
+    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    if (dayjsDate) {
+      setDateState(dayjsDate);
+      onDateChange?.(dateString);
+    }
   };
 
   const handleSelectedDateChange = (dateString: string) => {
@@ -119,7 +134,10 @@ export const Calendar = ({
     console.log(`click on ${clickedCell}`);
     const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
     if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
-      handleSelectedDateChange(dayjsDateToString(clickedDate));
+      if (pickerType === 'datePicker') {
+        handleSelectedDateChange(dayjsDateToString(clickedDate));
+        return;
+      }
     }
   };
 
@@ -186,16 +204,22 @@ export const Calendar = ({
   };
 
   const dateIsInRange = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !dateRangeState) return false;
-    return dateCurrent.isBetween(dateRangeState[0], dateRangeState[1], 'date', '()');
+    if (!dateCurrent) return false;
+    if (dateRangeStartInner && dateRangeEndInner) {
+      return dateCurrent.isBetween(dateRangeStartInner, dateRangeEndInner, 'date', '()');
+    }
+    if (dateRangeStartInner && activeDateInner) {
+      return dateCurrent.isBetween(dateRangeStartInner, activeDateInner, 'date', '()');
+    }
+    return false;
   };
   const dateIsRangeStart = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !dateRangeState) return false;
-    return dateCurrent.isSame(dateRangeState[0], 'date');
+    if (!dateCurrent || !dateRangeStartInner) return false;
+    return dateCurrent.isSame(dateRangeStartInner, 'date');
   };
   const dateIsRangeEnd = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !dateRangeState) return false;
-    return dateCurrent.isSame(dateRangeState[1], 'date');
+    if (!dateCurrent || !dateRangeEndInner) return false;
+    return dateCurrent.isSame(dateRangeEndInner, 'date');
   };
 
   const getDayNameCellState = (dayNumber: number): CellStateProps => {

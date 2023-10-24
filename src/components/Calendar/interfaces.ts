@@ -3,8 +3,11 @@ import type { HTMLAttributes, ReactNode } from 'react';
 import type { DateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
+  pickerType?: 'datePicker' | 'rangePicker';
   /** Даты в формате ISO */
   dateRange?: [string, string];
+  /** Даты в формате ISO */
+  defaultDateRange?: [string, string];
   /** Дата в формате ISO */
   date?: string;
   /** Дата по умолчанию в формате ISO */
