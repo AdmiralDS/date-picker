@@ -7,7 +7,6 @@ import type { Dayjs } from 'dayjs';
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 
 import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
-import type { DateCalendarProps } from '#src/components/DateCalendar/interfaces';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
@@ -26,6 +25,15 @@ import {
 } from '#src/components/DatesOfMonthWidget/mixins';
 import type { DateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
 import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates';
+import type { CalendarProps } from '#src/components/calendarInterfaces';
+
+export interface DateCalendarProps extends CalendarProps {
+  /** Выбранная дата в формате ISO */
+  selectedDate?: string;
+  /** Выбранная дата по умолчанию в формате ISO */
+  defaultSelectedDate?: string;
+  onSelectedDateChange?: (dateString: string) => void;
+}
 
 const DateCalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -123,7 +131,7 @@ export const DateCalendar = ({
 
   const handleActiveDateChange = (dateString?: string) => {
     const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
-    console.log(`set active ${dayjsActiveDate}`);
+    //console.log(`set active ${dayjsActiveDate}`);
     setActiveDateInner(dayjsActiveDate);
   };
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {

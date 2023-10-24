@@ -2,10 +2,10 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
+import type { DateCalendarProps } from '@admiral-ds/date-picker';
 import { DateCalendar } from '@admiral-ds/date-picker';
 
 import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
-import type { DateCalendarProps } from '#src/components/DateCalendar/interfaces';
 
 const DoubleCalendarWrapper = styled.div`
   box-sizing: border-box;
