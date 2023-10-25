@@ -160,10 +160,7 @@ export const DateCalendar = ({
     }
   };
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLDivElement;
-    if (target.dataset.cellType !== 'dateCell' && target.dataset.containerType !== 'datesWrapper') {
-      handleActiveDateChange(undefined);
-    }
+    handleActiveDateChange(undefined);
   };
 
   const dateIsSelected = (dateCurrent?: Dayjs) => {
