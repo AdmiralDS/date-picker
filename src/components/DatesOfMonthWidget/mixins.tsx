@@ -92,9 +92,25 @@ export const rangeDateCellMixin = css<{ $isActive?: boolean }>`
      border-color: ${p.theme.color['Primary/Primary 60 Main']};`}
 `;
 
+export const rangeCurrentDateCellMixin = css<{ $isActive?: boolean }>`
+  ${baseCellMixin};
+  background-color: transparent;
+  border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
+
+  ${(p) =>
+    p.$isActive &&
+    `background-color: ${p.theme.color['Special/Elevated BG']};
+     border-color: ${p.theme.color['Primary/Primary 60 Main']};`}
+`;
+
 export const rangeHolidayDateCellMixin = css<{ $isActive?: boolean }>`
+  ${rangeDateCellMixin};
   color: ${(p) => p.theme.color['Error/Error 60 Main']};
-  ${rangeDateCellMixin}
+`;
+
+export const rangeCurrentHolidayDateCellMixin = css<{ $isActive?: boolean }>`
+  ${rangeCurrentDateCellMixin};
+  color: ${(p) => p.theme.color['Error/Error 60 Main']};
 `;
 
 export const baseDayNameCellMixin = css`

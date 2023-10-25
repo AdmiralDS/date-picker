@@ -21,6 +21,8 @@ import {
   rangeHolidayDateCellMixin,
   rangeDisabledHolidayDateCellMixin,
   rangeDisabledDateCellMixin,
+  rangeCurrentDateCellMixin,
+  rangeCurrentHolidayDateCellMixin,
 } from '#src/components/DatesOfMonthWidget/mixins';
 
 const DatesWrapper = styled.div`
@@ -140,7 +142,9 @@ const getDateCellMixin = (
 ) => {
   if (hidden) return hiddenDateCellMixin;
   if (isInRange && disabled && isHoliday) return rangeDisabledHolidayDateCellMixin;
+  if (isInRange && isCurrentDay && isHoliday) return rangeCurrentHolidayDateCellMixin;
   if (isInRange && disabled) return rangeDisabledDateCellMixin;
+  if (isInRange && isCurrentDay) return rangeCurrentDateCellMixin;
   if (disabled && isHoliday) return disabledHolidayDateCellMixin;
   if (disabled) return disabledDateCellMixin;
   if (isOutsideMonth) return outsideMonthDateCellMixin;
@@ -192,8 +196,8 @@ export const DefaultDateCell = ({
       data-disabled-cell={disabled ? true : undefined}
       data-hidden-cell={hidden ? true : undefined}
     >
-      <LeftHalf $isVisible={!!isInRange || !!isRangeEnd} $isStartOfWeek={!!isStartOfWeek} />
-      <RightHalf $isVisible={!!isInRange || !!isRangeStart} $isEndOfWeek={!!isEndOfWeek} />
+      <LeftHalf $isVisible={!hidden && (!!isInRange || !!isRangeEnd)} $isStartOfWeek={!!isStartOfWeek} />
+      <RightHalf $isVisible={!hidden && (!!isInRange || !!isRangeStart)} $isEndOfWeek={!!isEndOfWeek} />
       <DateCell
         $dateCellMixin={cellMixin}
         $isInRange={isInRange}

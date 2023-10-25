@@ -277,8 +277,11 @@ export const DateRangeCalendar = ({
     const isInRange = dateIsInRange(dateCurrent);
     const isRangeStart = dateIsRangeStart(dateCurrent);
     const isRangeEnd = dateIsRangeEnd(dateCurrent);
-    const isStartOfWeek = dateCurrent.isSame(dateCurrent.startOf('week'), 'date');
-    const isEndOfWeek = dateCurrent.isSame(dateCurrent.endOf('week'), 'date');
+    const isStartOfWeek =
+      dateCurrent.isSame(dateCurrent.startOf('week'), 'date') ||
+      dateCurrent.isSame(dateCurrent.startOf('month'), 'date');
+    const isEndOfWeek =
+      dateCurrent.isSame(dateCurrent.endOf('week'), 'date') || dateCurrent.isSame(dateCurrent.endOf('month'), 'date');
     const isActive = activeDateInner?.isSame(dateCurrent, 'date');
 
     const dataAttributes = getDateCellDataAttributes(
