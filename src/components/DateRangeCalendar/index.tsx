@@ -143,8 +143,7 @@ export const DateRangeCalendar = ({
     if (target.dataset.cellType === 'dateCell') {
       const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
       if (hoveredDate) {
-        if (dateIsHidden(hoveredDate) || dateIsDisabled(hoveredDate)) {
-          console.log(`setting undefined`);
+        if (activeDateInner && (dateIsHidden(hoveredDate) || dateIsDisabled(hoveredDate))) {
           handleActiveDateChange(undefined);
           return;
         }
@@ -158,8 +157,7 @@ export const DateRangeCalendar = ({
       const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
       if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
         if (dateIsHidden(hoveredDate) || dateIsDisabled(hoveredDate)) {
-          if (!activeDateInner) {
-            console.log(`setting undefined`);
+          if (activeDateInner) {
             handleActiveDateChange(undefined);
           }
           return;
