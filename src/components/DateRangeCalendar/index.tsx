@@ -12,6 +12,7 @@ import {
   dayjsStateToString,
   getCurrentTimeZone,
   getDayjsDate,
+  sortDatesAsc,
 } from '#src/components/utils';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
@@ -83,6 +84,7 @@ const getDateCellDataAttributes = (
   isInRange?: boolean,
   isRangeStart?: boolean,
   isRangeEnd?: boolean,
+  isInRangeSelecting?: boolean,
   isRangeSelectingStart?: boolean,
   isRangeSelectingEnd?: boolean,
   isStartOfWeek?: boolean,
@@ -97,6 +99,7 @@ const getDateCellDataAttributes = (
     'data-is-in-range-cell': isInRange ? isInRange : undefined,
     'data-is-range-start-cell': isRangeStart ? isRangeStart : undefined,
     'data-is-range-end-cell': isRangeEnd ? isRangeEnd : undefined,
+    'data-is-in-range-selecting-cell': isInRangeSelecting ? isInRangeSelecting : undefined,
     'data-is-range-selecting-start-cell': isRangeSelectingStart ? isRangeSelectingStart : undefined,
     'data-is-range-selecting-end-cell': isRangeSelectingEnd ? isRangeSelectingEnd : undefined,
     'data-is-start-of-week-cell': isStartOfWeek ? isStartOfWeek : undefined,
@@ -283,16 +286,15 @@ export const DateRangeCalendar = ({
     );
   };
   const dateIsHidden = (dateCurrent?: Dayjs) => {
-    return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
+    //return dateCurrent && (dateCurrent.isBefore(dateInner, 'month') || dateCurrent.isAfter(dateInner, 'month'));
+    return dateCurrent && dateCurrent.month() !== dateInner.month();
   };
 
   const dateIsInRange = (dateCurrent?: Dayjs) => {
     if (!dateCurrent) return false;
     if (dateRangeFirstInner && dateRangeSecondInner) {
-      return dateCurrent.isBetween(dateRangeFirstInner, dateRangeSecondInner, 'date', '()');
-    }
-    if (dateRangeFirstInner && activeDateInner) {
-      return dateCurrent.isBetween(dateRangeFirstInner, activeDateInner, 'date', '()');
+      const dates = sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner);
+      return dateCurrent.isBetween(dates[0], dates[1], 'date', '()');
     }
     return false;
   };
@@ -305,21 +307,29 @@ export const DateRangeCalendar = ({
     return dateCurrent.isSame(dateRangeSecondInner, 'date');
   };
   const dateIsRangeSelectingStart = (dateCurrent?: Dayjs) => {
-    if (dateCurrent && dateRangeFirstInner && !dateRangeSecondInner) {
-      return dateCurrent.isSame(dateRangeFirstInner, 'date');
+    if (dateCurrent && activeDateInner && dateRangeActiveEnd) {
+      return dateCurrent.isSame(dateRangeActiveEnd, 'date');
     }
     return false;
   };
   const dateIsRangeSelectingEnd = (dateCurrent?: Dayjs) => {
     if (
       dateCurrent &&
-      dateRangeFirstInner &&
-      !dateRangeSecondInner &&
       activeDateInner &&
+      dateRangeActiveEnd &&
       !dateIsDisabled(dateCurrent) &&
       !dateIsHidden(dateCurrent)
     ) {
       return dateCurrent.isSame(activeDateInner, 'date');
+    }
+    return false;
+  };
+  const dateIsInRangeSelecting = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent) return false;
+    if (dateRangeActiveEnd && activeDateInner) {
+      const dates = sortDatesAsc(dateRangeActiveEnd, activeDateInner);
+      return dateCurrent.isBetween(dates[0], dates[1], 'date', '()');
+      //return dateCurrent.isBetween(dateRangeFirstInner, activeDateInner, 'date', '()');
     }
     return false;
   };
@@ -354,6 +364,7 @@ export const DateRangeCalendar = ({
     const isInRange = dateIsInRange(dateCurrent);
     const isRangeStart = dateIsRangeStart(dateCurrent);
     const isRangeEnd = dateIsRangeEnd(dateCurrent);
+    const isInRangeSelecting = dateIsInRangeSelecting(dateCurrent);
     const isRangeSelectingStart = dateIsRangeSelectingStart(dateCurrent);
     const isRangeSelectingEnd = dateIsRangeSelectingEnd(dateCurrent);
     const isStartOfWeek =
@@ -372,6 +383,7 @@ export const DateRangeCalendar = ({
       isInRange,
       isRangeStart,
       isRangeEnd,
+      isInRangeSelecting,
       isRangeSelectingStart,
       isRangeSelectingEnd,
       isStartOfWeek,
@@ -391,6 +403,7 @@ export const DateRangeCalendar = ({
       isInRange,
       isRangeStart,
       isRangeEnd,
+      isInRangeSelecting,
       isRangeSelectingStart,
       isRangeSelectingEnd,
       isStartOfWeek,

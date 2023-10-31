@@ -1,5 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
@@ -51,27 +51,26 @@ const DateCellContainer = styled.div`
   }
 `;
 
-const LeftHalf = styled.div<{ $isVisible: boolean; $isStartOfWeek: boolean }>`
+const rangeLayoutMixin = css<{ $isVisible: boolean; $isSelectingRange: boolean }>`
   position: absolute;
   top: 0;
-  left: 0;
   width: 50%;
   height: 100%;
-  background-color: ${(p) => p.theme.color['Opacity/Hover']};
+  background-color: ${(p) => (p.$isSelectingRange ? p.theme.color['Opacity/Press'] : p.theme.color['Opacity/Hover'])};
   visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
+`;
+
+const LeftHalf = styled.div<{ $isVisible: boolean; $isSelectingRange: boolean; $isStartOfWeek: boolean }>`
+  ${rangeLayoutMixin};
+  left: 0;
   ${(p) =>
     p.$isStartOfWeek &&
     `border-top-left-radius: ${mediumGroupBorderRadius(p.theme.shape)};
      border-bottom-left-radius: ${mediumGroupBorderRadius(p.theme.shape)};`}
 `;
-const RightHalf = styled.div<{ $isVisible: boolean; $isEndOfWeek: boolean }>`
-  position: absolute;
-  top: 0;
+const RightHalf = styled.div<{ $isVisible: boolean; $isSelectingRange: boolean; $isEndOfWeek: boolean }>`
+  ${rangeLayoutMixin};
   right: 0;
-  width: 50%;
-  height: 100%;
-  background-color: ${(p) => p.theme.color['Opacity/Hover']};
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
   ${(p) =>
     p.$isEndOfWeek &&
     `border-top-right-radius: ${mediumGroupBorderRadius(p.theme.shape)};
@@ -122,6 +121,7 @@ export interface DateCellProps extends HTMLAttributes<HTMLDivElement> {
   isInRange?: boolean;
   isRangeStart?: boolean;
   isRangeEnd?: boolean;
+  isInRangeSelecting?: boolean;
   isRangeSelectingStart?: boolean;
   isRangeSelectingEnd?: boolean;
   isStartOfWeek?: boolean;
@@ -139,6 +139,7 @@ const getDateCellMixin = (
   isInRange?: boolean,
   isRangeStart?: boolean,
   isRangeEnd?: boolean,
+  isInRangeSelecting?: boolean,
   isRangeSelectingStart?: boolean,
   isRangeSelectingEnd?: boolean,
   isStartOfWeek?: boolean,
@@ -174,6 +175,7 @@ export const DefaultDateCell = ({
   isInRange,
   isRangeStart,
   isRangeEnd,
+  isInRangeSelecting,
   isRangeSelectingStart,
   isRangeSelectingEnd,
   isStartOfWeek,
@@ -189,11 +191,14 @@ export const DefaultDateCell = ({
     isCurrentDay,
     isHoliday,
     isOutsideMonth,
-    isInRange,
+    isInRange || isInRangeSelecting,
     isRangeStart,
     isRangeEnd,
-    isRangeSelectingStart,
-    isRangeSelectingEnd,
+    isInRangeSelecting,
+    //isRangeSelectingStart,
+    false,
+    //isRangeSelectingEnd,
+    false,
     isStartOfWeek,
     isEndOfWeek,
     isActive,
@@ -211,17 +216,21 @@ export const DefaultDateCell = ({
         $isVisible={
           !hidden &&
           !(isRangeSelectingStart && isRangeSelectingEnd) &&
-          (!!isInRange || !!isRangeEnd || !!isRangeSelectingEnd)
+          (!!isInRange || !!isRangeEnd || !!isInRangeSelecting || !!isRangeSelectingEnd)
         }
+        $isSelectingRange={!!isInRangeSelecting || !!isRangeSelectingEnd}
         $isStartOfWeek={!!isStartOfWeek}
       />
       <RightHalf
-        $isVisible={!hidden && (!!isInRange || ((!!isRangeStart || !!isRangeSelectingStart) && !isActive))}
+        $isVisible={
+          !hidden && (!!isInRange || ((!!isRangeStart || !!isInRangeSelecting || !!isRangeSelectingStart) && !isActive))
+        }
+        $isSelectingRange={!!isInRangeSelecting || !!isRangeSelectingStart}
         $isEndOfWeek={!!isEndOfWeek}
       />
       <DateCell
         $dateCellMixin={cellMixin}
-        $isInRange={isInRange}
+        $isInRange={isInRange || isInRangeSelecting}
         $isRangeStart={isRangeStart}
         $isRangeEnd={isRangeEnd}
         $isActive={isActive}
