@@ -260,8 +260,8 @@ export const DateRangeCalendar = ({
         }*/
       }
       handleDateRangeActiveEndChange(clickedCell);
+      onDateRangeChange?.([dayjsStateToString(dateRangeFirstState), dayjsStateToString(dateRangeSecondState)]);
     }
-    onDateRangeChange?.([dayjsStateToString(dateRangeFirstState), dayjsStateToString(dateRangeSecondState)]);
     onClick?.(e);
   };
 
@@ -298,15 +298,24 @@ export const DateRangeCalendar = ({
   };
   const dateIsRangeStart = (dateCurrent?: Dayjs) => {
     if (!dateCurrent || !dateRangeFirstInner) return false;
-    return dateCurrent.isSame(dateRangeFirstInner, 'date');
+    const dates = dateRangeSecondInner ? sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner) : undefined;
+    return dateCurrent.isSame(dates ? dates[0] : dateRangeFirstInner, 'date');
   };
   const dateIsRangeEnd = (dateCurrent?: Dayjs) => {
     if (!dateCurrent || !dateRangeSecondInner) return false;
-    return dateCurrent.isSame(dateRangeSecondInner, 'date');
+    const dates = dateRangeFirstInner ? sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner) : undefined;
+    return dateCurrent.isSame(dates ? dates[1] : dateRangeSecondInner, 'date');
   };
   const dateIsRangeSelectingStart = (dateCurrent?: Dayjs) => {
-    if (dateCurrent && activeDateInner && dateRangeActiveEnd) {
-      return dateCurrent.isSame(dateRangeActiveEnd, 'date');
+    if (
+      dateCurrent &&
+      activeDateInner &&
+      dateRangeActiveEnd &&
+      !dateIsDisabled(dateCurrent) &&
+      !dateIsHidden(dateCurrent)
+    ) {
+      const dates = sortDatesAsc(dateRangeActiveEnd, activeDateInner);
+      return dateCurrent.isSame(dates[0], 'date');
     }
     return false;
   };
@@ -318,7 +327,8 @@ export const DateRangeCalendar = ({
       !dateIsDisabled(dateCurrent) &&
       !dateIsHidden(dateCurrent)
     ) {
-      return dateCurrent.isSame(activeDateInner, 'date');
+      const dates = sortDatesAsc(dateRangeActiveEnd, activeDateInner);
+      return dateCurrent.isSame(dates[1], 'date');
     }
     return false;
   };

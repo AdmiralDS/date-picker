@@ -215,6 +215,7 @@ export const DefaultDateCell = ({
       <LeftHalf
         $isVisible={
           !hidden &&
+          !(isRangeStart && isRangeEnd) &&
           !(isRangeSelectingStart && isRangeSelectingEnd) &&
           (!!isInRange || !!isRangeEnd || !!isInRangeSelecting || !!isRangeSelectingEnd)
         }
@@ -223,7 +224,10 @@ export const DefaultDateCell = ({
       />
       <RightHalf
         $isVisible={
-          !hidden && (!!isInRange || ((!!isRangeStart || !!isInRangeSelecting || !!isRangeSelectingStart) && !isActive))
+          !hidden &&
+          !(isRangeStart && isRangeEnd) &&
+          !(isRangeSelectingStart && isRangeSelectingEnd) &&
+          (!!isInRange || ((!!isRangeStart || !!isInRangeSelecting || !!isRangeSelectingStart) && !isActive))
         }
         $isSelectingRange={!!isInRangeSelecting || !!isRangeSelectingStart}
         $isEndOfWeek={!!isEndOfWeek}
