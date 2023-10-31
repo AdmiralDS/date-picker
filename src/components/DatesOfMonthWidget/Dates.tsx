@@ -23,6 +23,7 @@ import {
   rangeDisabledDateCellMixin,
   rangeCurrentDateCellMixin,
   rangeCurrentHolidayDateCellMixin,
+  selectingRangeEndDateCellMixin,
 } from '#src/components/DatesOfMonthWidget/mixins';
 
 const DatesWrapper = styled.div`
@@ -121,6 +122,8 @@ export interface DateCellProps extends HTMLAttributes<HTMLDivElement> {
   isInRange?: boolean;
   isRangeStart?: boolean;
   isRangeEnd?: boolean;
+  isRangeSelectingStart?: boolean;
+  isRangeSelectingEnd?: boolean;
   isStartOfWeek?: boolean;
   isEndOfWeek?: boolean;
   isActive?: boolean;
@@ -136,6 +139,8 @@ const getDateCellMixin = (
   isInRange?: boolean,
   isRangeStart?: boolean,
   isRangeEnd?: boolean,
+  isRangeSelectingStart?: boolean,
+  isRangeSelectingEnd?: boolean,
   isStartOfWeek?: boolean,
   isEndOfWeek?: boolean,
   isActive?: boolean,
@@ -143,6 +148,7 @@ const getDateCellMixin = (
   if (hidden) return hiddenDateCellMixin;
   if (isInRange && disabled && isHoliday) return rangeDisabledHolidayDateCellMixin;
   if (isInRange && isCurrentDay && isHoliday) return rangeCurrentHolidayDateCellMixin;
+  if (isRangeSelectingStart || isRangeSelectingEnd) return selectingRangeEndDateCellMixin;
   if (isInRange && disabled) return rangeDisabledDateCellMixin;
   if (isInRange && isCurrentDay) return rangeCurrentDateCellMixin;
   if (disabled && isHoliday) return disabledHolidayDateCellMixin;
@@ -168,6 +174,8 @@ export const DefaultDateCell = ({
   isInRange,
   isRangeStart,
   isRangeEnd,
+  isRangeSelectingStart,
+  isRangeSelectingEnd,
   isStartOfWeek,
   isEndOfWeek,
   isActive,
@@ -184,8 +192,11 @@ export const DefaultDateCell = ({
     isInRange,
     isRangeStart,
     isRangeEnd,
+    isRangeSelectingStart,
+    isRangeSelectingEnd,
     isStartOfWeek,
     isEndOfWeek,
+    isActive,
   );
   return (
     <DateCellContainer
@@ -196,8 +207,18 @@ export const DefaultDateCell = ({
       data-disabled-cell={disabled ? true : undefined}
       data-hidden-cell={hidden ? true : undefined}
     >
-      <LeftHalf $isVisible={!hidden && (!!isInRange || !!isRangeEnd)} $isStartOfWeek={!!isStartOfWeek} />
-      <RightHalf $isVisible={!hidden && (!!isInRange || !!isRangeStart)} $isEndOfWeek={!!isEndOfWeek} />
+      <LeftHalf
+        $isVisible={
+          !hidden &&
+          !(isRangeSelectingStart && isRangeSelectingEnd) &&
+          (!!isInRange || !!isRangeEnd || !!isRangeSelectingEnd)
+        }
+        $isStartOfWeek={!!isStartOfWeek}
+      />
+      <RightHalf
+        $isVisible={!hidden && (!!isInRange || ((!!isRangeStart || !!isRangeSelectingStart) && !isActive))}
+        $isEndOfWeek={!!isEndOfWeek}
+      />
       <DateCell
         $dateCellMixin={cellMixin}
         $isInRange={isInRange}

@@ -27,6 +27,13 @@ export const selectedDateCellMixin = css<{ $isActive?: boolean }>`
      border-color: ${p.theme.color['Primary/Primary 70']};`}
 `;
 
+export const selectingRangeEndDateCellMixin = css<{ $isActive?: boolean }>`
+  ${baseCellMixin};
+  background-color: ${(p) => p.theme.color['Primary/Primary 70']};
+  border-color: ${(p) => p.theme.color['Primary/Primary 70']};
+  color: ${(p) => p.theme.color['Special/Static White']};
+`;
+
 export const disabledDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseCellMixin};
   color: ${(p) => p.theme.color['Neutral/Neutral 30']};
