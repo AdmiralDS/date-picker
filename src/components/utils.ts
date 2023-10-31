@@ -125,3 +125,10 @@ export const yearsRange = (date: Dayjs, yearCount: number) => {
   const start = end - (yearCount - 1);
   return { start, end };
 };
+
+export const sortDatesAsc = (date1: Dayjs, date2: Dayjs) => {
+  //if (!date1 || !date2) return undefined;
+  const dateFirst = date1.isBefore(date2, 'date') ? date1 : date2;
+  const dateSecond = dateFirst.isSame(date1, 'date') ? date2 : date1;
+  return [dateFirst, dateSecond];
+};
