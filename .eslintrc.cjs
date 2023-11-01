@@ -16,6 +16,7 @@ module.exports = {
     'prettier/prettier': 2, // Means error,
     'import/no-cycle': [2, { ignoreExternal: true }],
     'import/no-duplicates': ['error', { considerQueryString: true }],
+    'import/no-named-as-default': 0,
     '@typescript-eslint/consistent-type-imports': [
       'error',
       {
