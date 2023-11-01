@@ -149,13 +149,14 @@ const getDateCellMixin = (
   if (hidden) return hiddenDateCellMixin;
   if (isInRange && disabled && isHoliday) return rangeDisabledHolidayDateCellMixin;
   if (isInRange && isCurrentDay && isHoliday) return rangeCurrentHolidayDateCellMixin;
-  if (isRangeSelectingStart || isRangeSelectingEnd) return selectingRangeEndDateCellMixin;
+  //if (isRangeSelectingStart || isRangeSelectingEnd) return selectingRangeEndDateCellMixin;
   if (isInRange && disabled) return rangeDisabledDateCellMixin;
   if (isInRange && isCurrentDay) return rangeCurrentDateCellMixin;
   if (disabled && isHoliday) return disabledHolidayDateCellMixin;
   if (disabled) return disabledDateCellMixin;
   if (isOutsideMonth) return outsideMonthDateCellMixin;
   if (selected || isRangeStart || isRangeEnd) return selectedDateCellMixin;
+  //if (isRangeStart || isRangeEnd) return rangeEndsDateCellMixin;
   if (isInRange && isHoliday) return rangeHolidayDateCellMixin;
   if (isHoliday && isCurrentDay) return currentDateHolidayDateCellMixin;
   if (isHoliday) return holidayDateCellMixin;
@@ -192,8 +193,8 @@ export const DefaultDateCell = ({
     isHoliday,
     isOutsideMonth,
     isInRange || isInRangeSelecting,
-    isRangeStart,
-    isRangeEnd,
+    isRangeStart || isRangeSelectingStart,
+    isRangeEnd || isRangeSelectingEnd,
     isInRangeSelecting,
     //isRangeSelectingStart,
     false,
@@ -227,7 +228,7 @@ export const DefaultDateCell = ({
           !hidden &&
           !(isRangeStart && isRangeEnd) &&
           !(isRangeSelectingStart && isRangeSelectingEnd) &&
-          (!!isInRange || ((!!isRangeStart || !!isInRangeSelecting || !!isRangeSelectingStart) && !isActive))
+          (!!isInRange || ((!!isRangeStart || !!isInRangeSelecting || !!isRangeSelectingStart)))
         }
         $isSelectingRange={!!isInRangeSelecting || !!isRangeSelectingStart}
         $isEndOfWeek={!!isEndOfWeek}

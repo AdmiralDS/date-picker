@@ -297,14 +297,14 @@ export const DateRangeCalendar = ({
     return false;
   };
   const dateIsRangeStart = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !dateRangeFirstInner) return false;
-    const dates = dateRangeSecondInner ? sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner) : undefined;
-    return dateCurrent.isSame(dates ? dates[0] : dateRangeFirstInner, 'date');
+    if (!dateCurrent || !dateRangeFirstInner || !dateRangeSecondInner) return false;
+    const dates = sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner);
+    return dateCurrent.isSame(dates[0], 'date');
   };
   const dateIsRangeEnd = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !dateRangeSecondInner) return false;
-    const dates = dateRangeFirstInner ? sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner) : undefined;
-    return dateCurrent.isSame(dates ? dates[1] : dateRangeSecondInner, 'date');
+    if (!dateCurrent || !dateRangeFirstInner || !dateRangeSecondInner) return false;
+    const dates = sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner);
+    return dateCurrent.isSame(dates[1], 'date');
   };
   const dateIsRangeSelectingStart = (dateCurrent?: Dayjs) => {
     if (
