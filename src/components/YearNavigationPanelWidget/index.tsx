@@ -2,8 +2,8 @@ import type { YearNavigationPanelWidgetProps } from '#src/components/YearNavigat
 import styled from 'styled-components';
 
 import { IconPlacement, typography } from '@admiral-ds/react-ui';
-import { ReactComponent as ChevronLeftOutline } from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg';
-import { ReactComponent as ChevronRightOutline } from '@admiral-ds/icons/build/system/ChevronRightOutline.svg';
+import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
+import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { getCurrentTimeZone, getDayjsDate } from '#src/components/utils';

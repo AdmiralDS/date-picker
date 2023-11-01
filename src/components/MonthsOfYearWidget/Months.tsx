@@ -1,5 +1,4 @@
-import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
-import styled from 'styled-components';
+import styled, { RuleSet } from 'styled-components';
 import dayjs from 'dayjs';
 
 import { capitalizeFirstLetter, dayjsDateToString, getMonthNamesList } from '#src/components/utils';
@@ -18,7 +17,7 @@ const MonthsWrapper = styled.div`
   align-content: space-between;
 `;
 
-const MonthCell = styled.div<{ $monthCellMixin?: FlattenInterpolation<ThemeProps<DefaultTheme>> }>`
+const MonthCell = styled.div<{ $monthCellMixin?: RuleSet<object> }>`
   box-sizing: border-box;
   text-align: center;
   width: ${MONTH_CELL_WIDTH}px;

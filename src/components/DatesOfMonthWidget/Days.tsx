@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
+import styled, { RuleSet } from 'styled-components';
 
 import { capitalizeFirstLetter, getDayNamesList } from '#src/components/utils';
 import { CELL_SIZE } from '#src/components/DatesOfMonthWidget/constants';
@@ -10,7 +9,7 @@ const DayNamesWrapper = styled.div`
   display: flex;
   margin-bottom: 4px;
 `;
-const DayNameCell = styled.div<{ $dateCellMixin: FlattenInterpolation<ThemeProps<DefaultTheme>> }>`
+const DayNameCell = styled.div<{ $dateCellMixin: RuleSet<object> }>`
   box-sizing: border-box;
   width: ${CELL_SIZE}px;
   height: ${CELL_SIZE}px;

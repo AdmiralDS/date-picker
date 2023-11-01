@@ -1,8 +1,7 @@
 import type { MouseEvent } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-import styled from 'styled-components';
-import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
+import styled, { RuleSet } from 'styled-components';
 
 import { YEAR_BORDER_RADIUS, YearCellWrapper } from './YearCell';
 import { capitalizeFirstLetter } from '../../utils';
@@ -16,7 +15,7 @@ export interface MonthCellProps {
   selected?: Dayjs;
   onSelectMonth: (date: Dayjs, event: MouseEvent<HTMLDivElement>) => void;
   disabled?: boolean;
-  highlightSpecialMonth?: (date: Dayjs) => FlattenInterpolation<ThemeProps<DefaultTheme>> | undefined;
+  highlightSpecialMonth?: (date: Dayjs) => RuleSet<object> | undefined;
   onMouseEnter: (date: Dayjs, event: MouseEvent<HTMLDivElement>) => void;
 }
 

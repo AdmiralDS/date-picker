@@ -1,6 +1,6 @@
 import type { HTMLAttributes, ReactNode } from 'react';
+import type { RuleSet } from 'styled-components';
 import styled, { css } from 'styled-components';
-import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
 
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 
@@ -78,7 +78,7 @@ const RightHalf = styled.div<{ $isVisible: boolean; $isSelectingRange: boolean; 
 `;
 
 const DateCell = styled.div<{
-  $dateCellMixin: FlattenInterpolation<ThemeProps<DefaultTheme>>;
+  $dateCellMixin: RuleSet<object>;
   $isInRange?: boolean;
   $isRangeStart?: boolean;
   $isRangeEnd?: boolean;

@@ -1,8 +1,7 @@
 import type { MouseEvent } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-import styled from 'styled-components';
-import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
+import styled, { RuleSet } from 'styled-components';
 
 import { CellWrapper } from './CellWrapper';
 import { YEARS_IN_ROW } from '../constants';
@@ -15,7 +14,7 @@ export interface YearCellProps {
   selected?: Dayjs;
   onSelectYear: (date: Dayjs, event: MouseEvent<HTMLDivElement>) => void;
   disabled?: boolean;
-  highlightSpecialYear?: (date: Dayjs) => FlattenInterpolation<ThemeProps<DefaultTheme>> | undefined;
+  highlightSpecialYear?: (date: Dayjs) => RuleSet<object> | undefined;
   onMouseEnter: (date: Dayjs, event: MouseEvent<HTMLDivElement>) => void;
 }
 
@@ -36,7 +35,7 @@ export const YearCellWrapper = styled(CellWrapper)<{
   isRowEnd: boolean;
   isRangeStart: boolean;
   isRangeEnd: boolean;
-  highlightSpecialDateMixin?: FlattenInterpolation<ThemeProps<DefaultTheme>>;
+  highlightSpecialDateMixin?: RuleSet<object>;
 }>`
   width: ${YEAR_WIDTH};
   height: ${YEAR_HEIGHT};

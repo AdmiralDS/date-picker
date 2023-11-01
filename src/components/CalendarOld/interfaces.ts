@@ -1,6 +1,6 @@
 import type { Dayjs } from 'dayjs';
 import type { ReactNode } from 'react';
-import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
+import type { RuleSet } from 'styled-components';
 
 import type { CalendarOldViewMode, PickerTypeMode } from '@admiral-ds/date-picker';
 import type { DateValidator } from '#src/components/CalendarOld/validator';
@@ -124,7 +124,7 @@ export interface CalendarWidgetOldProps {
   /** Функция отображения даты на текущем экране */
   isHiddenDate?: (date: string) => boolean;
   /** Позволяет добавлять стили на необходимые даты */
-  highlightSpecialDay?: (date: Dayjs) => FlattenInterpolation<ThemeProps<DefaultTheme>> | undefined;
+  highlightSpecialDay?: (date: Dayjs) => RuleSet<object> | undefined;
   /** Объект локализации - позволяет перезадать текстовые константы, используемые в компоненте,
    * по умолчанию значения констант берутся из темы в соответствии с параметром currentLocale, заданном в теме
    **/

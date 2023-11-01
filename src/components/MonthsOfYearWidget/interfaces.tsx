@@ -1,12 +1,12 @@
 import type { MouseEventHandler } from 'react';
 import type { Dayjs } from 'dayjs';
-import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
+import { RuleSet } from 'styled-components';
 
 export interface CellStateProps {
   selected?: boolean;
   disabled?: boolean;
   hidden?: boolean;
-  cellMixin: FlattenInterpolation<ThemeProps<DefaultTheme>>;
+  cellMixin: RuleSet<object>;
 }
 
 export interface MonthsOfYearWidgetProps {

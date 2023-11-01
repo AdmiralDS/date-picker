@@ -141,7 +141,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
         {...props}
         onClick={handleClick}
         dayNamesProps={{ dayNameCellState: getDayNameCellState }}
-        datesProps={{ dateCellState: getDateCellState }}
+        //datesProps={{ dateCellState: getDateCellState }}
       />
     </Wrapper>
   );

@@ -1,8 +1,7 @@
 import type { MouseEvent } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-import styled from 'styled-components';
-import type { DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components';
+import styled, { RuleSet } from 'styled-components';
 import isBetween from 'dayjs/plugin/isBetween';
 
 import { CellWrapper } from './CellWrapper';
@@ -23,7 +22,7 @@ export interface DayCellProps {
   onSelectDate?: (date: Dayjs) => void;
   disabled?: boolean;
   isHidden: boolean;
-  highlightSpecialDate?: (date: Dayjs) => FlattenInterpolation<ThemeProps<DefaultTheme>> | undefined;
+  highlightSpecialDate?: (date: Dayjs) => RuleSet<object> | undefined;
   onMouseEnter: (date: Dayjs, event: MouseEvent<HTMLDivElement>) => void;
 }
 
@@ -39,7 +38,7 @@ export const DayCellWrapper = styled(CellWrapper)<{
   isRowEnd: boolean;
   isRangeStart: boolean;
   isRangeEnd: boolean;
-  highlightSpecialDateMixin?: FlattenInterpolation<ThemeProps<DefaultTheme>>;
+  highlightSpecialDateMixin?: RuleSet<object>;
 }>`
   width: ${DAY_SIZE}px;
   height: ${DAY_SIZE}px;

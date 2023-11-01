@@ -63,7 +63,7 @@ export const getDayNamesList = (locale: string): string[] => {
   const instanceLocaleData = dayjs().locale(locale).localeData();
   const nameList = instanceLocaleData.weekdaysMin();
   const firstDay = instanceLocaleData.firstDayOfWeek();
-  return nameList.map((name, index, arr) => {
+  return nameList.map((_, index, arr) => {
     return arr[(firstDay + index) % 7];
   });
 };
