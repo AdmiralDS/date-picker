@@ -26,7 +26,7 @@ export default defineConfig({
       noForceEmit: true,
       declarationDir: resolve(__dirname, 'dist'),
       rootDir: resolve(__dirname, 'src'),
-      exclude: ['*.stories.tsx'],
+      exclude: ['*/**/*.stories.tsx'],
     }),
   ],
   build: {
