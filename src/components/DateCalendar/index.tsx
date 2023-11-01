@@ -74,7 +74,7 @@ const getDateCellDataAttributes = (
   isOutsideMonth?: boolean,
   isCurrentDay?: boolean,
   isActive?: boolean,
-): Record<string, any> => {
+) => {
   return {
     'data-value': value ? value : undefined,
     'data-is-holiday-cell': isHoliday ? isHoliday : undefined,

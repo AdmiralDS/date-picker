@@ -3,7 +3,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { css, ThemeProvider } from 'styled-components';
 
-import type { Theme } from '@admiral-ds/react-ui';
+import type { Theme, BorderRadiusType } from '@admiral-ds/react-ui';
 
 import { CalendarOld } from '@admiral-ds/date-picker';
 import type { CalendarOldProps, CalendarOldViewMode } from '@admiral-ds/date-picker';
@@ -22,9 +22,14 @@ const highlightSundays = (date: Dayjs) => {
 
 const simpleTemplateLocaleName = 'ru';
 
-export const SimpleCalendarOldTemplate = ({ rangePicker = true, doubleView = true, ...props }: CalendarOldProps) => {
+export const SimpleCalendarOldTemplate = ({
+  rangePicker = true,
+  doubleView = true,
+  themeBorderKind,
+  ...props
+}: CalendarOldProps & { themeBorderKind?: BorderRadiusType }) => {
   function swapBorder(theme: Theme): Theme {
-    theme.shape.borderRadiusKind = (props as any).themeBorderKind || theme.shape.borderRadiusKind;
+    theme.shape.borderRadiusKind = themeBorderKind || theme.shape.borderRadiusKind;
     return theme;
   }
 
@@ -58,10 +63,10 @@ export const SimpleCalendarOldTemplate = ({ rangePicker = true, doubleView = tru
     resetDateStatesInner();
   }, [rangePicker]);
 
-  const filterDate = (dateString: string) => {
+  /*const filterDate = (dateString: string) => {
     const date = dateStringToDayjs(dateString, simpleTemplateLocaleName);
     return date && date.date() < 7;
-  };
+  };*/
 
   const handleDayClickInner = (dateString: string) => {
     const date = dateStringToDayjs(dateString, simpleTemplateLocaleName);
