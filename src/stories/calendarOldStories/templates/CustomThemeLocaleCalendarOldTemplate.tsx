@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { css, ThemeProvider } from 'styled-components';
 import 'dayjs/locale/de';
 
-import type { Locale, Theme } from '@admiral-ds/react-ui';
+import type { Locale, Theme, BorderRadiusType } from '@admiral-ds/react-ui';
 
 import { CalendarOld } from '@admiral-ds/date-picker';
 import type { CalendarOldProps, CalendarOldViewMode } from '@admiral-ds/date-picker';
@@ -83,11 +83,12 @@ const customThemeLocaleName = 'de';
 export const CustomThemeLocaleCalendarOldTemplate = ({
   rangePicker = false,
   doubleView = false,
+  themeBorderKind,
   ...props
-}: CalendarOldProps) => {
+}: CalendarOldProps & { themeBorderKind?: BorderRadiusType }) => {
   function setDeLocale(theme: Theme): Theme {
     const newTheme = { ...theme, currentLocale: 'de', locales: { ...theme.locales, de: deLocale } };
-    newTheme.shape.borderRadiusKind = (props as any).themeBorderKind || theme.shape.borderRadiusKind;
+    newTheme.shape.borderRadiusKind = themeBorderKind || theme.shape.borderRadiusKind;
     return newTheme;
   }
 
@@ -121,10 +122,10 @@ export const CustomThemeLocaleCalendarOldTemplate = ({
     resetDateStatesInner();
   }, [rangePicker]);
 
-  const filterDate = (date: Dayjs) => {
+  /*const filterDate = (date: Dayjs) => {
     return date.date() < 7;
     //return date.isSame(dayjs(), 'date');
-  };
+  };*/
 
   const handleDayClickInner = (dateString: string) => {
     const date = dateStringToDayjs(dateString, customThemeLocaleName);

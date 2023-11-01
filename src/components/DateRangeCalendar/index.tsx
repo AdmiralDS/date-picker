@@ -89,7 +89,7 @@ const getDateCellDataAttributes = (
   isRangeSelectingEnd?: boolean,
   isStartOfWeek?: boolean,
   isEndOfWeek?: boolean,
-): Record<string, any> => {
+) => {
   return {
     'data-value': value ? value : undefined,
     'data-is-holiday-cell': isHoliday ? isHoliday : undefined,
@@ -173,7 +173,7 @@ export const DateRangeCalendar = ({
       }
     }
   };
-  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (e) => {
+  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
     handleActiveDateChange(undefined);
   };
   //</editor-fold>
@@ -342,6 +342,7 @@ export const DateRangeCalendar = ({
     return false;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getDayNameCellState = (dayNumber: number): CellStateProps => {
     const cellMixin = baseDayNameCellMixin;
     return { cellMixin };

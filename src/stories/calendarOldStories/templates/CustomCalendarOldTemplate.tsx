@@ -4,7 +4,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import styled, { ThemeProvider } from 'styled-components';
 
-import type { Theme } from '@admiral-ds/react-ui';
+import type { BorderRadiusType, Theme } from '@admiral-ds/react-ui';
 
 import { CalendarOld, DAY_BORDER_RADIUS, DayCellWrapper } from '@admiral-ds/date-picker';
 import type { CalendarOldProps, CalendarOldViewMode } from '@admiral-ds/date-picker';
@@ -16,9 +16,12 @@ const StyledDay = styled(DayCellWrapper)`
 
 const customCalendarTemplateLocale = 'en';
 
-export const CustomCalendarOldTemplate = (props: CalendarOldProps) => {
+export const CustomCalendarOldTemplate = ({
+  themeBorderKind,
+  ...props
+}: CalendarOldProps & { themeBorderKind?: BorderRadiusType }) => {
   function swapBorder(theme: Theme): Theme {
-    theme.shape.borderRadiusKind = (props as any).themeBorderKind || theme.shape.borderRadiusKind;
+    theme.shape.borderRadiusKind = themeBorderKind || theme.shape.borderRadiusKind;
     return theme;
   }
 
@@ -27,11 +30,11 @@ export const CustomCalendarOldTemplate = (props: CalendarOldProps) => {
   const [viewDateInner, setViewDateInner] = useState<Dayjs>(selectedInner);
   const [activeDateInner, setActiveDateInner] = useState<Dayjs | undefined>(undefined);
 
-  const resetDateStatesInner = () => {
+  /*const resetDateStatesInner = () => {
     setSelectedInner(dayjs());
     //setStartDateInner(undefined);
     //setEndDateInner(undefined);
-  };
+  };*/
   useEffect(() => {
     switch (props.pickerType) {
       case 'DATE_MONTH_YEAR':
@@ -85,10 +88,12 @@ export const CustomCalendarOldTemplate = (props: CalendarOldProps) => {
     }
   };
 
-  const handleDayMouseEnterInner = (date: Dayjs, _: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleDayMouseEnterInner = (date: Dayjs, _: MouseEvent) => {
     setActiveDateInner(date);
   };
-  const handleDayMouseLeaveInner = (date: Dayjs, _: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleDayMouseLeaveInner = (_date: Dayjs, _: MouseEvent) => {
     setActiveDateInner(undefined);
   };
 

@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { css, ThemeProvider } from 'styled-components';
 import 'dayjs/locale/es';
 
-import type { Theme } from '@admiral-ds/react-ui';
+import type { Theme, BorderRadiusType } from '@admiral-ds/react-ui';
 
 import { CalendarOld } from '@admiral-ds/date-picker';
 import type { CalendarOldProps, CalendarOldViewMode } from '@admiral-ds/date-picker';
@@ -26,10 +26,11 @@ const userLocaleName = 'es';
 export const UserLocaleCalendarOldTemplate = ({
   rangePicker = false,
   doubleView = false,
+  themeBorderKind,
   ...props
-}: CalendarOldProps) => {
+}: CalendarOldProps & { themeBorderKind?: BorderRadiusType }) => {
   function swapBorder(theme: Theme): Theme {
-    theme.shape.borderRadiusKind = (props as any).themeBorderKind || theme.shape.borderRadiusKind;
+    theme.shape.borderRadiusKind = themeBorderKind || theme.shape.borderRadiusKind;
     return theme;
   }
 
@@ -73,10 +74,10 @@ export const UserLocaleCalendarOldTemplate = ({
     resetDateStatesInner();
   }, [rangePicker]);
 
-  const filterDate = (date: Dayjs) => {
+  /*const filterDate = (date: Dayjs) => {
     return date.date() < 7;
     //return date.isSame(dayjs(), 'date');
-  };
+  };*/
 
   const handleDayClickInner = (dateString: string) => {
     const date = dateStringToDayjs(dateString, userLocaleName);
