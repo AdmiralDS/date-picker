@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 import { IconPlacement } from '@admiral-ds/react-ui';
-import { ReactComponent as ChevronLeftOutline } from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg';
-import { ReactComponent as ChevronRightOutline } from '@admiral-ds/icons/build/system/ChevronRightOutline.svg';
+import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
+import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
 import { getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
