@@ -1,7 +1,8 @@
 import type { MouseEvent } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-import styled, { RuleSet } from 'styled-components';
+import type { RuleSet } from 'styled-components';
+import styled from 'styled-components';
 
 import { CellWrapper } from './CellWrapper';
 import { YEARS_IN_ROW } from '../constants';

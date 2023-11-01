@@ -1,6 +1,6 @@
 import type { MouseEventHandler } from 'react';
 import type { Dayjs } from 'dayjs';
-import { RuleSet } from 'styled-components';
+import type { RuleSet } from 'styled-components';
 
 export interface CellStateProps {
   selected?: boolean;

@@ -159,7 +159,8 @@ export const DateCalendar = ({
       }
     }
   };
-  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (e) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (_) => {
     handleActiveDateChange(undefined);
   };
 
@@ -188,6 +189,7 @@ export const DateCalendar = ({
     return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getDayNameCellState = (dayNumber: number): CellStateProps => {
     const cellMixin = baseDayNameCellMixin;
     return { cellMixin };

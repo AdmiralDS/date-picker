@@ -1,4 +1,5 @@
-import styled, { RuleSet } from 'styled-components';
+import type { RuleSet } from 'styled-components';
+import styled from 'styled-components';
 import dayjs from 'dayjs';
 
 import { capitalizeFirstLetter, dayjsDateToString, getMonthNamesList } from '#src/components/utils';

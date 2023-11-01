@@ -1,4 +1,5 @@
-import styled, { RuleSet } from 'styled-components';
+import type { RuleSet } from 'styled-components';
+import styled from 'styled-components';
 
 import { capitalizeFirstLetter, getDayNamesList } from '#src/components/utils';
 import { CELL_SIZE } from '#src/components/DatesOfMonthWidget/constants';

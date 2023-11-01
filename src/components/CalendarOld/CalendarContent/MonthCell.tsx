@@ -1,7 +1,8 @@
 import type { MouseEvent } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-import styled, { RuleSet } from 'styled-components';
+import type { RuleSet } from 'styled-components';
+import styled from 'styled-components';
 
 import { YEAR_BORDER_RADIUS, YearCellWrapper } from './YearCell';
 import { capitalizeFirstLetter } from '../../utils';
