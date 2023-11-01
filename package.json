@@ -37,13 +37,13 @@
   "license": "See license in ./LICENSE",
   "dependencies": {
     "@admiral-ds/icons": "^4.0.0",
+    "@admiral-ds/react-ui": "^7.1.0",
     "dayjs": "^1.11.8",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
     "styled-components": "^6.1.0"
   },
   "devDependencies": {
-    "@admiral-ds/react-ui": "^7.1.0",
     "@rollup/plugin-typescript": "^11.1.5",
     "@storybook/addon-essentials": "^7.4.5",
     "@storybook/addon-interactions": "^7.4.5",
@@ -80,7 +80,7 @@
     "vite-tsconfig-paths": "^4.2.1"
   },
   "peerDependencies": {
-    "@admiral-ds/react-ui": "^5.1.0",
+    "@admiral-ds/react-ui": "^7.1.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
     "styled-components": "^6.1.0"
