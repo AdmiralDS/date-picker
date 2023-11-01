@@ -1,28 +1,31 @@
 {
   "compilerOptions": {
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "jsx": "react-jsx",
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "declaration": true,
-    "declarationMap": true,
-    "emitDeclarationOnly": true,
-    "sourceMap": true,
-    "outDir": "dist",
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "checkJs": true,
-    "target": "ESNext",
-    "baseUrl": "./src",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
     "paths": {
-      "#src/*": ["./*"],
-      "@admiral-ds/date-picker": ["./index"]
+      "#src/*": ["./src/*"],
+      "@admiral-ds/date-picker": ["./src/index"]
     },
     "types": ["@types/jest"]
   },
   "include": ["./src"],
-  "exclude": ["dist", "**/node_modules/*"]
+  "exclude": ["dist", "**/node_modules/*"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -12,7 +12,7 @@ import {
   getDayjsDate,
   getCurrentDate,
 } from '#src/components/utils';
-import { DatesOfMonthWidget } from 'components/DatesOfMonthWidget';
+import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
 import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import {
