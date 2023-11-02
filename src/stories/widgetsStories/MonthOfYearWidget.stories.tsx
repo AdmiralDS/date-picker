@@ -17,9 +17,9 @@ export default {
   argTypes: {},
 } as Meta<typeof MonthsOfYearWidget>;
 
-const DatesOfMonthWidgetStory: StoryFn<typeof MonthsOfYearWidget> = (props) => {
+const MonthsOfYearWidgetStory: StoryFn<typeof MonthsOfYearWidget> = (props) => {
   return <MonthsOfYearWidgetSimpleTemplate {...props} />;
 };
 
-export const DatesOfMonthWidgetSimple = DatesOfMonthWidgetStory.bind({});
-DatesOfMonthWidgetSimple.storyName = 'DatesOfMonthWidget.';
+export const MonthsOfYearWidgetSimple = MonthsOfYearWidgetStory.bind({});
+MonthsOfYearWidgetSimple.storyName = 'MonthsOfYearWidget.';
