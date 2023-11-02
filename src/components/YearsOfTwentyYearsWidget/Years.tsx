@@ -1,7 +1,8 @@
 import type { RuleSet } from 'styled-components';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 
-import { dayjsDateToString, setNoon } from '#src/components/utils';
+import { dayjsDateToString, setNoon, yearsRange } from '#src/components/utils';
 import {
   YEAR_CELL_HEIGHT,
   YEAR_CELL_WIDTH,
@@ -35,7 +36,8 @@ const YearCell = styled.div<{ $yearCellMixin?: RuleSet<object> }>`
 `;
 
 export const Years = ({ date, yearCellState, ...props }: YearsProps) => {
-  const firstDate = setNoon(date.startOf('year'));
+  const { start, end } = yearsRange(date, YEARS_ON_SCREEN);
+  const firstDate = setNoon(dayjs(`${start}-${1}-01T12:00:00`));
 
   const renderYears = () => {
     return Array.from(Array(YEARS_ON_SCREEN).keys()).map((v) => {
