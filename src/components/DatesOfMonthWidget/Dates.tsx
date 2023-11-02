@@ -23,7 +23,6 @@ import {
   rangeDisabledDateCellMixin,
   rangeCurrentDateCellMixin,
   rangeCurrentHolidayDateCellMixin,
-  selectingRangeEndDateCellMixin,
 } from '#src/components/DatesOfMonthWidget/mixins';
 
 const DatesWrapper = styled.div`
@@ -154,6 +153,7 @@ const getDateCellMixin = (
   if (isInRange && isCurrentDay) return rangeCurrentDateCellMixin;
   if (disabled && isHoliday) return disabledHolidayDateCellMixin;
   if (disabled) return disabledDateCellMixin;
+  if (isActive) return baseDateCellMixin;
   if (isOutsideMonth) return outsideMonthDateCellMixin;
   if (selected || isRangeStart || isRangeEnd) return selectedDateCellMixin;
   //if (isRangeStart || isRangeEnd) return rangeEndsDateCellMixin;
@@ -217,20 +217,25 @@ export const DefaultDateCell = ({
         $isVisible={
           !hidden &&
           !(isRangeStart && isRangeEnd) &&
-          !(isRangeSelectingStart && isRangeSelectingEnd) &&
+          !(isRangeSelectingStart && isRangeSelectingEnd && !isRangeEnd) &&
           (!!isInRange || !!isRangeEnd || !!isInRangeSelecting || !!isRangeSelectingEnd)
         }
-        $isSelectingRange={!!isInRangeSelecting || !!isRangeSelectingEnd}
+        //$isSelectingRange={!!isInRangeSelecting || !!isRangeSelectingEnd}
+        $isSelectingRange={
+          !!isInRangeSelecting || (!!isRangeSelectingEnd && !!isRangeSelectingStart !== isRangeSelectingEnd)
+        }
         $isStartOfWeek={!!isStartOfWeek}
       />
       <RightHalf
         $isVisible={
           !hidden &&
           !(isRangeStart && isRangeEnd) &&
-          !(isRangeSelectingStart && isRangeSelectingEnd) &&
-          (!!isInRange || ((!!isRangeStart || !!isInRangeSelecting || !!isRangeSelectingStart)))
+          !(isRangeSelectingStart && isRangeSelectingEnd && !isRangeStart) &&
+          (!!isInRange || !!isRangeStart || !!isInRangeSelecting || !!isRangeSelectingStart)
         }
-        $isSelectingRange={!!isInRangeSelecting || !!isRangeSelectingStart}
+        $isSelectingRange={
+          !!isInRangeSelecting || (!!isRangeSelectingStart && isRangeSelectingStart !== !!isRangeSelectingEnd)
+        }
         $isEndOfWeek={!!isEndOfWeek}
       />
       <DateCell
