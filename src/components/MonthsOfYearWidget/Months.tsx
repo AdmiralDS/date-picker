@@ -3,7 +3,7 @@ import type { RuleSet } from 'styled-components';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { dayjsDateToString } from '#src/components/utils';
+import { dayjsDateToString, setNoon } from '#src/components/utils';
 import type { MonthsProps } from '#src/components/MonthsOfYearWidget/interfaces';
 import {
   MONTH_CELL_HEIGHT,
@@ -43,7 +43,7 @@ const MonthCell = styled.div<{ $monthCellMixin?: RuleSet<object> }>`
 `;
 
 export const Months = ({ date, renderMonthCell, ...props }: MonthsProps) => {
-  const firstMonth = dayjs(`${date.year()}-01-01T12:00:00`);
+  const firstMonth = setNoon(dayjs(`${date.year()}-01-01T12:00:00`));
 
   const renderMonths = () => {
     return (
@@ -90,6 +90,7 @@ export const DefaultMonthCell = ({
   ...props
 }: DefaultMonthCellProps) => {
   const cellMixin = getDefaultMonthCellMixin(selected, disabled, hidden, isCurrentMonth);
+
   return (
     <MonthCell
       data-selected={selected ? true : undefined}
