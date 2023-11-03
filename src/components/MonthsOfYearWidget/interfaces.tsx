@@ -1,4 +1,4 @@
-import type { MouseEventHandler } from 'react';
+import type { MouseEventHandler, JSX } from 'react';
 import type { Dayjs } from 'dayjs';
 import type { RuleSet } from 'styled-components';
 
@@ -17,10 +17,10 @@ export interface MonthsOfYearWidgetProps {
    * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
   timezone?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
-  monthCellState: (date: string) => CellStateProps;
+  renderMonthCell: (dateString: string) => JSX.Element | (() => JSX.Element);
 }
 
 export interface MonthsProps {
   date: Dayjs;
-  monthCellState: (date: string) => CellStateProps;
+  renderMonthCell: (dateString: string) => JSX.Element | (() => JSX.Element);
 }

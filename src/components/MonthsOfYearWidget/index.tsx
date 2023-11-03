@@ -20,14 +20,14 @@ export const MonthsOfYearWidget = ({
   locale = 'ru',
   timezone = getCurrentTimeZone(),
   onClick,
-  monthCellState,
+  renderMonthCell,
   ...props
 }: MonthsOfYearWidgetProps) => {
   const localDate = getDayjsDate(locale, timezone, date);
 
   return (
     <MonthsOfYearWrapper {...props} onClick={onClick}>
-      <Months date={localDate} monthCellState={monthCellState} />
+      <Months date={localDate} renderMonthCell={renderMonthCell} />
     </MonthsOfYearWrapper>
   );
 };

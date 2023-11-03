@@ -10,13 +10,8 @@ import { capitalizeFirstLetter, dateStringToDayjs, dayjsDateToString, getCurrent
 import type { MonthsOfYearWidgetProps } from '#src/components/MonthsOfYearWidget/interfaces';
 import { MONTHS_OF_YEAR_WIDGET_WIDTH } from '#src/components/MonthsOfYearWidget/constants';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
-import {
-  baseMonthCellMixin,
-  currentMonthCellMixin,
-  disabledMonthCellMixin,
-  hiddenMonthCellMixin,
-  selectedMonthCellMixin,
-} from '#src/components/MonthsOfYearWidget/mixins';
+import type { DefaultMonthCellProps } from '#src/components/MonthsOfYearWidget/Months.tsx';
+import { DefaultMonthCell } from '#src/components/MonthsOfYearWidget/Months.tsx';
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,7 +32,7 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
   locale = 'ru',
   timezone,
   onClick,
-  monthCellState,
+  renderMonthCell,
   ...props
 }: MonthsOfYearWidgetProps) => {
   const dateInner = dateStringToDayjs(date, locale) || dayjs().locale(locale);
@@ -52,29 +47,26 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
     }
   };
 
-  const getMonthCellMixin = (selected?: boolean, disabled?: boolean, hidden?: boolean, isCurrentMonth?: boolean) => {
-    if (hidden) return hiddenMonthCellMixin;
-    if (disabled) return disabledMonthCellMixin;
-    if (selected) return selectedMonthCellMixin;
-    if (isCurrentMonth) return currentMonthCellMixin;
-    return baseMonthCellMixin;
-  };
-
-  const getMonthCellDataAttributes = (isCurrentMonth?: boolean): Record<string, any> => {
+  const getMonthCellDataAttributes = (value?: string, isCurrentMonth?: boolean): Record<string, any> => {
     return {
+      'data-value': value ? value : undefined,
       'data-is-current-month': isCurrentMonth ? isCurrentMonth : undefined,
     };
   };
 
-  const getMonthCellState = (dateString: string) => {
-    const date = dateStringToDayjs(dateString, locale, timezone);
-    const selected = date && selectedDate && date.isSame(selectedDate, 'month');
-    const isCurrentMonth = date && date.isSame(getCurrentDate(locale, timezone), 'month');
+  const renderMonth = (dateString: string) => {
+    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
+    if (!dateCurrent) return () => <></>;
+    const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
+    const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'month');
+    const isCurrentMonth = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'month');
+    const dataAttributes = getMonthCellDataAttributes(dateCurrent.toISOString(), isCurrentMonth);
 
-    const cellMixin = getMonthCellMixin(selected, false, false, isCurrentMonth);
-    const dataAttributes = getMonthCellDataAttributes(isCurrentMonth);
+    const renderDefaultMonthCell = (props: DefaultMonthCellProps) => (
+      <DefaultMonthCell key={dayjsDateToString(dateCurrent)} {...props} />
+    );
 
-    return { selected, cellMixin, ...dataAttributes };
+    return renderDefaultMonthCell({ cellContent, selected, isCurrentMonth, ...dataAttributes });
   };
 
   return (
@@ -86,7 +78,7 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
         locale={locale}
         timezone={timezone}
         onClick={handleClick}
-        monthCellState={getMonthCellState}
+        renderMonthCell={renderMonthCell || renderMonth}
       />
     </Wrapper>
   );
