@@ -11,22 +11,15 @@ import {
   getCurrentTimeZone,
   getDayjsDate,
   getCurrentDate,
+  dayjsDateToString,
 } from '#src/components/utils';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
 import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
-import {
-  baseDateCellMixin,
-  baseDayNameCellMixin,
-  disabledDateCellMixin,
-  disabledHolidayDateCellMixin,
-  hiddenDateCellMixin,
-  holidayDateCellMixin,
-  outsideMonthDateCellMixin,
-  selectedDateCellMixin,
-  currentDateCellMixin,
-  currentDateHolidayDateCellMixin,
-} from '#src/components/DatesOfMonthWidget/mixins';
+import { baseDayNameCellMixin } from '#src/components/DatesOfMonthWidget/mixins';
+import dayjs from 'dayjs';
+import type { DefaultDateCellProps } from '#src/components/DatesOfMonthWidget/Dates.tsx';
+import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates.tsx';
 
 const Wrapper = styled.div`
   display: flex;
@@ -42,34 +35,19 @@ const MonthYear = styled.div`
   ${typography['Subtitle/Subtitle 2']}
 `;
 
-const getDateCellMixin = (
-  selected?: boolean,
-  disabled?: boolean,
-  hidden?: boolean,
-  isHoliday?: boolean,
-  isOutsideMonth?: boolean,
-  isToday?: boolean,
-) => {
-  if (hidden) return hiddenDateCellMixin;
-  if (disabled && isHoliday) return disabledHolidayDateCellMixin;
-  if (disabled) return disabledDateCellMixin;
-  if (isOutsideMonth) return outsideMonthDateCellMixin;
-  if (selected) return selectedDateCellMixin;
-  if (isHoliday && isToday) return currentDateHolidayDateCellMixin;
-  if (isHoliday) return holidayDateCellMixin;
-  if (isToday) return currentDateCellMixin;
-  return baseDateCellMixin;
-};
-
 const getDateCellDataAttributes = (
+  value?: string,
   isHoliday?: boolean,
   isOutsideMonth?: boolean,
-  isToday?: boolean,
-): Record<string, any> => {
+  isCurrentDay?: boolean,
+  isActive?: boolean,
+) => {
   return {
-    'data-is-holiday': isHoliday ? isHoliday : undefined,
-    'data-is-outside-month': isOutsideMonth ? isOutsideMonth : undefined,
-    'data-is-today': isToday ? isToday : undefined,
+    'data-value': value ? value : undefined,
+    'data-is-holiday-cell': isHoliday ? isHoliday : undefined,
+    'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
+    'data-is-current-day-cell': isCurrentDay ? isCurrentDay : undefined,
+    'data-is-active-cell': isActive ? isActive : undefined,
   };
 };
 
@@ -82,6 +60,8 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
   const dateInner = getDayjsDate(locale, timezone, date);
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(locale, timezone).add(1, 'day'));
 
+  const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
+
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
@@ -91,6 +71,50 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
     }
   };
 
+  const handleActiveDateChange = (dateString?: string) => {
+    const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
+    //console.log(`set active ${dayjsActiveDate}`);
+    setActiveDateInner(dayjsActiveDate);
+  };
+  const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
+    const target = e.target as HTMLDivElement;
+    if (target.dataset.cellType === 'dateCell') {
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      if (hoveredDate) {
+        handleActiveDateChange(dayjsDateToString(hoveredDate));
+      }
+    }
+  };
+  const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
+    const target = e.target as HTMLDivElement;
+    if (target.dataset.cellType === 'dateCell') {
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
+        handleActiveDateChange(dayjsDateToString(hoveredDate));
+      }
+      return;
+    }
+    if (target.dataset.containerType !== 'datesWrapper') {
+      if (activeDateInner) {
+        handleActiveDateChange(undefined);
+        return;
+      }
+    }
+  };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (_) => {
+    handleActiveDateChange(undefined);
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const getDayNameCellState = (_: number): CellStateProps => {
+    const cellMixin = baseDayNameCellMixin;
+    return { cellMixin };
+  };
+
+  const dateIsSelected = (dateCurrent?: Dayjs) => {
+    return dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'date');
+  };
   const dateIsOutsideMonth = (dateCurrent?: Dayjs) => {
     return dateCurrent && dateCurrent.month() !== dateInner.month();
   };
@@ -105,33 +129,51 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
     return !!(
       dateCurrent &&
       dateCurrent.month() === dateInner.month() &&
-      (dateCurrent.day() === 6 ||
-        dateCurrent.day() === 0 ||
-        dateCurrent.isSame(getCurrentDate(locale, timezone), 'date'))
+      dateCurrent.date() !== 14 &&
+      (dateCurrent.day() === 6 || dateCurrent.day() === 0 || dateCurrent.isSame(dayjs().locale(locale), 'date'))
     );
   };
   const dateIsHidden = (dateCurrent?: Dayjs) => {
-    return dateCurrent && dateCurrent.isAfter(date, 'month');
+    return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
   };
-
-  const getDateCellState = (dateString: string): CellStateProps => {
+  const renderDefaultDate = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
-    const selected = dateCurrent && dateCurrent.isSame(selectedDate, 'date');
+    if (!dateCurrent) return () => <></>;
+    const cellContent = dateCurrent.date();
+    const selected = dateIsSelected(dateCurrent);
     const disabled = dateIsDisabled(dateCurrent);
-    const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
+    const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
     const isHoliday = dateIsHoliday(dateCurrent);
-    const isToday = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'date');
+    const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
+    const isStartOfWeek = dateCurrent.isSame(dateCurrent.startOf('week'), 'date');
+    const isEndOfWeek = dateCurrent.isSame(dateCurrent.endOf('week'), 'date');
+    const isActive = activeDateInner?.isSame(dateCurrent, 'date');
 
-    const cellMixin = getDateCellMixin(selected, disabled, hidden, isHoliday, isOutsideMonth, isToday);
-    const dataAttributes = getDateCellDataAttributes(isHoliday, isOutsideMonth, isToday);
+    const dataAttributes = getDateCellDataAttributes(
+      dateCurrent.toISOString(),
+      isHoliday,
+      isOutsideMonth,
+      isCurrentDay,
+      isActive,
+    );
+    const renderDefaultDateCell = (props: DefaultDateCellProps) => (
+      <DefaultDateCell key={dayjsDateToString(dateCurrent)} {...props} />
+    );
 
-    return { selected, disabled, hidden, cellMixin, ...dataAttributes };
-  };
-
-  const getDayNameCellState = (dayNumber: number): CellStateProps => {
-    const cellMixin = baseDayNameCellMixin;
-    return { cellMixin };
+    return renderDefaultDateCell({
+      cellContent,
+      selected,
+      disabled,
+      hidden,
+      isCurrentDay,
+      isHoliday,
+      isOutsideMonth,
+      isStartOfWeek,
+      isEndOfWeek,
+      isActive,
+      ...dataAttributes,
+    });
   };
 
   return (
@@ -140,8 +182,11 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
       <DatesOfMonthWidget
         {...props}
         onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
         dayNamesProps={{ dayNameCellState: getDayNameCellState }}
-        //datesProps={{ dateCellState: getDateCellState }}
+        renderDateCell={renderDefaultDate}
       />
     </Wrapper>
   );
