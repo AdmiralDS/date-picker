@@ -1,11 +1,9 @@
-import type { HTMLAttributes, ReactNode } from 'react';
-
-import type { DateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
+import type { HTMLAttributes, JSX } from 'react';
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   mode?: 'single' | 'double';
 
-  renderDateCell?: (props: DateCellProps) => ReactNode;
+  renderDateCell?: (dateString: string) => JSX.Element | (() => JSX.Element);
 
   /** Дата в формате ISO */
   date?: string;

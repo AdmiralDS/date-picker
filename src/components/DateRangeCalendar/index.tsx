@@ -30,7 +30,7 @@ import {
   currentDateCellMixin,
   currentDateHolidayDateCellMixin,
 } from '#src/components/DatesOfMonthWidget/mixins';
-import type { DateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
+import type { DefaultDateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
 import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates';
 import type { CalendarProps } from '#src/components/calendarInterfaces';
 
@@ -398,7 +398,7 @@ export const DateRangeCalendar = ({
       isStartOfWeek,
       isEndOfWeek,
     );
-    const renderDefaultDateCell = (props: DateCellProps) => (
+    const renderDefaultDateCell = (props: DefaultDateCellProps) => (
       <DefaultDateCell key={dayjsDateToString(dateCurrent)} {...props} />
     );
 

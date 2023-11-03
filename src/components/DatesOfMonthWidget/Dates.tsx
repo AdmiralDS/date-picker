@@ -113,7 +113,7 @@ export const Dates = ({ date, renderDateCell, ...props }: DatesProps) => {
   );
 };
 
-export interface DateCellProps extends HTMLAttributes<HTMLDivElement> {
+export interface DefaultDateCellProps extends HTMLAttributes<HTMLDivElement> {
   cellContent?: ReactNode;
   selected?: boolean;
   disabled?: boolean;
@@ -132,7 +132,7 @@ export interface DateCellProps extends HTMLAttributes<HTMLDivElement> {
   isActive?: boolean;
 }
 
-const getDateCellMixin = (
+const getDefaultDateCellMixin = (
   selected?: boolean,
   disabled?: boolean,
   hidden?: boolean,
@@ -188,8 +188,8 @@ export const DefaultDateCell = ({
   isActive,
   className,
   ...props
-}: DateCellProps) => {
-  const cellMixin = getDateCellMixin(
+}: DefaultDateCellProps) => {
+  const cellMixin = getDefaultDateCellMixin(
     selected,
     disabled,
     hidden,

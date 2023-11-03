@@ -11,19 +11,8 @@ import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstan
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
-import {
-  baseDateCellMixin,
-  baseDayNameCellMixin,
-  disabledDateCellMixin,
-  disabledHolidayDateCellMixin,
-  hiddenDateCellMixin,
-  holidayDateCellMixin,
-  outsideMonthDateCellMixin,
-  selectedDateCellMixin,
-  currentDateCellMixin,
-  currentDateHolidayDateCellMixin,
-} from '#src/components/DatesOfMonthWidget/mixins';
-import type { DateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
+import { baseDayNameCellMixin } from '#src/components/DatesOfMonthWidget/mixins';
+import type { DefaultDateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
 import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates';
 import type { CalendarProps } from '#src/components/calendarInterfaces';
 
@@ -49,25 +38,6 @@ const DateCalendarWrapper = styled.div`
   ${(p) => p.theme.shadow['Shadow 08']}
 `;
 
-export const getDateCellMixin = (
-  selected?: boolean,
-  disabled?: boolean,
-  hidden?: boolean,
-  isHoliday?: boolean,
-  isOutsideMonth?: boolean,
-  isToday?: boolean,
-) => {
-  if (hidden) return hiddenDateCellMixin;
-  if (disabled && isHoliday) return disabledHolidayDateCellMixin;
-  if (disabled) return disabledDateCellMixin;
-  if (isOutsideMonth) return outsideMonthDateCellMixin;
-  if (selected) return selectedDateCellMixin;
-  if (isHoliday && isToday) return currentDateHolidayDateCellMixin;
-  if (isHoliday) return holidayDateCellMixin;
-  if (isToday) return currentDateCellMixin;
-  return baseDateCellMixin;
-};
-
 const getDateCellDataAttributes = (
   value?: string,
   isHoliday?: boolean,
@@ -91,6 +61,7 @@ export const DateCalendar = ({
   selectedDate,
   defaultSelectedDate,
   onSelectedDateChange,
+  renderDateCell,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
@@ -208,7 +179,7 @@ export const DateCalendar = ({
   };
 
   //useMemo
-  const renderDate = (dateString: string) => {
+  const renderDefaultDate = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
     if (!dateCurrent) return () => <></>;
     const cellContent = dateCurrent.date();
@@ -229,7 +200,7 @@ export const DateCalendar = ({
       isCurrentDay,
       isActive,
     );
-    const renderDefaultDateCell = (props: DateCellProps) => (
+    const renderDefaultDateCell = (props: DefaultDateCellProps) => (
       <DefaultDateCell key={dayjsDateToString(dateCurrent)} {...props} />
     );
 
@@ -258,7 +229,7 @@ export const DateCalendar = ({
       />
       <DatesOfMonthWidget
         {...props}
-        renderDateCell={renderDate}
+        renderDateCell={renderDateCell || renderDefaultDate}
         date={dayjsDateToString(dateInner)}
         locale={locale}
         onClick={handleClick}
