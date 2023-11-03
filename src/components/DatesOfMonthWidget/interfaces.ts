@@ -1,4 +1,4 @@
-import type { HTMLAttributes, MouseEventHandler, ReactNode } from 'react';
+import type { HTMLAttributes, MouseEventHandler, JSX } from 'react';
 import type { Dayjs } from 'dayjs';
 import type { RuleSet } from 'styled-components';
 
@@ -27,12 +27,12 @@ export interface DatesOfMonthWidgetProps extends HTMLAttributes<HTMLDivElement> 
   timezone?: string;
   dayNamesProps: DayNameCellProps;
   onClick?: MouseEventHandler<HTMLDivElement>;
-  renderDateCell: (date: string) => ReactNode;
+  renderDateCell: (dateString: string) => JSX.Element | (() => JSX.Element);
 }
 
 export interface DatesProps {
   date: Dayjs;
-  renderDateCell: (date: string) => ReactNode;
+  renderDateCell: (dateString: string) => JSX.Element | (() => JSX.Element);
 }
 
 export interface DaysProps {
