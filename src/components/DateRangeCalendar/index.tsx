@@ -18,18 +18,7 @@ import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstan
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
-import {
-  baseDateCellMixin,
-  baseDayNameCellMixin,
-  disabledDateCellMixin,
-  disabledHolidayDateCellMixin,
-  hiddenDateCellMixin,
-  holidayDateCellMixin,
-  outsideMonthDateCellMixin,
-  selectedDateCellMixin,
-  currentDateCellMixin,
-  currentDateHolidayDateCellMixin,
-} from '#src/components/DatesOfMonthWidget/mixins';
+import { baseDayNameCellMixin } from '#src/components/DatesOfMonthWidget/mixins';
 import type { DefaultDateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
 import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates';
 import type { CalendarProps } from '#src/components/calendarInterfaces';
@@ -55,25 +44,6 @@ const DateCalendarWrapper = styled.div`
   border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
   ${(p) => p.theme.shadow['Shadow 08']}
 `;
-
-export const getDateCellMixin = (
-  selected?: boolean,
-  disabled?: boolean,
-  hidden?: boolean,
-  isHoliday?: boolean,
-  isOutsideMonth?: boolean,
-  isToday?: boolean,
-) => {
-  if (hidden) return hiddenDateCellMixin;
-  if (disabled && isHoliday) return disabledHolidayDateCellMixin;
-  if (disabled) return disabledDateCellMixin;
-  if (isOutsideMonth) return outsideMonthDateCellMixin;
-  if (selected) return selectedDateCellMixin;
-  if (isHoliday && isToday) return currentDateHolidayDateCellMixin;
-  if (isHoliday) return holidayDateCellMixin;
-  if (isToday) return currentDateCellMixin;
-  return baseDateCellMixin;
-};
 
 const getDateCellDataAttributes = (
   value?: string,
