@@ -1,3 +1,4 @@
+import type { HTMLAttributes, ReactNode } from 'react';
 import type { RuleSet } from 'styled-components';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
@@ -10,6 +11,13 @@ import {
   YEARS_WRAPPER_HEIGHT,
 } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { YearsProps } from '#src/components/YearsOfTwentyYearsWidget/interfaces.tsx';
+import {
+  baseYearCellMixin,
+  currentYearCellMixin,
+  disabledYearCellMixin,
+  hiddenYearCellMixin,
+  selectedYearCellMixin,
+} from '#src/components/YearsOfTwentyYearsWidget/mixins.tsx';
 
 const YearsWrapper = styled.div`
   height: ${YEARS_WRAPPER_HEIGHT}px;
@@ -35,31 +43,65 @@ const YearCell = styled.div<{ $yearCellMixin?: RuleSet<object> }>`
   ${(p) => p.$yearCellMixin}
 `;
 
-export const Years = ({ date, yearCellState, ...props }: YearsProps) => {
+export const Years = ({ date, renderYearCell, ...props }: YearsProps) => {
   const { start } = yearsRange(date, YEARS_ON_SCREEN);
-  const firstDate = setNoon(dayjs(`${start}-${1}-01T12:00:00`));
+  const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`));
 
   const renderYears = () => {
-    return Array.from(Array(YEARS_ON_SCREEN).keys()).map((v) => {
-      const currentDate = firstDate.add(v, 'year');
-      const { selected, disabled, hidden, cellMixin, ...restCellStateProps } = yearCellState(
-        dayjsDateToString(currentDate),
-      );
-      return (
-        <YearCell
-          key={currentDate.toISOString()}
-          data-value={currentDate.toISOString()}
-          data-selected={selected ? true : undefined}
-          data-disabled={disabled ? true : undefined}
-          data-hidden={hidden ? true : undefined}
-          $yearCellMixin={cellMixin}
-          {...restCellStateProps}
-        >
-          {currentDate.year()}
-        </YearCell>
-      );
-    });
+    return (
+      <>
+        {Array.from(Array(YEARS_ON_SCREEN).keys()).map((v) =>
+          renderYearCell(dayjsDateToString(firstYear.add(v, 'year'))),
+        )}
+      </>
+    );
   };
 
   return <YearsWrapper {...props}>{renderYears()}</YearsWrapper>;
+};
+
+export interface DefaultYearCellProps extends HTMLAttributes<HTMLDivElement> {
+  cellContent?: ReactNode;
+  selected?: boolean;
+  disabled?: boolean;
+  hidden?: boolean;
+  isCurrentYear?: boolean;
+  //isInRange?: boolean;
+  //isRangeStart?: boolean;
+  //isRangeEnd?: boolean;
+  //isInRangeSelecting?: boolean;
+  //isRangeSelectingStart?: boolean;
+  //isRangeSelectingEnd?: boolean;
+  //isActive?: boolean;
+}
+
+const getDefaultYearCellMixin = (selected?: boolean, disabled?: boolean, hidden?: boolean, isCurrentYear?: boolean) => {
+  if (hidden) return hiddenYearCellMixin;
+  if (disabled) return disabledYearCellMixin;
+  if (selected) return selectedYearCellMixin;
+  if (isCurrentYear) return currentYearCellMixin;
+  return baseYearCellMixin;
+};
+
+export const DefaultYearCell = ({
+  cellContent,
+  selected,
+  disabled,
+  hidden,
+  isCurrentYear,
+  ...props
+}: DefaultYearCellProps) => {
+  const cellMixin = getDefaultYearCellMixin(selected, disabled, hidden, isCurrentYear);
+
+  return (
+    <YearCell
+      data-selected={selected ? true : undefined}
+      data-disabled={disabled ? true : undefined}
+      data-hidden={hidden ? true : undefined}
+      $yearCellMixin={cellMixin}
+      {...props}
+    >
+      {cellContent}
+    </YearCell>
+  );
 };

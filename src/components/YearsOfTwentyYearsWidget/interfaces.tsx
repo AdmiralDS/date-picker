@@ -1,6 +1,7 @@
 import type { MouseEventHandler } from 'react';
 import type { Dayjs } from 'dayjs';
 import type { RuleSet } from 'styled-components';
+import { JSX } from 'react';
 
 export interface CellStateProps {
   selected?: boolean;
@@ -17,10 +18,10 @@ export interface YearsOfTwentyYearsWidgetProps {
    * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
   timezone?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
-  yearCellState: (date: string) => CellStateProps;
+  renderYearCell: (dateString: string) => JSX.Element | (() => JSX.Element);
 }
 
 export interface YearsProps {
   date: Dayjs;
-  yearCellState: (date: string) => CellStateProps;
+  renderYearCell: (dateString: string) => JSX.Element | (() => JSX.Element);
 }

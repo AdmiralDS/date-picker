@@ -11,17 +11,12 @@ import {
   getDayjsDate,
 } from '#src/components/utils';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
-import {
-  baseYearCellMixin,
-  currentYearCellMixin,
-  disabledYearCellMixin,
-  hiddenYearCellMixin,
-  selectedYearCellMixin,
-} from '#src/components/YearsOfTwentyYearsWidget/mixins.tsx';
 import type { TwentyYearsNavigationPanelWidgetProps } from '#src/components/TwentyYearsNavigationPanelWidget/interfaces';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
+import type { DefaultYearCellProps } from '#src/components/YearsOfTwentyYearsWidget/Years.tsx';
+import { DefaultYearCell } from '#src/components/YearsOfTwentyYearsWidget/Years.tsx';
 
 const CalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -53,29 +48,26 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
     }
   };
 
-  const getYearCellMixin = (selected?: boolean, disabled?: boolean, hidden?: boolean, isCurrentYear?: boolean) => {
-    if (hidden) return hiddenYearCellMixin;
-    if (disabled) return disabledYearCellMixin;
-    if (selected) return selectedYearCellMixin;
-    if (isCurrentYear) return currentYearCellMixin;
-    return baseYearCellMixin;
-  };
-
-  const getYearCellDataAttributes = (isCurrentYear?: boolean): Record<string, any> => {
+  const getYearCellDataAttributes = (value?: string, isCurrentYear?: boolean): Record<string, any> => {
     return {
+      'data-value': value ? value : undefined,
       'data-is-current-year': isCurrentYear ? isCurrentYear : undefined,
     };
   };
 
-  const getYearCellState = (dateString: string) => {
-    const date = dateStringToDayjs(dateString, locale, timezone);
-    const selected = date && selectedDate && date.isSame(selectedDate, 'year');
-    const isCurrentYear = date && date.isSame(getCurrentDate(locale, timezone), 'year');
+  const renderYear = (dateString: string) => {
+    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
+    if (!dateCurrent) return () => <></>;
+    const cellContent = dateCurrent.year();
+    const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'year');
+    const isCurrentYear = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'year');
+    const dataAttributes = getYearCellDataAttributes(dateCurrent.toISOString(), isCurrentYear);
 
-    const cellMixin = getYearCellMixin(selected, false, false, isCurrentYear);
-    const dataAttributes = getYearCellDataAttributes(isCurrentYear);
+    const renderDefaultMonthCell = (props: DefaultYearCellProps) => (
+      <DefaultYearCell key={dayjsDateToString(dateCurrent)} {...props} />
+    );
 
-    return { selected, cellMixin, ...dataAttributes };
+    return renderDefaultMonthCell({ cellContent, selected, isCurrentYear, ...dataAttributes });
   };
 
   const handleDateChange = (dateString: string) => {
@@ -110,7 +102,7 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
         locale={locale}
         timezone={timezone}
         onClick={handleClick}
-        yearCellState={getYearCellState}
+        renderYearCell={renderYear}
       />
     </CalendarWrapper>
   );

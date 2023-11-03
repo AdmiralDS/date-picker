@@ -20,14 +20,14 @@ export const YearsOfTwentyYearsWidget = ({
   locale = 'ru',
   timezone = getCurrentTimeZone(),
   onClick,
-  yearCellState,
+  renderYearCell,
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
   const localDate = getDayjsDate(locale, timezone, date);
 
   return (
     <YearsOfYearWrapper {...props} onClick={onClick}>
-      <Years date={localDate} yearCellState={yearCellState} />
+      <Years date={localDate} renderYearCell={renderYearCell} />
     </YearsOfYearWrapper>
   );
 };
