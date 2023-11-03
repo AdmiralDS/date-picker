@@ -36,7 +36,7 @@ const YearCell = styled.div<{ $yearCellMixin?: RuleSet<object> }>`
 `;
 
 export const Years = ({ date, yearCellState, ...props }: YearsProps) => {
-  const { start, end } = yearsRange(date, YEARS_ON_SCREEN);
+  const { start } = yearsRange(date, YEARS_ON_SCREEN);
   const firstDate = setNoon(dayjs(`${start}-${1}-01T12:00:00`));
 
   const renderYears = () => {
@@ -53,6 +53,7 @@ export const Years = ({ date, yearCellState, ...props }: YearsProps) => {
           data-disabled={disabled ? true : undefined}
           data-hidden={hidden ? true : undefined}
           $yearCellMixin={cellMixin}
+          {...restCellStateProps}
         >
           {currentDate.year()}
         </YearCell>

@@ -97,8 +97,12 @@ export const Dates = ({ date, renderDateCell, ...props }: DatesProps) => {
   const firstDate = setNoon(date.startOf('month').startOf('week'));
 
   const renderDates = () => {
-    return Array.from(Array(DATES_ON_SCREEN).keys()).map((v) =>
-      renderDateCell(dayjsDateToString(firstDate.add(v, 'day'))),
+    return (
+      <>
+        {Array.from(Array(DATES_ON_SCREEN).keys()).map((v) =>
+          renderDateCell(dayjsDateToString(firstDate.add(v, 'day'))),
+        )}
+      </>
     );
   };
 
@@ -138,11 +142,11 @@ const getDateCellMixin = (
   isInRange?: boolean,
   isRangeStart?: boolean,
   isRangeEnd?: boolean,
-  isInRangeSelecting?: boolean,
+  /*isInRangeSelecting?: boolean,
   isRangeSelectingStart?: boolean,
   isRangeSelectingEnd?: boolean,
   isStartOfWeek?: boolean,
-  isEndOfWeek?: boolean,
+  isEndOfWeek?: boolean,*/
   isActive?: boolean,
 ) => {
   if (hidden) return hiddenDateCellMixin;
@@ -195,13 +199,13 @@ export const DefaultDateCell = ({
     isInRange || isInRangeSelecting,
     isRangeStart || isRangeSelectingStart,
     isRangeEnd || isRangeSelectingEnd,
-    isInRangeSelecting,
+    /*isInRangeSelecting,
     //isRangeSelectingStart,
     false,
     //isRangeSelectingEnd,
     false,
     isStartOfWeek,
-    isEndOfWeek,
+    isEndOfWeek,*/
     isActive,
   );
   return (
@@ -220,7 +224,6 @@ export const DefaultDateCell = ({
           !(isRangeSelectingStart && isRangeSelectingEnd && !isRangeEnd) &&
           (!!isInRange || !!isRangeEnd || !!isInRangeSelecting || !!isRangeSelectingEnd)
         }
-        //$isSelectingRange={!!isInRangeSelecting || !!isRangeSelectingEnd}
         $isSelectingRange={
           !!isInRangeSelecting || (!!isRangeSelectingEnd && !!isRangeSelectingStart !== isRangeSelectingEnd)
         }

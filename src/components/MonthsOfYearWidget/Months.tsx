@@ -52,6 +52,7 @@ export const Months = ({ date, monthCellState, ...props }: MonthsProps) => {
         data-disabled={disabled ? true : undefined}
         data-hidden={hidden ? true : undefined}
         $monthCellMixin={cellMixin}
+        {...restCellStateProps}
       >
         {capitalizeFirstLetter(month)}
       </MonthCell>
