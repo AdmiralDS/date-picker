@@ -36,13 +36,14 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
   date,
   ...props
 }: TwentyYearsNavigationPanelWidgetProps) => {
-  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, date));
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(locale, timezone).add(1, 'day'));
+  const localeInner = locale || 'ru';
+  const [dateState, setDateState] = useState(getDayjsDate(localeInner, timezone, date));
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(localeInner, timezone).add(1, 'day'));
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
-    const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
+    const clickedDate = dateStringToDayjs(clickedCell, localeInner, timezone);
     if (clickedDate) {
       setSelectedDate(clickedDate);
     }
@@ -56,11 +57,11 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
   };
 
   const renderYear = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
+    const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
     if (!dateCurrent) return () => <></>;
     const cellContent = dateCurrent.year();
     const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'year');
-    const isCurrentYear = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'year');
+    const isCurrentYear = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner, timezone), 'year');
     const dataAttributes = getYearCellDataAttributes(dateCurrent.toISOString(), isCurrentYear);
 
     const renderDefaultMonthCell = (props: DefaultYearCellProps) => (
@@ -71,7 +72,7 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
   };
 
   const handleDateChange = (dateString: string) => {
-    const dayjsDate = getDayjsDate(locale, timezone, dateString);
+    const dayjsDate = getDayjsDate(localeInner, timezone, dateString);
     setDateState(dayjsDate);
     //onDateChange?.(dayjsDateToString(dayjsDate));
   };
@@ -92,14 +93,14 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
     <CalendarWrapper>
       <TwentyYearsNavigationPanelWidget
         date={dayjsDateToString(dateState)}
-        locale={locale}
+        locale={localeInner}
         timezone={timezone}
         onClick={handleTwentyYearsNavigationPanelClick}
       />
       <YearsOfTwentyYearsWidget
         {...props}
         date={dayjsDateToString(dateState)}
-        locale={locale}
+        locale={localeInner}
         timezone={timezone}
         onClick={handleClick}
         renderYearCell={renderYear}

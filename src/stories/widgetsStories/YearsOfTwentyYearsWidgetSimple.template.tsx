@@ -35,13 +35,14 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
   renderYearCell,
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
-  const dateInner = dateStringToDayjs(date, locale) || dayjs().locale(locale);
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(locale).add(1, 'year'));
+  const localeInner = locale || 'ru';
+  const dateInner = dateStringToDayjs(date, localeInner) || dayjs().locale(localeInner);
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(localeInner).add(1, 'year'));
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
-    const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
+    const clickedDate = dateStringToDayjs(clickedCell, localeInner, timezone);
     if (clickedDate) {
       setSelectedDate(clickedDate);
     }
@@ -55,11 +56,11 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
   };
 
   const renderYear = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
+    const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
     if (!dateCurrent) return () => <></>;
     const cellContent = dateCurrent.year();
     const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'year');
-    const isCurrentYear = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'year');
+    const isCurrentYear = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner, timezone), 'year');
     const dataAttributes = getYearCellDataAttributes(dateCurrent.toISOString(), isCurrentYear);
 
     const renderDefaultMonthCell = (props: DefaultYearCellProps) => (
@@ -75,7 +76,7 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
       <YearsOfTwentyYearsWidget
         {...props}
         date={dayjsDateToString(dateInner)}
-        locale={locale}
+        locale={localeInner}
         timezone={timezone}
         onClick={handleClick}
         renderYearCell={renderYearCell || renderYear}

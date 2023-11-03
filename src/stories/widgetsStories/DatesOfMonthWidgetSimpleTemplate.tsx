@@ -57,8 +57,9 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
   timezone = getCurrentTimeZone(),
   ...props
 }: DatesOfMonthWidgetProps) => {
-  const dateInner = getDayjsDate(locale, timezone, date);
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(locale, timezone).add(1, 'day'));
+  const localeInner = locale || 'ru';
+  const dateInner = getDayjsDate(localeInner, timezone, date);
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(localeInner, timezone).add(1, 'day'));
 
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
 
@@ -72,14 +73,14 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
   };
 
   const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsActiveDate = dateStringToDayjs(dateString, localeInner, timezone);
     //console.log(`set active ${dayjsActiveDate}`);
     setActiveDateInner(dayjsActiveDate);
   };
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, localeInner, timezone);
       if (hoveredDate) {
         handleActiveDateChange(dayjsDateToString(hoveredDate));
       }
@@ -88,7 +89,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
   const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, localeInner, timezone);
       if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
         handleActiveDateChange(dayjsDateToString(hoveredDate));
       }
@@ -130,20 +131,20 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
       dateCurrent &&
       dateCurrent.month() === dateInner.month() &&
       dateCurrent.date() !== 14 &&
-      (dateCurrent.day() === 6 || dateCurrent.day() === 0 || dateCurrent.isSame(dayjs().locale(locale), 'date'))
+      (dateCurrent.day() === 6 || dateCurrent.day() === 0 || dateCurrent.isSame(dayjs().locale(localeInner), 'date'))
     );
   };
   const dateIsHidden = (dateCurrent?: Dayjs) => {
     return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
   };
   const renderDefaultDate = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
+    const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
     if (!dateCurrent) return () => <></>;
     const cellContent = dateCurrent.date();
     const selected = dateIsSelected(dateCurrent);
     const disabled = dateIsDisabled(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
-    const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
+    const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(localeInner), 'date');
     const isHoliday = dateIsHoliday(dateCurrent);
     const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
     const isStartOfWeek = dateCurrent.isSame(dateCurrent.startOf('week'), 'date');
@@ -181,6 +182,8 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
       <MonthYear>Дата: {capitalizeFirstLetter(dateInner.format('D MMMM YYYY'))}</MonthYear>
       <DatesOfMonthWidget
         {...props}
+        locale={localeInner}
+        timezone={timezone}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
