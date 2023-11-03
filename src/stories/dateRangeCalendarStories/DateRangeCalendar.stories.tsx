@@ -1,7 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
 import { DateRangeCalendar } from '#src/components/DateRangeCalendar';
-import { DateRangeCalendarDoubleTemplate } from '#src/stories/dateRangeCalendarStories/DateRangeCalendarDouble.template';
 import { DateRangeCalendarSimpleTemplate } from '#src/stories/dateRangeCalendarStories/DateRangeCalendarSimple.template';
 
 export default {
@@ -42,9 +41,3 @@ const DateRangeCalendarSimpleStory: StoryFn<typeof DateRangeCalendar> = (props) 
 };
 export const DateRangeCalendarSimple = DateRangeCalendarSimpleStory.bind({});
 DateRangeCalendarSimple.storyName = 'DateRangeCalendarSimple';
-
-const DateRangeCalendarDoubleStory: StoryFn<typeof DateRangeCalendar> = (props) => {
-  return <DateRangeCalendarDoubleTemplate {...props} />;
-};
-export const DateRangeCalendarDouble = DateRangeCalendarDoubleStory.bind({});
-DateRangeCalendarDouble.storyName = 'DateRangeCalendarDouble';
