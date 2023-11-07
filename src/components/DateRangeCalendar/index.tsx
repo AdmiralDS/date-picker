@@ -31,7 +31,7 @@ export interface DateRangeCalendarProps extends CalendarProps {
   onDateRangeChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
 }
 
-const DateCalendarWrapper = styled.div`
+const DateRangeCalendarWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -393,7 +393,7 @@ export const DateRangeCalendar = ({
   };
 
   return (
-    <DateCalendarWrapper>
+    <DateRangeCalendarWrapper>
       <MonthNavigationPanelWidget
         date={dayjsDateToString(dateInner)}
         locale={locale}
@@ -411,6 +411,6 @@ export const DateRangeCalendar = ({
         onMouseMove={handleMouseMove}
         dayNamesProps={{ dayNameCellState: getDayNameCellState }}
       />
-    </DateCalendarWrapper>
+    </DateRangeCalendarWrapper>
   );
 };

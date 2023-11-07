@@ -31,7 +31,7 @@ export interface DateRangeDoubleCalendarProps extends CalendarProps {
   onDateRangeChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
 }
 
-const DateCalendarWrapper = styled.div`
+const DateRangeCalendarDoubleWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   width: ${CALENDAR_WIDTH * 2}px;
@@ -493,7 +493,7 @@ export const DateRangeDoubleCalendar = ({
   };
 
   return (
-    <DateCalendarWrapper>
+    <DateRangeCalendarDoubleWrapper>
       <Container>
         <MonthNavigationPanelWidget
           date={dayjsDateToString(dateLeftInner)}
@@ -532,6 +532,6 @@ export const DateRangeDoubleCalendar = ({
           dayNamesProps={{ dayNameCellState: getDayNameCellState }}
         />
       </Container>
-    </DateCalendarWrapper>
+    </DateRangeCalendarDoubleWrapper>
   );
 };
