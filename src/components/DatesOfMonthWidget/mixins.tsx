@@ -13,7 +13,7 @@ const baseCellMixin = css`
 
 export const baseDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseCellMixin};
-  ${(p) => p.$isActive && `border-color: ${p.theme.color['Primary/Primary 60 Main']};`}
+  ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
 `;
 
 export const selectedDateCellMixin = css<{ $isActive?: boolean }>`
@@ -22,9 +22,10 @@ export const selectedDateCellMixin = css<{ $isActive?: boolean }>`
   border-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
   color: ${(p) => p.theme.color['Special/Static White']};
   ${(p) =>
-    p.$isActive &&
-    `background-color: ${p.theme.color['Primary/Primary 70']};
-     border-color: ${p.theme.color['Primary/Primary 70']};`}
+    p.$isActive
+      ? `background-color: ${p.theme.color['Primary/Primary 70']};
+     border-color: ${p.theme.color['Primary/Primary 70']};`
+      : ''}
 `;
 
 export const selectingRangeEndDateCellMixin = css<{ $isActive?: boolean }>`
@@ -54,7 +55,7 @@ export const hiddenDateCellMixin = css<{ $isActive?: boolean }>`
 export const holidayDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseCellMixin};
   color: ${(p) => p.theme.color['Error/Error 60 Main']};
-  ${(p) => p.$isActive && `border-color: ${p.theme.color['Primary/Primary 60 Main']};`}
+  ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
 `;
 
 export const disabledHolidayDateCellMixin = css<{ $isActive?: boolean }>`
@@ -72,14 +73,14 @@ export const rangeDisabledHolidayDateCellMixin = css<{ $isActive?: boolean }>`
 export const currentDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseCellMixin};
   border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
-  ${(p) => p.$isActive && `border-color: ${p.theme.color['Primary/Primary 60 Main']};`}
+  ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
 `;
 
 export const currentDateHolidayDateCellMixin = css<{ $isActive?: boolean }>`
   ${currentDateCellMixin};
   ${holidayDateCellMixin};
   border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
-  ${(p) => p.$isActive && `border-color: ${p.theme.color['Primary/Primary 60 Main']};`}
+  ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
 `;
 
 export const outsideMonthDateCellMixin = css<{ $isActive?: boolean }>`
@@ -94,9 +95,10 @@ export const rangeDateCellMixin = css<{ $isActive?: boolean }>`
   border-color: transparent;
 
   ${(p) =>
-    p.$isActive &&
-    `background-color: ${p.theme.color['Special/Elevated BG']};
-     border-color: ${p.theme.color['Primary/Primary 60 Main']};`}
+    p.$isActive
+      ? `background-color: ${p.theme.color['Special/Elevated BG']};
+     border-color: ${p.theme.color['Primary/Primary 60 Main']};`
+      : ''}
 `;
 
 export const rangeCurrentDateCellMixin = css<{ $isActive?: boolean }>`
@@ -105,9 +107,10 @@ export const rangeCurrentDateCellMixin = css<{ $isActive?: boolean }>`
   border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
 
   ${(p) =>
-    p.$isActive &&
-    `background-color: ${p.theme.color['Special/Elevated BG']};
-     border-color: ${p.theme.color['Primary/Primary 60 Main']};`}
+    p.$isActive
+      ? `background-color: ${p.theme.color['Special/Elevated BG']};
+     border-color: ${p.theme.color['Primary/Primary 60 Main']};`
+      : ''}
 `;
 
 export const rangeHolidayDateCellMixin = css<{ $isActive?: boolean }>`

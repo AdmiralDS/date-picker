@@ -1,6 +1,7 @@
-import type { HTMLAttributes, MouseEventHandler, JSX } from 'react';
+import type { HTMLAttributes, MouseEventHandler } from 'react';
 import type { Dayjs } from 'dayjs';
 import type { RuleSet } from 'styled-components';
+import type { DefaultDateCellProps } from '#src/components/DatesOfMonthWidget/Dates.tsx';
 
 export interface CellStateProps {
   selected?: boolean;
@@ -27,12 +28,12 @@ export interface DatesOfMonthWidgetProps extends HTMLAttributes<HTMLDivElement> 
   timezone?: string;
   dayNamesProps: DayNameCellProps;
   onClick?: MouseEventHandler<HTMLDivElement>;
-  renderDateCell: (dateString: string) => JSX.Element | (() => JSX.Element);
+  renderDateCell: (dateString: string) => DefaultDateCellProps;
 }
 
 export interface DatesProps {
   date: Dayjs;
-  renderDateCell: (dateString: string) => JSX.Element | (() => JSX.Element);
+  renderDateCell: (dateString: string) => DefaultDateCellProps;
 }
 
 export interface DaysProps {

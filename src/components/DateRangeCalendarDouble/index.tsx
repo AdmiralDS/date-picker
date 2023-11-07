@@ -19,8 +19,6 @@ import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanel
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DatesOfMonthWidget/mixins';
-import type { DefaultDateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
-import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates';
 import type { CalendarProps } from '#src/components/calendarInterfaces';
 
 export interface DateRangeDoubleCalendarProps extends CalendarProps {
@@ -368,7 +366,7 @@ export const DateRangeDoubleCalendar = ({
     const isActive = activeDateInner?.isSame(dateCurrent, 'date');
 
     const dataAttributes = getDateCellDataAttributes(
-      dateCurrent.toISOString(),
+      dateString,
       isHoliday,
       isOutsideMonth,
       isCurrentDay,
@@ -382,11 +380,7 @@ export const DateRangeDoubleCalendar = ({
       isStartOfWeek,
       isEndOfWeek,
     );
-    const renderDefaultDateCell = (props: DefaultDateCellProps) => (
-      <DefaultDateCell key={dayjsDateToString(dateCurrent)} {...props} />
-    );
-
-    return renderDefaultDateCell({
+    return {
       cellContent,
       disabled,
       hidden,
@@ -403,7 +397,8 @@ export const DateRangeDoubleCalendar = ({
       isEndOfWeek,
       isActive,
       ...dataAttributes,
-    });
+    } as const;
+    //return <DefaultDateCell {...defaultDateCellProps} />;
   };
   const renderDateRight = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
@@ -428,7 +423,7 @@ export const DateRangeDoubleCalendar = ({
     const isActive = activeDateInner?.isSame(dateCurrent, 'date');
 
     const dataAttributes = getDateCellDataAttributes(
-      dateCurrent.toISOString(),
+      dateString,
       isHoliday,
       isOutsideMonth,
       isCurrentDay,
@@ -442,11 +437,7 @@ export const DateRangeDoubleCalendar = ({
       isStartOfWeek,
       isEndOfWeek,
     );
-    const renderDefaultDateCell = (props: DefaultDateCellProps) => (
-      <DefaultDateCell key={dayjsDateToString(dateCurrent)} {...props} />
-    );
-
-    return renderDefaultDateCell({
+    return {
       cellContent,
       disabled,
       hidden,
@@ -463,7 +454,7 @@ export const DateRangeDoubleCalendar = ({
       isEndOfWeek,
       isActive,
       ...dataAttributes,
-    });
+    } as const;
   };
 
   return (

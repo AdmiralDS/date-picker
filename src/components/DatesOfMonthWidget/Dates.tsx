@@ -92,23 +92,16 @@ const DateCell = styled.div<{
   height: ${CELL_SIZE}px;
   ${(p) => p.$dateCellMixin}
 `;
+const datesArray = Array.from(Array(DATES_ON_SCREEN).keys());
 
 export const Dates = ({ date, renderDateCell, ...props }: DatesProps) => {
   const firstDate = setNoon(date.startOf('month').startOf('week'));
 
-  const renderDates = () => {
-    return (
-      <>
-        {Array.from(Array(DATES_ON_SCREEN).keys()).map((v) =>
-          renderDateCell(dayjsDateToString(firstDate.add(v, 'day'))),
-        )}
-      </>
-    );
-  };
-
   return (
     <DatesWrapper {...props} data-container-type="datesWrapper">
-      {renderDates()}
+      {datesArray.map((v) => (
+        <DefaultDateCell key={v} {...renderDateCell(dayjsDateToString(firstDate.add(v, 'day')))} />
+      ))}
     </DatesWrapper>
   );
 };
