@@ -131,7 +131,6 @@ export const DateRangeDoubleCalendar = ({
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
   const handleActiveDateChange = (dateString?: string) => {
     const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
-    console.log(`set active ${dateString}`);
     setActiveDateInner(dayjsActiveDate);
   };
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -181,7 +180,6 @@ export const DateRangeDoubleCalendar = ({
   const dateRangeFirstInner = (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[0])) || dateRangeFirstState;
   const handleDateRangeFirstChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    //console.log(`first-${dateString}`);
     setDateRangeFirstState(dayjsDate);
   };
   //</editor-fold>
@@ -194,7 +192,6 @@ export const DateRangeDoubleCalendar = ({
     (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[1])) || dateRangeSecondState;
   const handleDateRangeSecondChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    //console.log(`second-${dateString}`);
     setDateRangeSecondState(dayjsDate);
   };
   //</editor-fold>
@@ -203,7 +200,6 @@ export const DateRangeDoubleCalendar = ({
   const [dateRangeActiveEnd, setDateRangeActiveEnd] = useState<Dayjs | undefined>();
   const handleDateRangeActiveEndChange = (dateString?: string) => {
     const dateDayjs = dateStringToDayjs(dateString, locale, timezone);
-    console.log(`activeEnd-${dateString}`);
     setDateRangeActiveEnd(dateDayjs);
   };
   //</editor-fold>
@@ -212,32 +208,12 @@ export const DateRangeDoubleCalendar = ({
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
     if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
-      /*//if (dateRangeActiveEnd === 'first') {
-      //if (dateRangeActiveEnd && dateRangeFirstInner && dateRangeActiveEnd.isSame(dateRangeFirstInner, 'date')) {
-      if ((!dateRangeFirstInner && !dateRangeSecondInner) || (!dateRangeFirstInner && dateRangeSecondInner)) {
-        handleDateRangeFirstChange(clickedCell);
-      }
-      //if (dateRangeActiveEnd === 'second') {
-      //if (dateRangeActiveEnd && dateRangeSecondInner && dateRangeActiveEnd.isSame(dateRangeSecondInner, 'date')) {
-      if ((dateRangeFirstInner && !dateRangeSecondInner) || (!dateRangeFirstInner && dateRangeSecondInner)) {
-        handleDateRangeSecondChange(clickedCell);
-      }*/
-
       if (!dateRangeActiveEnd) {
         if (dateRangeFirstInner && !dateRangeSecondInner) {
           handleDateRangeSecondChange(clickedCell);
         } else {
           handleDateRangeFirstChange(clickedCell);
         }
-        /*if (!dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeFirstChange(clickedCell);
-        }
-        if (!dateRangeFirstInner && dateRangeSecondInner) {
-          handleDateRangeFirstChange(clickedCell);
-        }
-        if (dateRangeFirstInner && dateRangeSecondInner) {
-          handleDateRangeFirstChange(clickedCell);
-        }*/
       } else {
         if (dateRangeFirstInner && dateRangeSecondInner) {
           if (dateRangeActiveEnd.isSame(dateRangeFirstInner, 'date')) {
@@ -251,16 +227,9 @@ export const DateRangeDoubleCalendar = ({
         } else {
           handleDateRangeFirstChange(clickedCell);
         }
-        /*if (!dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeFirstChange(clickedCell);
-        }
-        if (!dateRangeFirstInner && dateRangeSecondInner) {
-          handleDateRangeFirstChange(clickedCell);
-        }*/
       }
       handleDateRangeActiveEndChange(clickedCell);
       onDateRangeChange?.([dayjsStateToString(dateRangeFirstState), dayjsStateToString(dateRangeSecondState)]);
-      //console.log(`first-${dateRangeFirstInner}, second-${dateRangeSecondInner}, activeEnd-${dateRangeActiveEnd}`);
     }
     onClick?.(e);
   };
@@ -318,13 +287,7 @@ export const DateRangeDoubleCalendar = ({
       !dateIsHidden(dateCurrent, dateVisible)
     ) {
       const dates = sortDatesAsc(dateRangeActiveEnd, activeDateInner);
-      const res = dateCurrent.isSame(dates[0], 'date');
-      if (res) {
-        //console.log(`range selecting start-${dayjsDateToString(dateCurrent)}`);
-        console.log(`range selecting start-${dayjsDateToString(dateCurrent)}`);
-      }
-      return res;
-      //return dateCurrent.isSame(dates[0], 'date');
+      return dateCurrent.isSame(dates[0], 'date');
     }
     return false;
   };
