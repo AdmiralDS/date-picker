@@ -1,5 +1,5 @@
 import type { MouseEventHandler } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
@@ -105,7 +105,7 @@ export const DateRangeDoubleCalendar = ({
       onDateChange?.(dateString);
     }
   };
-  const [dateRightState, setDateRightState] = useState(getDayjsDate(locale, timezone, defaultDate));
+  const [dateRightState, setDateRightState] = useState(dateLeftInner.add(1, 'month'));
   const dateRightInner = (date && getDayjsDate(locale, timezone, date)) || dateRightState;
   const handleDateRightChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
@@ -114,6 +114,17 @@ export const DateRangeDoubleCalendar = ({
       onDateChange?.(dateString);
     }
   };
+
+  useEffect(() => {
+    if (dateLeftInner.isSameOrAfter(dateRightInner)) {
+      handleDateRightChange(dayjsDateToString(dateLeftInner.add(1, 'month')));
+    }
+  }, [dateLeftInner]);
+  useEffect(() => {
+    if (dateRightInner.isSameOrBefore(dateLeftInner)) {
+      handleDateLeftChange(dayjsDateToString(dateRightInner.subtract(1, 'month')));
+    }
+  }, [dateRightInner]);
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
