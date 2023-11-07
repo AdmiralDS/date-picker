@@ -345,7 +345,7 @@ export const DateRangeDoubleCalendar = ({
   //useMemo
   const renderDateLeft = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
-    if (!dateCurrent) return () => <></>;
+    if (!dateCurrent) return {};
     const cellContent = dateCurrent.date();
     const disabled = dateIsDisabled(dateCurrent, dateLeftInner);
     const hidden = dateIsHidden(dateCurrent, dateLeftInner);
@@ -402,7 +402,7 @@ export const DateRangeDoubleCalendar = ({
   };
   const renderDateRight = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
-    if (!dateCurrent) return () => <></>;
+    if (!dateCurrent) return {};
     const cellContent = dateCurrent.date();
     const disabled = dateIsDisabled(dateCurrent, dateRightInner);
     const hidden = dateIsHidden(dateCurrent, dateRightInner);
