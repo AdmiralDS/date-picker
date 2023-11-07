@@ -105,7 +105,7 @@ export const DateRangeCalendar = ({
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
   const handleActiveDateChange = (dateString?: string) => {
     const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
-    //console.log(`set active ${dayjsActiveDate}`);
+    //console.log(`set active ${dateString}`);
     setActiveDateInner(dayjsActiveDate);
   };
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -155,6 +155,7 @@ export const DateRangeCalendar = ({
   const dateRangeFirstInner = (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[0])) || dateRangeFirstState;
   const handleDateRangeFirstChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    //console.log(`first-${dateString}`);
     setDateRangeFirstState(dayjsDate);
   };
   //</editor-fold>
@@ -167,6 +168,7 @@ export const DateRangeCalendar = ({
     (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[1])) || dateRangeSecondState;
   const handleDateRangeSecondChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    //console.log(`second-${dateString}`);
     setDateRangeSecondState(dayjsDate);
   };
   //</editor-fold>
@@ -175,6 +177,7 @@ export const DateRangeCalendar = ({
   const [dateRangeActiveEnd, setDateRangeActiveEnd] = useState<Dayjs | undefined>();
   const handleDateRangeActiveEndChange = (dateString?: string) => {
     const dateDayjs = dateStringToDayjs(dateString, locale, timezone);
+    //console.log(`activeEnd-${dateString}`);
     setDateRangeActiveEnd(dateDayjs);
   };
   //</editor-fold>
@@ -231,6 +234,7 @@ export const DateRangeCalendar = ({
       }
       handleDateRangeActiveEndChange(clickedCell);
       onDateRangeChange?.([dayjsStateToString(dateRangeFirstState), dayjsStateToString(dateRangeSecondState)]);
+      //console.log(`first-${dateRangeFirstInner}, second-${dateRangeSecondInner}, activeEnd-${dateRangeActiveEnd}`);
     }
     onClick?.(e);
   };
@@ -285,6 +289,12 @@ export const DateRangeCalendar = ({
       !dateIsHidden(dateCurrent)
     ) {
       const dates = sortDatesAsc(dateRangeActiveEnd, activeDateInner);
+      /*const res = dateCurrent.isSame(dates[0], 'date');
+      if (res) {
+        //console.log(`range selecting start-${dayjsDateToString(dateCurrent)}`);
+        console.log(`range selecting start-${dayjsDateToString(dateCurrent)}`);
+      }
+      return res;*/
       return dateCurrent.isSame(dates[0], 'date');
     }
     return false;
