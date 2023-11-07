@@ -1,7 +1,7 @@
 import type { MouseEventHandler } from 'react';
 
-import type { DateRangeCalendarProps } from '#src/components/DateRangeCalendar';
-import { DateRangeCalendar } from '#src/components/DateRangeCalendar';
+import type { DateRangeCalendarProps } from '@admiral-ds/date-picker';
+import { DateRangeCalendar } from '@admiral-ds/date-picker';
 
 export const DateRangeCalendarSimpleTemplate = ({ locale, ...props }: DateRangeCalendarProps) => {
   const localeInner = locale || 'ru';

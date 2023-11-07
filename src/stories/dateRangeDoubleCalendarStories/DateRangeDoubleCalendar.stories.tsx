@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { DateRangeDoubleCalendar } from '#src/components/DateRangeCalendarDouble';
+import { DateRangeDoubleCalendar } from '@admiral-ds/date-picker';
 
 import { DateRangeDoubleCalendarSimpleTemplate } from '#src/stories/dateRangeDoubleCalendarStories/DateRangeDoubleCalendarSimple.template.tsx';
 

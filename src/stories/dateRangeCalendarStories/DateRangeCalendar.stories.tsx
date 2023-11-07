@@ -1,6 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { DateRangeCalendar } from '#src/components/DateRangeCalendar';
+import { DateRangeCalendar } from '@admiral-ds/date-picker';
+
 import { DateRangeCalendarSimpleTemplate } from '#src/stories/dateRangeCalendarStories/DateRangeCalendarSimple.template';
 
 export default {
