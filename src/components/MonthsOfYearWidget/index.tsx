@@ -26,8 +26,8 @@ export const MonthsOfYearWidget = ({
   const localDate = getDayjsDate(locale, timezone, date);
 
   return (
-    <MonthsOfYearWrapper {...props} onClick={onClick}>
-      <Months date={localDate} renderMonthCell={renderMonthCell} />
+    <MonthsOfYearWrapper {...props} onClick={onClick} data-container-type="monthsOfYearWrapper">
+      <Months date={localDate} renderMonthCell={renderMonthCell} data-container-type="monthsWrapper" />
     </MonthsOfYearWrapper>
   );
 };

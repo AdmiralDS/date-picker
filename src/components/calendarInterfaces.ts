@@ -1,8 +1,6 @@
 import type { HTMLAttributes, JSX } from 'react';
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
-  mode?: 'single' | 'double';
-
   renderDateCell?: (dateString: string) => JSX.Element | (() => JSX.Element);
 
   /** Дата в формате ISO */

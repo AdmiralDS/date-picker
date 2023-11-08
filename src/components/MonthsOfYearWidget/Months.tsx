@@ -26,7 +26,7 @@ const MonthsWrapper = styled.div`
   align-content: space-between;
 `;
 
-const MonthCell = styled.div<{ $monthCellMixin?: RuleSet<object> }>`
+const MonthCell = styled.div<{ $monthCellMixin?: RuleSet<object>; $isActive?: boolean }>`
   box-sizing: border-box;
   text-align: center;
   width: ${MONTH_CELL_WIDTH}px;
@@ -42,15 +42,16 @@ const MonthCell = styled.div<{ $monthCellMixin?: RuleSet<object> }>`
   ${(p) => p.$monthCellMixin}
 `;
 
+const monthsArray = Array.from(Array(12).keys());
+
 export const Months = ({ date, renderMonthCell, ...props }: MonthsProps) => {
   const firstMonth = setNoon(dayjs(`${date.year()}-01-01T12:00:00`));
 
-  const renderMonths = () => {
-    return (
-      <>{Array.from(Array(12).keys()).map((v) => renderMonthCell(dayjsDateToString(firstMonth.add(v, 'month'))))}</>
-    );
-  };
-  return <MonthsWrapper {...props}>{renderMonths()}</MonthsWrapper>;
+  return (
+    <MonthsWrapper {...props}>
+      <>{monthsArray.map((v) => renderMonthCell(dayjsDateToString(firstMonth.add(v, 'month'))))}</>
+    </MonthsWrapper>
+  );
 };
 
 export interface DefaultMonthCellProps extends HTMLAttributes<HTMLDivElement> {
@@ -59,6 +60,7 @@ export interface DefaultMonthCellProps extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
   hidden?: boolean;
   isCurrentMonth?: boolean;
+  isActive?: boolean;
   //isInRange?: boolean;
   //isRangeStart?: boolean;
   //isRangeEnd?: boolean;
@@ -73,6 +75,7 @@ const getDefaultMonthCellMixin = (
   disabled?: boolean,
   hidden?: boolean,
   isCurrentMonth?: boolean,
+  //isActive?: boolean,
 ) => {
   if (hidden) return hiddenMonthCellMixin;
   if (disabled) return disabledMonthCellMixin;
@@ -87,16 +90,20 @@ export const DefaultMonthCell = ({
   disabled,
   hidden,
   isCurrentMonth,
+  isActive,
   ...props
 }: DefaultMonthCellProps) => {
   const cellMixin = getDefaultMonthCellMixin(selected, disabled, hidden, isCurrentMonth);
+  console.log(cellContent);
 
   return (
     <MonthCell
+      data-cell-type="monthCell"
       data-selected={selected ? true : undefined}
       data-disabled={disabled ? true : undefined}
       data-hidden={hidden ? true : undefined}
       $monthCellMixin={cellMixin}
+      $isActive={isActive}
       {...props}
     >
       {cellContent}
