@@ -26,8 +26,8 @@ export const YearsOfTwentyYearsWidget = ({
   const localDate = getDayjsDate(locale, timezone, date);
 
   return (
-    <YearsOfYearWrapper {...props} onClick={onClick}>
-      <Years date={localDate} renderYearCell={renderYearCell} />
+    <YearsOfYearWrapper {...props} onClick={onClick} data-container-type="yearsOfYearWrapper">
+      <Years date={localDate} renderYearCell={renderYearCell} data-container-type="yearsWrapper" />
     </YearsOfYearWrapper>
   );
 };

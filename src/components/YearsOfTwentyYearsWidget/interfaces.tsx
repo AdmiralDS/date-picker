@@ -1,7 +1,7 @@
 import type { MouseEventHandler } from 'react';
 import type { Dayjs } from 'dayjs';
 import type { RuleSet } from 'styled-components';
-import { JSX } from 'react';
+import { HTMLAttributes, JSX } from 'react';
 
 export interface CellStateProps {
   selected?: boolean;
@@ -10,7 +10,7 @@ export interface CellStateProps {
   cellMixin: RuleSet<object>;
 }
 
-export interface YearsOfTwentyYearsWidgetProps {
+export interface YearsOfTwentyYearsWidgetProps extends HTMLAttributes<HTMLDivElement> {
   /** Дата в формате ISO */
   date?: string;
   locale?: string;

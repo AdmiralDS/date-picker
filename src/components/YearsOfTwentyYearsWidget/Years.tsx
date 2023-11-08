@@ -27,7 +27,7 @@ const YearsWrapper = styled.div`
   align-content: space-between;
 `;
 
-const YearCell = styled.div<{ $yearCellMixin?: RuleSet<object> }>`
+const YearCell = styled.div<{ $yearCellMixin?: RuleSet<object>; $isActive?: boolean }>`
   box-sizing: border-box;
   text-align: center;
   width: ${YEAR_CELL_WIDTH}px;
@@ -43,21 +43,17 @@ const YearCell = styled.div<{ $yearCellMixin?: RuleSet<object> }>`
   ${(p) => p.$yearCellMixin}
 `;
 
+const yearsArray = Array.from(Array(YEARS_ON_SCREEN).keys());
+
 export const Years = ({ date, renderYearCell, ...props }: YearsProps) => {
   const { start } = yearsRange(date, YEARS_ON_SCREEN);
   const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`));
 
-  const renderYears = () => {
-    return (
-      <>
-        {Array.from(Array(YEARS_ON_SCREEN).keys()).map((v) =>
-          renderYearCell(dayjsDateToString(firstYear.add(v, 'year'))),
-        )}
-      </>
-    );
-  };
-
-  return <YearsWrapper {...props}>{renderYears()}</YearsWrapper>;
+  return (
+    <YearsWrapper {...props}>
+      {<>{yearsArray.map((v) => renderYearCell(dayjsDateToString(firstYear.add(v, 'year'))))}</>}
+    </YearsWrapper>
+  );
 };
 
 export interface DefaultYearCellProps extends HTMLAttributes<HTMLDivElement> {
@@ -66,13 +62,13 @@ export interface DefaultYearCellProps extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
   hidden?: boolean;
   isCurrentYear?: boolean;
+  isActive?: boolean;
   //isInRange?: boolean;
   //isRangeStart?: boolean;
   //isRangeEnd?: boolean;
   //isInRangeSelecting?: boolean;
   //isRangeSelectingStart?: boolean;
   //isRangeSelectingEnd?: boolean;
-  //isActive?: boolean;
 }
 
 const getDefaultYearCellMixin = (selected?: boolean, disabled?: boolean, hidden?: boolean, isCurrentYear?: boolean) => {
@@ -89,15 +85,18 @@ export const DefaultYearCell = ({
   disabled,
   hidden,
   isCurrentYear,
+  isActive,
   ...props
 }: DefaultYearCellProps) => {
   const cellMixin = getDefaultYearCellMixin(selected, disabled, hidden, isCurrentYear);
 
   return (
     <YearCell
+      data-cell-type="yearCell"
       data-selected={selected ? true : undefined}
       data-disabled={disabled ? true : undefined}
       data-hidden={hidden ? true : undefined}
+      $isActive={isActive}
       $yearCellMixin={cellMixin}
       {...props}
     >
