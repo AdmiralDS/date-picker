@@ -1,5 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import type { RuleSet } from 'styled-components';
+//import type { RuleSet } from 'styled-components';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
@@ -11,12 +11,12 @@ import {
   MONTHS_WRAPPER_HEIGHT,
 } from '#src/components/MonthsOfYearWidget/constants';
 import {
-  baseMonthCellMixin,
+  /*baseMonthCellMixin,
   currentMonthCellMixin,
   disabledMonthCellMixin,
   hiddenMonthCellMixin,
+  selectedMonthCellMixin,*/
   monthCellMixin,
-  selectedMonthCellMixin,
 } from '#src/components/MonthsOfYearWidget/mixins.tsx';
 
 const MonthsWrapper = styled.div`
@@ -75,10 +75,9 @@ export interface DefaultMonthCellProps extends HTMLAttributes<HTMLDivElement> {
   //isInRangeSelecting?: boolean;
   //isRangeSelectingStart?: boolean;
   //isRangeSelectingEnd?: boolean;
-  //isActive?: boolean;
 }
 
-const getDefaultMonthCellMixin = (
+/*const getDefaultMonthCellMixin = (
   selected?: boolean,
   disabled?: boolean,
   hidden?: boolean,
@@ -90,7 +89,7 @@ const getDefaultMonthCellMixin = (
   if (selected) return selectedMonthCellMixin;
   if (isCurrentMonth) return currentMonthCellMixin;
   return baseMonthCellMixin;
-};
+};*/
 
 export const DefaultMonthCell = ({
   cellContent,
@@ -102,7 +101,7 @@ export const DefaultMonthCell = ({
   ...props
 }: DefaultMonthCellProps) => {
   //const cellMixin = getDefaultMonthCellMixin(selected, disabled, hidden, isCurrentMonth);
-  console.log(cellContent);
+  //console.log(cellContent);
 
   return (
     <MonthCell
