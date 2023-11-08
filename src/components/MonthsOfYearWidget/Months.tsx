@@ -15,6 +15,7 @@ import {
   currentMonthCellMixin,
   disabledMonthCellMixin,
   hiddenMonthCellMixin,
+  monthCellMixin,
   selectedMonthCellMixin,
 } from '#src/components/MonthsOfYearWidget/mixins.tsx';
 
@@ -26,7 +27,14 @@ const MonthsWrapper = styled.div`
   align-content: space-between;
 `;
 
-const MonthCell = styled.div<{ $monthCellMixin?: RuleSet<object>; $isActive?: boolean }>`
+const MonthCell = styled.div<{
+  //$monthCellMixin?: RuleSet<object>;
+  $isActive?: boolean;
+  $isSelected?: boolean;
+  $isCurrentMonth?: boolean;
+  $disabled?: boolean;
+  $hidden?: boolean;
+}>`
   box-sizing: border-box;
   text-align: center;
   width: ${MONTH_CELL_WIDTH}px;
@@ -39,7 +47,7 @@ const MonthCell = styled.div<{ $monthCellMixin?: RuleSet<object>; $isActive?: bo
   &[data-hidden='true'] {
     cursor: default;
   }
-  ${(p) => p.$monthCellMixin}
+  ${monthCellMixin}
 `;
 
 const monthsArray = Array.from(Array(12).keys());
@@ -93,7 +101,7 @@ export const DefaultMonthCell = ({
   isActive,
   ...props
 }: DefaultMonthCellProps) => {
-  const cellMixin = getDefaultMonthCellMixin(selected, disabled, hidden, isCurrentMonth);
+  //const cellMixin = getDefaultMonthCellMixin(selected, disabled, hidden, isCurrentMonth);
   console.log(cellContent);
 
   return (
@@ -102,8 +110,12 @@ export const DefaultMonthCell = ({
       data-selected={selected ? true : undefined}
       data-disabled={disabled ? true : undefined}
       data-hidden={hidden ? true : undefined}
-      $monthCellMixin={cellMixin}
+      //$monthCellMixin={cellMixin}
       $isActive={isActive}
+      $isSelected={selected}
+      $disabled={disabled}
+      $hidden={hidden}
+      $isCurrentMonth={isCurrentMonth}
       {...props}
     >
       {cellContent}

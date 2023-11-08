@@ -43,3 +43,36 @@ export const currentMonthCellMixin = css<{ $isActive?: boolean }>`
   border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
   ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
 `;
+
+export const monthCellMixin = css<{
+  $isActive?: boolean;
+  $isSelected?: boolean;
+  $isCurrentMonth?: boolean;
+  $disabled?: boolean;
+  $hidden?: boolean;
+}>`
+  ${baseCellMixin};
+  ${(p) => (p.$isCurrentMonth ? `border-color: ${p.theme.color['Neutral/Neutral 90']};` : '')}
+  ${(p) =>
+    p.$isSelected
+      ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};
+         background-color: ${p.theme.color['Primary/Primary 60 Main']};`
+      : ''}
+  ${(p) =>
+    p.$isActive
+      ? p.$isSelected
+        ? `border-color: ${p.theme.color['Primary/Primary 70']};
+           background-color: ${p.theme.color['Primary/Primary 70']};`
+        : `border-color: ${p.theme.color['Primary/Primary 60 Main']};`
+      : ''}
+  ${(p) =>
+    p.$disabled
+      ? `color: ${p.theme.color['Neutral/Neutral 30']};
+         border-color: ${p.theme.color['Special/Elevated BG']};`
+      : ''}
+  ${(p) =>
+    p.$hidden
+      ? `color: ${p.theme.color['Special/Elevated BG']};
+         border-color: ${p.theme.color['Special/Elevated BG']};`
+      : ''}
+`;
