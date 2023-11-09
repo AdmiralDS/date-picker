@@ -12,8 +12,6 @@ import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanel
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DatesOfMonthWidget/mixins';
-import type { DefaultDateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
-import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates';
 import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces';
 
 export interface DateCalendarProps extends SinglePickerCalendarProps {}
@@ -55,21 +53,18 @@ export const DateCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
+  activeDateValue,
+  defaultActiveDateValue,
+  onActiveDateValueChange,
   renderDateCell,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
   ...props
 }: DateCalendarProps) => {
-  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
-    defaultSelectedDateValue ? dateStringToDayjs(defaultSelectedDateValue, locale, timezone) : undefined,
-  );
-  const selectedDateInner = (selectedDateValue && dateStringToDayjs(selectedDateValue, locale, timezone)) || selectedDateState;
-
+  //<editor-fold desc="Date shown on calendar">
   const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
   const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
-
-  const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
 
   const handleDateChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
@@ -78,26 +73,19 @@ export const DateCalendar = ({
       onDateValueChange?.(dateString);
     }
   };
+  //</editor-fold>
 
-  const handleSelectedDateChange = (dateString: string) => {
-    const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
-    setSelectedDateState(dayjsSelectedDate);
-    onSelectedDateValueChange?.(dateString);
-  };
-
-  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    const clickedCell = (e.target as HTMLDivElement).dataset.value;
-    const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
-    if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
-      handleSelectedDateChange(dayjsDateToString(clickedDate));
-    }
-    onClick?.(e);
-  };
+  //<editor-fold desc="Hovered date">
+  const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(
+    dateStringToDayjs(defaultActiveDateValue, locale, timezone),
+  );
+  const activeDateInner = (activeDateValue && getDayjsDate(locale, timezone, activeDateValue)) || activeDateState;
 
   const handleActiveDateChange = (dateString?: string) => {
     const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
     //console.log(`set active ${dayjsActiveDate}`);
-    setActiveDateInner(dayjsActiveDate);
+    setActiveDateState(dayjsActiveDate);
+    onActiveDateValueChange?.(dateString);
   };
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
@@ -127,6 +115,30 @@ export const DateCalendar = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (_) => {
     handleActiveDateChange(undefined);
+  };
+  //</editor-fold>
+
+  //<editor-fold desc="Selected date">
+  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
+    defaultSelectedDateValue ? dateStringToDayjs(defaultSelectedDateValue, locale, timezone) : undefined,
+  );
+  const selectedDateInner =
+    (selectedDateValue && dateStringToDayjs(selectedDateValue, locale, timezone)) || selectedDateState;
+
+  const handleSelectedDateChange = (dateString: string) => {
+    const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
+    setSelectedDateState(dayjsSelectedDate);
+    onSelectedDateValueChange?.(dateString);
+  };
+  //</editor-fold>
+
+  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    const clickedCell = (e.target as HTMLDivElement).dataset.value;
+    const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
+    if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
+      handleSelectedDateChange(dayjsDateToString(clickedDate));
+    }
+    onClick?.(e);
   };
 
   const dateIsSelected = (dateCurrent?: Dayjs) => {
@@ -175,7 +187,7 @@ export const DateCalendar = ({
   //useMemo
   const renderDefaultDate = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
-    if (!dateCurrent) return () => <></>;
+    if (!dateCurrent) return {};
     const cellContent = dateCurrent.date();
     const selected = dateIsSelected(dateCurrent);
     const disabled = dateIsDisabled(dateCurrent);
@@ -194,11 +206,7 @@ export const DateCalendar = ({
       isCurrentDay,
       isActive,
     );
-    const renderDefaultDateCell = (props: DefaultDateCellProps) => (
-      <DefaultDateCell key={dayjsDateToString(dateCurrent)} {...props} />
-    );
-
-    return renderDefaultDateCell({
+    return {
       cellContent,
       selected,
       disabled,
@@ -210,7 +218,7 @@ export const DateCalendar = ({
       isEndOfWeek,
       isActive,
       ...dataAttributes,
-    });
+    };
   };
 
   return (

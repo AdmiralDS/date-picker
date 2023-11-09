@@ -19,8 +19,6 @@ import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanel
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DatesOfMonthWidget/mixins';
-import type { DefaultDateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
-import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates';
 import type { RangePickerCalendarProps } from '#src/components/calendarInterfaces';
 
 export interface DateRangeCalendarProps extends RangePickerCalendarProps {}
@@ -78,6 +76,9 @@ export const DateRangeCalendar = ({
   dateValue,
   defaultDateValue,
   onDateValueChange,
+  activeDateValue,
+  defaultActiveDateValue,
+  onActiveDateValueChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
@@ -96,11 +97,16 @@ export const DateRangeCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
-  const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
+  const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(
+    dateStringToDayjs(defaultActiveDateValue, locale, timezone),
+  );
+  const activeDateInner = (activeDateValue && getDayjsDate(locale, timezone, activeDateValue)) || activeDateState;
+
   const handleActiveDateChange = (dateString?: string) => {
     const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
-    //console.log(`set active ${dateString}`);
-    setActiveDateInner(dayjsActiveDate);
+    //console.log(`set active ${dayjsActiveDate}`);
+    setActiveDateState(dayjsActiveDate);
+    onActiveDateValueChange?.(dateString);
   };
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
@@ -146,7 +152,8 @@ export const DateRangeCalendar = ({
   const [dateRangeFirstState, setDateRangeFirstState] = useState(
     dateStringToDayjs(defaultSelectedDateRangeValue?.[0], locale, timezone),
   );
-  const dateRangeFirstInner = (selectedDateRangeValue && dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[0])) || dateRangeFirstState;
+  const dateRangeFirstInner =
+    (selectedDateRangeValue && dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[0])) || dateRangeFirstState;
   const handleDateRangeFirstChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     //console.log(`first-${dateString}`);
@@ -159,7 +166,8 @@ export const DateRangeCalendar = ({
     dateStringToDayjs(defaultSelectedDateRangeValue?.[1], locale, timezone),
   );
   const dateRangeSecondInner =
-    (selectedDateRangeValue && dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[1])) || dateRangeSecondState;
+    (selectedDateRangeValue && dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[1])) ||
+    dateRangeSecondState;
   const handleDateRangeSecondChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     //console.log(`second-${dateString}`);
@@ -227,7 +235,10 @@ export const DateRangeCalendar = ({
         }*/
       }
       handleDateRangeActiveEndChange(clickedCell);
-      onSelectedDateRangeValueChange?.([dayjsStateToString(dateRangeFirstState), dayjsStateToString(dateRangeSecondState)]);
+      onSelectedDateRangeValueChange?.([
+        dayjsStateToString(dateRangeFirstState),
+        dayjsStateToString(dateRangeSecondState),
+      ]);
       //console.log(`first-${dateRangeFirstInner}, second-${dateRangeSecondInner}, activeEnd-${dateRangeActiveEnd}`);
     }
     onClick?.(e);
@@ -337,7 +348,7 @@ export const DateRangeCalendar = ({
   //useMemo
   const renderDate = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
-    if (!dateCurrent) return () => <></>;
+    if (!dateCurrent) return {};
     const cellContent = dateCurrent.date();
     const disabled = dateIsDisabled(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
@@ -372,11 +383,8 @@ export const DateRangeCalendar = ({
       isStartOfWeek,
       isEndOfWeek,
     );
-    const renderDefaultDateCell = (props: DefaultDateCellProps) => (
-      <DefaultDateCell key={dayjsDateToString(dateCurrent)} {...props} />
-    );
 
-    return renderDefaultDateCell({
+    return {
       cellContent,
       disabled,
       hidden,
@@ -393,7 +401,7 @@ export const DateRangeCalendar = ({
       isEndOfWeek,
       isActive,
       ...dataAttributes,
-    });
+    };
   };
 
   return (

@@ -82,6 +82,9 @@ export const DateRangeDoubleCalendar = ({
   dateRangeValue,
   defaultDateRangeValue,
   onDateRangeValueChange,
+  activeDateValue,
+  defaultActiveDateValue,
+  onActiveDateValueChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
@@ -124,11 +127,15 @@ export const DateRangeDoubleCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
-  const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
+  const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(
+    dateStringToDayjs(defaultActiveDateValue, locale, timezone),
+  );
   const handleActiveDateChange = (dateString?: string) => {
     const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
-    setActiveDateInner(dayjsActiveDate);
+    setActiveDateState(dayjsActiveDate);
+    onActiveDateValueChange?.(dateString);
   };
+  const activeDateInner = (activeDateValue && getDayjsDate(locale, timezone, activeDateValue)) || activeDateState;
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'dateCell') {

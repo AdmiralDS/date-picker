@@ -1,7 +1,8 @@
-import type { HTMLAttributes, JSX } from 'react';
+import type { HTMLAttributes } from 'react';
+import type { DefaultDateCellProps } from '#src/components/DatesOfMonthWidget/Dates.tsx';
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
-  renderDateCell?: (dateString: string) => JSX.Element | (() => JSX.Element);
+  renderDateCell?: (dateString: string) => DefaultDateCellProps;
 
   /** Дата для отображения на экране в формате ISO */
   dateValue?: string;
@@ -15,7 +16,7 @@ export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   /** Активная дата (hover) по умолчанию в формате ISO */
   defaultActiveDateValue?: string;
   /** Коллбэк на изменение активной даты */
-  onActiveDateValueChange?: (dateString: string) => void;
+  onActiveDateValueChange?: (dateString?: string) => void;
 
   locale?: string;
   /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона

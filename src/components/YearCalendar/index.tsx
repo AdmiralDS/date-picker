@@ -38,6 +38,9 @@ export const YearCalendar = ({
   dateValue,
   defaultDateValue,
   onDateValueChange,
+  activeDateValue,
+  defaultActiveDateValue,
+  onActiveDateValueChange,
   onClick,
   locale = 'ru',
   timezone = getCurrentTimeZone(),
@@ -57,11 +60,16 @@ export const YearCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
-  const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
+  const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(
+    dateStringToDayjs(defaultActiveDateValue, locale, timezone),
+  );
+  const activeDateInner = (activeDateValue && getDayjsDate(locale, timezone, activeDateValue)) || activeDateState;
+
   const handleActiveDateChange = (dateString?: string) => {
     const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
-    //console.log(`set active ${dateString}`);
-    setActiveDateInner(dayjsActiveDate);
+    //console.log(`set active ${dayjsActiveDate}`);
+    setActiveDateState(dayjsActiveDate);
+    onActiveDateValueChange?.(dateString);
   };
 
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -106,7 +114,8 @@ export const YearCalendar = ({
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
     dateStringToDayjs(defaultSelectedDateValue, locale, timezone),
   );
-  const selectedDateInner = (selectedDateValue && dateStringToDayjs(selectedDateValue, locale, timezone)) || selectedDateState;
+  const selectedDateInner =
+    (selectedDateValue && dateStringToDayjs(selectedDateValue, locale, timezone)) || selectedDateState;
 
   const handleSelectedDateChange = (dateString: string) => {
     const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);

@@ -19,15 +19,6 @@ export default {
     },
   },
   argTypes: {
-    dateValue: {
-      control: { type: 'text' },
-    },
-    defaultDateValue: {
-      control: { type: 'text' },
-    },
-    onDateValueChange: {
-      control: false,
-    },
     timezone: {
       control: { type: 'text' },
     },
