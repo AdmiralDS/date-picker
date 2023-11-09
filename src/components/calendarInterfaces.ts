@@ -40,4 +40,13 @@ export interface RangePickerCalendarProps extends CalendarProps {
   /** Коллбэк на изменение выбранного диапазона дат */
   onSelectedDateRangeValueChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
 }
+
+export interface RangePickerCalendarDoubleProps
+  extends Omit<RangePickerCalendarProps, 'dateValue' | 'defaultDateValue' | 'onDateValueChange'> {
+  /** Выбранное значение диапазона дат в формате ISO */
+  dateRangeValue?: [string, string];
+  /** Выбранное значение диапазона дат по умолчанию в формате ISO */
+  defaultDateRangeValue?: [string | undefined, string | undefined];
+  /** Коллбэк на изменение выбранного диапазона дат */
+  onDateRangeValueChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
 }

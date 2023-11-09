@@ -19,15 +19,9 @@ import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanel
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DatesOfMonthWidget/mixins';
-import type { CalendarProps } from '#src/components/calendarInterfaces';
+import type { RangePickerCalendarDoubleProps } from '#src/components/calendarInterfaces';
 
-export interface DateRangeDoubleCalendarProps extends CalendarProps {
-  /** Даты в формате ISO */
-  dateRange?: [string, string];
-  /** Даты в формате ISO */
-  defaultDateRange?: [string | undefined, string | undefined];
-  onDateRangeChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
-}
+export interface DateRangeDoubleCalendarProps extends RangePickerCalendarDoubleProps {}
 
 const DateRangeCalendarDoubleWrapper = styled.div`
   box-sizing: border-box;
@@ -82,34 +76,38 @@ const getDateCellDataAttributes = (
 };
 
 export const DateRangeDoubleCalendar = ({
-  dateRange,
-  defaultDateRange,
-  onDateRangeChange,
-  dateValue,
-  defaultDateValue,
-  onDateValueChange,
+  selectedDateRangeValue,
+  defaultSelectedDateRangeValue,
+  onSelectedDateRangeValueChange,
+  dateRangeValue,
+  defaultDateRangeValue,
+  onDateRangeValueChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
   ...props
 }: DateRangeDoubleCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const [dateLeftState, setDateLeftState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
-  const dateLeftInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateLeftState;
+  const [dateLeftState, setDateLeftState] = useState(getDayjsDate(locale, timezone, defaultDateRangeValue?.[0]));
+  const dateLeftInner = (dateRangeValue && getDayjsDate(locale, timezone, dateRangeValue[0])) || dateLeftState;
   const handleDateLeftChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     if (dayjsDate) {
       setDateLeftState(dayjsDate);
-      onDateValueChange?.(dateString);
+      onDateRangeValueChange?.([dateString, dayjsDateToString(dateRightInner)]);
     }
   };
-  const [dateRightState, setDateRightState] = useState(dateLeftInner.add(1, 'month'));
-  const dateRightInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateRightState;
+  const [dateRightState, setDateRightState] = useState(
+    defaultDateRangeValue && defaultDateRangeValue[1]
+      ? getDayjsDate(locale, timezone, defaultDateRangeValue[1])
+      : dateLeftInner.add(1, 'month'),
+  );
+  const dateRightInner = (dateRangeValue && getDayjsDate(locale, timezone, dateRangeValue[1])) || dateRightState;
   const handleDateRightChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     if (dayjsDate) {
       setDateRightState(dayjsDate);
-      onDateValueChange?.(dateString);
+      onDateRangeValueChange?.([dayjsDateToString(dateLeftInner), dateString]);
     }
   };
 
@@ -173,9 +171,10 @@ export const DateRangeDoubleCalendar = ({
 
   //<editor-fold desc="First date of range">
   const [dateRangeFirstState, setDateRangeFirstState] = useState(
-    dateStringToDayjs(defaultDateRange?.[0], locale, timezone),
+    dateStringToDayjs(defaultSelectedDateRangeValue?.[0], locale, timezone),
   );
-  const dateRangeFirstInner = (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[0])) || dateRangeFirstState;
+  const dateRangeFirstInner =
+    (selectedDateRangeValue && dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[0])) || dateRangeFirstState;
   const handleDateRangeFirstChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     setDateRangeFirstState(dayjsDate);
@@ -184,10 +183,11 @@ export const DateRangeDoubleCalendar = ({
 
   //<editor-fold desc="Second date of range">
   const [dateRangeSecondState, setDateRangeSecondState] = useState(
-    dateStringToDayjs(defaultDateRange?.[1], locale, timezone),
+    dateStringToDayjs(defaultSelectedDateRangeValue?.[1], locale, timezone),
   );
   const dateRangeSecondInner =
-    (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[1])) || dateRangeSecondState;
+    (selectedDateRangeValue && dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[1])) ||
+    dateRangeSecondState;
   const handleDateRangeSecondChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     setDateRangeSecondState(dayjsDate);
@@ -227,7 +227,10 @@ export const DateRangeDoubleCalendar = ({
         }
       }
       handleDateRangeActiveEndChange(clickedCell);
-      onDateRangeChange?.([dayjsStateToString(dateRangeFirstState), dayjsStateToString(dateRangeSecondState)]);
+      onSelectedDateRangeValueChange?.([
+        dayjsStateToString(dateRangeFirstState),
+        dayjsStateToString(dateRangeSecondState),
+      ]);
     }
     onClick?.(e);
   };
