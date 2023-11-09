@@ -21,15 +21,9 @@ import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfac
 import { baseDayNameCellMixin } from '#src/components/DatesOfMonthWidget/mixins';
 import type { DefaultDateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
 import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates';
-import type { CalendarProps } from '#src/components/calendarInterfaces';
+import type { RangePickerCalendarProps } from '#src/components/calendarInterfaces';
 
-export interface DateRangeCalendarProps extends CalendarProps {
-  /** Даты в формате ISO */
-  dateRange?: [string, string];
-  /** Даты в формате ISO */
-  defaultDateRange?: [string | undefined, string | undefined];
-  onDateRangeChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
-}
+export interface DateRangeCalendarProps extends RangePickerCalendarProps {}
 
 const DateRangeCalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -78,25 +72,25 @@ const getDateCellDataAttributes = (
 };
 
 export const DateRangeCalendar = ({
-  dateRange,
-  defaultDateRange,
-  onDateRangeChange,
-  date,
-  defaultDate,
-  onDateChange,
+  selectedDateRangeValue,
+  defaultSelectedDateRangeValue,
+  onSelectedDateRangeValueChange,
+  dateValue,
+  defaultDateValue,
+  onDateValueChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
   ...props
 }: DateRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDate));
-  const dateInner = (date && getDayjsDate(locale, timezone, date)) || dateState;
+  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
+  const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
   const handleDateChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     if (dayjsDate) {
       setDateState(dayjsDate);
-      onDateChange?.(dateString);
+      onDateValueChange?.(dateString);
     }
   };
   //</editor-fold>
@@ -150,9 +144,9 @@ export const DateRangeCalendar = ({
 
   //<editor-fold desc="First date of range">
   const [dateRangeFirstState, setDateRangeFirstState] = useState(
-    dateStringToDayjs(defaultDateRange?.[0], locale, timezone),
+    dateStringToDayjs(defaultSelectedDateRangeValue?.[0], locale, timezone),
   );
-  const dateRangeFirstInner = (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[0])) || dateRangeFirstState;
+  const dateRangeFirstInner = (selectedDateRangeValue && dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[0])) || dateRangeFirstState;
   const handleDateRangeFirstChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     //console.log(`first-${dateString}`);
@@ -162,10 +156,10 @@ export const DateRangeCalendar = ({
 
   //<editor-fold desc="Second date of range">
   const [dateRangeSecondState, setDateRangeSecondState] = useState(
-    dateStringToDayjs(defaultDateRange?.[1], locale, timezone),
+    dateStringToDayjs(defaultSelectedDateRangeValue?.[1], locale, timezone),
   );
   const dateRangeSecondInner =
-    (dateRange && dateStringToDayjs(locale, timezone, dateRange?.[1])) || dateRangeSecondState;
+    (selectedDateRangeValue && dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[1])) || dateRangeSecondState;
   const handleDateRangeSecondChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     //console.log(`second-${dateString}`);
@@ -233,7 +227,7 @@ export const DateRangeCalendar = ({
         }*/
       }
       handleDateRangeActiveEndChange(clickedCell);
-      onDateRangeChange?.([dayjsStateToString(dateRangeFirstState), dayjsStateToString(dateRangeSecondState)]);
+      onSelectedDateRangeValueChange?.([dayjsStateToString(dateRangeFirstState), dayjsStateToString(dateRangeSecondState)]);
       //console.log(`first-${dateRangeFirstInner}, second-${dateRangeSecondInner}, activeEnd-${dateRangeActiveEnd}`);
     }
     onClick?.(e);

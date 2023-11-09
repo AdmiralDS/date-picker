@@ -15,7 +15,7 @@ import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNav
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import { DefaultYearCell } from '#src/components/YearsOfTwentyYearsWidget/Years.tsx';
-import type { CalendarProps } from '#src/components/calendarInterfaces.ts';
+import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces.ts';
 
 const YearCalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -29,35 +29,29 @@ const YearCalendarWrapper = styled.div`
   ${(p) => p.theme.shadow['Shadow 08']}
 `;
 
-export interface YearCalendarProps extends CalendarProps {
-  /** Выбранная дата в формате ISO */
-  selectedDate?: string;
-  /** Выбранная дата по умолчанию в формате ISO */
-  defaultSelectedDate?: string;
-  onSelectedDateChange?: (dateString: string) => void;
-}
+export interface YearCalendarProps extends SinglePickerCalendarProps {}
 
 export const YearCalendar = ({
-  selectedDate,
-  defaultSelectedDate,
-  onSelectedDateChange,
-  date,
-  defaultDate,
-  onDateChange,
+  selectedDateValue,
+  defaultSelectedDateValue,
+  onSelectedDateValueChange,
+  dateValue,
+  defaultDateValue,
+  onDateValueChange,
   onClick,
   locale = 'ru',
   timezone = getCurrentTimeZone(),
   ...props
 }: YearCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDate));
-  const dateInner = (date && getDayjsDate(locale, timezone, date)) || dateState;
+  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
+  const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
 
   const handleDateChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     if (dayjsDate) {
       setDateState(dayjsDate);
-      onDateChange?.(dateString);
+      onDateValueChange?.(dateString);
     }
   };
   //</editor-fold>
@@ -110,14 +104,14 @@ export const YearCalendar = ({
 
   //<editor-fold desc="Selected date">
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
-    dateStringToDayjs(defaultSelectedDate, locale, timezone),
+    dateStringToDayjs(defaultSelectedDateValue, locale, timezone),
   );
-  const selectedDateInner = (selectedDate && dateStringToDayjs(selectedDate, locale, timezone)) || selectedDateState;
+  const selectedDateInner = (selectedDateValue && dateStringToDayjs(selectedDateValue, locale, timezone)) || selectedDateState;
 
   const handleSelectedDateChange = (dateString: string) => {
     const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
     setSelectedDateState(dayjsSelectedDate);
-    onSelectedDateChange?.(dateString);
+    onSelectedDateValueChange?.(dateString);
   };
   //</editor-fold>
 

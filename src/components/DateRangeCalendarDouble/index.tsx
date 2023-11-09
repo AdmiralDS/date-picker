@@ -85,31 +85,31 @@ export const DateRangeDoubleCalendar = ({
   dateRange,
   defaultDateRange,
   onDateRangeChange,
-  date,
-  defaultDate,
-  onDateChange,
+  dateValue,
+  defaultDateValue,
+  onDateValueChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
   ...props
 }: DateRangeDoubleCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const [dateLeftState, setDateLeftState] = useState(getDayjsDate(locale, timezone, defaultDate));
-  const dateLeftInner = (date && getDayjsDate(locale, timezone, date)) || dateLeftState;
+  const [dateLeftState, setDateLeftState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
+  const dateLeftInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateLeftState;
   const handleDateLeftChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     if (dayjsDate) {
       setDateLeftState(dayjsDate);
-      onDateChange?.(dateString);
+      onDateValueChange?.(dateString);
     }
   };
   const [dateRightState, setDateRightState] = useState(dateLeftInner.add(1, 'month'));
-  const dateRightInner = (date && getDayjsDate(locale, timezone, date)) || dateRightState;
+  const dateRightInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateRightState;
   const handleDateRightChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     if (dayjsDate) {
       setDateRightState(dayjsDate);
-      onDateChange?.(dateString);
+      onDateValueChange?.(dateString);
     }
   };
 

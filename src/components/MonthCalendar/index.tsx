@@ -15,7 +15,7 @@ import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstan
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 import { DefaultMonthCell } from '#src/components/MonthsOfYearWidget/Months.tsx';
-import type { CalendarProps } from '#src/components/calendarInterfaces.ts';
+import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces.ts';
 
 const MonthCalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -29,35 +29,29 @@ const MonthCalendarWrapper = styled.div`
   ${(p) => p.theme.shadow['Shadow 08']}
 `;
 
-export interface MonthCalendarProps extends CalendarProps {
-  /** Выбранная дата в формате ISO */
-  selectedDate?: string;
-  /** Выбранная дата по умолчанию в формате ISO */
-  defaultSelectedDate?: string;
-  onSelectedDateChange?: (dateString: string) => void;
-}
+export interface MonthCalendarProps extends SinglePickerCalendarProps {}
 
 export const MonthCalendar = ({
-  selectedDate,
-  defaultSelectedDate,
-  onSelectedDateChange,
-  date,
-  defaultDate,
-  onDateChange,
+  selectedDateValue,
+  defaultSelectedDateValue,
+  onSelectedDateValueChange,
+  dateValue,
+  defaultDateValue,
+  onDateValueChange,
   onClick,
   locale = 'ru',
   timezone = getCurrentTimeZone(),
   ...props
 }: MonthCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDate));
-  const dateInner = (date && getDayjsDate(locale, timezone, date)) || dateState;
+  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
+  const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
 
   const handleDateChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     if (dayjsDate) {
       setDateState(dayjsDate);
-      onDateChange?.(dateString);
+      onDateValueChange?.(dateString);
     }
   };
   //</editor-fold>
@@ -110,14 +104,14 @@ export const MonthCalendar = ({
 
   //<editor-fold desc="Selected date">
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
-    dateStringToDayjs(defaultSelectedDate, locale, timezone),
+    dateStringToDayjs(defaultSelectedDateValue, locale, timezone),
   );
-  const selectedDateInner = (selectedDate && dateStringToDayjs(selectedDate, locale, timezone)) || selectedDateState;
+  const selectedDateInner = (selectedDateValue && dateStringToDayjs(selectedDateValue, locale, timezone)) || selectedDateState;
 
   const handleSelectedDateChange = (dateString: string) => {
     const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
     setSelectedDateState(dayjsSelectedDate);
-    onSelectedDateChange?.(dateString);
+    onSelectedDateValueChange?.(dateString);
   };
   //</editor-fold>
 

@@ -14,15 +14,9 @@ import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfac
 import { baseDayNameCellMixin } from '#src/components/DatesOfMonthWidget/mixins';
 import type { DefaultDateCellProps } from '#src/components/DatesOfMonthWidget/Dates';
 import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates';
-import type { CalendarProps } from '#src/components/calendarInterfaces';
+import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces';
 
-export interface DateCalendarProps extends CalendarProps {
-  /** Выбранная дата в формате ISO */
-  selectedDate?: string;
-  /** Выбранная дата по умолчанию в формате ISO */
-  defaultSelectedDate?: string;
-  onSelectedDateChange?: (dateString: string) => void;
-}
+export interface DateCalendarProps extends SinglePickerCalendarProps {}
 
 const DateCalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -55,12 +49,12 @@ const getDateCellDataAttributes = (
 };
 
 export const DateCalendar = ({
-  date,
-  defaultDate,
-  onDateChange,
-  selectedDate,
-  defaultSelectedDate,
-  onSelectedDateChange,
+  dateValue,
+  defaultDateValue,
+  onDateValueChange,
+  selectedDateValue,
+  defaultSelectedDateValue,
+  onSelectedDateValueChange,
   renderDateCell,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
@@ -68,12 +62,12 @@ export const DateCalendar = ({
   ...props
 }: DateCalendarProps) => {
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
-    defaultSelectedDate ? dateStringToDayjs(defaultSelectedDate, locale, timezone) : undefined,
+    defaultSelectedDateValue ? dateStringToDayjs(defaultSelectedDateValue, locale, timezone) : undefined,
   );
-  const selectedDateInner = (selectedDate && dateStringToDayjs(selectedDate, locale, timezone)) || selectedDateState;
+  const selectedDateInner = (selectedDateValue && dateStringToDayjs(selectedDateValue, locale, timezone)) || selectedDateState;
 
-  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDate));
-  const dateInner = (date && getDayjsDate(locale, timezone, date)) || dateState;
+  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
+  const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
 
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
 
@@ -81,14 +75,14 @@ export const DateCalendar = ({
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     if (dayjsDate) {
       setDateState(dayjsDate);
-      onDateChange?.(dateString);
+      onDateValueChange?.(dateString);
     }
   };
 
   const handleSelectedDateChange = (dateString: string) => {
     const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
     setSelectedDateState(dayjsSelectedDate);
-    onSelectedDateChange?.(dateString);
+    onSelectedDateValueChange?.(dateString);
   };
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
