@@ -33,15 +33,15 @@ const DateCalendarWrapper = styled.div`
 const getDateCellDataAttributes = (
   value?: string,
   isHoliday?: boolean,
-  isOutsideMonth?: boolean,
-  isCurrentDay?: boolean,
+  //isOutsideMonth?: boolean,
+  isCurrent?: boolean,
   isActive?: boolean,
 ) => {
   return {
     'data-value': value ? value : undefined,
     'data-is-holiday-cell': isHoliday ? isHoliday : undefined,
-    'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
-    'data-is-current-day-cell': isCurrentDay ? isCurrentDay : undefined,
+    //'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
+    'data-is-current-day-cell': isCurrent ? isCurrent : undefined,
     'data-is-active-cell': isActive ? isActive : undefined,
   };
 };
@@ -192,9 +192,9 @@ export const DateCalendar = ({
     const selected = dateIsSelected(dateCurrent);
     const disabled = dateIsDisabled(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
-    const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
+    const isCurrent = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
     const isHoliday = dateIsHoliday(dateCurrent);
-    const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
+    //const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
     const isStartOfWeek = dateCurrent.isSame(dateCurrent.startOf('week'), 'date');
     const isEndOfWeek = dateCurrent.isSame(dateCurrent.endOf('week'), 'date');
     const isActive = activeDateInner?.isSame(dateCurrent, 'date');
@@ -202,8 +202,8 @@ export const DateCalendar = ({
     const dataAttributes = getDateCellDataAttributes(
       dateCurrent.toISOString(),
       isHoliday,
-      isOutsideMonth,
-      isCurrentDay,
+      //isOutsideMonth,
+      isCurrent,
       isActive,
     );
     return {
@@ -211,9 +211,9 @@ export const DateCalendar = ({
       selected,
       disabled,
       hidden,
-      isCurrentDay,
+      isCurrent,
       isHoliday,
-      isOutsideMonth,
+      //isOutsideMonth,
       isStartOfWeek,
       isEndOfWeek,
       isActive,

@@ -40,8 +40,8 @@ const DateRangeCalendarWrapper = styled.div`
 const getDateCellDataAttributes = (
   value?: string,
   isHoliday?: boolean,
-  isOutsideMonth?: boolean,
-  isCurrentDay?: boolean,
+  //isOutsideMonth?: boolean,
+  isCurrent?: boolean,
   isActive?: boolean,
   isInRange?: boolean,
   isRangeStart?: boolean,
@@ -55,8 +55,8 @@ const getDateCellDataAttributes = (
   return {
     'data-value': value ? value : undefined,
     'data-is-holiday-cell': isHoliday ? isHoliday : undefined,
-    'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
-    'data-is-current-day-cell': isCurrentDay ? isCurrentDay : undefined,
+    //'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
+    'data-is-current-day-cell': isCurrent ? isCurrent : undefined,
     'data-is-active-cell': isActive ? isActive : undefined,
     'data-is-in-range-cell': isInRange ? isInRange : undefined,
     'data-is-range-start-cell': isRangeStart ? isRangeStart : undefined,
@@ -352,9 +352,9 @@ export const DateRangeCalendar = ({
     const cellContent = dateCurrent.date();
     const disabled = dateIsDisabled(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
-    const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
+    const isCurrent = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
     const isHoliday = dateIsHoliday(dateCurrent);
-    const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
+    //const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
     const isInRange = dateIsInRange(dateCurrent);
     const isRangeStart = dateIsRangeStart(dateCurrent);
     const isRangeEnd = dateIsRangeEnd(dateCurrent);
@@ -371,8 +371,8 @@ export const DateRangeCalendar = ({
     const dataAttributes = getDateCellDataAttributes(
       dateCurrent.toISOString(),
       isHoliday,
-      isOutsideMonth,
-      isCurrentDay,
+      //isOutsideMonth,
+      isCurrent,
       isActive,
       isInRange,
       isRangeStart,
@@ -388,9 +388,9 @@ export const DateRangeCalendar = ({
       cellContent,
       disabled,
       hidden,
-      isCurrentDay,
+      isCurrent,
       isHoliday,
-      isOutsideMonth,
+      //isOutsideMonth,
       isInRange,
       isRangeStart,
       isRangeEnd,

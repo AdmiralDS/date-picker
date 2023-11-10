@@ -46,8 +46,8 @@ const Container = styled.div`
 const getDateCellDataAttributes = (
   value?: string,
   isHoliday?: boolean,
-  isOutsideMonth?: boolean,
-  isCurrentDay?: boolean,
+  //isOutsideMonth?: boolean,
+  isCurrent?: boolean,
   isActive?: boolean,
   isInRange?: boolean,
   isRangeStart?: boolean,
@@ -61,8 +61,8 @@ const getDateCellDataAttributes = (
   return {
     'data-value': value ? value : undefined,
     'data-is-holiday-cell': isHoliday ? isHoliday : undefined,
-    'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
-    'data-is-current-day-cell': isCurrentDay ? isCurrentDay : undefined,
+    //'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
+    'data-is-current-day-cell': isCurrent ? isCurrent : undefined,
     'data-is-active-cell': isActive ? isActive : undefined,
     'data-is-in-range-cell': isInRange ? isInRange : undefined,
     'data-is-range-start-cell': isRangeStart ? isRangeStart : undefined,
@@ -359,9 +359,9 @@ export const DateRangeDoubleCalendar = ({
     const cellContent = dateCurrent.date();
     const disabled = dateIsDisabled(dateCurrent, dateLeftInner);
     const hidden = dateIsHidden(dateCurrent, dateLeftInner);
-    const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
+    const isCurrent = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
     const isHoliday = dateIsHoliday(dateCurrent, dateLeftInner);
-    const isOutsideMonth = dateIsOutsideMonth(dateCurrent, dateLeftInner);
+    //const isOutsideMonth = dateIsOutsideMonth(dateCurrent, dateLeftInner);
     const isInRange = dateIsInRange(dateCurrent);
     const isRangeStart = dateIsRangeStart(dateCurrent);
     const isRangeEnd = dateIsRangeEnd(dateCurrent);
@@ -378,8 +378,8 @@ export const DateRangeDoubleCalendar = ({
     const dataAttributes = getDateCellDataAttributes(
       dateString,
       isHoliday,
-      isOutsideMonth,
-      isCurrentDay,
+      //isOutsideMonth,
+      isCurrent,
       isActive,
       isInRange,
       isRangeStart,
@@ -394,9 +394,9 @@ export const DateRangeDoubleCalendar = ({
       cellContent,
       disabled,
       hidden,
-      isCurrentDay,
+      isCurrent,
       isHoliday,
-      isOutsideMonth,
+      //isOutsideMonth,
       isInRange,
       isRangeStart,
       isRangeEnd,
@@ -416,9 +416,9 @@ export const DateRangeDoubleCalendar = ({
     const cellContent = dateCurrent.date();
     const disabled = dateIsDisabled(dateCurrent, dateRightInner);
     const hidden = dateIsHidden(dateCurrent, dateRightInner);
-    const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
+    const isCurrent = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
     const isHoliday = dateIsHoliday(dateCurrent, dateRightInner);
-    const isOutsideMonth = dateIsOutsideMonth(dateCurrent, dateRightInner);
+    //const isOutsideMonth = dateIsOutsideMonth(dateCurrent, dateRightInner);
     const isInRange = dateIsInRange(dateCurrent);
     const isRangeStart = dateIsRangeStart(dateCurrent);
     const isRangeEnd = dateIsRangeEnd(dateCurrent);
@@ -435,8 +435,8 @@ export const DateRangeDoubleCalendar = ({
     const dataAttributes = getDateCellDataAttributes(
       dateString,
       isHoliday,
-      isOutsideMonth,
-      isCurrentDay,
+      //isOutsideMonth,
+      isCurrent,
       isActive,
       isInRange,
       isRangeStart,
@@ -451,9 +451,9 @@ export const DateRangeDoubleCalendar = ({
       cellContent,
       disabled,
       hidden,
-      isCurrentDay,
+      isCurrent,
       isHoliday,
-      isOutsideMonth,
+      //isOutsideMonth,
       isInRange,
       isRangeStart,
       isRangeEnd,

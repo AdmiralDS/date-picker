@@ -197,7 +197,7 @@ const getDefaultDateCellMixin = (
   selected?: boolean,
   disabled?: boolean,
   hidden?: boolean,
-  isCurrentDay?: boolean,
+  isCurrent?: boolean,
   isHoliday?: boolean,
   //isOutsideMonth?: boolean,
   isInRange?: boolean,
@@ -207,10 +207,10 @@ const getDefaultDateCellMixin = (
 ) => {
   if (hidden) return hiddenDateCellMixin;
   if (isInRange && disabled && isHoliday) return rangeDisabledHolidayDateCellMixin;
-  if (isInRange && isCurrentDay && isHoliday) return rangeCurrentHolidayDateCellMixin;
+  if (isInRange && isCurrent && isHoliday) return rangeCurrentHolidayDateCellMixin;
   //if (isRangeSelectingStart || isRangeSelectingEnd) return selectingRangeEndDateCellMixin;
   if (isInRange && disabled) return rangeDisabledDateCellMixin;
-  if (isInRange && isCurrentDay) return rangeCurrentDateCellMixin;
+  if (isInRange && isCurrent) return rangeCurrentDateCellMixin;
   if (disabled && isHoliday) return disabledHolidayDateCellMixin;
   if (disabled) return disabledDateCellMixin;
   if (isActive) return baseDateCellMixin;
@@ -218,9 +218,9 @@ const getDefaultDateCellMixin = (
   if (selected || isRangeStart || isRangeEnd) return selectedDateCellMixin;
   //if (isRangeStart || isRangeEnd) return rangeEndsDateCellMixin;
   if (isInRange && isHoliday) return rangeHolidayDateCellMixin;
-  if (isHoliday && isCurrentDay) return currentDateHolidayDateCellMixin;
+  if (isHoliday && isCurrent) return currentDateHolidayDateCellMixin;
   if (isHoliday) return holidayDateCellMixin;
-  if (isCurrentDay) return currentDateCellMixin;
+  if (isCurrent) return currentDateCellMixin;
   if (isInRange) return rangeDateCellMixin;
   return baseDateCellMixin;
 };

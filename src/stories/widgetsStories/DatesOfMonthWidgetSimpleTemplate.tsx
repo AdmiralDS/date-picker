@@ -37,14 +37,14 @@ const getDateCellDataAttributes = (
   value?: string,
   isHoliday?: boolean,
   //isOutsideMonth?: boolean,
-  isCurrentDay?: boolean,
+  isCurrent?: boolean,
   isActive?: boolean,
 ) => {
   return {
     'data-value': value ? value : undefined,
     'data-is-holiday-cell': isHoliday ? isHoliday : undefined,
     //'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
-    'data-is-current-day-cell': isCurrentDay ? isCurrentDay : undefined,
+    'data-is-current-day-cell': isCurrent ? isCurrent : undefined,
     'data-is-active-cell': isActive ? isActive : undefined,
   };
 };
