@@ -15,8 +15,6 @@ import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstan
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import type { YearNavigationPanelWidgetProps } from '#src/components/YearNavigationPanelWidget/interfaces';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
-import type { DefaultMonthCellProps } from '#src/components/MonthsOfYearWidget/Months.tsx';
-import { DefaultMonthCell } from '#src/components/MonthsOfYearWidget/Months.tsx';
 
 const CalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -38,7 +36,9 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
 }: YearNavigationPanelWidgetProps) => {
   const localeInner = locale || 'ru';
   const [dateState, setDateState] = useState(getDayjsDate(localeInner, timezone, date));
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(localeInner, timezone).add(1, 'day'));
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
+    getCurrentDate(localeInner, timezone).add(1, 'day'),
+  );
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
@@ -58,17 +58,13 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
 
   const renderMonth = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
-    if (!dateCurrent) return () => <></>;
+    if (!dateCurrent) return {};
     const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
     const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'month');
     const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner, timezone), 'month');
     const dataAttributes = getMonthCellDataAttributes(dateCurrent.toISOString(), isCurrent);
 
-    const renderDefaultMonthCell = (props: DefaultMonthCellProps) => (
-      <DefaultMonthCell key={dayjsDateToString(dateCurrent)} {...props} />
-    );
-
-    return renderDefaultMonthCell({ cellContent, selected, isCurrent, ...dataAttributes });
+    return { cellContent, selected, isCurrent, ...dataAttributes };
   };
 
   const handleDateChange = (dateString: string) => {

@@ -18,8 +18,6 @@ import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/
 import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DatesOfMonthWidget/mixins';
 import dayjs from 'dayjs';
-import type { DefaultDateCellProps } from '#src/components/DatesOfMonthWidget/Dates.tsx';
-import { DefaultDateCell } from '#src/components/DatesOfMonthWidget/Dates.tsx';
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,14 +36,14 @@ const MonthYear = styled.div`
 const getDateCellDataAttributes = (
   value?: string,
   isHoliday?: boolean,
-  isOutsideMonth?: boolean,
+  //isOutsideMonth?: boolean,
   isCurrentDay?: boolean,
   isActive?: boolean,
 ) => {
   return {
     'data-value': value ? value : undefined,
     'data-is-holiday-cell': isHoliday ? isHoliday : undefined,
-    'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
+    //'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
     'data-is-current-day-cell': isCurrentDay ? isCurrentDay : undefined,
     'data-is-active-cell': isActive ? isActive : undefined,
   };
@@ -59,7 +57,9 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
 }: DatesOfMonthWidgetProps) => {
   const localeInner = locale || 'ru';
   const dateInner = getDayjsDate(localeInner, timezone, date);
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(localeInner, timezone).add(1, 'day'));
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
+    getCurrentDate(localeInner, timezone).add(1, 'day'),
+  );
 
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
 
@@ -139,14 +139,14 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
   };
   const renderDefaultDate = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
-    if (!dateCurrent) return () => <></>;
+    if (!dateCurrent) return {};
     const cellContent = dateCurrent.date();
     const selected = dateIsSelected(dateCurrent);
     const disabled = dateIsDisabled(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
-    const isCurrentDay = dateCurrent && dateCurrent.isSame(dayjs().locale(localeInner), 'date');
+    const isCurrent = dateCurrent && dateCurrent.isSame(dayjs().locale(localeInner), 'date');
     const isHoliday = dateIsHoliday(dateCurrent);
-    const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
+    //const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
     const isStartOfWeek = dateCurrent.isSame(dateCurrent.startOf('week'), 'date');
     const isEndOfWeek = dateCurrent.isSame(dateCurrent.endOf('week'), 'date');
     const isActive = activeDateInner?.isSame(dateCurrent, 'date');
@@ -154,27 +154,24 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
     const dataAttributes = getDateCellDataAttributes(
       dateCurrent.toISOString(),
       isHoliday,
-      isOutsideMonth,
-      isCurrentDay,
+      //isOutsideMonth,
+      isCurrent,
       isActive,
     );
-    const renderDefaultDateCell = (props: DefaultDateCellProps) => (
-      <DefaultDateCell key={dayjsDateToString(dateCurrent)} {...props} />
-    );
 
-    return renderDefaultDateCell({
+    return {
       cellContent,
       selected,
       disabled,
       hidden,
-      isCurrentDay,
+      isCurrent,
       isHoliday,
-      isOutsideMonth,
+      //isOutsideMonth,
       isStartOfWeek,
       isEndOfWeek,
       isActive,
       ...dataAttributes,
-    });
+    };
   };
 
   return (

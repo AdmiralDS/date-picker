@@ -10,8 +10,6 @@ import { capitalizeFirstLetter, dateStringToDayjs, dayjsDateToString, getCurrent
 import type { YearsOfTwentyYearsWidgetProps } from '#src/components/YearsOfTwentyYearsWidget/interfaces';
 import { YEARS_OF_YEAR_WIDGET_WIDTH } from '#src/components/YearsOfTwentyYearsWidget/constants';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
-import type { DefaultYearCellProps } from '#src/components/YearsOfTwentyYearsWidget/Years.tsx';
-import { DefaultYearCell } from '#src/components/YearsOfTwentyYearsWidget/Years.tsx';
 
 const Wrapper = styled.div`
   display: flex;
@@ -57,17 +55,13 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
 
   const renderYear = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
-    if (!dateCurrent) return () => <></>;
+    if (!dateCurrent) return {};
     const cellContent = dateCurrent.year();
     const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'year');
     const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner, timezone), 'year');
     const dataAttributes = getYearCellDataAttributes(dateCurrent.toISOString(), isCurrent);
 
-    const renderDefaultMonthCell = (props: DefaultYearCellProps) => (
-      <DefaultYearCell key={dayjsDateToString(dateCurrent)} {...props} />
-    );
-
-    return renderDefaultMonthCell({ cellContent, selected, isCurrent, ...dataAttributes });
+    return { cellContent, selected, isCurrent, ...dataAttributes };
   };
 
   return (

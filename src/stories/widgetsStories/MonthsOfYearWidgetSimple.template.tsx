@@ -10,8 +10,6 @@ import { capitalizeFirstLetter, dateStringToDayjs, dayjsDateToString, getCurrent
 import type { MonthsOfYearWidgetProps } from '#src/components/MonthsOfYearWidget/interfaces';
 import { MONTHS_OF_YEAR_WIDGET_WIDTH } from '#src/components/MonthsOfYearWidget/constants';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
-import type { DefaultMonthCellProps } from '#src/components/MonthsOfYearWidget/Months.tsx';
-import { DefaultMonthCell } from '#src/components/MonthsOfYearWidget/Months.tsx';
 
 const Wrapper = styled.div`
   display: flex;
@@ -57,17 +55,13 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
 
   const renderMonth = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
-    if (!dateCurrent) return () => <></>;
+    if (!dateCurrent) return {};
     const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
     const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'month');
     const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner, timezone), 'month');
     const dataAttributes = getMonthCellDataAttributes(dateCurrent.toISOString(), isCurrent);
 
-    const renderDefaultMonthCell = (props: DefaultMonthCellProps) => (
-      <DefaultMonthCell key={dayjsDateToString(dateCurrent)} {...props} />
-    );
-
-    return renderDefaultMonthCell({ cellContent, selected, isCurrent, ...dataAttributes });
+    return { cellContent, selected, isCurrent, ...dataAttributes };
   };
 
   return (
