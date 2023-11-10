@@ -1,9 +1,9 @@
 import { css } from 'styled-components';
 import { typography } from '@admiral-ds/react-ui';
-import { YEAR_CELL_PADDING } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
+import { CELL_PADDING } from '#src/components/calendarConstants.ts';
 
 const baseCellMixin = css`
-  padding: ${YEAR_CELL_PADDING};
+  padding: ${CELL_PADDING};
   ${typography['Body/Body 2 Long']}
   background-color: ${(p) => p.theme.color['Special/Elevated BG']};
   color: ${(p) => p.theme.color['Neutral/Neutral 90']};

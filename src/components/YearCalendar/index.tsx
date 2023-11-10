@@ -14,7 +14,6 @@ import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstan
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
-import { DefaultYearCell } from '#src/components/YearsOfTwentyYearsWidget/Years.tsx';
 import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces.ts';
 
 const YearCalendarWrapper = styled.div`
@@ -135,27 +134,26 @@ export const YearCalendar = ({
 
   const getYearCellDataAttributes = (
     value?: string,
-    isCurrentYear?: boolean,
+    isCurrent?: boolean,
     isActive?: boolean,
   ): Record<string, any> => {
     return {
       'data-value': value ? value : undefined,
-      'data-is-current-year': isCurrentYear ? isCurrentYear : undefined,
+      'data-is-current-year': isCurrent ? isCurrent : undefined,
       'data-is-active-year': isActive ? isActive : undefined,
     };
   };
 
   const renderYear = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
-    if (!dateCurrent) return <></>;
+    if (!dateCurrent) return {};
     const cellContent = dateCurrent.year();
     const selected = dateCurrent && selectedDateInner && dateCurrent.isSame(selectedDateInner, 'year');
-    const isCurrentYear = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'year');
+    const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'year');
     const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'year');
-    const dataAttributes = getYearCellDataAttributes(dateCurrent.toISOString(), isCurrentYear, isActive);
-    const cellProps = { cellContent, selected, isCurrentYear, isActive, ...dataAttributes };
+    const dataAttributes = getYearCellDataAttributes(dateCurrent.toISOString(), isCurrent, isActive);
 
-    return <DefaultYearCell key={dayjsDateToString(dateCurrent)} {...cellProps} />;
+    return { cellContent, selected, isCurrent, isActive, ...dataAttributes };
   };
 
   const handleTwentyYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {

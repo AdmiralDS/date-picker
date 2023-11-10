@@ -48,10 +48,10 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
     }
   };
 
-  const getMonthCellDataAttributes = (value?: string, isCurrentMonth?: boolean): Record<string, any> => {
+  const getMonthCellDataAttributes = (value?: string, isCurrent?: boolean): Record<string, any> => {
     return {
       'data-value': value ? value : undefined,
-      'data-is-current-month': isCurrentMonth ? isCurrentMonth : undefined,
+      'data-is-current-month': isCurrent ? isCurrent : undefined,
     };
   };
 
@@ -60,14 +60,14 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
     if (!dateCurrent) return () => <></>;
     const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
     const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'month');
-    const isCurrentMonth = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner, timezone), 'month');
-    const dataAttributes = getMonthCellDataAttributes(dateCurrent.toISOString(), isCurrentMonth);
+    const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner, timezone), 'month');
+    const dataAttributes = getMonthCellDataAttributes(dateCurrent.toISOString(), isCurrent);
 
     const renderDefaultMonthCell = (props: DefaultMonthCellProps) => (
       <DefaultMonthCell key={dayjsDateToString(dateCurrent)} {...props} />
     );
 
-    return renderDefaultMonthCell({ cellContent, selected, isCurrentMonth, ...dataAttributes });
+    return renderDefaultMonthCell({ cellContent, selected, isCurrent, ...dataAttributes });
   };
 
   return (

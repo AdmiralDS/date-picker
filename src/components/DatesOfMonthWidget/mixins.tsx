@@ -1,9 +1,9 @@
 import { css } from 'styled-components';
 import { typography } from '@admiral-ds/react-ui';
-import { DAY_CELL_PADDING } from '#src/components/DatesOfMonthWidget/constants';
+import { CELL_PADDING } from '#src/components/calendarConstants.ts';
 
 const baseCellMixin = css`
-  padding: ${DAY_CELL_PADDING};
+  padding: ${CELL_PADDING};
   ${typography['Body/Body 2 Long']}
   color: ${(p) => p.theme.color['Neutral/Neutral 90']};
   background-color: ${(p) => p.theme.color['Special/Elevated BG']};

@@ -1,7 +1,7 @@
-import type { MouseEventHandler } from 'react';
+import type { MouseEventHandler, HTMLAttributes } from 'react';
 import type { Dayjs } from 'dayjs';
 import type { RuleSet } from 'styled-components';
-import { HTMLAttributes, JSX } from 'react';
+import type { DefaultCellProps } from '#src/components/DefaultCell';
 
 export interface CellStateProps {
   selected?: boolean;
@@ -18,10 +18,10 @@ export interface YearsOfTwentyYearsWidgetProps extends HTMLAttributes<HTMLDivEle
    * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
   timezone?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
-  renderYearCell: (dateString: string) => JSX.Element | (() => JSX.Element);
+  renderYearCell: (dateString: string) => DefaultCellProps;
 }
 
 export interface YearsProps {
   date: Dayjs;
-  renderYearCell: (dateString: string) => JSX.Element | (() => JSX.Element);
+  renderYearCell: (dateString: string) => DefaultCellProps;
 }

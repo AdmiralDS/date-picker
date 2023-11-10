@@ -1,2 +1,11 @@
 export const CALENDAR_WIDTH = 284;
 export const CALENDAR_HEIGHT = 356;
+export const CELL_PADDING = '7px 0';
+export const DAY_CELL_WIDTH = 36;
+export const DAY_CELL_HEIGHT = 36;
+export const DATE_CELL_WIDTH = 36;
+export const DATE_CELL_HEIGHT = 36;
+export const MONTH_CELL_WIDTH = 84;
+export const MONTH_CELL_HEIGHT = 36;
+export const YEAR_CELL_WIDTH = 60;
+export const YEAR_CELL_HEIGHT = 36;

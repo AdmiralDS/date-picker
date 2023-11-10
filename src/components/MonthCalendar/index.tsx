@@ -14,7 +14,6 @@ import {
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
-import { DefaultMonthCell } from '#src/components/MonthsOfYearWidget/Months.tsx';
 import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces.ts';
 
 const MonthCalendarWrapper = styled.div`
@@ -135,27 +134,27 @@ export const MonthCalendar = ({
 
   const getMonthCellDataAttributes = (
     value?: string,
-    isCurrentMonth?: boolean,
+    isCurrent?: boolean,
     isActive?: boolean,
   ): Record<string, any> => {
     return {
       'data-value': value ? value : undefined,
-      'data-is-current-month': isCurrentMonth ? isCurrentMonth : undefined,
+      'data-is-current-month': isCurrent ? isCurrent : undefined,
       'data-is-active-month': isActive ? isActive : undefined,
     };
   };
 
   const renderMonth = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
-    if (!dateCurrent) return <></>;
+    if (!dateCurrent) return {};
     const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
     const selected = selectedDateInner && dateCurrent.isSame(selectedDateInner, 'month');
-    const isCurrentMonth = dateCurrent.isSame(getCurrentDate(locale, timezone), 'month');
+    const isCurrent = dateCurrent.isSame(getCurrentDate(locale, timezone), 'month');
     const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'month');
-    const dataAttributes = getMonthCellDataAttributes(dateCurrent.toISOString(), isCurrentMonth, isActive);
+    const dataAttributes = getMonthCellDataAttributes(dateCurrent.toISOString(), isCurrent, isActive);
 
-    const cellProps = { cellContent, selected, isCurrentMonth, isActive, ...dataAttributes };
-    return <DefaultMonthCell key={dayjsDateToString(dateCurrent)} {...cellProps} />;
+    return { cellContent, selected, isCurrent: isCurrent, isActive, ...dataAttributes };
+    //return <DefaultMonthCell key={dayjsDateToString(dateCurrent)} {...cellProps} />;
   };
 
   const handleYearNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {

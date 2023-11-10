@@ -2,8 +2,8 @@ import type { RuleSet } from 'styled-components';
 import styled from 'styled-components';
 
 import { capitalizeFirstLetter, getDayNamesList } from '#src/components/utils';
-import { CELL_SIZE } from '#src/components/DatesOfMonthWidget/constants';
 import type { DaysProps } from '#src/components/DatesOfMonthWidget/interfaces';
+import { DAY_CELL_HEIGHT, DAY_CELL_WIDTH } from '#src/components/calendarConstants.ts';
 
 const DayNamesWrapper = styled.div`
   box-sizing: border-box;
@@ -12,8 +12,8 @@ const DayNamesWrapper = styled.div`
 `;
 const DayNameCell = styled.div<{ $dateCellMixin: RuleSet<object> }>`
   box-sizing: border-box;
-  width: ${CELL_SIZE}px;
-  height: ${CELL_SIZE}px;
+  width: ${DAY_CELL_WIDTH}px;
+  height: ${DAY_CELL_HEIGHT}px;
   text-align: center;
   ${(p) => p.$dateCellMixin}
 `;

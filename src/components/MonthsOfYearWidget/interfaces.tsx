@@ -1,13 +1,6 @@
-import type { MouseEventHandler, JSX, HTMLAttributes } from 'react';
+import type { MouseEventHandler, HTMLAttributes } from 'react';
 import type { Dayjs } from 'dayjs';
-import type { RuleSet } from 'styled-components';
-
-export interface CellStateProps {
-  selected?: boolean;
-  disabled?: boolean;
-  hidden?: boolean;
-  cellMixin: RuleSet<object>;
-}
+import type { DefaultCellProps } from '#src/components/DefaultCell';
 
 export interface MonthsOfYearWidgetProps extends HTMLAttributes<HTMLDivElement> {
   /** Дата в формате ISO */
@@ -17,10 +10,10 @@ export interface MonthsOfYearWidgetProps extends HTMLAttributes<HTMLDivElement> 
    * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
   timezone?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
-  renderMonthCell: (dateString: string) => JSX.Element | (() => JSX.Element);
+  renderMonthCell: (dateString: string) => DefaultCellProps;
 }
 
 export interface MonthsProps {
   date: Dayjs;
-  renderMonthCell: (dateString: string) => JSX.Element | (() => JSX.Element);
+  renderMonthCell: (dateString: string) => DefaultCellProps;
 }

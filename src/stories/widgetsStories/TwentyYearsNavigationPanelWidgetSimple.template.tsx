@@ -49,10 +49,10 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
     }
   };
 
-  const getYearCellDataAttributes = (value?: string, isCurrentYear?: boolean): Record<string, any> => {
+  const getYearCellDataAttributes = (value?: string, isCurrent?: boolean): Record<string, any> => {
     return {
       'data-value': value ? value : undefined,
-      'data-is-current-year': isCurrentYear ? isCurrentYear : undefined,
+      'data-is-current-year': isCurrent ? isCurrent : undefined,
     };
   };
 
@@ -61,14 +61,14 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
     if (!dateCurrent) return () => <></>;
     const cellContent = dateCurrent.year();
     const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'year');
-    const isCurrentYear = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner, timezone), 'year');
-    const dataAttributes = getYearCellDataAttributes(dateCurrent.toISOString(), isCurrentYear);
+    const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner, timezone), 'year');
+    const dataAttributes = getYearCellDataAttributes(dateCurrent.toISOString(), isCurrent);
 
     const renderDefaultMonthCell = (props: DefaultYearCellProps) => (
       <DefaultYearCell key={dayjsDateToString(dateCurrent)} {...props} />
     );
 
-    return renderDefaultMonthCell({ cellContent, selected, isCurrentYear, ...dataAttributes });
+    return renderDefaultMonthCell({ cellContent, selected, isCurrent, ...dataAttributes });
   };
 
   const handleDateChange = (dateString: string) => {

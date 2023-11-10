@@ -1,9 +1,9 @@
 import { css } from 'styled-components';
 import { typography } from '@admiral-ds/react-ui';
-import { MONTH_CELL_PADDING } from '#src/components/MonthsOfYearWidget/constants';
+import { CELL_PADDING } from '#src/components/calendarConstants.ts';
 
 const baseCellMixin = css`
-  padding: ${MONTH_CELL_PADDING};
+  padding: ${CELL_PADDING};
   ${typography['Body/Body 2 Long']}
   background-color: ${(p) => p.theme.color['Special/Elevated BG']};
   color: ${(p) => p.theme.color['Neutral/Neutral 90']};
@@ -47,12 +47,12 @@ export const currentMonthCellMixin = css<{ $isActive?: boolean }>`
 export const monthCellMixin = css<{
   $isActive?: boolean;
   $isSelected?: boolean;
-  $isCurrentMonth?: boolean;
+  $isCurrent?: boolean;
   $disabled?: boolean;
   $hidden?: boolean;
 }>`
   ${baseCellMixin};
-  ${(p) => (p.$isCurrentMonth ? `border-color: ${p.theme.color['Neutral/Neutral 90']};` : '')}
+  ${(p) => (p.$isCurrent ? `border-color: ${p.theme.color['Neutral/Neutral 90']};` : '')}
   ${(p) =>
     p.$isSelected
       ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};
