@@ -19,6 +19,7 @@ import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstan
 import type { RangePickerCalendarProps } from '#src/components/calendarInterfaces';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
+import { MONTHS_COLUMNS } from '#src/components/MonthsOfYearWidget/constants.ts';
 
 export interface MonthRangeCalendarProps extends RangePickerCalendarProps {}
 
@@ -48,8 +49,8 @@ const getMonthCellDataAttributes = (
   isInRangeSelecting?: boolean,
   isRangeSelectingStart?: boolean,
   isRangeSelectingEnd?: boolean,
-  isStartOfWeek?: boolean,
-  isEndOfWeek?: boolean,
+  isStartOfRow?: boolean,
+  isEndOfRow?: boolean,
 ) => {
   return {
     'data-value': value ? value : undefined,
@@ -63,8 +64,8 @@ const getMonthCellDataAttributes = (
     'data-is-in-range-selecting-cell': isInRangeSelecting ? isInRangeSelecting : undefined,
     'data-is-range-selecting-start-cell': isRangeSelectingStart ? isRangeSelectingStart : undefined,
     'data-is-range-selecting-end-cell': isRangeSelectingEnd ? isRangeSelectingEnd : undefined,
-    'data-is-start-of-week-cell': isStartOfWeek ? isStartOfWeek : undefined,
-    'data-is-end-of-week-cell': isEndOfWeek ? isEndOfWeek : undefined,
+    'data-is-start-of-week-cell': isStartOfRow ? isStartOfRow : undefined,
+    'data-is-end-of-week-cell': isEndOfRow ? isEndOfRow : undefined,
   };
 };
 
@@ -290,11 +291,8 @@ export const MonthRangeCalendar = ({
     const isInRangeSelecting = dateIsInRangeSelecting(dateCurrent);
     const isRangeSelectingStart = dateIsRangeSelectingStart(dateCurrent);
     const isRangeSelectingEnd = dateIsRangeSelectingEnd(dateCurrent);
-    /*const isStartOfWeek =
-      dateCurrent.isSame(dateCurrent.startOf('week'), 'month') ||
-      dateCurrent.isSame(dateCurrent.startOf('month'), 'month');
-    const isEndOfWeek =
-      dateCurrent.isSame(dateCurrent.endOf('week'), 'month') || dateCurrent.isSame(dateCurrent.endOf('month'), 'month');*/
+    const isStartOfRow = dateCurrent.month() % MONTHS_COLUMNS === 0;
+    const isEndOfRow = dateCurrent.month() % MONTHS_COLUMNS === 2;
 
     const dataAttributes = getMonthCellDataAttributes(
       dateCurrent.toISOString(),
@@ -306,8 +304,8 @@ export const MonthRangeCalendar = ({
       isInRangeSelecting,
       isRangeSelectingStart,
       isRangeSelectingEnd,
-      /*isStartOfWeek,
-      isEndOfWeek,*/
+      isStartOfRow,
+      isEndOfRow,
     );
 
     return {
@@ -319,8 +317,8 @@ export const MonthRangeCalendar = ({
       isInRangeSelecting,
       isRangeSelectingStart,
       isRangeSelectingEnd,
-      /*isStartOfWeek,
-      isEndOfWeek,*/
+      isStartOfRow,
+      isEndOfRow,
       isActive,
       ...dataAttributes,
     };
