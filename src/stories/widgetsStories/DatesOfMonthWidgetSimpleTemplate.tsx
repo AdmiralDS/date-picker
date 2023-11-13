@@ -16,7 +16,7 @@ import {
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
 import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
-import { baseDayNameCellMixin } from '#src/components/DatesOfMonthWidget/mixins';
+import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
 import dayjs from 'dayjs';
 
 const Wrapper = styled.div`

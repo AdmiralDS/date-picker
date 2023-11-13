@@ -11,7 +11,7 @@ import {
   MONTH_CELL_WIDTH,
   YEAR_CELL_HEIGHT,
   YEAR_CELL_WIDTH,
-} from '#src/components/calendarConstants.ts';
+} from '#src/components/DefaultCell/constants.ts';
 import {
   baseDateCellMixin,
   currentDateCellMixin,
@@ -27,21 +27,17 @@ import {
   rangeDisabledHolidayDateCellMixin,
   rangeHolidayDateCellMixin,
   selectedDateCellMixin,
-} from '#src/components/DatesOfMonthWidget/mixins.tsx';
-import {
-  baseYearCellMixin,
-  currentYearCellMixin,
-  disabledYearCellMixin,
-  hiddenYearCellMixin,
-  selectedYearCellMixin,
-} from '#src/components/YearsOfTwentyYearsWidget/mixins.tsx';
-import {
   baseMonthCellMixin,
   currentMonthCellMixin,
   disabledMonthCellMixin,
   hiddenMonthCellMixin,
   selectedMonthCellMixin,
-} from '#src/components/MonthsOfYearWidget/mixins.tsx';
+  baseYearCellMixin,
+  currentYearCellMixin,
+  disabledYearCellMixin,
+  hiddenYearCellMixin,
+  selectedYearCellMixin,
+} from '#src/components/DefaultCell/mixins.tsx';
 
 const CellContainer = styled.div<{ $width: number; $height: number }>`
   position: relative;

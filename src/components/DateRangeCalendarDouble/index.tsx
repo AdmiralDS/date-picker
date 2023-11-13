@@ -18,7 +18,7 @@ import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstan
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
-import { baseDayNameCellMixin } from '#src/components/DatesOfMonthWidget/mixins';
+import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
 import type { RangePickerCalendarDoubleProps } from '#src/components/calendarInterfaces';
 
 export interface DateRangeDoubleCalendarProps extends RangePickerCalendarDoubleProps {}

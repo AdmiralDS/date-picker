@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { capitalizeFirstLetter, getDayNamesList } from '#src/components/utils';
 import type { DaysProps } from '#src/components/DatesOfMonthWidget/interfaces';
-import { DAY_CELL_HEIGHT, DAY_CELL_WIDTH } from '#src/components/calendarConstants.ts';
+import { DAY_CELL_HEIGHT, DAY_CELL_WIDTH } from '#src/components/DefaultCell/constants.ts';
 
 const DayNamesWrapper = styled.div`
   box-sizing: border-box;
