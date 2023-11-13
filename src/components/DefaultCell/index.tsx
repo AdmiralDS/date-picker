@@ -69,19 +69,19 @@ const rangeLayoutMixin = css<{ $isVisible: boolean; $isSelectingRange: boolean }
   visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
 `;
 
-const LeftHalf = styled.div<{ $isVisible: boolean; $isSelectingRange: boolean; $isStartOfWeek: boolean }>`
+const LeftHalf = styled.div<{ $isVisible: boolean; $isSelectingRange: boolean; $isStartOfRow: boolean }>`
   ${rangeLayoutMixin};
   left: 0;
   ${(p) =>
-    p.$isStartOfWeek &&
+    p.$isStartOfRow &&
     `border-top-left-radius: ${mediumGroupBorderRadius(p.theme.shape)};
      border-bottom-left-radius: ${mediumGroupBorderRadius(p.theme.shape)};`}
 `;
-const RightHalf = styled.div<{ $isVisible: boolean; $isSelectingRange: boolean; $isEndOfWeek: boolean }>`
+const RightHalf = styled.div<{ $isVisible: boolean; $isSelectingRange: boolean; $isEndOfRow: boolean }>`
   ${rangeLayoutMixin};
   right: 0;
   ${(p) =>
-    p.$isEndOfWeek &&
+    p.$isEndOfRow &&
     `border-top-right-radius: ${mediumGroupBorderRadius(p.theme.shape)};
      border-bottom-right-radius: ${mediumGroupBorderRadius(p.theme.shape)};`}
 `;
@@ -118,8 +118,8 @@ export interface CellProps extends HTMLAttributes<HTMLDivElement> {
   isInRangeSelecting?: boolean;
   isRangeSelectingStart?: boolean;
   isRangeSelectingEnd?: boolean;
-  isStartOfWeek?: boolean;
-  isEndOfWeek?: boolean;
+  isStartOfRow?: boolean;
+  isEndOfRow?: boolean;
   isActive?: boolean;
 }
 
@@ -137,8 +137,8 @@ export const DefaultCell = ({
   isInRangeSelecting,
   isRangeSelectingStart,
   isRangeSelectingEnd,
-  isStartOfWeek,
-  isEndOfWeek,
+  isStartOfRow,
+  isEndOfRow,
   isActive,
   ...props
 }: CellProps) => {
@@ -161,7 +161,7 @@ export const DefaultCell = ({
         $isSelectingRange={
           !!isInRangeSelecting || (!!isRangeSelectingEnd && !!isRangeSelectingStart !== isRangeSelectingEnd)
         }
-        $isStartOfWeek={!!isStartOfWeek}
+        $isStartOfRow={!!isStartOfRow}
       />
       <RightHalf
         $isVisible={
@@ -173,7 +173,7 @@ export const DefaultCell = ({
         $isSelectingRange={
           !!isInRangeSelecting || (!!isRangeSelectingStart && isRangeSelectingStart !== !!isRangeSelectingEnd)
         }
-        $isEndOfWeek={!!isEndOfWeek}
+        $isEndOfRow={!!isEndOfRow}
       />
       <Cell
         $cellMixin={cellMixin}

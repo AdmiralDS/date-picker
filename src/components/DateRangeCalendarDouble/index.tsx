@@ -55,8 +55,8 @@ const getDateCellDataAttributes = (
   isInRangeSelecting?: boolean,
   isRangeSelectingStart?: boolean,
   isRangeSelectingEnd?: boolean,
-  isStartOfWeek?: boolean,
-  isEndOfWeek?: boolean,
+  isStartOfRow?: boolean,
+  isEndOfRow?: boolean,
 ) => {
   return {
     'data-value': value ? value : undefined,
@@ -70,8 +70,8 @@ const getDateCellDataAttributes = (
     'data-is-in-range-selecting-cell': isInRangeSelecting ? isInRangeSelecting : undefined,
     'data-is-range-selecting-start-cell': isRangeSelectingStart ? isRangeSelectingStart : undefined,
     'data-is-range-selecting-end-cell': isRangeSelectingEnd ? isRangeSelectingEnd : undefined,
-    'data-is-start-of-week-cell': isStartOfWeek ? isStartOfWeek : undefined,
-    'data-is-end-of-week-cell': isEndOfWeek ? isEndOfWeek : undefined,
+    'data-is-start-of-week-cell': isStartOfRow ? isStartOfRow : undefined,
+    'data-is-end-of-week-cell': isEndOfRow ? isEndOfRow : undefined,
   };
 };
 
@@ -368,10 +368,10 @@ export const DateRangeDoubleCalendar = ({
     const isInRangeSelecting = dateIsInRangeSelecting(dateCurrent);
     const isRangeSelectingStart = dateIsRangeSelectingStart(dateCurrent, dateLeftInner);
     const isRangeSelectingEnd = dateIsRangeSelectingEnd(dateCurrent, dateLeftInner);
-    const isStartOfWeek =
+    const isStartOfRow =
       dateCurrent.isSame(dateCurrent.startOf('week'), 'date') ||
       dateCurrent.isSame(dateCurrent.startOf('month'), 'date');
-    const isEndOfWeek =
+    const isEndOfRow =
       dateCurrent.isSame(dateCurrent.endOf('week'), 'date') || dateCurrent.isSame(dateCurrent.endOf('month'), 'date');
     const isActive = activeDateInner?.isSame(dateCurrent, 'date');
 
@@ -387,8 +387,8 @@ export const DateRangeDoubleCalendar = ({
       isInRangeSelecting,
       isRangeSelectingStart,
       isRangeSelectingEnd,
-      isStartOfWeek,
-      isEndOfWeek,
+      isStartOfRow,
+      isEndOfRow,
     );
     return {
       cellContent,
@@ -403,8 +403,8 @@ export const DateRangeDoubleCalendar = ({
       isInRangeSelecting,
       isRangeSelectingStart,
       isRangeSelectingEnd,
-      isStartOfWeek,
-      isEndOfWeek,
+      isStartOfRow,
+      isEndOfRow,
       isActive,
       ...dataAttributes,
     } as const;
@@ -425,10 +425,10 @@ export const DateRangeDoubleCalendar = ({
     const isInRangeSelecting = dateIsInRangeSelecting(dateCurrent);
     const isRangeSelectingStart = dateIsRangeSelectingStart(dateCurrent, dateRightInner);
     const isRangeSelectingEnd = dateIsRangeSelectingEnd(dateCurrent, dateRightInner);
-    const isStartOfWeek =
+    const isStartOfRow =
       dateCurrent.isSame(dateCurrent.startOf('week'), 'date') ||
       dateCurrent.isSame(dateCurrent.startOf('month'), 'date');
-    const isEndOfWeek =
+    const isEndOfRow =
       dateCurrent.isSame(dateCurrent.endOf('week'), 'date') || dateCurrent.isSame(dateCurrent.endOf('month'), 'date');
     const isActive = activeDateInner?.isSame(dateCurrent, 'date');
 
@@ -444,8 +444,8 @@ export const DateRangeDoubleCalendar = ({
       isInRangeSelecting,
       isRangeSelectingStart,
       isRangeSelectingEnd,
-      isStartOfWeek,
-      isEndOfWeek,
+      isStartOfRow,
+      isEndOfRow,
     );
     return {
       cellContent,
@@ -460,8 +460,8 @@ export const DateRangeDoubleCalendar = ({
       isInRangeSelecting,
       isRangeSelectingStart,
       isRangeSelectingEnd,
-      isStartOfWeek,
-      isEndOfWeek,
+      isStartOfRow,
+      isEndOfRow,
       isActive,
       ...dataAttributes,
     } as const;

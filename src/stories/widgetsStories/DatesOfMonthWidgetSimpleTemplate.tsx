@@ -147,8 +147,8 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
     const isCurrent = dateCurrent && dateCurrent.isSame(dayjs().locale(localeInner), 'date');
     const isHoliday = dateIsHoliday(dateCurrent);
     //const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
-    const isStartOfWeek = dateCurrent.isSame(dateCurrent.startOf('week'), 'date');
-    const isEndOfWeek = dateCurrent.isSame(dateCurrent.endOf('week'), 'date');
+    const isStartOfRow = dateCurrent.isSame(dateCurrent.startOf('week'), 'date');
+    const isEndOfRow = dateCurrent.isSame(dateCurrent.endOf('week'), 'date');
     const isActive = activeDateInner?.isSame(dateCurrent, 'date');
 
     const dataAttributes = getDateCellDataAttributes(
@@ -167,8 +167,8 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
       isCurrent,
       isHoliday,
       //isOutsideMonth,
-      isStartOfWeek,
-      isEndOfWeek,
+      isStartOfRow,
+      isEndOfRow,
       isActive,
       ...dataAttributes,
     };

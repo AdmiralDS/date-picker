@@ -49,8 +49,8 @@ const getDateCellDataAttributes = (
   isInRangeSelecting?: boolean,
   isRangeSelectingStart?: boolean,
   isRangeSelectingEnd?: boolean,
-  isStartOfWeek?: boolean,
-  isEndOfWeek?: boolean,
+  isStartOfRow?: boolean,
+  isEndOfRow?: boolean,
 ) => {
   return {
     'data-value': value ? value : undefined,
@@ -64,8 +64,8 @@ const getDateCellDataAttributes = (
     'data-is-in-range-selecting-cell': isInRangeSelecting ? isInRangeSelecting : undefined,
     'data-is-range-selecting-start-cell': isRangeSelectingStart ? isRangeSelectingStart : undefined,
     'data-is-range-selecting-end-cell': isRangeSelectingEnd ? isRangeSelectingEnd : undefined,
-    'data-is-start-of-week-cell': isStartOfWeek ? isStartOfWeek : undefined,
-    'data-is-end-of-week-cell': isEndOfWeek ? isEndOfWeek : undefined,
+    'data-is-start-of-week-cell': isStartOfRow ? isStartOfRow : undefined,
+    'data-is-end-of-week-cell': isEndOfRow ? isEndOfRow : undefined,
   };
 };
 
@@ -361,10 +361,10 @@ export const DateRangeCalendar = ({
     const isInRangeSelecting = dateIsInRangeSelecting(dateCurrent);
     const isRangeSelectingStart = dateIsRangeSelectingStart(dateCurrent);
     const isRangeSelectingEnd = dateIsRangeSelectingEnd(dateCurrent);
-    const isStartOfWeek =
+    const isStartOfRow =
       dateCurrent.isSame(dateCurrent.startOf('week'), 'date') ||
       dateCurrent.isSame(dateCurrent.startOf('month'), 'date');
-    const isEndOfWeek =
+    const isEndOfRow =
       dateCurrent.isSame(dateCurrent.endOf('week'), 'date') || dateCurrent.isSame(dateCurrent.endOf('month'), 'date');
     const isActive = activeDateInner?.isSame(dateCurrent, 'date');
 
@@ -380,8 +380,8 @@ export const DateRangeCalendar = ({
       isInRangeSelecting,
       isRangeSelectingStart,
       isRangeSelectingEnd,
-      isStartOfWeek,
-      isEndOfWeek,
+      isStartOfRow,
+      isEndOfRow,
     );
 
     return {
@@ -397,8 +397,8 @@ export const DateRangeCalendar = ({
       isInRangeSelecting,
       isRangeSelectingStart,
       isRangeSelectingEnd,
-      isStartOfWeek,
-      isEndOfWeek,
+      isStartOfRow,
+      isEndOfRow,
       isActive,
       ...dataAttributes,
     };
