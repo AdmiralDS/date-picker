@@ -132,11 +132,7 @@ export const MonthCalendar = ({
     onClick?.(e);
   };
 
-  const getMonthCellDataAttributes = (
-    value?: string,
-    isCurrent?: boolean,
-    isActive?: boolean,
-  ): Record<string, any> => {
+  const getMonthCellDataAttributes = (value?: string, isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
     return {
       'data-value': value ? value : undefined,
       'data-is-current-month': isCurrent ? isCurrent : undefined,
