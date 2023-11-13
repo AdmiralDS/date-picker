@@ -2,115 +2,143 @@ import { css } from 'styled-components';
 import { typography } from '@admiral-ds/react-ui';
 import { CELL_PADDING } from '#src/components/DefaultCell/constants.ts';
 
+//<editor-fold desc="Base cell mixins">
 const baseCellMixin = css`
   padding: ${CELL_PADDING};
   ${typography['Body/Body 2 Long']}
   color: ${(p) => p.theme.color['Neutral/Neutral 90']};
   background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: 50%;
   border: 1px ${(p) => p.theme.color['Special/Elevated BG']} solid;
 `;
 
-export const baseDateCellMixin = css<{ $isActive?: boolean }>`
-  ${baseCellMixin};
+const activeCellMixin = css<{ $isActive?: boolean }>`
   ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
 `;
 
-export const selectedDateCellMixin = css<{ $isActive?: boolean }>`
-  ${baseCellMixin};
+const activeRangeCellMixin = css<{ $isActive?: boolean }>`
+  ${(p) =>
+    p.$isActive
+      ? `background-color: ${p.theme.color['Special/Elevated BG']};
+         border-color: ${p.theme.color['Primary/Primary 60 Main']};`
+      : ''}
+`;
+
+const selectedCellMixin = css<{ $isActive?: boolean }>`
   background-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
   border-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
   color: ${(p) => p.theme.color['Special/Static White']};
   ${(p) =>
     p.$isActive
       ? `background-color: ${p.theme.color['Primary/Primary 70']};
-     border-color: ${p.theme.color['Primary/Primary 70']};`
+         border-color: ${p.theme.color['Primary/Primary 70']};`
       : ''}
 `;
 
-export const selectingRangeEndDateCellMixin = css<{ $isActive?: boolean }>`
-  ${baseCellMixin};
-  background-color: ${(p) => p.theme.color['Primary/Primary 70']};
-  border-color: ${(p) => p.theme.color['Primary/Primary 70']};
-  color: ${(p) => p.theme.color['Special/Static White']};
-`;
-
-export const disabledDateCellMixin = css<{ $isActive?: boolean }>`
-  ${baseCellMixin};
-  color: ${(p) => p.theme.color['Neutral/Neutral 30']};
-`;
-
-export const rangeDisabledDateCellMixin = css<{ $isActive?: boolean }>`
-  ${baseCellMixin};
-  color: ${(p) => p.theme.color['Neutral/Neutral 30']};
-  background-color: transparent;
-  border-color: transparent;
-`;
-
-export const hiddenDateCellMixin = css<{ $isActive?: boolean }>`
-  ${baseCellMixin};
+const hiddenCellMixin = css`
   color: ${(p) => p.theme.color['Special/Elevated BG']};
 `;
 
-export const holidayDateCellMixin = css<{ $isActive?: boolean }>`
+const currentCellMixin = css`
+  border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
+`;
+
+const disabledCellMixin = css`
+  color: ${(p) => p.theme.color['Neutral/Neutral 30']};
+`;
+
+const rangeCellMixin = css`
+  background-color: transparent;
+  border-color: transparent;
+`;
+//</editor-fold>
+
+//<editor-fold desc="Date cell mixins">
+const baseDateMixin = css`
   ${baseCellMixin};
+  border-radius: 50%;
+`;
+export const baseDateCellMixin = css<{ $isActive?: boolean }>`
+  ${baseDateMixin};
+  ${activeCellMixin};
+`;
+
+export const selectedDateCellMixin = css<{ $isActive?: boolean }>`
+  ${baseDateMixin};
+  ${selectedCellMixin};
+`;
+
+/*export const selectingRangeEndDateCellMixin = css<{ $isActive?: boolean }>`
+  ${baseDateMixin};
+  background-color: ${(p) => p.theme.color['Primary/Primary 70']};
+  border-color: ${(p) => p.theme.color['Primary/Primary 70']};
+  color: ${(p) => p.theme.color['Special/Static White']};
+`;*/
+
+export const disabledDateCellMixin = css<{ $isActive?: boolean }>`
+  ${baseDateMixin};
+  ${disabledCellMixin};
+`;
+
+export const rangeDisabledDateCellMixin = css<{ $isActive?: boolean }>`
+  ${baseDateMixin};
+  ${disabledCellMixin};
+  ${rangeCellMixin};
+`;
+
+export const hiddenDateCellMixin = css<{ $isActive?: boolean }>`
+  ${baseDateMixin};
+  ${hiddenCellMixin};
+`;
+
+export const holidayDateCellMixin = css<{ $isActive?: boolean }>`
+  ${baseDateMixin};
   color: ${(p) => p.theme.color['Error/Error 60 Main']};
-  ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
+  ${activeCellMixin};
 `;
 
 export const disabledHolidayDateCellMixin = css<{ $isActive?: boolean }>`
-  ${baseCellMixin};
+  ${baseDateMixin};
   color: ${(p) => p.theme.color['Error/Error 30']};
 `;
 
 export const rangeDisabledHolidayDateCellMixin = css<{ $isActive?: boolean }>`
-  ${baseCellMixin};
-  background-color: transparent;
-  border-color: transparent;
+  ${baseDateMixin};
+  ${rangeCellMixin};
   color: ${(p) => p.theme.color['Error/Error 30']};
 `;
 
 export const currentDateCellMixin = css<{ $isActive?: boolean }>`
-  ${baseCellMixin};
-  border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
-  ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
+  ${baseDateMixin};
+  ${currentCellMixin};
+  ${activeCellMixin};
 `;
 
 export const currentDateHolidayDateCellMixin = css<{ $isActive?: boolean }>`
   ${currentDateCellMixin};
   ${holidayDateCellMixin};
-  border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
-  ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
+  ${currentCellMixin};
+  ${activeCellMixin};
 `;
 
-export const outsideMonthDateCellMixin = css<{ $isActive?: boolean }>`
-  ${baseCellMixin};
+/*export const outsideMonthDateCellMixin = css<{ $isActive?: boolean }>`
+  ${baseDateMixin};
   cursor: default;
   color: ${(p) => p.theme.color['Neutral/Neutral 20']};
-`;
+`;*/
 
 export const rangeDateCellMixin = css<{ $isActive?: boolean }>`
-  ${baseCellMixin};
-  background-color: transparent;
-  border-color: transparent;
+  ${baseDateMixin};
+  ${rangeCellMixin};
 
-  ${(p) =>
-    p.$isActive
-      ? `background-color: ${p.theme.color['Special/Elevated BG']};
-     border-color: ${p.theme.color['Primary/Primary 60 Main']};`
-      : ''}
+  ${activeRangeCellMixin};
 `;
 
 export const rangeCurrentDateCellMixin = css<{ $isActive?: boolean }>`
-  ${baseCellMixin};
-  background-color: transparent;
-  border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
+  ${baseDateMixin};
+  ${rangeCellMixin};
+  ${currentCellMixin};
 
-  ${(p) =>
-    p.$isActive
-      ? `background-color: ${p.theme.color['Special/Elevated BG']};
-     border-color: ${p.theme.color['Primary/Primary 60 Main']};`
-      : ''}
+  ${activeRangeCellMixin};
 `;
 
 export const rangeHolidayDateCellMixin = css<{ $isActive?: boolean }>`
@@ -122,12 +150,16 @@ export const rangeCurrentHolidayDateCellMixin = css<{ $isActive?: boolean }>`
   ${rangeCurrentDateCellMixin};
   color: ${(p) => p.theme.color['Error/Error 60 Main']};
 `;
+//</editor-fold>
 
+//<editor-fold desc="Day name cell mixins">
 export const baseDayNameCellMixin = css`
   ${baseCellMixin};
   cursor: default;
 `;
+//</editor-fold>
 
+//<editor-fold desc="Month cell mixins">
 const baseMonthMixin = css`
   ${baseCellMixin};
   border-radius: 18px;
@@ -135,35 +167,43 @@ const baseMonthMixin = css`
 
 export const baseMonthCellMixin = css<{ $isActive?: boolean }>`
   ${baseMonthMixin};
-  ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
+  ${activeCellMixin};
 `;
 
 export const selectedMonthCellMixin = css<{ $isActive?: boolean }>`
   ${baseMonthMixin};
-  background-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
-  border-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
-  color: ${(p) => p.theme.color['Special/Static White']};
-  ${(p) =>
-    p.$isActive
-      ? `border-color: ${p.theme.color['Primary/Primary 70']};
-         background-color: ${p.theme.color['Primary/Primary 70']};`
-      : ''}
+  ${selectedCellMixin};
 `;
 
 export const disabledMonthCellMixin = css`
   ${baseMonthMixin};
-  color: ${(p) => p.theme.color['Neutral/Neutral 30']};
+  ${disabledCellMixin};
 `;
 
 export const hiddenMonthCellMixin = css`
   ${baseMonthMixin};
-  color: ${(p) => p.theme.color['Special/Elevated BG']};
+  ${hiddenCellMixin};
 `;
 
 export const currentMonthCellMixin = css<{ $isActive?: boolean }>`
   ${baseMonthMixin};
-  border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
-  ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
+  ${currentCellMixin};
+  ${activeCellMixin};
+`;
+
+export const rangeMonthCellMixin = css<{ $isActive?: boolean }>`
+  ${baseMonthMixin};
+  ${rangeCellMixin};
+
+  ${activeRangeCellMixin};
+`;
+
+export const rangeCurrentMonthCellMixin = css<{ $isActive?: boolean }>`
+  ${baseMonthMixin};
+  ${rangeCellMixin};
+  ${currentCellMixin};
+
+  ${activeRangeCellMixin};
 `;
 
 export const monthCellMixin = css<{
@@ -198,7 +238,9 @@ export const monthCellMixin = css<{
          border-color: ${p.theme.color['Special/Elevated BG']};`
       : ''}
 `;
+//</editor-fold>
 
+//<editor-fold desc="Year cell mixins">
 const baseYearMixin = css`
   ${baseCellMixin};
   border-radius: 18px;
@@ -206,33 +248,42 @@ const baseYearMixin = css`
 
 export const baseYearCellMixin = css<{ $isActive?: boolean }>`
   ${baseYearMixin};
-  ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
+  ${activeCellMixin};
 `;
 
 export const selectedYearCellMixin = css<{ $isActive?: boolean }>`
   ${baseYearMixin};
-  background-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
-  border-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
-  color: ${(p) => p.theme.color['Special/Static White']};
-  ${(p) =>
-    p.$isActive
-      ? `border-color: ${p.theme.color['Primary/Primary 70']};
-         background-color: ${p.theme.color['Primary/Primary 70']};`
-      : ''}
+  ${selectedCellMixin};
 `;
 
 export const disabledYearCellMixin = css`
   ${baseYearMixin};
-  color: ${(p) => p.theme.color['Neutral/Neutral 30']};
+  ${disabledCellMixin};
 `;
 
 export const hiddenYearCellMixin = css`
   ${baseYearMixin};
-  color: ${(p) => p.theme.color['Special/Elevated BG']};
+  ${hiddenCellMixin};
 `;
 
 export const currentYearCellMixin = css<{ $isActive?: boolean }>`
   ${baseYearMixin};
-  border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
-  ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
+  ${currentCellMixin};
+  ${activeCellMixin};
 `;
+
+export const rangeYearCellMixin = css<{ $isActive?: boolean }>`
+  ${baseYearMixin};
+  ${rangeCellMixin};
+
+  ${activeRangeCellMixin};
+`;
+
+export const rangeCurrentYearCellMixin = css<{ $isActive?: boolean }>`
+  ${baseYearMixin};
+  ${rangeCellMixin};
+  ${currentCellMixin};
+
+  ${activeRangeCellMixin};
+`;
+//</editor-fold>
