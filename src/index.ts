@@ -5,3 +5,4 @@ export * from './components/DateRangeCalendarDouble';
 export * from './components/MonthCalendar';
 export * from './components/MonthRangeCalendar';
 export * from './components/YearCalendar';
+export * from './components/YearRangeCalendar';

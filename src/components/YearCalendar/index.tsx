@@ -15,6 +15,7 @@ import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNav
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces.ts';
+import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 
 const YearCalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -25,6 +26,8 @@ const YearCalendarWrapper = styled.div`
   padding-top: 20px;
   width: ${CALENDAR_WIDTH}px;
   height: ${CALENDAR_HEIGHT}px;
+  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
+  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
   ${(p) => p.theme.shadow['Shadow 08']}
 `;
 
@@ -132,11 +135,7 @@ export const YearCalendar = ({
     onClick?.(e);
   };
 
-  const getYearCellDataAttributes = (
-    value?: string,
-    isCurrent?: boolean,
-    isActive?: boolean,
-  ): Record<string, any> => {
+  const getYearCellDataAttributes = (value?: string, isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
     return {
       'data-value': value ? value : undefined,
       'data-is-current-year': isCurrent ? isCurrent : undefined,
