@@ -1,13 +1,21 @@
+import type { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-import { IconPlacement } from '@admiral-ds/react-ui';
+import { IconPlacement, typography } from '@admiral-ds/react-ui';
 import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
-import { getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
+import { capitalizeFirstLetter, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
-import type { MonthNavigationPanelWidgetProps } from '#src/components/MonthNavigationPanelWidget/interfaces';
-import { MonthYear } from '#src/components/MonthNavigationPanelWidget/MonthYear';
+
+export interface MonthNavigationPanelWidgetProps extends HTMLAttributes<HTMLElement> {
+  /** Дата в формате ISO */
+  date?: string;
+  locale?: string;
+  /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
+   * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
+  timezone?: string;
+}
 
 const MonthNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
@@ -17,6 +25,18 @@ const MonthNavigationPanelWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: ${(p) => p.theme.color['Special/Elevated BG']};
+`;
+
+const MonthYearWrapper = styled.div`
+  display: flex;
+  color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
+  ${typography['Subtitle/Subtitle 2']}
+`;
+const MonthWrapper = styled.div`
+  padding: 4px 8px;
+`;
+const YearWrapper = styled.div`
+  padding: 4px 8px;
 `;
 
 export const MonthNavigationPanelWidget = ({
@@ -32,7 +52,10 @@ export const MonthNavigationPanelWidget = ({
       <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="left">
         <ChevronLeftOutline />
       </IconPlacement>
-      <MonthYear date={dateInner} />
+      <MonthYearWrapper {...props}>
+        <MonthWrapper data-panel-target-type="month">{capitalizeFirstLetter(dateInner.format('MMMM'))}</MonthWrapper>
+        <YearWrapper data-panel-target-type="year">{dateInner.year()}</YearWrapper>
+      </MonthYearWrapper>
       <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="right">
         <ChevronRightOutline />
       </IconPlacement>

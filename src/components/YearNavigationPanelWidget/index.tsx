@@ -1,4 +1,4 @@
-import type { YearNavigationPanelWidgetProps } from '#src/components/YearNavigationPanelWidget/interfaces';
+import type { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 import { IconPlacement, typography } from '@admiral-ds/react-ui';
@@ -7,6 +7,15 @@ import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutl
 
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
+
+export interface YearNavigationPanelWidgetProps extends HTMLAttributes<HTMLElement> {
+  /** Дата в формате ISO */
+  date?: string;
+  locale?: string;
+  /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
+   * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
+  timezone?: string;
+}
 
 const YearNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
@@ -36,7 +45,7 @@ export const YearNavigationPanelWidget = ({
       <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="left">
         <ChevronLeftOutline />
       </IconPlacement>
-      <YearWrapper>{dateInner.year()}</YearWrapper>
+      <YearWrapper data-panel-target-type="year">{dateInner.year()}</YearWrapper>
       <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="right">
         <ChevronRightOutline />
       </IconPlacement>
