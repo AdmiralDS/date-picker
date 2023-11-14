@@ -11,7 +11,7 @@ import { Months } from '#src/components/MonthsOfYearWidget/Months';
 const MonthsOfYearWrapper = styled.div`
   background-color: ${({ theme }) => theme.color['Special/Elevated BG']};
   width: ${MONTHS_OF_YEAR_WIDGET_WIDTH}px;
-  margin-top: 28px;
+  margin: 28px 16px 36px 16px;
   ${typography['Body/Body 2 Long']}
 `;
 

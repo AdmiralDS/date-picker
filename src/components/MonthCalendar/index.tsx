@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import type { MouseEventHandler } from 'react';
-import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
 import {
@@ -11,32 +10,16 @@ import {
   getCurrentTimeZone,
   getDayjsDate,
 } from '#src/components/utils';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
-import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces.ts';
 
-const MonthCalendarWrapper = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-  ${(p) => p.theme.shadow['Shadow 08']}
-`;
-
-export interface MonthCalendarProps extends SinglePickerCalendarProps {}
+export interface MonthCalendarProps extends  Omit<SinglePickerCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 export const MonthCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
   dateValue,
-  defaultDateValue,
-  onDateValueChange,
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
@@ -45,7 +28,7 @@ export const MonthCalendar = ({
   timezone = getCurrentTimeZone(),
   ...props
 }: MonthCalendarProps) => {
-  //<editor-fold desc="Date shown on calendar">
+  /*//<editor-fold desc="Date shown on calendar">
   const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
   const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
 
@@ -56,7 +39,7 @@ export const MonthCalendar = ({
       onDateValueChange?.(dateString);
     }
   };
-  //</editor-fold>
+  //</editor-fold>*/
 
   //<editor-fold desc="Hovered date">
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(
@@ -153,7 +136,7 @@ export const MonthCalendar = ({
     //return <DefaultMonthCell key={dayjsDateToString(dateCurrent)} {...cellProps} />;
   };
 
-  const handleYearNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
+  /*const handleYearNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
@@ -163,27 +146,19 @@ export const MonthCalendar = ({
         handleDateChange(dayjsDateToString(dateInner.add(1, 'year')));
         break;
     }
-  };
+  };*/
 
   return (
-    <MonthCalendarWrapper>
-      <YearNavigationPanelWidget
-        date={dayjsDateToString(dateInner)}
-        locale={locale}
-        timezone={timezone}
-        onClick={handleYearNavigationPanelClick}
-      />
-      <MonthsOfYearWidget
-        {...props}
-        date={dayjsDateToString(dateInner)}
-        locale={locale}
-        timezone={timezone}
-        onClick={handleClick}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
-        renderMonthCell={renderMonth}
-      />
-    </MonthCalendarWrapper>
+    <MonthsOfYearWidget
+      {...props}
+      date={dateValue}
+      locale={locale}
+      timezone={timezone}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
+      renderMonthCell={renderMonth}
+    />
   );
 };

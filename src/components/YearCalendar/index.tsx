@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import type { MouseEventHandler } from 'react';
-import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
 import {
@@ -10,36 +9,16 @@ import {
   getCurrentTimeZone,
   getDayjsDate,
 } from '#src/components/utils';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
-import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
-import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 
-const YearCalendarWrapper = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
-`;
-
-export interface YearCalendarProps extends SinglePickerCalendarProps {}
+export interface YearCalendarProps extends Omit<SinglePickerCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 export const YearCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
   dateValue,
-  defaultDateValue,
-  onDateValueChange,
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
@@ -48,8 +27,8 @@ export const YearCalendar = ({
   timezone = getCurrentTimeZone(),
   ...props
 }: YearCalendarProps) => {
-  //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
+  /*//<editor-fold desc="Date shown on calendar">
+  const [dateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
   const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
 
   const handleDateChange = (dateString: string) => {
@@ -59,7 +38,7 @@ export const YearCalendar = ({
       onDateValueChange?.(dateString);
     }
   };
-  //</editor-fold>
+  //</editor-fold>*/
 
   //<editor-fold desc="Hovered date">
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(
@@ -155,7 +134,7 @@ export const YearCalendar = ({
     return { cellContent, selected, isCurrent, isActive, ...dataAttributes };
   };
 
-  const handleTwentyYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
+  /*const handleTwentyYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
@@ -165,27 +144,19 @@ export const YearCalendar = ({
         handleDateChange(dayjsDateToString(dateInner.add(YEARS_ON_SCREEN, 'year')));
         break;
     }
-  };
+  };*/
 
   return (
-    <YearCalendarWrapper>
-      <TwentyYearsNavigationPanelWidget
-        date={dayjsDateToString(dateInner)}
-        locale={locale}
-        timezone={timezone}
-        onClick={handleTwentyYearsNavigationPanelClick}
-      />
-      <YearsOfTwentyYearsWidget
-        {...props}
-        date={dayjsDateToString(dateInner)}
-        locale={locale}
-        timezone={timezone}
-        onClick={handleClick}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
-        renderYearCell={renderYear}
-      />
-    </YearCalendarWrapper>
+    <YearsOfTwentyYearsWidget
+      {...props}
+      date={dateValue}
+      locale={locale}
+      timezone={timezone}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
+      renderYearCell={renderYear}
+    />
   );
 };

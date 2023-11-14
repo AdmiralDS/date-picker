@@ -11,7 +11,7 @@ import { YEARS_OF_YEAR_WIDGET_WIDTH } from '#src/components/YearsOfTwentyYearsWi
 const YearsOfYearWrapper = styled.div`
   background-color: ${({ theme }) => theme.color['Special/Elevated BG']};
   width: ${YEARS_OF_YEAR_WIDGET_WIDTH}px;
-  margin-top: 28px;
+  margin: 28px 22px 32px 22px;
   ${typography['Body/Body 2 Long']}
 `;
 

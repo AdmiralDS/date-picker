@@ -5,10 +5,12 @@ import { IconPlacement, typography } from '@admiral-ds/react-ui';
 import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
+import type { CalendarViewMode } from '@admiral-ds/date-picker';
 import { capitalizeFirstLetter, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
 
 export interface MonthNavigationPanelWidgetProps extends HTMLAttributes<HTMLElement> {
+  viewMode?: CalendarViewMode;
   /** Дата в формате ISO */
   date?: string;
   locale?: string;
@@ -29,18 +31,22 @@ const MonthNavigationPanelWrapper = styled.div`
 
 const MonthYearWrapper = styled.div`
   display: flex;
+`;
+const TextWrapper = styled.div<{ $isActive?: boolean }>`
+  padding: 4px 8px;
+  border-radius: 16px;
+  cursor: pointer;
   color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
   ${typography['Subtitle/Subtitle 2']}
-`;
-const MonthWrapper = styled.div`
-  padding: 4px 8px;
-`;
-const YearWrapper = styled.div`
-  padding: 4px 8px;
+  background-color: ${(p) => (p.$isActive ? p.theme.color['Opacity/Focus'] : p.theme.color['Special/Elevated BG'])};
+  &:hover {
+    background-color: ${(p) => p.theme.color['Opacity/Hover']};
+  }
 `;
 
 export const MonthNavigationPanelWidget = ({
   date,
+  viewMode,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
@@ -53,8 +59,12 @@ export const MonthNavigationPanelWidget = ({
         <ChevronLeftOutline />
       </IconPlacement>
       <MonthYearWrapper {...props}>
-        <MonthWrapper data-panel-target-type="month">{capitalizeFirstLetter(dateInner.format('MMMM'))}</MonthWrapper>
-        <YearWrapper data-panel-target-type="year">{dateInner.year()}</YearWrapper>
+        <TextWrapper data-panel-target-type="month" $isActive={viewMode === 'months'}>
+          {capitalizeFirstLetter(dateInner.format('MMMM'))}
+        </TextWrapper>
+        <TextWrapper data-panel-target-type="year" $isActive={viewMode === 'years'}>
+          {dateInner.year()}
+        </TextWrapper>
       </MonthYearWrapper>
       <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="right">
         <ChevronRightOutline />

@@ -1,34 +1,15 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import styled from 'styled-components';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
-
 import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
-import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
 import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces';
 
-export interface DateCalendarProps extends SinglePickerCalendarProps {}
-
-const DateCalendarWrapper = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
-`;
+export interface DateCalendarProps extends Omit<SinglePickerCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 const getDateCellDataAttributes = (
   value?: string,
@@ -48,8 +29,6 @@ const getDateCellDataAttributes = (
 
 export const DateCalendar = ({
   dateValue,
-  defaultDateValue,
-  onDateValueChange,
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
@@ -62,7 +41,7 @@ export const DateCalendar = ({
   onClick,
   ...props
 }: DateCalendarProps) => {
-  //<editor-fold desc="Date shown on calendar">
+  /*//<editor-fold desc="Date shown on calendar">
   const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
   const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
 
@@ -73,7 +52,8 @@ export const DateCalendar = ({
       onDateValueChange?.(dateString);
     }
   };
-  //</editor-fold>
+  //</editor-fold>*/
+  const dateInner = getDayjsDate(locale, timezone, dateValue);
 
   //<editor-fold desc="Hovered date">
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(
@@ -83,7 +63,6 @@ export const DateCalendar = ({
 
   const handleActiveDateChange = (dateString?: string) => {
     const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
-    //console.log(`set active ${dayjsActiveDate}`);
     setActiveDateState(dayjsActiveDate);
     onActiveDateValueChange?.(dateString);
   };
@@ -163,25 +142,14 @@ export const DateCalendar = ({
     );
   };
   const dateIsHidden = (dateCurrent?: Dayjs) => {
-    return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
+    return dateCurrent && dateCurrent.month() !== dateInner.month();
+    //return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getDayNameCellState = (_: number): CellStateProps => {
     const cellMixin = baseDayNameCellMixin;
     return { cellMixin };
-  };
-
-  const handleMonthNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
-    const targetType = (e.target as HTMLElement).dataset.panelTargetType;
-    switch (targetType) {
-      case 'left':
-        handleDateChange(dayjsDateToString(dateInner.subtract(1, 'month')));
-        break;
-      case 'right':
-        handleDateChange(dayjsDateToString(dateInner.add(1, 'month')));
-        break;
-    }
   };
 
   //useMemo
@@ -222,24 +190,16 @@ export const DateCalendar = ({
   };
 
   return (
-    <DateCalendarWrapper>
-      <MonthNavigationPanelWidget
-        date={dayjsDateToString(dateInner)}
-        locale={locale}
-        timezone={timezone}
-        onClick={handleMonthNavigationPanelClick}
-      />
-      <DatesOfMonthWidget
-        {...props}
-        renderDateCell={renderDateCell || renderDefaultDate}
-        date={dayjsDateToString(dateInner)}
-        locale={locale}
-        onClick={handleClick}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
-        dayNamesProps={{ dayNameCellState: getDayNameCellState }}
-      />
-    </DateCalendarWrapper>
+    <DatesOfMonthWidget
+      {...props}
+      renderDateCell={renderDateCell || renderDefaultDate}
+      date={dayjsDateToString(dateInner)}
+      locale={locale}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
+      dayNamesProps={{ dayNameCellState: getDayNameCellState }}
+    />
   );
 };

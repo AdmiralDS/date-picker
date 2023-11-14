@@ -12,7 +12,7 @@ import { Dates } from '#src/components/DatesOfMonthWidget/Dates';
 const DatesOfMonthWrapper = styled.div`
   background-color: ${({ theme }) => theme.color['Special/Elevated BG']};
   width: ${DATES_OF_MONTH_WIDGET_WIDTH}px;
-  margin-top: 12px;
+  margin: 12px 16px 16px 16px;
   ${typography['Body/Body 2 Long']}
 `;
 
