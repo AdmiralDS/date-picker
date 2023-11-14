@@ -74,7 +74,7 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
   };
 
   const handleYearNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
-    const targetType = (e.target as HTMLElement).dataset.direction;
+    const targetType = (e.target as HTMLElement).dataset.dataPanelTargetType;
     switch (targetType) {
       case 'left':
         handleDateChange(dayjsDateToString(dateState.subtract(1, 'year')));

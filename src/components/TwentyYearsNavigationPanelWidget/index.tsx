@@ -35,11 +35,11 @@ export const TwentyYearsNavigationPanelWidget = ({
 
   return (
     <TwentyYearsNavigationPanelWrapper {...props}>
-      <IconPlacement dimension="lSmall" highlightFocus={false} data-direction="left">
+      <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="left">
         <ChevronLeftOutline />
       </IconPlacement>
       <TwentyYearsWrapper>{`${start}–${end}`}</TwentyYearsWrapper>
-      <IconPlacement dimension="lSmall" highlightFocus={false} data-direction="right">
+      <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="right">
         <ChevronRightOutline />
       </IconPlacement>
     </TwentyYearsNavigationPanelWrapper>

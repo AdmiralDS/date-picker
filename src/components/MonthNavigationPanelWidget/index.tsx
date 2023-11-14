@@ -29,11 +29,11 @@ export const MonthNavigationPanelWidget = ({
 
   return (
     <MonthNavigationPanelWrapper {...props}>
-      <IconPlacement dimension="lSmall" highlightFocus={false} data-direction="left">
+      <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="left">
         <ChevronLeftOutline />
       </IconPlacement>
       <MonthYear date={dateInner} />
-      <IconPlacement dimension="lSmall" highlightFocus={false} data-direction="right">
+      <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="right">
         <ChevronRightOutline />
       </IconPlacement>
     </MonthNavigationPanelWrapper>

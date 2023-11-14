@@ -33,11 +33,11 @@ export const YearNavigationPanelWidget = ({
 
   return (
     <YearNavigationPanelWrapper {...props}>
-      <IconPlacement dimension="lSmall" highlightFocus={false} data-direction="left">
+      <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="left">
         <ChevronLeftOutline />
       </IconPlacement>
       <YearWrapper>{dateInner.year()}</YearWrapper>
-      <IconPlacement dimension="lSmall" highlightFocus={false} data-direction="right">
+      <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="right">
         <ChevronRightOutline />
       </IconPlacement>
     </YearNavigationPanelWrapper>

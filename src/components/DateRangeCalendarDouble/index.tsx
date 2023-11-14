@@ -330,7 +330,7 @@ export const DateRangeDoubleCalendar = ({
   };
 
   const handleLeftMonthNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
-    const targetType = (e.target as HTMLElement).dataset.direction;
+    const targetType = (e.target as HTMLElement).dataset.dataPanelTargetType;
     switch (targetType) {
       case 'left':
         handleDateLeftChange(dayjsDateToString(dateLeftInner.subtract(1, 'month')));
@@ -341,7 +341,7 @@ export const DateRangeDoubleCalendar = ({
     }
   };
   const handleRightMonthNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
-    const targetType = (e.target as HTMLElement).dataset.direction;
+    const targetType = (e.target as HTMLElement).dataset.dataPanelTargetType;
     switch (targetType) {
       case 'left':
         handleDateRightChange(dayjsDateToString(dateRightInner.subtract(1, 'month')));
