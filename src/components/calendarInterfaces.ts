@@ -1,8 +1,8 @@
 import type { HTMLAttributes } from 'react';
-import type { DefaultDateCellProps } from '#src/components/DatesOfMonthWidget/Dates.tsx';
+import type { DefaultCellProps } from '#src/components/DefaultCell';
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
-  renderDateCell?: (dateString: string) => DefaultDateCellProps;
+  renderDateCell?: (dateString: string) => DefaultCellProps;
 
   /** Дата для отображения на экране в формате ISO */
   dateValue?: string;
