@@ -2,9 +2,11 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 
 import { dayjsDateToString, setNoon } from '#src/components/utils';
-import type { MonthsProps } from '#src/components/MonthsOfYearWidget/interfaces';
 import { MONTHS_COLUMNS, MONTHS_ROWS, MONTHS_WRAPPER_HEIGHT } from '#src/components/MonthsOfYearWidget/constants';
 import { DefaultMonthCell, DefaultMonthRangeCell } from '#src/components/DefaultCell';
+import type { BaseInnerWidgetProps } from '#src/components/widgetInterfaces.ts';
+
+interface MonthsProps extends BaseInnerWidgetProps {}
 
 const MonthsWrapper = styled.div`
   height: ${MONTHS_WRAPPER_HEIGHT}px;

@@ -7,8 +7,8 @@ import type { Dayjs } from 'dayjs';
 import { typography } from '@admiral-ds/react-ui';
 
 import { capitalizeFirstLetter, dateStringToDayjs, dayjsDateToString, getCurrentDate } from '#src/components/utils';
-import type { MonthsOfYearWidgetProps } from '#src/components/MonthsOfYearWidget/interfaces';
 import { MONTHS_OF_YEAR_WIDGET_WIDTH } from '#src/components/MonthsOfYearWidget/constants';
+import type { MonthsOfYearWidgetProps } from '#src/components/MonthsOfYearWidget';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 
 const Wrapper = styled.div`

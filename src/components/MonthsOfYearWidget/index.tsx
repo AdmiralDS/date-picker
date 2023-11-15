@@ -4,9 +4,11 @@ import 'dayjs/locale/ru';
 import { typography } from '@admiral-ds/react-ui';
 
 import { getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
-import type { MonthsOfYearWidgetProps } from '#src/components/MonthsOfYearWidget/interfaces';
 import { MONTHS_OF_YEAR_WIDGET_WIDTH } from '#src/components/MonthsOfYearWidget/constants';
 import { Months } from '#src/components/MonthsOfYearWidget/Months';
+import type { BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
+
+export interface MonthsOfYearWidgetProps extends BaseWidgetProps {}
 
 const MonthsOfYearWrapper = styled.div`
   background-color: ${({ theme }) => theme.color['Special/Elevated BG']};
