@@ -1,6 +1,7 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
+import type { Dayjs } from 'dayjs';
 
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 
@@ -8,16 +9,28 @@ import type { SinglePickerCalendarProps } from '#src/components/calendarInterfac
 import { DateCalendar } from '#src/components/DateCalendar';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants.ts';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
-import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils.ts';
+import {
+  dateStringToDayjs,
+  dayjsDateToString,
+  dayjsStateToString,
+  getCurrentTimeZone,
+  getDayjsDate,
+} from '#src/components/utils.ts';
 import { MonthCalendar } from '#src/components/MonthCalendar';
 import { YearCalendar } from '#src/components/YearCalendar';
 
 export type CalendarViewMode = 'dates' | 'months' | 'years';
 
 export interface CalendarProps extends SinglePickerCalendarProps {
+  /** Экран выбора дат, месяцев, лет */
   viewModeValue?: CalendarViewMode;
+  /** Режим отображения по умолчанию */
   defaultViewModeValue?: CalendarViewMode;
+  /** Коллбэк на переключение экрана */
   onViewModeChange?: (mode: CalendarViewMode) => void;
+  onDateChange?: (dateString: string) => void;
+  onMonthChange?: (dateString: string) => void;
+  onYearChange?: (dateString: string) => void;
 }
 
 const CalendarWrapper = styled.div`
@@ -60,16 +73,32 @@ const StyledYearCalendar = styled(YearCalendar)<{ $isVisible: boolean }>`
 `;
 
 export const Calendar = ({
-  dateValue,
-  defaultDateValue,
-  onDateValueChange,
   viewModeValue,
   defaultViewModeValue,
   onViewModeChange,
+  dateValue,
+  defaultDateValue,
+  onDateValueChange,
+  selectedDateValue,
+  defaultSelectedDateValue,
+  onSelectedDateValueChange,
+  onDateChange,
+  onMonthChange,
+  onYearChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
 }: CalendarProps) => {
+  //<editor-fold desc="Calendar view mode">
+  const [viewModeState, setViewModeState] = useState<CalendarViewMode>(defaultViewModeValue || 'dates');
+  const viewModeInner = viewModeValue || viewModeState;
+
+  const handleViewModeChange = (mode: CalendarViewMode) => {
+    setViewModeState(mode);
+    onViewModeChange?.(mode);
+  };
+  //</editor-fold>
+
   //<editor-fold desc="Date shown on calendar">
   const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
   const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
@@ -83,15 +112,38 @@ export const Calendar = ({
   };
   //</editor-fold>
 
-  //<editor-fold desc="Calendar view mode">
-  const [viewModeState, setViewModeState] = useState<CalendarViewMode>(defaultViewModeValue || 'dates');
-  const viewModeInner = viewModeValue || viewModeState;
+  //<editor-fold desc="Selected date">
+  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
+    defaultSelectedDateValue ? dateStringToDayjs(defaultSelectedDateValue, locale, timezone) : undefined,
+  );
+  const selectedDateInner =
+    (selectedDateValue && dateStringToDayjs(selectedDateValue, locale, timezone)) || selectedDateState;
 
-  const handleViewModeChange = (mode: CalendarViewMode) => {
-    setViewModeState(mode);
-    onViewModeChange?.(mode);
+  const handleSelectedDateChange = (dateString: string) => {
+    const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
+    setSelectedDateState(dayjsSelectedDate);
+    onSelectedDateValueChange?.(dateString);
   };
   //</editor-fold>
+
+  const handleDateClick = (dateString: string) => {
+    handleSelectedDateChange(dateString);
+    onDateChange?.(dateString);
+  };
+  const handleMonthClick = (dateString: string) => {
+    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    const newDate = dayjsDate ? dayjsDateToString(dateInner.month(dayjsDate.month())) : dateString;
+    handleDateChange(newDate);
+    handleViewModeChange('dates');
+    onMonthChange?.(newDate);
+  };
+  const handleYearClick = (dateString: string) => {
+    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    const newDate = dayjsDate ? dayjsDateToString(dateInner.year(dayjsDate.year())) : dateString;
+    handleDateChange(newDate);
+    handleViewModeChange('dates');
+    onYearChange?.(newDate);
+  };
 
   const handleMonthNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
@@ -124,18 +176,24 @@ export const Calendar = ({
         <StyledDateCalendar
           {...props}
           dateValue={dayjsDateToString(dateInner)}
+          selectedDateValue={dayjsStateToString(selectedDateInner)}
+          onSelectedDateValueChange={handleDateClick}
           locale={locale}
           $isVisible={viewModeInner === 'dates'}
         />
         <StyledMonthCalendar
           {...props}
           dateValue={dayjsDateToString(dateInner)}
+          selectedDateValue={dayjsStateToString(selectedDateInner)}
+          onSelectedDateValueChange={handleMonthClick}
           locale={locale}
           $isVisible={viewModeInner === 'months'}
         />
         <StyledYearCalendar
           {...props}
           dateValue={dayjsDateToString(dateInner)}
+          selectedDateValue={dayjsStateToString(selectedDateInner)}
+          onSelectedDateValueChange={handleYearClick}
           locale={locale}
           $isVisible={viewModeInner === 'years'}
         />
