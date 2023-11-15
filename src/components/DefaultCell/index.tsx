@@ -295,8 +295,8 @@ const getDefaultMonthCellMixin = (
 ) => {
   if (hidden) return hiddenMonthCellMixin;
   if (disabled) return disabledMonthCellMixin;
-  if (isActive) return baseMonthCellMixin;
   if (selected) return selectedMonthCellMixin;
+  if (isActive) return baseMonthCellMixin;
   if (isCurrent) return currentMonthCellMixin;
   return baseMonthCellMixin;
 };
@@ -372,8 +372,8 @@ const getDefaultYearCellMixin = (
 ) => {
   if (hidden) return hiddenYearCellMixin;
   if (disabled) return disabledYearCellMixin;
-  if (isActive) return baseYearCellMixin;
   if (selected) return selectedYearCellMixin;
+  if (isActive) return baseYearCellMixin;
   if (isCurrent) return currentYearCellMixin;
   return baseYearCellMixin;
 };
