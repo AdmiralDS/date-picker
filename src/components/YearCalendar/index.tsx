@@ -149,6 +149,7 @@ export const YearCalendar = ({
   return (
     <YearsOfTwentyYearsWidget
       {...props}
+      rangeCalendar={false}
       date={dateValue}
       locale={locale}
       timezone={timezone}
@@ -156,7 +157,7 @@ export const YearCalendar = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
-      renderYearCell={renderYear}
+      renderCell={renderYear}
     />
   );
 };

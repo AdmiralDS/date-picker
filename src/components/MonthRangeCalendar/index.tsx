@@ -334,7 +334,8 @@ export const MonthRangeCalendar = ({
       />
       <MonthsOfYearWidget
         {...props}
-        renderMonthCell={renderDate}
+        rangeCalendar={true}
+        renderCell={renderDate}
         date={dayjsDateToString(dateInner)}
         locale={locale}
         onClick={handleClick}

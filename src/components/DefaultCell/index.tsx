@@ -200,6 +200,26 @@ const getDefaultDateCellMixin = (
   isCurrent?: boolean,
   isHoliday?: boolean,
   //isOutsideMonth?: boolean,
+  isActive?: boolean,
+) => {
+  if (hidden) return hiddenDateCellMixin;
+  if (disabled && isHoliday) return disabledHolidayDateCellMixin;
+  if (disabled) return disabledDateCellMixin;
+  //if (isOutsideMonth) return outsideMonthDateCellMixin;
+  if (selected) return selectedDateCellMixin;
+  if (isActive) return baseDateCellMixin;
+  if (isHoliday && isCurrent) return currentDateHolidayDateCellMixin;
+  if (isHoliday) return holidayDateCellMixin;
+  if (isCurrent) return currentDateCellMixin;
+  return baseDateCellMixin;
+};
+const getDefaultDateRangeCellMixin = (
+  selected?: boolean,
+  disabled?: boolean,
+  hidden?: boolean,
+  isCurrent?: boolean,
+  isHoliday?: boolean,
+  //isOutsideMonth?: boolean,
   isInRange?: boolean,
   isRangeStart?: boolean,
   isRangeEnd?: boolean,
@@ -231,6 +251,25 @@ export const DefaultDateCell = ({ isCurrent, isHoliday, ...props }: DefaultCellP
     props.hidden,
     isCurrent,
     isHoliday,
+    props.isActive,
+  );
+  return (
+    <DefaultCell
+      width={DATE_CELL_WIDTH}
+      height={DATE_CELL_HEIGHT}
+      cellMixin={dateCellMixin}
+      data-cell-type="dateCell"
+      {...props}
+    />
+  );
+};
+export const DefaultDateRangeCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
+  const dateCellMixin = getDefaultDateRangeCellMixin(
+    props.selected,
+    props.disabled,
+    props.hidden,
+    isCurrent,
+    isHoliday,
     props.isInRange || props.isInRangeSelecting,
     props.isRangeStart || props.isRangeSelectingStart,
     props.isRangeEnd || props.isRangeSelectingEnd,
@@ -248,6 +287,20 @@ export const DefaultDateCell = ({ isCurrent, isHoliday, ...props }: DefaultCellP
 };
 
 const getDefaultMonthCellMixin = (
+  selected?: boolean,
+  disabled?: boolean,
+  hidden?: boolean,
+  isCurrent?: boolean,
+  isActive?: boolean,
+) => {
+  if (hidden) return hiddenMonthCellMixin;
+  if (disabled) return disabledMonthCellMixin;
+  if (isActive) return baseMonthCellMixin;
+  if (selected) return selectedMonthCellMixin;
+  if (isCurrent) return currentMonthCellMixin;
+  return baseMonthCellMixin;
+};
+const getDefaultMonthRangeCellMixin = (
   selected?: boolean,
   disabled?: boolean,
   hidden?: boolean,
@@ -274,6 +327,26 @@ export const DefaultMonthCell = ({ isCurrent, isHoliday, ...props }: DefaultCell
     props.disabled,
     props.hidden,
     isCurrent,
+    props.isActive,
+  );
+  return (
+    <DefaultCell
+      width={MONTH_CELL_WIDTH}
+      height={MONTH_CELL_HEIGHT}
+      cellMixin={monthCellMixin}
+      data-cell-type="monthCell"
+      {...props}
+    />
+  );
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const DefaultMonthRangeCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
+  const monthCellMixin = getDefaultMonthRangeCellMixin(
+    props.selected,
+    props.disabled,
+    props.hidden,
+    isCurrent,
     props.isInRange || props.isInRangeSelecting,
     props.isRangeStart || props.isRangeSelectingStart,
     props.isRangeEnd || props.isRangeSelectingEnd,
@@ -291,6 +364,20 @@ export const DefaultMonthCell = ({ isCurrent, isHoliday, ...props }: DefaultCell
 };
 
 const getDefaultYearCellMixin = (
+  selected?: boolean,
+  disabled?: boolean,
+  hidden?: boolean,
+  isCurrent?: boolean,
+  isActive?: boolean,
+) => {
+  if (hidden) return hiddenYearCellMixin;
+  if (disabled) return disabledYearCellMixin;
+  if (isActive) return baseYearCellMixin;
+  if (selected) return selectedYearCellMixin;
+  if (isCurrent) return currentYearCellMixin;
+  return baseYearCellMixin;
+};
+const getDefaultYearRangeCellMixin = (
   selected?: boolean,
   disabled?: boolean,
   hidden?: boolean,
@@ -313,6 +400,25 @@ const getDefaultYearCellMixin = (
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DefaultYearCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const yearCellMixin = getDefaultYearCellMixin(
+    props.selected,
+    props.disabled,
+    props.hidden,
+    isCurrent,
+    props.isActive,
+  );
+  return (
+    <DefaultCell
+      width={YEAR_CELL_WIDTH}
+      height={YEAR_CELL_HEIGHT}
+      cellMixin={yearCellMixin}
+      data-cell-type="yearCell"
+      {...props}
+    />
+  );
+};
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const DefaultYearRangeCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
+  const yearCellMixin = getDefaultYearRangeCellMixin(
     props.selected,
     props.disabled,
     props.hidden,

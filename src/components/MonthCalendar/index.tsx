@@ -151,6 +151,7 @@ export const MonthCalendar = ({
   return (
     <MonthsOfYearWidget
       {...props}
+      rangeCalendar={false}
       date={dateValue}
       locale={locale}
       timezone={timezone}
@@ -158,7 +159,7 @@ export const MonthCalendar = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
-      renderMonthCell={renderMonth}
+      renderCell={renderMonth}
     />
   );
 };

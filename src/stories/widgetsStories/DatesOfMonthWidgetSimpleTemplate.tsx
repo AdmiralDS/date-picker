@@ -186,7 +186,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
         dayNamesProps={{ dayNameCellState: getDayNameCellState }}
-        renderDateCell={renderDefaultDate}
+        renderCell={renderDefaultDate}
       />
     </Wrapper>
   );

@@ -478,7 +478,7 @@ export const DateRangeDoubleCalendar = ({
         />
         <DatesOfMonthWidget
           {...props}
-          renderDateCell={renderDateLeft}
+          renderCell={renderDateLeft}
           date={dayjsDateToString(dateLeftInner)}
           locale={locale}
           onClick={handleClick}
@@ -497,7 +497,7 @@ export const DateRangeDoubleCalendar = ({
         />
         <DatesOfMonthWidget
           {...props}
-          renderDateCell={renderDateRight}
+          renderCell={renderDateRight}
           date={dayjsDateToString(dateRightInner)}
           locale={locale}
           onClick={handleClick}

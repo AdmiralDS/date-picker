@@ -16,18 +16,24 @@ const MonthsOfYearWrapper = styled.div`
 `;
 
 export const MonthsOfYearWidget = ({
+  rangeCalendar = false,
   date,
   locale = 'ru',
   timezone = getCurrentTimeZone(),
   onClick,
-  renderMonthCell,
+  renderCell,
   ...props
 }: MonthsOfYearWidgetProps) => {
   const localDate = getDayjsDate(locale, timezone, date);
 
   return (
     <MonthsOfYearWrapper {...props} onClick={onClick} data-container-type="monthsOfYearWrapper">
-      <Months date={localDate} renderMonthCell={renderMonthCell} data-container-type="monthsWrapper" />
+      <Months
+        rangeCalendar={rangeCalendar}
+        date={localDate}
+        renderCell={renderCell}
+        data-container-type="monthsWrapper"
+      />
     </MonthsOfYearWrapper>
   );
 };

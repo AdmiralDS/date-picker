@@ -17,12 +17,13 @@ const DatesOfMonthWrapper = styled.div`
 `;
 
 export const DatesOfMonthWidget = ({
+  rangeCalendar = false,
   date,
   //onClick,
   locale = 'ru',
   timezone = getCurrentTimeZone(),
   dayNamesProps,
-  renderDateCell,
+  renderCell,
   ...props
 }: DatesOfMonthWidgetProps) => {
   const { dayNameCellState } = dayNamesProps;
@@ -41,7 +42,12 @@ export const DatesOfMonthWidget = ({
   return (
     <DatesOfMonthWrapper {...props} data-container-type="datesOfMonthWrapper">
       <Days locale={locale} dayNameCellState={dayNameCellState} />
-      <Dates date={localDate} renderDateCell={renderDateCell} data-container-type="datesWrapper" />
+      <Dates
+        rangeCalendar={rangeCalendar}
+        date={localDate}
+        renderCell={renderCell}
+        data-container-type="datesWrapper"
+      />
     </DatesOfMonthWrapper>
   );
 };

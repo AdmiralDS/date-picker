@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { dayjsDateToString, setNoon, yearsRange } from '#src/components/utils';
 import { YEARS_ON_SCREEN, YEARS_WRAPPER_HEIGHT } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { YearsProps } from '#src/components/YearsOfTwentyYearsWidget/interfaces.tsx';
-import { DefaultYearCell } from '#src/components/DefaultCell';
+import { DefaultYearCell, DefaultYearRangeCell } from '#src/components/DefaultCell';
 
 const YearsWrapper = styled.div`
   height: ${YEARS_WRAPPER_HEIGHT}px;
@@ -16,15 +16,19 @@ const YearsWrapper = styled.div`
 
 const yearsArray = Array.from(Array(YEARS_ON_SCREEN).keys());
 
-export const Years = ({ date, renderYearCell, ...props }: YearsProps) => {
+export const Years = ({ rangeCalendar, date, renderCell, ...props }: YearsProps) => {
   const { start } = yearsRange(date, YEARS_ON_SCREEN);
   const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`));
 
   return (
     <YearsWrapper {...props}>
-      {yearsArray.map((v) => (
-        <DefaultYearCell key={v} {...renderYearCell(dayjsDateToString(firstYear.add(v, 'year')))} />
-      ))}
+      {yearsArray.map((v) =>
+        rangeCalendar ? (
+          <DefaultYearRangeCell key={v} {...renderCell(dayjsDateToString(firstYear.add(v, 'year')))} />
+        ) : (
+          <DefaultYearCell key={v} {...renderCell(dayjsDateToString(firstYear.add(v, 'year')))} />
+        ),
+      )}
     </YearsWrapper>
   );
 };

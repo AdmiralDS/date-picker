@@ -1,7 +1,7 @@
-import type { HTMLAttributes, MouseEventHandler } from 'react';
-import type { Dayjs } from 'dayjs';
+import type { HTMLAttributes } from 'react';
 import type { RuleSet } from 'styled-components';
-import type { DefaultCellProps } from '#src/components/DefaultCell';
+
+import type { BaseInnerWidgetProps, BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
 
 export interface CellStateProps {
   selected?: boolean;
@@ -14,27 +14,14 @@ export interface CellStateProps {
   isRangeEnd?: boolean;
 }
 
-export interface DayNameCellProps {
-  onClick?: MouseEventHandler<HTMLDivElement>;
+export interface DayNameCellProps extends HTMLAttributes<HTMLDivElement> {
   dayNameCellState: (dayNumber: number) => CellStateProps;
 }
 
-export interface DatesOfMonthWidgetProps extends HTMLAttributes<HTMLDivElement> {
-  /** Дата в формате ISO */
-  date?: string;
-  locale?: string;
-  /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
-   * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
-  timezone?: string;
+export interface DatesOfMonthWidgetProps extends BaseWidgetProps {
   dayNamesProps: DayNameCellProps;
-  onClick?: MouseEventHandler<HTMLDivElement>;
-  renderDateCell: (dateString: string) => DefaultCellProps;
 }
-
-export interface DatesProps {
-  date: Dayjs;
-  renderDateCell: (dateString: string) => DefaultCellProps;
-}
+export interface DatesProps extends BaseInnerWidgetProps {}
 
 export interface DaysProps {
   locale: string;

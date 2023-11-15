@@ -99,7 +99,7 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
         locale={localeInner}
         timezone={timezone}
         onClick={handleClick}
-        renderMonthCell={renderMonth}
+        renderCell={renderMonth}
       />
     </CalendarWrapper>
   );

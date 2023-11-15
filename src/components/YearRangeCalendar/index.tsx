@@ -333,7 +333,8 @@ export const YearRangeCalendar = ({
       />
       <YearsOfTwentyYearsWidget
         {...props}
-        renderYearCell={renderDate}
+        rangeCalendar={true}
+        renderCell={renderDate}
         date={dayjsDateToString(dateInner)}
         locale={locale}
         onClick={handleClick}

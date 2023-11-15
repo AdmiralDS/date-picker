@@ -30,7 +30,7 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
   locale = 'ru',
   timezone,
   onClick,
-  renderYearCell,
+  renderCell,
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
   const localeInner = locale || 'ru';
@@ -73,7 +73,7 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
         locale={localeInner}
         timezone={timezone}
         onClick={handleClick}
-        renderYearCell={renderYearCell || renderYear}
+        renderCell={renderCell || renderYear}
       />
     </Wrapper>
   );
