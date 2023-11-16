@@ -1,4 +1,3 @@
-import type { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 import { IconPlacement, typography } from '@admiral-ds/react-ui';
@@ -7,15 +6,9 @@ import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutl
 
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
+import type { BasePanelWidgetProps } from '#src/components/widgetInterfaces.ts';
 
-export interface YearNavigationPanelWidgetProps extends HTMLAttributes<HTMLElement> {
-  /** Дата в формате ISO */
-  date?: string;
-  locale?: string;
-  /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
-   * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
-  timezone?: string;
-}
+export interface YearNavigationPanelWidgetProps extends BasePanelWidgetProps {}
 
 const YearNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
@@ -26,13 +19,20 @@ const YearNavigationPanelWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const YearWrapper = styled.div`
+const TextWrapper = styled.div<{ $isActive?: boolean }>`
   padding: 4px 8px;
+  border-radius: 16px;
+  cursor: pointer;
   color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
   ${typography['Subtitle/Subtitle 2']}
+  background-color: ${(p) => (p.$isActive ? p.theme.color['Opacity/Focus'] : p.theme.color['Special/Elevated BG'])};
+  &:hover {
+    background-color: ${(p) => p.theme.color['Opacity/Hover']};
+  }
 `;
 
 export const YearNavigationPanelWidget = ({
+  viewMode,
   date,
   locale = 'ru',
   timezone = getCurrentTimeZone(),
@@ -45,7 +45,9 @@ export const YearNavigationPanelWidget = ({
       <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="left">
         <ChevronLeftOutline />
       </IconPlacement>
-      <YearWrapper data-panel-target-type="year">{dateInner.year()}</YearWrapper>
+      <TextWrapper data-panel-target-type="year" $isActive={viewMode === 'years'}>
+        {dateInner.year()}
+      </TextWrapper>
       <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="right">
         <ChevronRightOutline />
       </IconPlacement>

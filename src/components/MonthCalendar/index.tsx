@@ -13,7 +13,7 @@ import {
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces.ts';
 
-export interface MonthCalendarProps extends  Omit<SinglePickerCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface MonthCalendarProps extends Omit<SinglePickerCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 export const MonthCalendar = ({
   selectedDateValue,
@@ -135,18 +135,6 @@ export const MonthCalendar = ({
     return { cellContent, selected, isCurrent: isCurrent, isActive, ...dataAttributes };
     //return <DefaultMonthCell key={dayjsDateToString(dateCurrent)} {...cellProps} />;
   };
-
-  /*const handleYearNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
-    const targetType = (e.target as HTMLElement).dataset.panelTargetType;
-    switch (targetType) {
-      case 'left':
-        handleDateChange(dayjsDateToString(dateInner.subtract(1, 'year')));
-        break;
-      case 'right':
-        handleDateChange(dayjsDateToString(dateInner.add(1, 'year')));
-        break;
-    }
-  };*/
 
   return (
     <MonthsOfYearWidget

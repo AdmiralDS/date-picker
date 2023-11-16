@@ -1,4 +1,3 @@
-import type { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 import { IconPlacement, typography } from '@admiral-ds/react-ui';
@@ -7,17 +6,9 @@ import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutl
 
 import { capitalizeFirstLetter, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
-import type { CalendarViewMode } from '#src/components/calendarInterfaces.ts';
+import type { BasePanelWidgetProps } from '#src/components/widgetInterfaces.ts';
 
-export interface MonthNavigationPanelWidgetProps extends HTMLAttributes<HTMLElement> {
-  viewMode?: CalendarViewMode;
-  /** Дата в формате ISO */
-  date?: string;
-  locale?: string;
-  /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
-   * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
-  timezone?: string;
-}
+export interface MonthNavigationPanelWidgetProps extends BasePanelWidgetProps {}
 
 const MonthNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
@@ -45,8 +36,8 @@ const TextWrapper = styled.div<{ $isActive?: boolean }>`
 `;
 
 export const MonthNavigationPanelWidget = ({
-  date,
   viewMode,
+  date,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
