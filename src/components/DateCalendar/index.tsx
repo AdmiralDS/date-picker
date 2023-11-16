@@ -7,9 +7,9 @@ import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate 
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
-import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces';
+import type { SingleCalendarProps } from '#src/components/calendarInterfaces';
 
-export interface DateCalendarProps extends Omit<SinglePickerCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface DateCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 const getDateCellDataAttributes = (
   value?: string,

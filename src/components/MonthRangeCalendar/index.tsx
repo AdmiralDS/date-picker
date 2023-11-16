@@ -16,12 +16,12 @@ import {
   sortDatesAsc,
 } from '#src/components/utils';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
-import type { RangePickerCalendarProps } from '#src/components/calendarInterfaces';
+import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import { MONTHS_COLUMNS } from '#src/components/MonthsOfYearWidget/constants.ts';
 
-export interface MonthRangeCalendarProps extends RangePickerCalendarProps {}
+export interface MonthRangeCalendarProps extends RangeCalendarProps {}
 
 const MonthRangeCalendarWrapper = styled.div`
   box-sizing: border-box;

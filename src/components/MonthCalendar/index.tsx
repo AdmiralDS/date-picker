@@ -11,9 +11,9 @@ import {
   getDayjsDate,
 } from '#src/components/utils';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
-import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces.ts';
+import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
 
-export interface MonthCalendarProps extends Omit<SinglePickerCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface MonthCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 export const MonthCalendar = ({
   selectedDateValue,

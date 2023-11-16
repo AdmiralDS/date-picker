@@ -10,9 +10,9 @@ import {
   getDayjsDate,
 } from '#src/components/utils';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
-import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces.ts';
+import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
 
-export interface YearCalendarProps extends Omit<SinglePickerCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface YearCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 export const YearCalendar = ({
   selectedDateValue,

@@ -15,12 +15,12 @@ import {
   sortDatesAsc,
 } from '#src/components/utils';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
-import type { RangePickerCalendarProps } from '#src/components/calendarInterfaces';
+import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { YEARS_COLUMNS, YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 
-export interface YearRangeCalendarProps extends RangePickerCalendarProps {}
+export interface YearRangeCalendarProps extends RangeCalendarProps {}
 
 const YearRangeCalendarWrapper = styled.div`
   box-sizing: border-box;

@@ -26,7 +26,7 @@ export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   timezone?: string;
 }
 
-export interface SinglePickerCalendarProps extends CalendarProps {
+export interface SingleCalendarProps extends CalendarProps {
   /** Выбранное значение даты в формате ISO */
   selectedDateValue?: string;
   /** Выбранное значение даты по умолчанию в формате ISO */
@@ -35,7 +35,7 @@ export interface SinglePickerCalendarProps extends CalendarProps {
   onSelectedDateValueChange?: (dateString: string) => void;
 }
 
-export interface RangePickerCalendarProps extends CalendarProps {
+export interface RangeCalendarProps extends CalendarProps {
   /** Выбранное значение диапазона дат в формате ISO */
   selectedDateRangeValue?: [string, string];
   /** Выбранное значение диапазона дат по умолчанию в формате ISO */
@@ -44,12 +44,21 @@ export interface RangePickerCalendarProps extends CalendarProps {
   onSelectedDateRangeValueChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
 }
 
-export interface RangePickerCalendarDoubleProps
-  extends Omit<RangePickerCalendarProps, 'dateValue' | 'defaultDateValue' | 'onDateValueChange'> {
+export interface RangeCalendarDoubleProps
+  extends Omit<RangeCalendarProps, 'dateValue' | 'defaultDateValue' | 'onDateValueChange'> {
   /** Выбранное значение диапазона дат в формате ISO */
   dateRangeValue?: [string, string];
   /** Выбранное значение диапазона дат по умолчанию в формате ISO */
   defaultDateRangeValue?: [string | undefined, string | undefined];
   /** Коллбэк на изменение выбранного диапазона дат */
   onDateRangeValueChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
+}
+
+export interface PickerCalendarProps {
+  /** Экран выбора дат, месяцев, лет */
+  viewModeValue?: CalendarViewMode;
+  /** Режим отображения по умолчанию */
+  defaultViewModeValue?: CalendarViewMode;
+  /** Коллбэк на переключение экрана */
+  onViewModeChange?: (mode: CalendarViewMode) => void;
 }
