@@ -23,6 +23,7 @@ const TwentyYearsNavigationPanelWrapper = styled.div`
 const TwentyYearsWrapper = styled.div`
   padding: 4px 8px;
   color: ${(p) => p.theme.color['Neutral/Neutral 90']};
+  cursor: default;
   ${typography['Subtitle/Subtitle 2']}
 `;
 

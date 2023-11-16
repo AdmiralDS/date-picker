@@ -1,9 +1,6 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
-
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 
 import {
   dateStringToDayjs,
@@ -14,27 +11,11 @@ import {
   getDayjsDate,
   sortDatesAsc,
 } from '#src/components/utils';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
-import { YEARS_COLUMNS, YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
-import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
+import { YEARS_COLUMNS } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 
-export interface YearRangeCalendarProps extends RangeCalendarProps {}
-
-const YearRangeCalendarWrapper = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
-`;
+export interface YearRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 const getYearCellDataAttributes = (
   value?: string,
@@ -73,8 +54,6 @@ export const YearRangeCalendar = ({
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
   dateValue,
-  defaultDateValue,
-  onDateValueChange,
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
@@ -84,15 +63,7 @@ export const YearRangeCalendar = ({
   ...props
 }: YearRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
-  const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
-  const handleDateChange = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    if (dayjsDate) {
-      setDateState(dayjsDate);
-      onDateValueChange?.(dateString);
-    }
-  };
+  const dateInner = getDayjsDate(locale, timezone, dateValue);
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
@@ -263,18 +234,6 @@ export const YearRangeCalendar = ({
     return false;
   };
 
-  const handleTwentyYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
-    const targetType = (e.target as HTMLElement).dataset.panelTargetType;
-    switch (targetType) {
-      case 'left':
-        handleDateChange(dayjsDateToString(dateInner.subtract(YEARS_ON_SCREEN, 'year')));
-        break;
-      case 'right':
-        handleDateChange(dayjsDateToString(dateInner.add(YEARS_ON_SCREEN, 'year')));
-        break;
-    }
-  };
-
   //useMemo
   const renderDate = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
@@ -324,24 +283,16 @@ export const YearRangeCalendar = ({
   };
 
   return (
-    <YearRangeCalendarWrapper>
-      <TwentyYearsNavigationPanelWidget
-        date={dayjsDateToString(dateInner)}
-        locale={locale}
-        timezone={timezone}
-        onClick={handleTwentyYearsNavigationPanelClick}
-      />
-      <YearsOfTwentyYearsWidget
-        {...props}
-        rangeCalendar={true}
-        renderCell={renderDate}
-        date={dayjsDateToString(dateInner)}
-        locale={locale}
-        onClick={handleClick}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
-      />
-    </YearRangeCalendarWrapper>
+    <YearsOfTwentyYearsWidget
+      {...props}
+      rangeCalendar={true}
+      renderCell={renderDate}
+      date={dayjsDateToString(dateInner)}
+      locale={locale}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
+    />
   );
 };

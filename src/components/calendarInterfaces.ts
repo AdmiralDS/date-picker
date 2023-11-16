@@ -37,7 +37,7 @@ export interface SingleCalendarProps extends CalendarProps {
 
 export interface RangeCalendarProps extends CalendarProps {
   /** Выбранное значение диапазона дат в формате ISO */
-  selectedDateRangeValue?: [string, string];
+  selectedDateRangeValue?: [string | undefined, string | undefined];
   /** Выбранное значение диапазона дат по умолчанию в формате ISO */
   defaultSelectedDateRangeValue?: [string | undefined, string | undefined];
   /** Коллбэк на изменение выбранного диапазона дат */
