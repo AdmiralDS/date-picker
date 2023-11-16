@@ -1,11 +1,11 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { Calendar } from '@admiral-ds/date-picker';
-import { CalendarSimpleTemplate } from '#src/stories/calendarStories/CalendarSimple.template.tsx';
+import { DatePickerCalendar } from '@admiral-ds/date-picker';
+import { DatePickerCalendarSimpleTemplate } from '#src/stories/datePickerCalendarStories/DatePickerCalendarSimple.template.tsx';
 
 export default {
-  title: 'Admiral-2.1/Calendar',
-  component: Calendar,
+  title: 'Admiral-2.1/DatePickerCalendar',
+  component: DatePickerCalendar,
   parameters: {
     docs: {
       source: {
@@ -34,10 +34,10 @@ export default {
       control: { type: 'text' },
     },
   },
-} as Meta<typeof Calendar>;
+} as Meta<typeof DatePickerCalendar>;
 
-const CalendarSimpleStory: StoryFn<typeof Calendar> = (props) => {
-  return <CalendarSimpleTemplate {...props} />;
+const DatePickerCalendarSimpleStory: StoryFn<typeof DatePickerCalendar> = (props) => {
+  return <DatePickerCalendarSimpleTemplate {...props} />;
 };
-export const CalendarSimple = CalendarSimpleStory.bind({});
-CalendarSimple.storyName = 'CalendarSimple';
+export const DatePickerCalendarSimple = DatePickerCalendarSimpleStory.bind({});
+DatePickerCalendarSimple.storyName = 'DatePickerCalendarSimple';

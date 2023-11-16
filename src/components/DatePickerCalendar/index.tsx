@@ -19,7 +19,7 @@ import { DateCalendar } from '#src/components/DateCalendar';
 import { MonthCalendar } from '#src/components/MonthCalendar';
 import { YearCalendar } from '#src/components/YearCalendar';
 
-export interface CalendarProps extends SinglePickerCalendarProps {
+export interface DatePickerCalendarProps extends SinglePickerCalendarProps {
   /** Экран выбора дат, месяцев, лет */
   viewModeValue?: CalendarViewMode;
   /** Режим отображения по умолчанию */
@@ -31,7 +31,7 @@ export interface CalendarProps extends SinglePickerCalendarProps {
   onYearChange?: (dateString: string) => void;
 }
 
-const CalendarWrapper = styled.div`
+const DatePickerCalendarWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -45,7 +45,7 @@ const CalendarWrapper = styled.div`
   ${(p) => p.theme.shadow['Shadow 08']}
 `;
 
-const CalendarContainer = styled.div`
+const DatePickerCalendarContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
@@ -70,7 +70,7 @@ const StyledYearCalendar = styled(YearCalendar)<{ $isVisible: boolean }>`
   visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
 `;
 
-export const Calendar = ({
+export const DatePickerCalendar = ({
   viewModeValue,
   defaultViewModeValue,
   onViewModeChange,
@@ -86,7 +86,7 @@ export const Calendar = ({
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
-}: CalendarProps) => {
+}: DatePickerCalendarProps) => {
   //<editor-fold desc="Calendar view mode">
   const [viewModeState, setViewModeState] = useState<CalendarViewMode>(defaultViewModeValue || 'dates');
   const viewModeInner = viewModeValue || viewModeState;
@@ -162,7 +162,7 @@ export const Calendar = ({
   };
 
   return (
-    <CalendarWrapper>
+    <DatePickerCalendarWrapper>
       <MonthNavigationPanelWidget
         date={dayjsDateToString(dateInner)}
         viewMode={viewModeInner}
@@ -170,7 +170,7 @@ export const Calendar = ({
         timezone={timezone}
         onClick={handleMonthNavigationPanelClick}
       />
-      <CalendarContainer>
+      <DatePickerCalendarContainer>
         <StyledDateCalendar
           {...props}
           dateValue={dayjsDateToString(dateInner)}
@@ -195,7 +195,7 @@ export const Calendar = ({
           locale={locale}
           $isVisible={viewModeInner === 'years'}
         />
-      </CalendarContainer>
-    </CalendarWrapper>
+      </DatePickerCalendarContainer>
+    </DatePickerCalendarWrapper>
   );
 };
