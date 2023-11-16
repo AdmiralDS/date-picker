@@ -1,6 +1,8 @@
 import type { HTMLAttributes } from 'react';
 import type { DefaultCellProps } from '#src/components/DefaultCell';
 
+export type CalendarViewMode = 'dates' | 'months' | 'years';
+
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   renderDateCell?: (dateString: string) => DefaultCellProps;
 

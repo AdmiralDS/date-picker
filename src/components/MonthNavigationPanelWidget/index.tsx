@@ -5,9 +5,9 @@ import { IconPlacement, typography } from '@admiral-ds/react-ui';
 import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
-import type { CalendarViewMode } from '@admiral-ds/date-picker';
 import { capitalizeFirstLetter, getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
+import type { CalendarViewMode } from '#src/components/calendarInterfaces.ts';
 
 export interface MonthNavigationPanelWidgetProps extends HTMLAttributes<HTMLElement> {
   viewMode?: CalendarViewMode;

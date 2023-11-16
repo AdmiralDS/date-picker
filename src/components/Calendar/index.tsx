@@ -5,8 +5,7 @@ import type { Dayjs } from 'dayjs';
 
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 
-import type { SinglePickerCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { DateCalendar } from '#src/components/DateCalendar';
+import type { CalendarViewMode, SinglePickerCalendarProps } from '#src/components/calendarInterfaces.ts';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants.ts';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import {
@@ -16,10 +15,9 @@ import {
   getCurrentTimeZone,
   getDayjsDate,
 } from '#src/components/utils.ts';
+import { DateCalendar } from '#src/components/DateCalendar';
 import { MonthCalendar } from '#src/components/MonthCalendar';
 import { YearCalendar } from '#src/components/YearCalendar';
-
-export type CalendarViewMode = 'dates' | 'months' | 'years';
 
 export interface CalendarProps extends SinglePickerCalendarProps {
   /** Экран выбора дат, месяцев, лет */
