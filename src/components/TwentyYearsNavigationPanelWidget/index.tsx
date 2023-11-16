@@ -1,4 +1,3 @@
-import type { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 import { IconPlacement, typography } from '@admiral-ds/react-ui';
@@ -8,15 +7,9 @@ import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutl
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { getCurrentTimeZone, getDayjsDate, yearsRange } from '#src/components/utils';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
+import type { BasePanelWidgetProps } from '#src/components/widgetInterfaces.ts';
 
-export interface TwentyYearsNavigationPanelWidgetProps extends HTMLAttributes<HTMLElement> {
-  /** Дата в формате ISO */
-  date?: string;
-  locale?: string;
-  /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
-   * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
-  timezone?: string;
-}
+export interface TwentyYearsNavigationPanelWidgetProps extends BasePanelWidgetProps {}
 
 const TwentyYearsNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
