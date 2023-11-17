@@ -19,7 +19,6 @@ import { YearCalendar } from '#src/components/YearCalendar';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 
 export interface MonthPickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {
-  onMonthChange?: (dateString: string) => void;
   onYearChange?: (dateString: string) => void;
 }
 
@@ -68,7 +67,6 @@ export const MonthPickerCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
-  onMonthChange,
   onYearChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
@@ -113,7 +111,6 @@ export const MonthPickerCalendar = ({
 
   const handleMonthClick = (dateString: string) => {
     handleSelectedDateChange(dateString);
-    onMonthChange?.(dateString);
   };
   const handleYearClick = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);

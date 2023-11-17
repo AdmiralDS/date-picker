@@ -68,7 +68,7 @@ export const YearRangePickerCalendar = ({
   };
   //</editor-fold>
 
-  //<editor-fold desc="First date of range">
+  //<editor-fold desc="Selected range">
   const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
   const handleSelectedDateRangeChange = (dateRangeString: [string | undefined, string | undefined]) => {
