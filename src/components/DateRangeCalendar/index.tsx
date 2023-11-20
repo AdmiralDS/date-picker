@@ -262,6 +262,16 @@ export const DateRangeCalendar = ({
     }
     return false;
   };
+  const dateIsSelected = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent) return false;
+    if (dateRangeFirstInner && dateCurrent.isSame(dateRangeFirstInner, 'date')) {
+      return true;
+    }
+    if (dateRangeSecondInner && dateCurrent.isSame(dateRangeSecondInner, 'date')) {
+      return true;
+    }
+    return false;
+  };
   const dateIsRangeStart = (dateCurrent?: Dayjs) => {
     if (!dateCurrent || !dateRangeFirstInner || !dateRangeSecondInner) return false;
     const dates = sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner);
@@ -337,6 +347,7 @@ export const DateRangeCalendar = ({
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
     if (!dateCurrent) return {};
     const cellContent = dateCurrent.date();
+    const selected = dateIsSelected(dateCurrent);
     const disabled = dateIsDisabled(dateCurrent);
     const hidden = dateIsHidden(dateCurrent);
     const isCurrent = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
@@ -373,6 +384,7 @@ export const DateRangeCalendar = ({
 
     return {
       cellContent,
+      selected,
       disabled,
       hidden,
       isCurrent,

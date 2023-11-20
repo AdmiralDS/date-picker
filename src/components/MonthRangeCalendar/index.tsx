@@ -217,6 +217,16 @@ export const MonthRangeCalendar = ({
     }
     return false;
   };
+  const dateIsSelected = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent) return false;
+    if (dateRangeFirstInner && dateCurrent.isSame(dateRangeFirstInner, 'month')) {
+      return true;
+    }
+    if (dateRangeSecondInner && dateCurrent.isSame(dateRangeSecondInner, 'month')) {
+      return true;
+    }
+    return false;
+  };
   const dateIsRangeStart = (dateCurrent?: Dayjs) => {
     if (!dateCurrent || !dateRangeFirstInner || !dateRangeSecondInner) return false;
     const dates = sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner);
@@ -262,6 +272,7 @@ export const MonthRangeCalendar = ({
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
     if (!dateCurrent) return {};
     const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
+    const selected = dateIsSelected(dateCurrent);
     //const disabled = dateIsDisabled(dateCurrent);
     //const hidden = dateIsHidden(dateCurrent);
     const isCurrent = dateCurrent.isSame(getCurrentDate(locale, timezone), 'month');
@@ -291,6 +302,7 @@ export const MonthRangeCalendar = ({
 
     return {
       cellContent,
+      selected,
       isCurrent,
       isInRange,
       isRangeStart,
