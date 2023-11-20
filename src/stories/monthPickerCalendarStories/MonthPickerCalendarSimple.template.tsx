@@ -1,9 +1,9 @@
 import type { MouseEventHandler } from 'react';
 
-import type { DatePickerCalendarProps } from '@admiral-ds/date-picker';
+import type { MonthPickerCalendarProps } from '@admiral-ds/date-picker';
 import { MonthPickerCalendar } from '#src/components/MonthPickerCalendar';
 
-export const MonthPickerCalendarSimpleTemplate = ({ locale, ...props }: DatePickerCalendarProps) => {
+export const MonthPickerCalendarSimpleTemplate = ({ locale, ...props }: MonthPickerCalendarProps) => {
   const localeInner = locale || 'ru';
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {

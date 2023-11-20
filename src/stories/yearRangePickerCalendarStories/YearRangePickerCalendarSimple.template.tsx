@@ -1,9 +1,9 @@
 import type { MouseEventHandler } from 'react';
 
-import type { YearRangeCalendarProps } from '@admiral-ds/date-picker';
+import type { YearRangePickerCalendarProps } from '@admiral-ds/date-picker';
 import { YearRangePickerCalendar } from '@admiral-ds/date-picker';
 
-export const YearRangePickerCalendarSimpleTemplate = ({ locale, ...props }: YearRangeCalendarProps) => {
+export const YearRangePickerCalendarSimpleTemplate = ({ locale, ...props }: YearRangePickerCalendarProps) => {
   const localeInner = locale || 'ru';
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
