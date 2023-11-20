@@ -2,7 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 
 import { YearRangeCalendar } from '@admiral-ds/date-picker';
 
-import { YearRangeCalendarSimpleTemplate } from '#src/stories/yearRangeCalendarStories/YearRangeCalendarSimple.template.tsx';
+import { YearRangeCalendarSimpleTemplate } from '#src/stories/widgetsStories/YearRangeCalendarSimple.template.tsx';
 
 export default {
   title: 'Admiral-2.1/Widgets/YearRangeCalendar',

@@ -1,12 +1,12 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { DateRangeCalendar } from '@admiral-ds/date-picker';
+import { MonthCalendar } from '@admiral-ds/date-picker';
 
-import { DateRangeCalendarSimpleTemplate } from '#src/stories/dateRangeCalendarStories/DateRangeCalendarSimple.template';
+import { MonthCalendarSimpleTemplate } from '#src/stories/widgetsStories/MonthCalendarSimple.template.tsx';
 
 export default {
-  title: 'Admiral-2.1/Widgets/DateRangeCalendar',
-  component: DateRangeCalendar,
+  title: 'Admiral-2.1/Widgets/MonthCalendar',
+  component: MonthCalendar,
   parameters: {
     docs: {
       source: {
@@ -35,10 +35,10 @@ export default {
       control: { type: 'text' },
     },
   },
-} as Meta<typeof DateRangeCalendar>;
+} as Meta<typeof MonthCalendar>;
 
-const DateRangeCalendarSimpleStory: StoryFn<typeof DateRangeCalendar> = (props) => {
-  return <DateRangeCalendarSimpleTemplate {...props} />;
+const MonthCalendarSimpleStory: StoryFn<typeof MonthCalendar> = (props) => {
+  return <MonthCalendarSimpleTemplate {...props} />;
 };
-export const DateRangeCalendarSimple = DateRangeCalendarSimpleStory.bind({});
-DateRangeCalendarSimple.storyName = 'DateRangeCalendarSimple';
+export const MonthCalendarSimple = MonthCalendarSimpleStory.bind({});
+MonthCalendarSimple.storyName = 'MonthCalendarSimple';
