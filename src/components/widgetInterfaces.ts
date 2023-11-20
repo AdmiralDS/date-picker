@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'react';
 import type { Dayjs } from 'dayjs';
 
 import type { DefaultCellProps } from '#src/components/DefaultCell';
-import { CalendarViewMode } from '#src/components/calendarInterfaces.ts';
+import type { CalendarViewMode } from '#src/components/calendarInterfaces.ts';
 
 export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   rangeCalendar?: boolean;
