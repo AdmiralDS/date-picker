@@ -5,7 +5,7 @@ import { DateRangeCalendar } from '@admiral-ds/date-picker';
 import { DateRangeCalendarSimpleTemplate } from '#src/stories/dateRangeCalendarStories/DateRangeCalendarSimple.template';
 
 export default {
-  title: 'Admiral-2.1/DateRangeCalendar',
+  title: 'Admiral-2.1/Widgets/DateRangeCalendar',
   component: DateRangeCalendar,
   parameters: {
     docs: {

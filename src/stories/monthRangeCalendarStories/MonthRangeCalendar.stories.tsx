@@ -5,7 +5,7 @@ import { MonthRangeCalendar } from '@admiral-ds/date-picker';
 import { MonthRangeCalendarSimpleTemplate } from '#src/stories/monthRangeCalendarStories/MonthRangeCalendarSimple.template.tsx';
 
 export default {
-  title: 'Admiral-2.1/MonthRangeCalendar',
+  title: 'Admiral-2.1/Widgets/MonthRangeCalendar',
   component: MonthRangeCalendar,
   parameters: {
     docs: {

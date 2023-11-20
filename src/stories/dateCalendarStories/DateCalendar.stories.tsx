@@ -4,7 +4,7 @@ import { DateCalendar } from '@admiral-ds/date-picker';
 import { DateCalendarSimpleTemplate } from '#src/stories/dateCalendarStories/DateCalendarSimple.template';
 
 export default {
-  title: 'Admiral-2.1/DateCalendar',
+  title: 'Admiral-2.1/Widgets/DateCalendar',
   component: DateCalendar,
   parameters: {
     docs: {

@@ -5,7 +5,7 @@ import { YearRangeCalendar } from '@admiral-ds/date-picker';
 import { YearRangeCalendarSimpleTemplate } from '#src/stories/yearRangeCalendarStories/YearRangeCalendarSimple.template.tsx';
 
 export default {
-  title: 'Admiral-2.1/YearRangeCalendar',
+  title: 'Admiral-2.1/Widgets/YearRangeCalendar',
   component: YearRangeCalendar,
   parameters: {
     docs: {
