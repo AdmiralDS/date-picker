@@ -28,6 +28,8 @@ const TwentyYearsWrapper = styled.div`
 `;
 
 export const TwentyYearsNavigationPanelWidget = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  viewMode,
   date,
   locale = 'ru',
   timezone = getCurrentTimeZone(),
