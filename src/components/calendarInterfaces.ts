@@ -42,6 +42,13 @@ export interface RangeCalendarProps extends CalendarProps {
   defaultSelectedDateRangeValue?: [string | undefined, string | undefined];
   /** Коллбэк на изменение выбранного диапазона дат */
   onSelectedDateRangeValueChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
+
+  /** Значение активного конца диапазона дат в формате ISO */
+  activeDateRangeEndValue?: string;
+  /** Значение активного конца диапазона дат по умолчанию в формате ISO */
+  defaultActiveDateRangeEndValue?: string;
+  /** Коллбэк на изменение значения активного конца диапазона дат */
+  onActiveDateRangeEndValueChange?: (dateString: string | undefined) => void;
 }
 
 export interface RangeCalendarDoubleProps

@@ -73,6 +73,9 @@ export const DateRangeCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
+  activeDateRangeEndValue,
+  defaultActiveDateRangeEndValue,
+  onActiveDateRangeEndValueChange,
   dateValue,
   defaultDateValue,
   onDateValueChange,
@@ -188,57 +191,41 @@ export const DateRangeCalendar = ({
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
     if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
-      /*//if (dateRangeActiveEnd === 'first') {
-      //if (dateRangeActiveEnd && dateRangeFirstInner && dateRangeActiveEnd.isSame(dateRangeFirstInner, 'date')) {
-      if ((!dateRangeFirstInner && !dateRangeSecondInner) || (!dateRangeFirstInner && dateRangeSecondInner)) {
-        handleDateRangeFirstChange(clickedCell);
-      }
-      //if (dateRangeActiveEnd === 'second') {
-      //if (dateRangeActiveEnd && dateRangeSecondInner && dateRangeActiveEnd.isSame(dateRangeSecondInner, 'date')) {
-      if ((dateRangeFirstInner && !dateRangeSecondInner) || (!dateRangeFirstInner && dateRangeSecondInner)) {
-        handleDateRangeSecondChange(clickedCell);
-      }*/
-
+      const newSelectedDateRangeValue: [string | undefined, string | undefined] = [undefined, undefined];
       if (!dateRangeActiveEnd) {
         if (dateRangeFirstInner && !dateRangeSecondInner) {
           handleDateRangeSecondChange(clickedCell);
+          newSelectedDateRangeValue[0] = dayjsStateToString(dateRangeFirstState);
+          newSelectedDateRangeValue[1] = clickedCell;
         } else {
           handleDateRangeFirstChange(clickedCell);
+          newSelectedDateRangeValue[0] = clickedCell;
+          newSelectedDateRangeValue[1] = dayjsStateToString(dateRangeSecondState);
         }
-        /*if (!dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeFirstChange(clickedCell);
-        }
-        if (!dateRangeFirstInner && dateRangeSecondInner) {
-          handleDateRangeFirstChange(clickedCell);
-        }
-        if (dateRangeFirstInner && dateRangeSecondInner) {
-          handleDateRangeFirstChange(clickedCell);
-        }*/
       } else {
         if (dateRangeFirstInner && dateRangeSecondInner) {
           if (dateRangeActiveEnd.isSame(dateRangeFirstInner, 'date')) {
             handleDateRangeSecondChange(clickedCell);
+            newSelectedDateRangeValue[0] = dayjsStateToString(dateRangeFirstState);
+            newSelectedDateRangeValue[1] = clickedCell;
           }
           if (dateRangeActiveEnd.isSame(dateRangeSecondInner, 'date')) {
             handleDateRangeFirstChange(clickedCell);
+            newSelectedDateRangeValue[0] = clickedCell;
+            newSelectedDateRangeValue[1] = dayjsStateToString(dateRangeSecondState);
           }
         } else if (dateRangeFirstInner && !dateRangeSecondInner) {
           handleDateRangeSecondChange(clickedCell);
+          newSelectedDateRangeValue[0] = dayjsStateToString(dateRangeFirstState);
+          newSelectedDateRangeValue[1] = clickedCell;
         } else {
           handleDateRangeFirstChange(clickedCell);
+          newSelectedDateRangeValue[0] = clickedCell;
+          newSelectedDateRangeValue[1] = dayjsStateToString(dateRangeSecondState);
         }
-        /*if (!dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeFirstChange(clickedCell);
-        }
-        if (!dateRangeFirstInner && dateRangeSecondInner) {
-          handleDateRangeFirstChange(clickedCell);
-        }*/
       }
       handleDateRangeActiveEndChange(clickedCell);
-      onSelectedDateRangeValueChange?.([
-        dayjsStateToString(dateRangeFirstState),
-        dayjsStateToString(dateRangeSecondState),
-      ]);
+      onSelectedDateRangeValueChange?.(newSelectedDateRangeValue);
       //console.log(`first-${dateRangeFirstInner}, second-${dateRangeSecondInner}, activeEnd-${dateRangeActiveEnd}`);
     }
     onClick?.(e);
