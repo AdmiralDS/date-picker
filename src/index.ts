@@ -1,5 +1,6 @@
 export * from './components/CalendarOld';
 export * from './components/DatePickerCalendar';
+export * from './components/DateRangePickerCalendar';
 export * from './components/MonthPickerCalendar';
 export * from './components/YearPickerCalendar';
 export * from './components/MonthRangePickerCalendar';

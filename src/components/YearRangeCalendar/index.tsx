@@ -147,11 +147,17 @@ export const YearRangeCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Active end of range">
-  const [dateRangeActiveEnd, setDateRangeActiveEnd] = useState<Dayjs | undefined>();
+  const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>(
+    dateStringToDayjs(defaultActiveDateRangeEndValue, locale, timezone),
+  );
+  const dateRangeActiveEndInner = activeDateRangeEndValue
+    ? dateStringToDayjs(activeDateRangeEndValue, locale, timezone)
+    : dateRangeActiveEndState;
   const handleDateRangeActiveEndChange = (dateString?: string) => {
     const dateDayjs = dateStringToDayjs(dateString, locale, timezone);
     //console.log(`activeEnd-${dateString}`);
-    setDateRangeActiveEnd(dateDayjs);
+    setDateRangeActiveEndState(dateDayjs);
+    onActiveDateRangeEndValueChange?.(dateString);
   };
   //</editor-fold>
 
@@ -160,7 +166,7 @@ export const YearRangeCalendar = ({
     const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
     if (clickedDate) {
       const newSelectedDateRangeValue: [string | undefined, string | undefined] = [undefined, undefined];
-      if (!dateRangeActiveEnd) {
+      if (!dateRangeActiveEndInner) {
         if (dateRangeFirstInner && !dateRangeSecondInner) {
           handleDateRangeSecondChange(clickedCell);
           newSelectedDateRangeValue[0] = dayjsStateToString(dateRangeFirstState);
@@ -172,12 +178,12 @@ export const YearRangeCalendar = ({
         }
       } else {
         if (dateRangeFirstInner && dateRangeSecondInner) {
-          if (dateRangeActiveEnd.isSame(dateRangeFirstInner, 'year')) {
+          if (dateRangeActiveEndInner.isSame(dateRangeFirstInner, 'year')) {
             handleDateRangeSecondChange(clickedCell);
             newSelectedDateRangeValue[0] = dayjsStateToString(dateRangeFirstState);
             newSelectedDateRangeValue[1] = clickedCell;
           }
-          if (dateRangeActiveEnd.isSame(dateRangeSecondInner, 'year')) {
+          if (dateRangeActiveEndInner.isSame(dateRangeSecondInner, 'year')) {
             handleDateRangeFirstChange(clickedCell);
             newSelectedDateRangeValue[0] = clickedCell;
             newSelectedDateRangeValue[1] = dayjsStateToString(dateRangeSecondState);
@@ -228,8 +234,8 @@ export const YearRangeCalendar = ({
     return dateCurrent.isSame(dates[1], 'year');
   };
   const dateIsRangeSelectingStart = (dateCurrent?: Dayjs) => {
-    if (dateCurrent && activeDateInner && dateRangeActiveEnd) {
-      const dates = sortDatesAsc(dateRangeActiveEnd, activeDateInner);
+    if (dateCurrent && activeDateInner && dateRangeActiveEndInner) {
+      const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
       /*const res = dateCurrent.isSame(dates[0], 'year');
       if (res) {
         //console.log(`range selecting start-${dayjsDateToString(dateCurrent)}`);
@@ -241,16 +247,16 @@ export const YearRangeCalendar = ({
     return false;
   };
   const dateIsRangeSelectingEnd = (dateCurrent?: Dayjs) => {
-    if (dateCurrent && activeDateInner && dateRangeActiveEnd) {
-      const dates = sortDatesAsc(dateRangeActiveEnd, activeDateInner);
+    if (dateCurrent && activeDateInner && dateRangeActiveEndInner) {
+      const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
       return dateCurrent.isSame(dates[1], 'year');
     }
     return false;
   };
   const dateIsInRangeSelecting = (dateCurrent?: Dayjs) => {
     if (!dateCurrent) return false;
-    if (dateRangeActiveEnd && activeDateInner) {
-      const dates = sortDatesAsc(dateRangeActiveEnd, activeDateInner);
+    if (dateRangeActiveEndInner && activeDateInner) {
+      const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
       return dateCurrent.isBetween(dates[0], dates[1], 'year', '()');
       //return dateCurrent.isBetween(dateRangeFirstInner, activeDateInner, 'year', '()');
     }

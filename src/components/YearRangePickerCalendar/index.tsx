@@ -51,6 +51,9 @@ export const YearRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
+  activeDateRangeEndValue,
+  defaultActiveDateRangeEndValue,
+  onActiveDateRangeEndValueChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props

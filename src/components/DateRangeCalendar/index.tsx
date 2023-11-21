@@ -1,10 +1,7 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import styled from 'styled-components';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 
 import {
   dateStringToDayjs,
@@ -14,28 +11,12 @@ import {
   getDayjsDate,
   sortDatesAsc,
 } from '#src/components/utils';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
-import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 
-export interface DateRangeCalendarProps extends RangeCalendarProps {}
-
-const DateRangeCalendarWrapper = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
-`;
+export interface DateRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 const getDateCellDataAttributes = (
   value?: string,
@@ -77,8 +58,6 @@ export const DateRangeCalendar = ({
   defaultActiveDateRangeEndValue,
   onActiveDateRangeEndValueChange,
   dateValue,
-  defaultDateValue,
-  onDateValueChange,
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
@@ -88,15 +67,7 @@ export const DateRangeCalendar = ({
   ...props
 }: DateRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
-  const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
-  const handleDateChange = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    if (dayjsDate) {
-      setDateState(dayjsDate);
-      onDateValueChange?.(dateString);
-    }
-  };
+  const dateInner = getDayjsDate(locale, timezone, dateValue);
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
@@ -179,11 +150,17 @@ export const DateRangeCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Active end of range">
-  const [dateRangeActiveEnd, setDateRangeActiveEnd] = useState<Dayjs | undefined>();
+  const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>(
+    dateStringToDayjs(defaultActiveDateRangeEndValue, locale, timezone),
+  );
+  const dateRangeActiveEndInner = activeDateRangeEndValue
+    ? dateStringToDayjs(activeDateRangeEndValue, locale, timezone)
+    : dateRangeActiveEndState;
   const handleDateRangeActiveEndChange = (dateString?: string) => {
     const dateDayjs = dateStringToDayjs(dateString, locale, timezone);
     //console.log(`activeEnd-${dateString}`);
-    setDateRangeActiveEnd(dateDayjs);
+    setDateRangeActiveEndState(dateDayjs);
+    onActiveDateRangeEndValueChange?.(dateString);
   };
   //</editor-fold>
 
@@ -192,7 +169,7 @@ export const DateRangeCalendar = ({
     const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
     if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
       const newSelectedDateRangeValue: [string | undefined, string | undefined] = [undefined, undefined];
-      if (!dateRangeActiveEnd) {
+      if (!dateRangeActiveEndInner) {
         if (dateRangeFirstInner && !dateRangeSecondInner) {
           handleDateRangeSecondChange(clickedCell);
           newSelectedDateRangeValue[0] = dayjsStateToString(dateRangeFirstState);
@@ -204,12 +181,12 @@ export const DateRangeCalendar = ({
         }
       } else {
         if (dateRangeFirstInner && dateRangeSecondInner) {
-          if (dateRangeActiveEnd.isSame(dateRangeFirstInner, 'date')) {
+          if (dateRangeActiveEndInner.isSame(dateRangeFirstInner, 'date')) {
             handleDateRangeSecondChange(clickedCell);
             newSelectedDateRangeValue[0] = dayjsStateToString(dateRangeFirstState);
             newSelectedDateRangeValue[1] = clickedCell;
           }
-          if (dateRangeActiveEnd.isSame(dateRangeSecondInner, 'date')) {
+          if (dateRangeActiveEndInner.isSame(dateRangeSecondInner, 'date')) {
             handleDateRangeFirstChange(clickedCell);
             newSelectedDateRangeValue[0] = clickedCell;
             newSelectedDateRangeValue[1] = dayjsStateToString(dateRangeSecondState);
@@ -286,11 +263,11 @@ export const DateRangeCalendar = ({
     if (
       dateCurrent &&
       activeDateInner &&
-      dateRangeActiveEnd &&
+      dateRangeActiveEndInner &&
       !dateIsDisabled(dateCurrent) &&
       !dateIsHidden(dateCurrent)
     ) {
-      const dates = sortDatesAsc(dateRangeActiveEnd, activeDateInner);
+      const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
       /*const res = dateCurrent.isSame(dates[0], 'date');
       if (res) {
         //console.log(`range selecting start-${dayjsDateToString(dateCurrent)}`);
@@ -305,19 +282,19 @@ export const DateRangeCalendar = ({
     if (
       dateCurrent &&
       activeDateInner &&
-      dateRangeActiveEnd &&
+      dateRangeActiveEndInner &&
       !dateIsDisabled(dateCurrent) &&
       !dateIsHidden(dateCurrent)
     ) {
-      const dates = sortDatesAsc(dateRangeActiveEnd, activeDateInner);
+      const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
       return dateCurrent.isSame(dates[1], 'date');
     }
     return false;
   };
   const dateIsInRangeSelecting = (dateCurrent?: Dayjs) => {
     if (!dateCurrent) return false;
-    if (dateRangeActiveEnd && activeDateInner) {
-      const dates = sortDatesAsc(dateRangeActiveEnd, activeDateInner);
+    if (dateRangeActiveEndInner && activeDateInner) {
+      const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
       return dateCurrent.isBetween(dates[0], dates[1], 'date', '()');
       //return dateCurrent.isBetween(dateRangeFirstInner, activeDateInner, 'date', '()');
     }
@@ -328,18 +305,6 @@ export const DateRangeCalendar = ({
   const getDayNameCellState = (_: number): CellStateProps => {
     const cellMixin = baseDayNameCellMixin;
     return { cellMixin };
-  };
-
-  const handleMonthNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
-    const targetType = (e.target as HTMLElement).dataset.panelTargetType;
-    switch (targetType) {
-      case 'left':
-        handleDateChange(dayjsDateToString(dateInner.subtract(1, 'month')));
-        break;
-      case 'right':
-        handleDateChange(dayjsDateToString(dateInner.add(1, 'month')));
-        break;
-    }
   };
 
   //useMemo
@@ -404,25 +369,17 @@ export const DateRangeCalendar = ({
   };
 
   return (
-    <DateRangeCalendarWrapper>
-      <MonthNavigationPanelWidget
-        date={dayjsDateToString(dateInner)}
-        locale={locale}
-        timezone={timezone}
-        onClick={handleMonthNavigationPanelClick}
-      />
-      <DatesOfMonthWidget
-        {...props}
-        rangeCalendar={true}
-        renderCell={renderDate}
-        date={dayjsDateToString(dateInner)}
-        locale={locale}
-        onClick={handleClick}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
-        dayNamesProps={{ dayNameCellState: getDayNameCellState }}
-      />
-    </DateRangeCalendarWrapper>
+    <DatesOfMonthWidget
+      {...props}
+      rangeCalendar={true}
+      renderCell={renderDate}
+      date={dayjsDateToString(dateInner)}
+      locale={locale}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
+      dayNamesProps={{ dayNameCellState: getDayNameCellState }}
+    />
   );
 };
