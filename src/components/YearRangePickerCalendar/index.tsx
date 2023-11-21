@@ -11,7 +11,11 @@ import { YearRangeCalendar } from '#src/components/YearRangeCalendar';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 
-export interface YearRangePickerCalendarProps extends RangeCalendarProps {}
+export interface YearRangePickerCalendarProps
+  extends Omit<
+    RangeCalendarProps,
+    'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
+  > {}
 
 const YearRangePickerCalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -51,9 +55,6 @@ export const YearRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
-  activeDateRangeEndValue,
-  defaultActiveDateRangeEndValue,
-  onActiveDateRangeEndValueChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props

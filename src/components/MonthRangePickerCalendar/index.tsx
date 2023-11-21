@@ -12,7 +12,12 @@ import { MonthRangeCalendar } from '#src/components/MonthRangeCalendar';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 import { YearCalendar } from '#src/components/YearCalendar';
 
-export interface MonthRangePickerCalendarProps extends RangeCalendarProps, PickerCalendarProps {
+export interface MonthRangePickerCalendarProps
+  extends Omit<
+      RangeCalendarProps,
+      'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
+    >,
+    PickerCalendarProps {
   onYearChange?: (dateString: string) => void;
 }
 
@@ -61,9 +66,6 @@ export const MonthRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
-  activeDateRangeEndValue,
-  defaultActiveDateRangeEndValue,
-  onActiveDateRangeEndValueChange,
   onYearChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
