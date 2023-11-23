@@ -130,21 +130,12 @@ export const YearRangeDoublePickerCalendar = ({
     setSelectedDateRangeState(dateRangeString);
     onSelectedDateRangeValueChange?.(dateRangeString);
   };
-  const handleSelectedLeft = (dateRangeString: [string | undefined, string | undefined]) => {
-    console.log(`set selected from left - ${dateRangeString}`);
-    handleSelectedDateRangeChange(dateRangeString);
-  };
-  const handleSelectedRight = (dateRangeString: [string | undefined, string | undefined]) => {
-    console.log(`set selected from right - ${dateRangeString}`);
-    handleSelectedDateRangeChange(dateRangeString);
-  };
   //</editor-fold>
 
   //<editor-fold desc="Active end of range">
   const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>();
   const handleDateRangeActiveEndChange = (dateString?: string) => {
     const dateDayjs = dateStringToDayjs(dateString, locale, timezone);
-    //console.log(`activeEnd-${dateString}`);
     setDateRangeActiveEndState(dateDayjs);
   };
   //</editor-fold>
@@ -187,7 +178,7 @@ export const YearRangeDoublePickerCalendar = ({
             {...props}
             dateValue={dayjsDateToString(dateLeftInner)}
             selectedDateRangeValue={selectedDateRangeInner}
-            onSelectedDateRangeValueChange={handleSelectedLeft}
+            onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
             activeDateValue={dayjsStateToString(activeDateInner)}
             onActiveDateValueChange={handleActiveDateChange}
             activeDateRangeEndValue={dayjsStateToString(dateRangeActiveEndState)}
@@ -210,7 +201,7 @@ export const YearRangeDoublePickerCalendar = ({
             {...props}
             dateValue={dayjsDateToString(dateRightInner)}
             selectedDateRangeValue={selectedDateRangeInner}
-            onSelectedDateRangeValueChange={handleSelectedRight}
+            onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
             activeDateValue={dayjsStateToString(activeDateInner)}
             onActiveDateValueChange={handleActiveDateChange}
             activeDateRangeEndValue={dayjsStateToString(dateRangeActiveEndState)}
