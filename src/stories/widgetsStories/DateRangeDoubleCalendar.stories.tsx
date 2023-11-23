@@ -2,10 +2,10 @@ import type { Meta, StoryFn } from '@storybook/react';
 
 import { DateRangeDoubleCalendar } from '@admiral-ds/date-picker';
 
-import { DateRangeDoubleCalendarSimpleTemplate } from '#src/stories/dateRangeDoubleCalendarStories/DateRangeDoubleCalendarSimple.template.tsx';
+import { DateRangeDoubleCalendarSimpleTemplate } from '#src/stories/widgetsStories/DateRangeDoubleCalendarSimple.template.tsx';
 
 export default {
-  title: 'Admiral-2.1/DateRangeDoubleCalendar',
+  title: 'Admiral-2.1/Widgets/DateRangeDoubleCalendar',
   component: DateRangeDoubleCalendar,
   parameters: {
     docs: {
