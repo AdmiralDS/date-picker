@@ -312,6 +312,7 @@ export const YearRangeCalendar = ({
       ...dataAttributes,
     };
   };
+  console.log(`selected - ${dateRangeFirstInner} - ${dateRangeSecondInner}`);
 
   return (
     <YearsOfTwentyYearsWidget
