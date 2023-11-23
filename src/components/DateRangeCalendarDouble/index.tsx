@@ -19,9 +19,9 @@ import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanel
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
-import type { RangeCalendarDoubleProps } from '#src/components/calendarInterfaces';
+import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces';
 
-export interface DateRangeDoubleCalendarProps extends RangeCalendarDoubleProps {}
+export interface DateRangeDoubleCalendarProps extends RangeDoubleCalendarProps {}
 
 const DateRangeCalendarDoubleWrapper = styled.div`
   box-sizing: border-box;

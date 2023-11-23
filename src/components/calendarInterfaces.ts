@@ -51,7 +51,7 @@ export interface RangeCalendarProps extends CalendarProps {
   onActiveDateRangeEndValueChange?: (dateString: string | undefined) => void;
 }
 
-export interface RangeCalendarDoubleProps
+export interface RangeDoubleCalendarProps
   extends Omit<RangeCalendarProps, 'dateValue' | 'defaultDateValue' | 'onDateValueChange'> {
   /** Выбранное значение диапазона дат в формате ISO */
   dateRangeValue?: [string, string];

@@ -16,11 +16,11 @@ import {
 import { YearRangeCalendar } from '#src/components/YearRangeCalendar';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
-import type { RangeCalendarDoubleProps } from '#src/components/calendarInterfaces.ts';
+import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces.ts';
 
 export interface YearRangeDoublePickerCalendarProps
   extends Omit<
-    RangeCalendarDoubleProps,
+    RangeDoubleCalendarProps,
     'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
   > {}
 
