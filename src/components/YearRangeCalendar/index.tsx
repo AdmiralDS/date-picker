@@ -124,7 +124,7 @@ export const YearRangeCalendar = ({
     dateStringToDayjs(defaultSelectedDateRangeValue?.[0], locale, timezone),
   );
   const dateRangeFirstInner =
-    (selectedDateRangeValue && dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[0])) || dateRangeFirstState;
+    (selectedDateRangeValue && dateStringToDayjs(selectedDateRangeValue?.[0], locale, timezone)) || dateRangeFirstState;
   const handleDateRangeFirstChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     //console.log(`first-${dateString}`);
@@ -137,7 +137,7 @@ export const YearRangeCalendar = ({
     dateStringToDayjs(defaultSelectedDateRangeValue?.[1], locale, timezone),
   );
   const dateRangeSecondInner =
-    (selectedDateRangeValue && dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[1])) ||
+    (selectedDateRangeValue && dateStringToDayjs(selectedDateRangeValue?.[1], locale, timezone)) ||
     dateRangeSecondState;
   const handleDateRangeSecondChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
