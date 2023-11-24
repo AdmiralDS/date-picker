@@ -78,7 +78,6 @@ export const MonthRangeCalendar = ({
 
   const handleActiveDateChange = (dateString?: string) => {
     const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
-    //console.log(`set active ${dayjsActiveDate}`);
     setActiveDateState(dayjsActiveDate);
     onActiveDateValueChange?.(dateString);
   };
@@ -125,12 +124,11 @@ export const MonthRangeCalendar = ({
     dateStringToDayjs(defaultSelectedDateRangeValue?.[0], locale, timezone),
   );
   const dateRangeFirstInner =
-    selectedDateRangeValue && dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[0])
-      ? dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[0])
+    selectedDateRangeValue && dateStringToDayjs(selectedDateRangeValue?.[0], locale, timezone)
+      ? dateStringToDayjs(selectedDateRangeValue?.[0], locale, timezone)
       : dateRangeFirstState;
   const handleDateRangeFirstChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    //console.log(`first-${dateString}`);
     setDateRangeFirstState(dayjsDate);
   };
   //</editor-fold>
@@ -140,12 +138,11 @@ export const MonthRangeCalendar = ({
     dateStringToDayjs(defaultSelectedDateRangeValue?.[1], locale, timezone),
   );
   const dateRangeSecondInner =
-    selectedDateRangeValue && dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[1])
-      ? dateStringToDayjs(locale, timezone, selectedDateRangeValue?.[1])
+    selectedDateRangeValue && dateStringToDayjs(selectedDateRangeValue?.[1], locale, timezone)
+      ? dateStringToDayjs(selectedDateRangeValue?.[1], locale, timezone)
       : dateRangeSecondState;
   const handleDateRangeSecondChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    //console.log(`second-${dateString}`);
     setDateRangeSecondState(dayjsDate);
   };
   //</editor-fold>
@@ -174,7 +171,6 @@ export const MonthRangeCalendar = ({
     : dateRangeActiveEndState;
   const handleDateRangeActiveEndChange = (dateString?: string) => {
     const dateDayjs = dateStringToDayjs(dateString, locale, timezone);
-    //console.log(`activeEnd-${dateString}`);
     setDateRangeActiveEndState(dateDayjs);
     onActiveDateRangeEndValueChange?.(dateString);
   };
@@ -219,7 +215,6 @@ export const MonthRangeCalendar = ({
       }
       handleDateRangeActiveEndChange(clickedCell);
       onSelectedDateRangeValueChange?.(newSelectedDateRangeValue);
-      //console.log(`first-${dateRangeFirstInner}, second-${dateRangeSecondInner}, activeEnd-${dateRangeActiveEnd}`);
     }
     onClick?.(e);
   };
@@ -255,12 +250,6 @@ export const MonthRangeCalendar = ({
   const dateIsRangeSelectingStart = (dateCurrent?: Dayjs) => {
     if (dateCurrent && activeDateInner && dateRangeActiveEndInner) {
       const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
-      /*const res = dateCurrent.isSame(dates[0], 'month');
-      if (res) {
-        //console.log(`range selecting start-${dayjsDateToString(dateCurrent)}`);
-        console.log(`range selecting start-${dayjsDateToString(dateCurrent)}`);
-      }
-      return res;*/
       return dateCurrent.isSame(dates[0], 'month');
     }
     return false;
@@ -277,7 +266,6 @@ export const MonthRangeCalendar = ({
     if (dateRangeActiveEndInner && activeDateInner) {
       const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
       return dateCurrent.isBetween(dates[0], dates[1], 'month', '()');
-      //return dateCurrent.isBetween(dateRangeFirstInner, activeDateInner, 'month', '()');
     }
     return false;
   };
