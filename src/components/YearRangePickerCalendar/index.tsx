@@ -2,34 +2,18 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
-
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants.ts';
 import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils.ts';
 import { YearRangeCalendar } from '#src/components/YearRangeCalendar';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
+import { SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
 
 export interface YearRangePickerCalendarProps
   extends Omit<
     RangeCalendarProps,
     'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
   > {}
-
-const YearRangePickerCalendarWrapper = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
-`;
 
 const YearRangePickerCalendarContainer = styled.div`
   position: relative;
@@ -94,7 +78,7 @@ export const YearRangePickerCalendar = ({
   };
 
   return (
-    <YearRangePickerCalendarWrapper>
+    <SinglePickerCalendarWrapper>
       <TwentyYearsNavigationPanelWidget
         date={dayjsDateToString(dateInner)}
         viewMode={'years'}
@@ -112,6 +96,6 @@ export const YearRangePickerCalendar = ({
           $isVisible={true}
         />
       </YearRangePickerCalendarContainer>
-    </YearRangePickerCalendarWrapper>
+    </SinglePickerCalendarWrapper>
   );
 };

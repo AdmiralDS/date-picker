@@ -3,10 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
-
 import type { CalendarViewMode, SingleCalendarProps, PickerCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants.ts';
 import {
   dateStringToDayjs,
   dayjsDateToString,
@@ -17,24 +14,11 @@ import {
 import { MonthCalendar } from '#src/components/MonthCalendar';
 import { YearCalendar } from '#src/components/YearCalendar';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
+import { SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
 
 export interface MonthPickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {
   onYearChange?: (dateString: string) => void;
 }
-
-const MonthPickerCalendarWrapper = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
-`;
 
 const MonthPickerCalendarContainer = styled.div`
   position: relative;
@@ -136,7 +120,7 @@ export const MonthPickerCalendar = ({
   };
 
   return (
-    <MonthPickerCalendarWrapper>
+    <SinglePickerCalendarWrapper>
       <YearNavigationPanelWidget
         date={dayjsDateToString(dateInner)}
         viewMode={viewModeInner}
@@ -162,6 +146,6 @@ export const MonthPickerCalendar = ({
           $isVisible={viewModeInner === 'years'}
         />
       </MonthPickerCalendarContainer>
-    </MonthPickerCalendarWrapper>
+    </SinglePickerCalendarWrapper>
   );
 };

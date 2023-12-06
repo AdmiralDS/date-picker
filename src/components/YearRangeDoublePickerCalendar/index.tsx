@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
-
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants.ts';
 import {
   dateStringToDayjs,
@@ -17,6 +15,7 @@ import { YearRangeCalendar } from '#src/components/YearRangeCalendar';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces.ts';
+import { DoublePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
 
 export interface YearRangeDoublePickerCalendarProps
   extends Omit<
@@ -24,15 +23,6 @@ export interface YearRangeDoublePickerCalendarProps
     'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
   > {}
 
-const YearRangeDoublePickerCalendarWrapper = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  width: ${CALENDAR_WIDTH * 2}px;
-  height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
-`;
 const Container = styled.div`
   box-sizing: border-box;
   display: flex;
@@ -164,7 +154,7 @@ export const YearRangeDoublePickerCalendar = ({
   };
 
   return (
-    <YearRangeDoublePickerCalendarWrapper>
+    <DoublePickerCalendarWrapper>
       <Container>
         <TwentyYearsNavigationPanelWidget
           date={dayjsDateToString(dateLeftInner)}
@@ -211,6 +201,6 @@ export const YearRangeDoublePickerCalendar = ({
           />
         </YearRangeDoublePickerCalendarContainer>
       </Container>
-    </YearRangeDoublePickerCalendarWrapper>
+    </DoublePickerCalendarWrapper>
   );
 };

@@ -3,10 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
-
 import type { CalendarViewMode, SingleCalendarProps, PickerCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants.ts';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import {
   dateStringToDayjs,
@@ -18,26 +15,13 @@ import {
 import { DateCalendar } from '#src/components/DateCalendar';
 import { MonthCalendar } from '#src/components/MonthCalendar';
 import { YearCalendar } from '#src/components/YearCalendar';
+import { SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
 
 export interface DatePickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {
   onDateChange?: (dateString: string) => void;
   onMonthChange?: (dateString: string) => void;
   onYearChange?: (dateString: string) => void;
 }
-
-const DatePickerCalendarWrapper = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
-`;
 
 const DatePickerCalendarContainer = styled.div`
   position: relative;
@@ -156,7 +140,7 @@ export const DatePickerCalendar = ({
   };
 
   return (
-    <DatePickerCalendarWrapper>
+    <SinglePickerCalendarWrapper>
       <MonthNavigationPanelWidget
         date={dayjsDateToString(dateInner)}
         viewMode={viewModeInner}
@@ -190,6 +174,6 @@ export const DatePickerCalendar = ({
           $isVisible={viewModeInner === 'years'}
         />
       </DatePickerCalendarContainer>
-    </DatePickerCalendarWrapper>
+    </SinglePickerCalendarWrapper>
   );
 };

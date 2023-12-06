@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
-
 import {
   dateStringToDayjs,
   dayjsDateToString,
@@ -20,18 +18,10 @@ import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
 import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces';
+import { DoublePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
 
 export interface DateRangeDoubleCalendarProps extends RangeDoubleCalendarProps {}
 
-const DateRangeCalendarDoubleWrapper = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  width: ${CALENDAR_WIDTH * 2}px;
-  height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
-`;
 const Container = styled.div`
   box-sizing: border-box;
   display: flex;
@@ -471,7 +461,7 @@ export const DateRangeDoubleCalendar = ({
   };
 
   return (
-    <DateRangeCalendarDoubleWrapper>
+    <DoublePickerCalendarWrapper>
       <Container>
         <MonthNavigationPanelWidget
           date={dayjsDateToString(dateLeftInner)}
@@ -510,6 +500,6 @@ export const DateRangeDoubleCalendar = ({
           dayNamesProps={{ dayNameCellState: getDayNameCellState }}
         />
       </Container>
-    </DateRangeCalendarDoubleWrapper>
+    </DoublePickerCalendarWrapper>
   );
 };

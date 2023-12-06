@@ -3,15 +3,13 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
-
 import type { RangeCalendarProps, PickerCalendarProps, CalendarViewMode } from '#src/components/calendarInterfaces.ts';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants.ts';
 import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils.ts';
 import { DateRangeCalendar } from '#src/components/DateRangeCalendar';
 import { YearCalendar } from '#src/components/YearCalendar';
 import { MonthCalendar } from '#src/components/MonthCalendar';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
+import { SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
 
 export interface DateRangePickerCalendarProps
   extends Omit<
@@ -22,20 +20,6 @@ export interface DateRangePickerCalendarProps
   onMonthChange?: (dateString: string) => void;
   onYearChange?: (dateString: string) => void;
 }
-
-const DateRangePickerCalendarWrapper = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
-`;
 
 const DateRangePickerCalendarContainer = styled.div`
   position: relative;
@@ -171,7 +155,7 @@ export const DateRangePickerCalendar = ({
   const selectedRangeEnd = getSelectedRangeEnd();
 
   return (
-    <DateRangePickerCalendarWrapper>
+    <SinglePickerCalendarWrapper>
       <MonthNavigationPanelWidget
         date={dayjsDateToString(dateInner)}
         viewMode={viewModeInner}
@@ -207,6 +191,6 @@ export const DateRangePickerCalendar = ({
           $isVisible={viewModeInner === 'years'}
         />
       </DateRangePickerCalendarContainer>
-    </DateRangePickerCalendarWrapper>
+    </SinglePickerCalendarWrapper>
   );
 };

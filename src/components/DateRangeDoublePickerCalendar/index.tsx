@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
-
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants.ts';
 import {
   dateStringToDayjs,
@@ -22,6 +20,7 @@ import { YearCalendar } from '#src/components/YearCalendar';
 import { DateRangeCalendar } from '#src/components/DateRangeCalendar';
 import { MonthCalendar } from '#src/components/MonthCalendar';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
+import { DoublePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
 
 export interface DateRangeDoublePickerCalendarProps
   extends Omit<
@@ -30,15 +29,6 @@ export interface DateRangeDoublePickerCalendarProps
     >,
     PickerCalendarProps {}
 
-const DateRangeDoublePickerCalendarWrapper = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  width: ${CALENDAR_WIDTH * 2}px;
-  height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
-`;
 const Container = styled.div`
   box-sizing: border-box;
   display: flex;
@@ -258,7 +248,7 @@ export const DateRangeDoublePickerCalendar = ({
   const selectedRangeEnd = getSelectedRangeEnd();
 
   return (
-    <DateRangeDoublePickerCalendarWrapper>
+    <DoublePickerCalendarWrapper>
       <Container>
         <MonthNavigationPanelWidget
           date={dayjsDateToString(dateLeftInner)}
@@ -339,6 +329,6 @@ export const DateRangeDoublePickerCalendar = ({
           />
         </DateRangeDoublePickerCalendarContainer>
       </Container>
-    </DateRangeDoublePickerCalendarWrapper>
+    </DoublePickerCalendarWrapper>
   );
 };

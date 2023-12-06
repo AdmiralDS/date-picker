@@ -3,14 +3,12 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
-
 import type { RangeCalendarProps, PickerCalendarProps, CalendarViewMode } from '#src/components/calendarInterfaces.ts';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants.ts';
 import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils.ts';
 import { MonthRangeCalendar } from '#src/components/MonthRangeCalendar';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 import { YearCalendar } from '#src/components/YearCalendar';
+import { SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
 
 export interface MonthRangePickerCalendarProps
   extends Omit<
@@ -20,20 +18,6 @@ export interface MonthRangePickerCalendarProps
     PickerCalendarProps {
   onYearChange?: (dateString: string) => void;
 }
-
-const MonthRangePickerCalendarWrapper = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
-`;
 
 const MonthRangePickerCalendarContainer = styled.div`
   position: relative;
@@ -154,7 +138,7 @@ export const MonthRangePickerCalendar = ({
   const selectedRangeEnd = getSelectedRangeEnd();
 
   return (
-    <MonthRangePickerCalendarWrapper>
+    <SinglePickerCalendarWrapper>
       <YearNavigationPanelWidget
         date={dayjsDateToString(dateInner)}
         viewMode={viewModeInner}
@@ -182,6 +166,6 @@ export const MonthRangePickerCalendar = ({
           $isVisible={viewModeInner === 'years'}
         />
       </MonthRangePickerCalendarContainer>
-    </MonthRangePickerCalendarWrapper>
+    </SinglePickerCalendarWrapper>
   );
 };
