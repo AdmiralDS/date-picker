@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants.ts';
 import {
   dateStringToDayjs,
   dayjsDateToString,
@@ -19,7 +18,7 @@ import type {
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 import { MonthRangeCalendar } from '#src/components/MonthRangeCalendar';
 import { YearCalendar } from '#src/components/YearCalendar';
-import { DoublePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import { DoublePickerCalendarWrapper, SingleContainer } from '#src/components/pickerStyle.ts';
 
 export interface MonthRangeDoublePickerCalendarProps
   extends Omit<
@@ -27,17 +26,6 @@ export interface MonthRangeDoublePickerCalendarProps
       'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
     >,
     PickerCalendarProps {}
-
-const Container = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-`;
 
 const MonthRangeDoublePickerCalendarContainer = styled.div`
   position: relative;
@@ -223,7 +211,7 @@ export const MonthRangeDoublePickerCalendar = ({
 
   return (
     <DoublePickerCalendarWrapper>
-      <Container>
+      <SingleContainer>
         <YearNavigationPanelWidget
           date={dayjsDateToString(dateLeftInner)}
           viewMode={viewModeLeftInner}
@@ -254,8 +242,8 @@ export const MonthRangeDoublePickerCalendar = ({
             $isVisible={viewModeLeftInner === 'years'}
           />
         </MonthRangeDoublePickerCalendarContainer>
-      </Container>
-      <Container>
+      </SingleContainer>
+      <SingleContainer>
         <YearNavigationPanelWidget
           date={dayjsDateToString(dateRightInner)}
           viewMode={viewModeRightInner}
@@ -286,7 +274,7 @@ export const MonthRangeDoublePickerCalendar = ({
             $isVisible={viewModeRightInner === 'years'}
           />
         </MonthRangeDoublePickerCalendarContainer>
-      </Container>
+      </SingleContainer>
     </DoublePickerCalendarWrapper>
   );
 };

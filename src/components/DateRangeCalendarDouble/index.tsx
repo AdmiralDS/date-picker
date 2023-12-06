@@ -1,6 +1,5 @@
 import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
@@ -12,26 +11,14 @@ import {
   getDayjsDate,
   sortDatesAsc,
 } from '#src/components/utils';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
 import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces';
-import { DoublePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import { DoublePickerCalendarWrapper, SingleContainer } from '#src/components/pickerStyle.ts';
 
 export interface DateRangeDoubleCalendarProps extends RangeDoubleCalendarProps {}
-
-const Container = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-`;
 
 const getDateCellDataAttributes = (
   value?: string,
@@ -462,7 +449,7 @@ export const DateRangeDoubleCalendar = ({
 
   return (
     <DoublePickerCalendarWrapper>
-      <Container>
+      <SingleContainer>
         <MonthNavigationPanelWidget
           date={dayjsDateToString(dateLeftInner)}
           locale={locale}
@@ -480,8 +467,8 @@ export const DateRangeDoubleCalendar = ({
           onMouseMove={handleMouseMove}
           dayNamesProps={{ dayNameCellState: getDayNameCellState }}
         />
-      </Container>
-      <Container>
+      </SingleContainer>
+      <SingleContainer>
         <MonthNavigationPanelWidget
           date={dayjsDateToString(dateRightInner)}
           locale={locale}
@@ -499,7 +486,7 @@ export const DateRangeDoubleCalendar = ({
           onMouseMove={handleMouseMove}
           dayNamesProps={{ dayNameCellState: getDayNameCellState }}
         />
-      </Container>
+      </SingleContainer>
     </DoublePickerCalendarWrapper>
   );
 };

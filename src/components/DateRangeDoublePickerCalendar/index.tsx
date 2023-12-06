@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants.ts';
 import {
   dateStringToDayjs,
   dayjsDateToString,
@@ -20,7 +19,7 @@ import { YearCalendar } from '#src/components/YearCalendar';
 import { DateRangeCalendar } from '#src/components/DateRangeCalendar';
 import { MonthCalendar } from '#src/components/MonthCalendar';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
-import { DoublePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import { DoublePickerCalendarWrapper, SingleContainer } from '#src/components/pickerStyle.ts';
 
 export interface DateRangeDoublePickerCalendarProps
   extends Omit<
@@ -28,17 +27,6 @@ export interface DateRangeDoublePickerCalendarProps
       'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
     >,
     PickerCalendarProps {}
-
-const Container = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-`;
 
 const DateRangeDoublePickerCalendarContainer = styled.div`
   position: relative;
@@ -249,7 +237,7 @@ export const DateRangeDoublePickerCalendar = ({
 
   return (
     <DoublePickerCalendarWrapper>
-      <Container>
+      <SingleContainer>
         <MonthNavigationPanelWidget
           date={dayjsDateToString(dateLeftInner)}
           viewMode={viewModeLeftInner}
@@ -288,8 +276,8 @@ export const DateRangeDoublePickerCalendar = ({
             $isVisible={viewModeLeftInner === 'years'}
           />
         </DateRangeDoublePickerCalendarContainer>
-      </Container>
-      <Container>
+      </SingleContainer>
+      <SingleContainer>
         <MonthNavigationPanelWidget
           date={dayjsDateToString(dateRightInner)}
           viewMode={viewModeRightInner}
@@ -328,7 +316,7 @@ export const DateRangeDoublePickerCalendar = ({
             $isVisible={viewModeRightInner === 'years'}
           />
         </DateRangeDoublePickerCalendarContainer>
-      </Container>
+      </SingleContainer>
     </DoublePickerCalendarWrapper>
   );
 };

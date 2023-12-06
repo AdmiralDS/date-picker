@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants.ts';
 import {
   dateStringToDayjs,
   dayjsDateToString,
@@ -15,24 +14,13 @@ import { YearRangeCalendar } from '#src/components/YearRangeCalendar';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { DoublePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import { DoublePickerCalendarWrapper, SingleContainer } from '#src/components/pickerStyle.ts';
 
 export interface YearRangeDoublePickerCalendarProps
   extends Omit<
     RangeDoubleCalendarProps,
     'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
   > {}
-
-const Container = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  padding-top: 20px;
-  width: ${CALENDAR_WIDTH}px;
-  height: ${CALENDAR_HEIGHT}px;
-`;
 
 const YearRangeDoublePickerCalendarContainer = styled.div`
   position: relative;
@@ -155,7 +143,7 @@ export const YearRangeDoublePickerCalendar = ({
 
   return (
     <DoublePickerCalendarWrapper>
-      <Container>
+      <SingleContainer>
         <TwentyYearsNavigationPanelWidget
           date={dayjsDateToString(dateLeftInner)}
           viewMode={'years'}
@@ -177,8 +165,8 @@ export const YearRangeDoublePickerCalendar = ({
             $isVisible={true}
           />
         </YearRangeDoublePickerCalendarContainer>
-      </Container>
-      <Container>
+      </SingleContainer>
+      <SingleContainer>
         <TwentyYearsNavigationPanelWidget
           date={dayjsDateToString(dateRightInner)}
           viewMode={'years'}
@@ -200,7 +188,7 @@ export const YearRangeDoublePickerCalendar = ({
             $isVisible={true}
           />
         </YearRangeDoublePickerCalendarContainer>
-      </Container>
+      </SingleContainer>
     </DoublePickerCalendarWrapper>
   );
 };
