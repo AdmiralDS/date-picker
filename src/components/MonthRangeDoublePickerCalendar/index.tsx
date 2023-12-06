@@ -18,7 +18,7 @@ import type {
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 import { MonthRangeCalendar } from '#src/components/MonthRangeCalendar';
 import { YearCalendar } from '#src/components/YearCalendar';
-import { DoublePickerCalendarWrapper, SingleContainer } from '#src/components/pickerStyle.ts';
+import { CalendarContainer, DoublePickerCalendarWrapper, SingleContainer } from '#src/components/pickerStyle.ts';
 
 export interface MonthRangeDoublePickerCalendarProps
   extends Omit<
@@ -26,19 +26,6 @@ export interface MonthRangeDoublePickerCalendarProps
       'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
     >,
     PickerCalendarProps {}
-
-const MonthRangeDoublePickerCalendarContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  & > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-`;
 
 const StyledMonthRangeCalendar = styled(MonthRangeCalendar)<{ $isVisible: boolean }>`
   visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
@@ -219,7 +206,7 @@ export const MonthRangeDoublePickerCalendar = ({
           timezone={timezone}
           onClick={handleLeftYearNavigationPanelClick}
         />
-        <MonthRangeDoublePickerCalendarContainer>
+        <CalendarContainer>
           <StyledMonthRangeCalendar
             {...props}
             dateValue={dayjsDateToString(dateLeftInner)}
@@ -241,7 +228,7 @@ export const MonthRangeDoublePickerCalendar = ({
             locale={locale}
             $isVisible={viewModeLeftInner === 'years'}
           />
-        </MonthRangeDoublePickerCalendarContainer>
+        </CalendarContainer>
       </SingleContainer>
       <SingleContainer>
         <YearNavigationPanelWidget
@@ -251,7 +238,7 @@ export const MonthRangeDoublePickerCalendar = ({
           timezone={timezone}
           onClick={handleRightYearNavigationPanelClick}
         />
-        <MonthRangeDoublePickerCalendarContainer>
+        <CalendarContainer>
           <StyledMonthRangeCalendar
             {...props}
             dateValue={dayjsDateToString(dateRightInner)}
@@ -273,7 +260,7 @@ export const MonthRangeDoublePickerCalendar = ({
             locale={locale}
             $isVisible={viewModeRightInner === 'years'}
           />
-        </MonthRangeDoublePickerCalendarContainer>
+        </CalendarContainer>
       </SingleContainer>
     </DoublePickerCalendarWrapper>
   );

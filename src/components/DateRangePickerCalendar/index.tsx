@@ -9,7 +9,7 @@ import { DateRangeCalendar } from '#src/components/DateRangeCalendar';
 import { YearCalendar } from '#src/components/YearCalendar';
 import { MonthCalendar } from '#src/components/MonthCalendar';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
-import { SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import { CalendarContainer, SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
 
 export interface DateRangePickerCalendarProps
   extends Omit<
@@ -20,19 +20,6 @@ export interface DateRangePickerCalendarProps
   onMonthChange?: (dateString: string) => void;
   onYearChange?: (dateString: string) => void;
 }
-
-const DateRangePickerCalendarContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  & > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-`;
 
 const StyledDateRangeCalendar = styled(DateRangeCalendar)<{ $isVisible: boolean }>`
   visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
@@ -163,7 +150,7 @@ export const DateRangePickerCalendar = ({
         timezone={timezone}
         onClick={handleMonthNavigationPanelClick}
       />
-      <DateRangePickerCalendarContainer>
+      <CalendarContainer>
         <StyledDateRangeCalendar
           {...props}
           dateValue={dayjsDateToString(dateInner)}
@@ -190,7 +177,7 @@ export const DateRangePickerCalendar = ({
           locale={locale}
           $isVisible={viewModeInner === 'years'}
         />
-      </DateRangePickerCalendarContainer>
+      </CalendarContainer>
     </SinglePickerCalendarWrapper>
   );
 };

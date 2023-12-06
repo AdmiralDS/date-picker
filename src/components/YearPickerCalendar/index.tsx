@@ -14,24 +14,11 @@ import {
 import { YearCalendar } from '#src/components/YearCalendar';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
-import { SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import { CalendarContainer, SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
 
 export interface YearPickerCalendarProps extends SingleCalendarProps {
   onYearChange?: (dateString: string) => void;
 }
-
-const YearPickerCalendarContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  & > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-`;
 
 const StyledYearCalendar = styled(YearCalendar)<{ $isVisible: boolean }>`
   visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
@@ -102,7 +89,7 @@ export const YearPickerCalendar = ({
         timezone={timezone}
         onClick={handleTwentyYearsNavigationPanelClick}
       />
-      <YearPickerCalendarContainer>
+      <CalendarContainer>
         <StyledYearCalendar
           {...props}
           dateValue={dayjsDateToString(dateInner)}
@@ -111,7 +98,7 @@ export const YearPickerCalendar = ({
           locale={locale}
           $isVisible={true}
         />
-      </YearPickerCalendarContainer>
+      </CalendarContainer>
     </SinglePickerCalendarWrapper>
   );
 };

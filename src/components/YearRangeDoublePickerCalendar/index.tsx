@@ -14,26 +14,13 @@ import { YearRangeCalendar } from '#src/components/YearRangeCalendar';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { DoublePickerCalendarWrapper, SingleContainer } from '#src/components/pickerStyle.ts';
+import { CalendarContainer, DoublePickerCalendarWrapper, SingleContainer } from '#src/components/pickerStyle.ts';
 
 export interface YearRangeDoublePickerCalendarProps
   extends Omit<
     RangeDoubleCalendarProps,
     'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
   > {}
-
-const YearRangeDoublePickerCalendarContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  & > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-`;
 
 const StyledYearRangeCalendar = styled(YearRangeCalendar)<{ $isVisible: boolean }>`
   visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
@@ -151,7 +138,7 @@ export const YearRangeDoublePickerCalendar = ({
           timezone={timezone}
           onClick={handleLeftTwentyYearsNavigationPanelClick}
         />
-        <YearRangeDoublePickerCalendarContainer>
+        <CalendarContainer>
           <StyledYearRangeCalendar
             {...props}
             dateValue={dayjsDateToString(dateLeftInner)}
@@ -164,7 +151,7 @@ export const YearRangeDoublePickerCalendar = ({
             locale={locale}
             $isVisible={true}
           />
-        </YearRangeDoublePickerCalendarContainer>
+        </CalendarContainer>
       </SingleContainer>
       <SingleContainer>
         <TwentyYearsNavigationPanelWidget
@@ -174,7 +161,7 @@ export const YearRangeDoublePickerCalendar = ({
           timezone={timezone}
           onClick={handleRightTwentyYearsNavigationPanelClick}
         />
-        <YearRangeDoublePickerCalendarContainer>
+        <CalendarContainer>
           <StyledYearRangeCalendar
             {...props}
             dateValue={dayjsDateToString(dateRightInner)}
@@ -187,7 +174,7 @@ export const YearRangeDoublePickerCalendar = ({
             locale={locale}
             $isVisible={true}
           />
-        </YearRangeDoublePickerCalendarContainer>
+        </CalendarContainer>
       </SingleContainer>
     </DoublePickerCalendarWrapper>
   );

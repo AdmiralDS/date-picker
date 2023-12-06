@@ -14,24 +14,11 @@ import {
 import { MonthCalendar } from '#src/components/MonthCalendar';
 import { YearCalendar } from '#src/components/YearCalendar';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
-import { SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import { CalendarContainer, SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
 
 export interface MonthPickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {
   onYearChange?: (dateString: string) => void;
 }
-
-const MonthPickerCalendarContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  & > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-`;
 
 const StyledMonthCalendar = styled(MonthCalendar)<{ $isVisible: boolean }>`
   visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
@@ -128,7 +115,7 @@ export const MonthPickerCalendar = ({
         timezone={timezone}
         onClick={handleYearNavigationPanelClick}
       />
-      <MonthPickerCalendarContainer>
+      <CalendarContainer>
         <StyledMonthCalendar
           {...props}
           dateValue={dayjsDateToString(dateInner)}
@@ -145,7 +132,7 @@ export const MonthPickerCalendar = ({
           locale={locale}
           $isVisible={viewModeInner === 'years'}
         />
-      </MonthPickerCalendarContainer>
+      </CalendarContainer>
     </SinglePickerCalendarWrapper>
   );
 };

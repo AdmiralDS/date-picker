@@ -7,26 +7,13 @@ import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate 
 import { YearRangeCalendar } from '#src/components/YearRangeCalendar';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
-import { SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import { CalendarContainer, SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
 
 export interface YearRangePickerCalendarProps
   extends Omit<
     RangeCalendarProps,
     'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
   > {}
-
-const YearRangePickerCalendarContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  & > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-`;
 
 const StyledYearRangeCalendar = styled(YearRangeCalendar)<{ $isVisible: boolean }>`
   visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
@@ -86,7 +73,7 @@ export const YearRangePickerCalendar = ({
         timezone={timezone}
         onClick={handleTwentyYearsNavigationPanelClick}
       />
-      <YearRangePickerCalendarContainer>
+      <CalendarContainer>
         <StyledYearRangeCalendar
           {...props}
           dateValue={dayjsDateToString(dateInner)}
@@ -95,7 +82,7 @@ export const YearRangePickerCalendar = ({
           locale={locale}
           $isVisible={true}
         />
-      </YearRangePickerCalendarContainer>
+      </CalendarContainer>
     </SinglePickerCalendarWrapper>
   );
 };

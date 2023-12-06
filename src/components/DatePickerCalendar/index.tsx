@@ -15,26 +15,13 @@ import {
 import { DateCalendar } from '#src/components/DateCalendar';
 import { MonthCalendar } from '#src/components/MonthCalendar';
 import { YearCalendar } from '#src/components/YearCalendar';
-import { SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import { CalendarContainer, SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
 
 export interface DatePickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {
   onDateChange?: (dateString: string) => void;
   onMonthChange?: (dateString: string) => void;
   onYearChange?: (dateString: string) => void;
 }
-
-const DatePickerCalendarContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  & > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-`;
 
 const StyledDateCalendar = styled(DateCalendar)<{ $isVisible: boolean }>`
   visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
@@ -148,7 +135,7 @@ export const DatePickerCalendar = ({
         timezone={timezone}
         onClick={handleMonthNavigationPanelClick}
       />
-      <DatePickerCalendarContainer>
+      <CalendarContainer>
         <StyledDateCalendar
           {...props}
           dateValue={dayjsDateToString(dateInner)}
@@ -173,7 +160,7 @@ export const DatePickerCalendar = ({
           locale={locale}
           $isVisible={viewModeInner === 'years'}
         />
-      </DatePickerCalendarContainer>
+      </CalendarContainer>
     </SinglePickerCalendarWrapper>
   );
 };
