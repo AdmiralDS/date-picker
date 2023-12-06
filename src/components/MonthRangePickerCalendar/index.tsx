@@ -10,7 +10,7 @@ import {
   SinglePickerCalendarWrapper,
   MonthRangeCalendarView,
   YearCalendarView,
-} from '#src/components/pickerStyle.ts';
+} from '#src/components/calendarStyle.ts';
 
 export interface MonthRangePickerCalendarProps
   extends Omit<

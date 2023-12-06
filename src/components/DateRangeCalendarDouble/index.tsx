@@ -16,7 +16,7 @@ import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
 import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces';
-import { DoublePickerCalendarWrapper, SingleContainer } from '#src/components/pickerStyle.ts';
+import { DoublePickerCalendarWrapper, SingleContainer } from '#src/components/calendarStyle.ts';
 
 export interface DateRangeDoubleCalendarProps extends RangeDoubleCalendarProps {}
 

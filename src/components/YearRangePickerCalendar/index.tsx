@@ -5,7 +5,7 @@ import type { RangeCalendarProps } from '#src/components/calendarInterfaces.ts';
 import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
-import { CalendarContainer, SinglePickerCalendarWrapper, YearRangeCalendarView } from '#src/components/pickerStyle.ts';
+import { CalendarContainer, SinglePickerCalendarWrapper, YearRangeCalendarView } from '#src/components/calendarStyle.ts';
 
 export interface YearRangePickerCalendarProps
   extends Omit<

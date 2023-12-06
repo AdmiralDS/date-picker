@@ -11,7 +11,7 @@ import {
   DateRangeCalendarView,
   MonthCalendarView,
   YearCalendarView,
-} from '#src/components/pickerStyle.ts';
+} from '#src/components/calendarStyle.ts';
 
 export interface DateRangePickerCalendarProps
   extends Omit<

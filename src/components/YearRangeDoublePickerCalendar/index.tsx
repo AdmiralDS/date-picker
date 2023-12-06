@@ -17,7 +17,7 @@ import {
   DoublePickerCalendarWrapper,
   SingleContainer,
   YearRangeCalendarView,
-} from '#src/components/pickerStyle.ts';
+} from '#src/components/calendarStyle.ts';
 
 export interface YearRangeDoublePickerCalendarProps
   extends Omit<

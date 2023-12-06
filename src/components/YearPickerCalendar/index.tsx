@@ -12,7 +12,7 @@ import {
 } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
-import { CalendarContainer, SinglePickerCalendarWrapper, YearCalendarView } from '#src/components/pickerStyle.ts';
+import { CalendarContainer, SinglePickerCalendarWrapper, YearCalendarView } from '#src/components/calendarStyle.ts';
 
 export interface YearPickerCalendarProps extends SingleCalendarProps {
   onYearChange?: (dateString: string) => void;

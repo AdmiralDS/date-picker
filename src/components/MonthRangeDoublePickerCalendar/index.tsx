@@ -21,7 +21,7 @@ import {
   SingleContainer,
   MonthRangeCalendarView,
   YearCalendarView,
-} from '#src/components/pickerStyle.ts';
+} from '#src/components/calendarStyle.ts';
 
 export interface MonthRangeDoublePickerCalendarProps
   extends Omit<
