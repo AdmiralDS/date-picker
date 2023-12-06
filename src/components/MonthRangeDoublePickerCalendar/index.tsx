@@ -1,6 +1,5 @@
 import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
 import {
@@ -16,9 +15,13 @@ import type {
   PickerCalendarProps,
 } from '#src/components/calendarInterfaces.ts';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
-import { MonthRangeCalendar } from '#src/components/MonthRangeCalendar';
-import { YearCalendar } from '#src/components/YearCalendar';
-import { CalendarContainer, DoublePickerCalendarWrapper, SingleContainer } from '#src/components/pickerStyle.ts';
+import {
+  CalendarContainer,
+  DoublePickerCalendarWrapper,
+  SingleContainer,
+  MonthRangeCalendarView,
+  YearCalendarView,
+} from '#src/components/pickerStyle.ts';
 
 export interface MonthRangeDoublePickerCalendarProps
   extends Omit<
@@ -26,14 +29,6 @@ export interface MonthRangeDoublePickerCalendarProps
       'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
     >,
     PickerCalendarProps {}
-
-const StyledMonthRangeCalendar = styled(MonthRangeCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
-
-const StyledYearCalendar = styled(YearCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
 
 export const MonthRangeDoublePickerCalendar = ({
   viewModeValue,
@@ -207,7 +202,7 @@ export const MonthRangeDoublePickerCalendar = ({
           onClick={handleLeftYearNavigationPanelClick}
         />
         <CalendarContainer>
-          <StyledMonthRangeCalendar
+          <MonthRangeCalendarView
             {...props}
             dateValue={dayjsDateToString(dateLeftInner)}
             selectedDateRangeValue={selectedDateRangeInner}
@@ -220,7 +215,7 @@ export const MonthRangeDoublePickerCalendar = ({
             locale={locale}
             $isVisible={viewModeLeftInner === 'months'}
           />
-          <StyledYearCalendar
+          <YearCalendarView
             {...props}
             dateValue={dayjsDateToString(dateLeftInner)}
             selectedDateValue={selectedRangeEnd}
@@ -239,7 +234,7 @@ export const MonthRangeDoublePickerCalendar = ({
           onClick={handleRightYearNavigationPanelClick}
         />
         <CalendarContainer>
-          <StyledMonthRangeCalendar
+          <MonthRangeCalendarView
             {...props}
             dateValue={dayjsDateToString(dateRightInner)}
             selectedDateRangeValue={selectedDateRangeInner}
@@ -252,7 +247,7 @@ export const MonthRangeDoublePickerCalendar = ({
             locale={locale}
             $isVisible={viewModeRightInner === 'months'}
           />
-          <StyledYearCalendar
+          <YearCalendarView
             {...props}
             dateValue={dayjsDateToString(dateRightInner)}
             selectedDateValue={selectedRangeEnd}

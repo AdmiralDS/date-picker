@@ -1,14 +1,16 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
 import type { RangeCalendarProps, PickerCalendarProps, CalendarViewMode } from '#src/components/calendarInterfaces.ts';
 import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils.ts';
-import { MonthRangeCalendar } from '#src/components/MonthRangeCalendar';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
-import { YearCalendar } from '#src/components/YearCalendar';
-import { CalendarContainer, SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import {
+  CalendarContainer,
+  SinglePickerCalendarWrapper,
+  MonthRangeCalendarView,
+  YearCalendarView,
+} from '#src/components/pickerStyle.ts';
 
 export interface MonthRangePickerCalendarProps
   extends Omit<
@@ -18,14 +20,6 @@ export interface MonthRangePickerCalendarProps
     PickerCalendarProps {
   onYearChange?: (dateString: string) => void;
 }
-
-const StyledMonthRangeCalendar = styled(MonthRangeCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
-
-const StyledYearCalendar = styled(YearCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
 
 export const MonthRangePickerCalendar = ({
   viewModeValue,
@@ -134,7 +128,7 @@ export const MonthRangePickerCalendar = ({
         onClick={handleYearNavigationPanelClick}
       />
       <CalendarContainer>
-        <StyledMonthRangeCalendar
+        <MonthRangeCalendarView
           {...props}
           dateValue={dayjsDateToString(dateInner)}
           selectedDateRangeValue={selectedDateRangeInner}
@@ -144,7 +138,7 @@ export const MonthRangePickerCalendar = ({
           locale={locale}
           $isVisible={viewModeInner === 'months'}
         />
-        <StyledYearCalendar
+        <YearCalendarView
           {...props}
           dateValue={dayjsDateToString(dateInner)}
           selectedDateValue={selectedRangeEnd}

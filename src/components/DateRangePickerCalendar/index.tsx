@@ -1,15 +1,17 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
 import type { RangeCalendarProps, PickerCalendarProps, CalendarViewMode } from '#src/components/calendarInterfaces.ts';
 import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils.ts';
-import { DateRangeCalendar } from '#src/components/DateRangeCalendar';
-import { YearCalendar } from '#src/components/YearCalendar';
-import { MonthCalendar } from '#src/components/MonthCalendar';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
-import { CalendarContainer, SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import {
+  CalendarContainer,
+  SinglePickerCalendarWrapper,
+  DateRangeCalendarView,
+  MonthCalendarView,
+  YearCalendarView,
+} from '#src/components/pickerStyle.ts';
 
 export interface DateRangePickerCalendarProps
   extends Omit<
@@ -20,18 +22,6 @@ export interface DateRangePickerCalendarProps
   onMonthChange?: (dateString: string) => void;
   onYearChange?: (dateString: string) => void;
 }
-
-const StyledDateRangeCalendar = styled(DateRangeCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
-
-const StyledMonthCalendar = styled(MonthCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
-
-const StyledYearCalendar = styled(YearCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
 
 export const DateRangePickerCalendar = ({
   viewModeValue,
@@ -151,7 +141,7 @@ export const DateRangePickerCalendar = ({
         onClick={handleMonthNavigationPanelClick}
       />
       <CalendarContainer>
-        <StyledDateRangeCalendar
+        <DateRangeCalendarView
           {...props}
           dateValue={dayjsDateToString(dateInner)}
           selectedDateRangeValue={selectedDateRangeInner}
@@ -161,7 +151,7 @@ export const DateRangePickerCalendar = ({
           locale={locale}
           $isVisible={viewModeInner === 'dates'}
         />
-        <StyledMonthCalendar
+        <MonthCalendarView
           {...props}
           dateValue={dayjsDateToString(dateInner)}
           selectedDateValue={selectedRangeEnd}
@@ -169,7 +159,7 @@ export const DateRangePickerCalendar = ({
           locale={locale}
           $isVisible={viewModeInner === 'months'}
         />
-        <StyledYearCalendar
+        <YearCalendarView
           {...props}
           dateValue={dayjsDateToString(dateInner)}
           selectedDateValue={selectedRangeEnd}

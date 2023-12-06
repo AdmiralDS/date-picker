@@ -1,6 +1,5 @@
 import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
 import {
@@ -10,21 +9,21 @@ import {
   getCurrentTimeZone,
   getDayjsDate,
 } from '#src/components/utils.ts';
-import { YearRangeCalendar } from '#src/components/YearRangeCalendar';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { CalendarContainer, DoublePickerCalendarWrapper, SingleContainer } from '#src/components/pickerStyle.ts';
+import {
+  CalendarContainer,
+  DoublePickerCalendarWrapper,
+  SingleContainer,
+  YearRangeCalendarView,
+} from '#src/components/pickerStyle.ts';
 
 export interface YearRangeDoublePickerCalendarProps
   extends Omit<
     RangeDoubleCalendarProps,
     'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
   > {}
-
-const StyledYearRangeCalendar = styled(YearRangeCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
 
 export const YearRangeDoublePickerCalendar = ({
   dateRangeValue,
@@ -139,7 +138,7 @@ export const YearRangeDoublePickerCalendar = ({
           onClick={handleLeftTwentyYearsNavigationPanelClick}
         />
         <CalendarContainer>
-          <StyledYearRangeCalendar
+          <YearRangeCalendarView
             {...props}
             dateValue={dayjsDateToString(dateLeftInner)}
             selectedDateRangeValue={selectedDateRangeInner}
@@ -162,7 +161,7 @@ export const YearRangeDoublePickerCalendar = ({
           onClick={handleRightTwentyYearsNavigationPanelClick}
         />
         <CalendarContainer>
-          <StyledYearRangeCalendar
+          <YearRangeCalendarView
             {...props}
             dateValue={dayjsDateToString(dateRightInner)}
             selectedDateRangeValue={selectedDateRangeInner}

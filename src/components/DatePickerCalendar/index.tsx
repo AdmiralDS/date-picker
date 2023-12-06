@@ -1,6 +1,5 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
 import type { CalendarViewMode, SingleCalendarProps, PickerCalendarProps } from '#src/components/calendarInterfaces.ts';
@@ -12,28 +11,19 @@ import {
   getCurrentTimeZone,
   getDayjsDate,
 } from '#src/components/utils.ts';
-import { DateCalendar } from '#src/components/DateCalendar';
-import { MonthCalendar } from '#src/components/MonthCalendar';
-import { YearCalendar } from '#src/components/YearCalendar';
-import { CalendarContainer, SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import {
+  CalendarContainer,
+  SinglePickerCalendarWrapper,
+  DateCalendarView,
+  MonthCalendarView,
+  YearCalendarView,
+} from '#src/components/pickerStyle.ts';
 
 export interface DatePickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {
   onDateChange?: (dateString: string) => void;
   onMonthChange?: (dateString: string) => void;
   onYearChange?: (dateString: string) => void;
 }
-
-const StyledDateCalendar = styled(DateCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
-
-const StyledMonthCalendar = styled(MonthCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
-
-const StyledYearCalendar = styled(YearCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
 
 export const DatePickerCalendar = ({
   viewModeValue,
@@ -136,7 +126,7 @@ export const DatePickerCalendar = ({
         onClick={handleMonthNavigationPanelClick}
       />
       <CalendarContainer>
-        <StyledDateCalendar
+        <DateCalendarView
           {...props}
           dateValue={dayjsDateToString(dateInner)}
           selectedDateValue={dayjsStateToString(selectedDateInner)}
@@ -144,7 +134,7 @@ export const DatePickerCalendar = ({
           locale={locale}
           $isVisible={viewModeInner === 'dates'}
         />
-        <StyledMonthCalendar
+        <MonthCalendarView
           {...props}
           dateValue={dayjsDateToString(dateInner)}
           selectedDateValue={dayjsStateToString(selectedDateInner)}
@@ -152,7 +142,7 @@ export const DatePickerCalendar = ({
           locale={locale}
           $isVisible={viewModeInner === 'months'}
         />
-        <StyledYearCalendar
+        <YearCalendarView
           {...props}
           dateValue={dayjsDateToString(dateInner)}
           selectedDateValue={dayjsStateToString(selectedDateInner)}

@@ -1,6 +1,5 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
 import type { CalendarViewMode, SingleCalendarProps, PickerCalendarProps } from '#src/components/calendarInterfaces.ts';
@@ -11,22 +10,17 @@ import {
   getCurrentTimeZone,
   getDayjsDate,
 } from '#src/components/utils.ts';
-import { MonthCalendar } from '#src/components/MonthCalendar';
-import { YearCalendar } from '#src/components/YearCalendar';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
-import { CalendarContainer, SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import {
+  CalendarContainer,
+  SinglePickerCalendarWrapper,
+  MonthCalendarView,
+  YearCalendarView,
+} from '#src/components/pickerStyle.ts';
 
 export interface MonthPickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {
   onYearChange?: (dateString: string) => void;
 }
-
-const StyledMonthCalendar = styled(MonthCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
-
-const StyledYearCalendar = styled(YearCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
 
 export const MonthPickerCalendar = ({
   viewModeValue,
@@ -116,7 +110,7 @@ export const MonthPickerCalendar = ({
         onClick={handleYearNavigationPanelClick}
       />
       <CalendarContainer>
-        <StyledMonthCalendar
+        <MonthCalendarView
           {...props}
           dateValue={dayjsDateToString(dateInner)}
           selectedDateValue={dayjsStateToString(selectedDateInner)}
@@ -124,7 +118,7 @@ export const MonthPickerCalendar = ({
           locale={locale}
           $isVisible={viewModeInner === 'months'}
         />
-        <StyledYearCalendar
+        <YearCalendarView
           {...props}
           dateValue={dayjsDateToString(dateInner)}
           selectedDateValue={dayjsStateToString(selectedDateInner)}

@@ -1,6 +1,5 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
 import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
@@ -11,18 +10,13 @@ import {
   getCurrentTimeZone,
   getDayjsDate,
 } from '#src/components/utils.ts';
-import { YearCalendar } from '#src/components/YearCalendar';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
-import { CalendarContainer, SinglePickerCalendarWrapper } from '#src/components/pickerStyle.ts';
+import { CalendarContainer, SinglePickerCalendarWrapper, YearCalendarView } from '#src/components/pickerStyle.ts';
 
 export interface YearPickerCalendarProps extends SingleCalendarProps {
   onYearChange?: (dateString: string) => void;
 }
-
-const StyledYearCalendar = styled(YearCalendar)<{ $isVisible: boolean }>`
-  visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
-`;
 
 export const YearPickerCalendar = ({
   dateValue,
@@ -90,7 +84,7 @@ export const YearPickerCalendar = ({
         onClick={handleTwentyYearsNavigationPanelClick}
       />
       <CalendarContainer>
-        <StyledYearCalendar
+        <YearCalendarView
           {...props}
           dateValue={dayjsDateToString(dateInner)}
           selectedDateValue={dayjsStateToString(selectedDateInner)}
