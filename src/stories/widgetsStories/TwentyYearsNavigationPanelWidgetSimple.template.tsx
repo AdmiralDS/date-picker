@@ -11,7 +11,7 @@ import {
   getDayjsDate,
 } from '#src/components/utils';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
-import type { TwentyYearsNavigationPanelWidgetProps } from '#src/components/TwentyYearsNavigationPanelWidget/interfaces';
+import type { TwentyYearsNavigationPanelWidgetProps } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';

@@ -13,7 +13,7 @@ import {
 } from '#src/components/utils';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
-import type { YearNavigationPanelWidgetProps } from '#src/components/YearNavigationPanelWidget/interfaces';
+import type { YearNavigationPanelWidgetProps } from '#src/components/YearNavigationPanelWidget';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 
 const CalendarWrapper = styled.div`
