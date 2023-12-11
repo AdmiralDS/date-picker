@@ -1,0 +1,689 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`YearRangePickerCalendar should render component 1`] = `
+.c5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+.c5>svg {
+  height: 24px;
+  width: 24px;
+}
+
+.c4 {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: transparent;
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.c2 {
+  position: relative;
+  padding: 0;
+  margin: 4px;
+  box-sizing: border-box;
+  border: none;
+  background-color: transparent;
+  appearance: none;
+  flex: 0 0 auto;
+  height: 24px;
+  width: 24px;
+  border-radius: 4px;
+  overflow: visible;
+  cursor: pointer;
+}
+
+.c2 >* {
+  pointer-events: none;
+}
+
+.c2:disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+.c2:disabled *[fill^='#'] {
+  fill: #B0B5BD;
+}
+
+.c2:focus-visible {
+  outline-offset: 2px;
+  outline: #0062FF solid 2px;
+}
+
+.c2:focus >.c3 {
+  background-color: transparent;
+}
+
+.c2:hover >.c3 {
+  background-color: #0000000D;
+}
+
+.c2:active >.c3 {
+  background-color: #0000001F;
+}
+
+.c2:focus-visible >.c3 {
+  background-color: transparent;
+}
+
+.c11 {
+  position: relative;
+  width: 60px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.c11>* {
+  pointer-events: none;
+}
+
+.c11[data-disabled-cell='true'] {
+  cursor: default;
+}
+
+.c11[data-hidden-cell='true'] {
+  cursor: default;
+}
+
+.c12 {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-color: transparent;
+  left: 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.c15 {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-color: transparent;
+  left: 0;
+}
+
+.c13 {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-color: transparent;
+  right: 0;
+}
+
+.c17 {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-color: transparent;
+  right: 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.c14 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 7px 0;
+  font-family: 'VTB Group UI',sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  font-feature-settings: 'tnum' on,'lnum' on;
+  text-rendering: geometricPrecision;
+  color: #23262D;
+  background-color: #FFFFFF;
+  border: 1px #FFFFFF solid;
+  border-radius: 18px;
+}
+
+.c16 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 7px 0;
+  font-family: 'VTB Group UI',sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  font-feature-settings: 'tnum' on,'lnum' on;
+  text-rendering: geometricPrecision;
+  color: #23262D;
+  background-color: #FFFFFF;
+  border: 1px #FFFFFF solid;
+  border-radius: 18px;
+  border-color: #23262D;
+}
+
+.c10 {
+  height: 244px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+.c8 {
+  background-color: #FFFFFF;
+  width: 240px;
+  margin: 28px 22px 32px 22px;
+  font-family: 'VTB Group UI',sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  font-feature-settings: 'tnum' on,'lnum' on;
+  text-rendering: geometricPrecision;
+}
+
+.c0 {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: space-between;
+  padding-top: 20px;
+  width: 284px;
+  height: 356px;
+  background-color: #FFFFFF;
+  border-radius: 4px;
+  box-shadow: 0px -1.5px 6px rgba(0, 0, 0, 0.06),0px 0.6px 1.8px rgba(0, 0, 0, 0.1),0px 3.2px 9px rgba(0, 0, 0, 0.16);
+}
+
+.c7 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.c7>div {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.c9 {
+  visibility: visible;
+}
+
+.c1 {
+  box-sizing: border-box;
+  width: 284PX;
+  height: 32px;
+  padding: 0 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.c6 {
+  padding: 4px 8px;
+  color: #23262D;
+  cursor: default;
+  font-family: 'VTB Group UI',sans-serif;
+  font-style: normal;
+  font-weight: 550;
+  font-size: 16px;
+  line-height: 24px;
+  font-feature-settings: 'tnum' on,'lnum' on;
+  text-rendering: geometricPrecision;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <button
+        class="c2"
+        data-panel-target-type="left"
+        type="button"
+      >
+        <div
+          aria-hidden="true"
+          class="c3 c4"
+        />
+        <div
+          aria-hidden="true"
+          class="c5"
+        >
+          <svg
+            fill="none"
+            focusable="false"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14.508 18.754c.18 0 .35-.07.48-.21.24-.27.22-.68-.04-.92l-6.369-5.74 6.41-5.55a.65.65 0 0 0 .04-.92.658.658 0 0 0-.92-.04l-6.9 5.99c-.31.28-.31.76 0 1.04l6.86 6.18c.13.12.28.17.44.17"
+              fill="#717681"
+            />
+          </svg>
+        </div>
+      </button>
+      <div
+        class="c6"
+      >
+        2021–2040
+      </div>
+      <button
+        class="c2"
+        data-panel-target-type="right"
+        type="button"
+      >
+        <div
+          aria-hidden="true"
+          class="c3 c4"
+        />
+        <div
+          aria-hidden="true"
+          class="c5"
+        >
+          <svg
+            fill="none"
+            focusable="false"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9.474 18.754c-.18 0-.35-.07-.48-.21a.658.658 0 0 1 .04-.92l6.37-5.74-6.41-5.55a.65.65 0 0 1-.04-.92c.24-.26.65-.28.92-.04l6.9 5.99c.31.28.31.76 0 1.04l-6.86 6.18c-.13.12-.28.17-.44.17"
+              fill="#717681"
+            />
+          </svg>
+        </div>
+      </button>
+    </div>
+    <div
+      class="c7"
+    >
+      <div
+        class="c8 c9"
+        data-container-type="yearsOfYearWrapper"
+      >
+        <div
+          class="c10"
+          data-container-type="yearsWrapper"
+        >
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-is-start-of-week-cell="true"
+            data-value="2021-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c12"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2021
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-value="2022-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2022
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-is-current-day-cell="true"
+            data-value="2023-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c16"
+            >
+              2023
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-is-end-of-week-cell="true"
+            data-value="2024-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c17"
+            />
+            <div
+              class="c14"
+            >
+              2024
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-is-start-of-week-cell="true"
+            data-value="2025-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c12"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2025
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-value="2026-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2026
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-value="2027-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2027
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-is-end-of-week-cell="true"
+            data-value="2028-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c17"
+            />
+            <div
+              class="c14"
+            >
+              2028
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-is-start-of-week-cell="true"
+            data-value="2029-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c12"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2029
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-value="2030-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2030
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-value="2031-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2031
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-is-end-of-week-cell="true"
+            data-value="2032-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c17"
+            />
+            <div
+              class="c14"
+            >
+              2032
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-is-start-of-week-cell="true"
+            data-value="2033-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c12"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2033
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-value="2034-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2034
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-value="2035-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2035
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-is-end-of-week-cell="true"
+            data-value="2036-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c17"
+            />
+            <div
+              class="c14"
+            >
+              2036
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-is-start-of-week-cell="true"
+            data-value="2037-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c12"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2037
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-value="2038-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2038
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-value="2039-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c14"
+            >
+              2039
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-is-end-of-week-cell="true"
+            data-value="2040-01-01T09:00:00.000Z"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c17"
+            />
+            <div
+              class="c14"
+            >
+              2040
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
