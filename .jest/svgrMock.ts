@@ -1,2 +1,5 @@
-export default "SvgrURL";
-export const ReactComponent = "div";
+//const React = require('react');
+module.exports = {
+  default: 'SvgrURL',
+  ReactComponent: 'div',
+};

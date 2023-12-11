@@ -7,7 +7,7 @@
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "Node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -19,12 +19,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "#src/*": ["./src/*"],
       "@admiral-ds/date-picker": ["./src/index"]
-    },
-    "types": ["@types/jest"]
+    }
   },
-  "include": ["./src"],
-  "exclude": ["dist", "**/node_modules/*"],
+  "include": ["src/**/*", "jest.config.ts", ".jest/**/*", "node_modules/@admiral-ds/**/*"]
 }
