@@ -23,6 +23,7 @@ import {
   MonthCalendarView,
   YearCalendarView,
 } from '#src/components/calendarStyle.ts';
+import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 
 export interface DateRangeDoublePickerCalendarProps
   extends Omit<
@@ -165,10 +166,22 @@ export const DateRangeDoublePickerCalendar = ({
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
-        handleDateLeftChange(dayjsDateToString(dateLeftInner.subtract(1, 'month')));
+        if (viewModeLeftInner === 'dates') {
+          handleDateLeftChange(dayjsDateToString(dateLeftInner.subtract(1, 'month')));
+        } else if (viewModeLeftInner === 'months') {
+          handleDateLeftChange(dayjsDateToString(dateLeftInner.subtract(1, 'year')));
+        } else {
+          handleDateLeftChange(dayjsDateToString(dateLeftInner.subtract(YEARS_ON_SCREEN, 'year')));
+        }
         break;
       case 'right':
-        handleDateLeftChange(dayjsDateToString(dateLeftInner.add(1, 'month')));
+        if (viewModeLeftInner === 'dates') {
+          handleDateLeftChange(dayjsDateToString(dateLeftInner.add(1, 'month')));
+        } else if (viewModeLeftInner === 'months') {
+          handleDateLeftChange(dayjsDateToString(dateLeftInner.add(1, 'year')));
+        } else {
+          handleDateLeftChange(dayjsDateToString(dateLeftInner.add(YEARS_ON_SCREEN, 'year')));
+        }
         break;
       case 'month':
         handleViewModeLeftChange(viewModeLeftInner === 'months' ? 'dates' : 'months');
@@ -182,10 +195,22 @@ export const DateRangeDoublePickerCalendar = ({
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
-        handleDateRightChange(dayjsDateToString(dateRightInner.subtract(1, 'month')));
+        if (viewModeRightInner === 'dates') {
+          handleDateRightChange(dayjsDateToString(dateRightInner.subtract(1, 'month')));
+        } else if (viewModeRightInner === 'months') {
+          handleDateRightChange(dayjsDateToString(dateRightInner.subtract(1, 'year')));
+        } else {
+          handleDateRightChange(dayjsDateToString(dateRightInner.subtract(YEARS_ON_SCREEN, 'year')));
+        }
         break;
       case 'right':
-        handleDateRightChange(dayjsDateToString(dateRightInner.add(1, 'month')));
+        if (viewModeRightInner === 'dates') {
+          handleDateRightChange(dayjsDateToString(dateRightInner.add(1, 'month')));
+        } else if (viewModeRightInner === 'months') {
+          handleDateRightChange(dayjsDateToString(dateRightInner.add(1, 'year')));
+        } else {
+          handleDateRightChange(dayjsDateToString(dateRightInner.add(YEARS_ON_SCREEN, 'year')));
+        }
         break;
       case 'month':
         handleViewModeRightChange(viewModeRightInner === 'months' ? 'dates' : 'months');

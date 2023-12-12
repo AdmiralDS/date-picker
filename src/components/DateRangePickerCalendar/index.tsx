@@ -12,6 +12,7 @@ import {
   MonthCalendarView,
   YearCalendarView,
 } from '#src/components/calendarStyle.ts';
+import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 
 export interface DateRangePickerCalendarProps
   extends Omit<
@@ -99,10 +100,22 @@ export const DateRangePickerCalendar = ({
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
-        handleDateChange(dayjsDateToString(dateInner.subtract(1, 'month')));
+        if (viewModeInner === 'dates') {
+          handleDateChange(dayjsDateToString(dateInner.subtract(1, 'month')));
+        } else if (viewModeInner === 'months') {
+          handleDateChange(dayjsDateToString(dateInner.subtract(1, 'year')));
+        } else {
+          handleDateChange(dayjsDateToString(dateInner.subtract(YEARS_ON_SCREEN, 'year')));
+        }
         break;
       case 'right':
-        handleDateChange(dayjsDateToString(dateInner.add(1, 'month')));
+        if (viewModeInner === 'dates') {
+          handleDateChange(dayjsDateToString(dateInner.add(1, 'month')));
+        } else if (viewModeInner === 'months') {
+          handleDateChange(dayjsDateToString(dateInner.add(1, 'year')));
+        } else {
+          handleDateChange(dayjsDateToString(dateInner.add(YEARS_ON_SCREEN, 'year')));
+        }
         break;
       case 'month':
         handleViewModeChange(viewModeInner === 'months' ? 'dates' : 'months');
