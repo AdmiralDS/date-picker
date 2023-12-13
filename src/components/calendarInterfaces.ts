@@ -5,6 +5,8 @@ export type CalendarViewMode = 'dates' | 'months' | 'years';
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   renderDateCell?: (dateString: string) => DefaultCellProps;
+  /** Дата, которая не может быть выбрана */
+  disabledDate?: (currentDate: string) => boolean;
 
   /** Дата для отображения на экране в формате ISO */
   dateValue?: string;

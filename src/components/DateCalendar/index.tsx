@@ -28,6 +28,7 @@ const getDateCellDataAttributes = (
 };
 
 export const DateCalendar = ({
+  disabledDate,
   dateValue,
   selectedDateValue,
   defaultSelectedDateValue,
@@ -127,11 +128,10 @@ export const DateCalendar = ({
     return dateCurrent && dateCurrent.month() !== dateInner.month();
   };
   const dateIsDisabled = (dateCurrent?: Dayjs) => {
-    return !!(
-      dateCurrent &&
-      dateCurrent.month() === dateInner.month() &&
-      (dateCurrent.day() === 6 || dateCurrent.date() < 5)
-    );
+    if (!dateCurrent || !disabledDate) {
+      return false;
+    }
+    return disabledDate(dayjsDateToString(dateCurrent));
   };
   const dateIsHoliday = (dateCurrent?: Dayjs) => {
     return !!(
@@ -188,6 +188,7 @@ export const DateCalendar = ({
       ...dataAttributes,
     };
   };
+  console.log('render DateCalendar');
 
   return (
     <DatesOfMonthWidget

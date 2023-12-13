@@ -7,7 +7,9 @@ import {
   dayjsDateToString,
   getCurrentDate,
   getCurrentTimeZone,
+  getDateByDayOfYear,
   getDayjsDate,
+  getDaysInYear,
 } from '#src/components/utils';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
@@ -18,6 +20,7 @@ export const YearCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
+  disabledDate,
   dateValue,
   activeDateValue,
   defaultActiveDateValue,
@@ -122,16 +125,33 @@ export const YearCalendar = ({
     };
   };
 
+  const dateIsDisabled = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent || !disabledDate) {
+      return false;
+    }
+    const datesArray = Array.from(Array(getDaysInYear(dateCurrent)).keys());
+    //console.log(`start Year Check-${dayjs()}`);
+    const res = datesArray.every((v) => {
+      const date = getDateByDayOfYear(dateCurrent, v);
+      //console.log(date);
+      return disabledDate(dayjsDateToString(date));
+    });
+    //console.log(`stop Year Check-${dayjs()}`);
+    console.log('years checked');
+    return res;
+  };
+
   const renderYear = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
     if (!dateCurrent) return {};
     const cellContent = dateCurrent.year();
+    const disabled = dateIsDisabled(dateCurrent);
     const selected = dateCurrent && selectedDateInner && dateCurrent.isSame(selectedDateInner, 'year');
     const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'year');
     const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'year');
     const dataAttributes = getYearCellDataAttributes(dateCurrent.toISOString(), isCurrent, isActive);
 
-    return { cellContent, selected, isCurrent, isActive, ...dataAttributes };
+    return { cellContent, disabled, selected, isCurrent, isActive, ...dataAttributes };
   };
 
   /*const handleTwentyYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {

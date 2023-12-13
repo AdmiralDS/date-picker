@@ -5,6 +5,8 @@ import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import isLeapYear from 'dayjs/plugin/isLeapYear';
+import DayOfYear from 'dayjs/plugin/dayOfYear';
 //import isBetween from 'dayjs/plugin/isBetween';
 
 dayjs.extend(localeData);
@@ -12,7 +14,17 @@ dayjs.extend(CustomParseFormat);
 dayjs.extend(LocalizedFormat);
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(isLeapYear);
+dayjs.extend(DayOfYear);
 //dayjs.extend(isBetween);
+
+export const getDaysInYear = (date: Dayjs) => {
+  return date.isLeapYear() ? 366 : 365;
+};
+
+export const getDateByDayOfYear = (date: Dayjs, dayOfYear: number) => {
+  return date.dayOfYear(dayOfYear);
+};
 
 export const getCurrentTimeZone = () => {
   return Intl.DateTimeFormat().resolvedOptions().timeZone;

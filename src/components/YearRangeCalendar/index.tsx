@@ -7,8 +7,8 @@ import {
   dayjsDateToString,
   dayjsStateToString,
   getCurrentDate,
-  getCurrentTimeZone,
-  getDayjsDate,
+  getCurrentTimeZone, getDateByDayOfYear,
+  getDayjsDate, getDaysInYear,
   sortDatesAsc,
 } from '#src/components/utils';
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
@@ -56,6 +56,7 @@ export const YearRangeCalendar = ({
   activeDateRangeEndValue,
   defaultActiveDateRangeEndValue,
   onActiveDateRangeEndValueChange,
+  disabledDate,
   dateValue,
   activeDateValue,
   defaultActiveDateValue,
@@ -220,6 +221,17 @@ export const YearRangeCalendar = ({
     onClick?.(e);
   };
 
+  const dateIsDisabled = (dateCurrent?: Dayjs) => {
+    const viewDateInner = dateStringToDayjs(dateValue, locale, timezone);
+    if (!dateCurrent || !disabledDate || !viewDateInner) {
+      return false;
+    }
+    const datesArray = Array.from(Array(getDaysInYear(viewDateInner)).keys());
+    return datesArray.every((v) => {
+      const date = getDateByDayOfYear(viewDateInner, v);
+      return disabledDate(dayjsDateToString(date));
+    });
+  };
   const dateIsInRange = (dateCurrent?: Dayjs) => {
     if (!dateCurrent) return false;
     if (dateRangeFirstInner && dateRangeSecondInner) {
@@ -284,7 +296,7 @@ export const YearRangeCalendar = ({
     if (!dateCurrent) return {};
     const cellContent = dateCurrent.year();
     const selected = dateIsSelected(dateCurrent);
-    //const disabled = dateIsDisabled(dateCurrent);
+    const disabled = dateIsDisabled(dateCurrent);
     //const hidden = dateIsHidden(dateCurrent);
     const isCurrent = dateCurrent.isSame(getCurrentDate(locale, timezone), 'year');
     const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'year');
@@ -313,6 +325,7 @@ export const YearRangeCalendar = ({
 
     return {
       cellContent,
+      disabled,
       selected,
       isCurrent,
       isInRange,

@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import type { MouseEventHandler } from 'react';
+import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
 import {
@@ -19,6 +19,7 @@ export const MonthCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
+  disabledDate,
   dateValue,
   activeDateValue,
   defaultActiveDateValue,
@@ -123,16 +124,32 @@ export const MonthCalendar = ({
     };
   };
 
+  const dateIsDisabled = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent || !disabledDate) {
+      return false;
+    }
+    const datesArray = Array.from(Array(dateCurrent.endOf('month').date()).keys());
+    //console.log(`start Month Check-${dayjs()}`);
+    const res = datesArray.every((v) => {
+      const date = dateCurrent.date(v);
+      return disabledDate(dayjsDateToString(date));
+    });
+    //console.log(`stop Month Check-${dayjs()}`);
+    console.log('months checked');
+    return res;
+  };
+
   const renderMonth = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
     if (!dateCurrent) return {};
     const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
+    const disabled = dateIsDisabled(dateCurrent);
     const selected = selectedDateInner && dateCurrent.isSame(selectedDateInner, 'month');
     const isCurrent = dateCurrent.isSame(getCurrentDate(locale, timezone), 'month');
     const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'month');
     const dataAttributes = getMonthCellDataAttributes(dateCurrent.toISOString(), isCurrent, isActive);
 
-    return { cellContent, selected, isCurrent: isCurrent, isActive, ...dataAttributes };
+    return { cellContent, disabled, selected, isCurrent: isCurrent, isActive, ...dataAttributes };
     //return <DefaultMonthCell key={dayjsDateToString(dateCurrent)} {...cellProps} />;
   };
 

@@ -57,6 +57,7 @@ export const DateRangeCalendar = ({
   activeDateRangeEndValue,
   defaultActiveDateRangeEndValue,
   onActiveDateRangeEndValueChange,
+  disabledDate,
   dateValue,
   activeDateValue,
   defaultActiveDateValue,
@@ -227,11 +228,10 @@ export const DateRangeCalendar = ({
     return dateCurrent && dateCurrent.month() !== dateInner.month();
   };
   const dateIsDisabled = (dateCurrent?: Dayjs) => {
-    return !!(
-      dateCurrent &&
-      dateCurrent.month() === dateInner.month() &&
-      (dateCurrent.day() === 6 || dateCurrent.date() < 5)
-    );
+    if (!dateCurrent || !disabledDate) {
+      return false;
+    }
+    return disabledDate(dayjsDateToString(dateCurrent));
   };
   const dateIsHoliday = (dateCurrent?: Dayjs) => {
     return !!(

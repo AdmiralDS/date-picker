@@ -69,8 +69,8 @@ const rangeLayoutMixin = css<{ $isVisible: boolean; $isSelectingRange: boolean }
     !p.$isVisible
       ? 'transparent'
       : p.$isSelectingRange
-      ? p.theme.color['Opacity/Press']
-      : p.theme.color['Opacity/Hover']};
+        ? p.theme.color['Opacity/Press']
+        : p.theme.color['Opacity/Hover']};
 `;
 
 const LeftHalf = styled.div<{ $isVisible: boolean; $isSelectingRange: boolean; $isStartOfRow: boolean }>`
@@ -257,6 +257,8 @@ export const DefaultDateCell = ({ isCurrent, isHoliday, ...props }: DefaultCellP
     isHoliday,
     props.isActive,
   );
+  console.log('render DateCell');
+
   return (
     <DefaultCell
       width={DATE_CELL_WIDTH}

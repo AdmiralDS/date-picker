@@ -57,6 +57,7 @@ export const MonthRangeCalendar = ({
   activeDateRangeEndValue,
   defaultActiveDateRangeEndValue,
   onActiveDateRangeEndValueChange,
+  disabledDate,
   dateValue,
   activeDateValue,
   defaultActiveDateValue,
@@ -219,6 +220,17 @@ export const MonthRangeCalendar = ({
     onClick?.(e);
   };
 
+  const dateIsDisabled = (dateCurrent?: Dayjs) => {
+    const viewDateInner = dateStringToDayjs(dateValue, locale, timezone);
+    if (!dateCurrent || !disabledDate || !viewDateInner) {
+      return false;
+    }
+    const datesArray = Array.from(Array(viewDateInner.endOf('month').date()).keys());
+    return datesArray.every((v) => {
+      const date = viewDateInner.date(v);
+      return disabledDate(dayjsDateToString(date));
+    });
+  };
   const dateIsInRange = (dateCurrent?: Dayjs) => {
     if (!dateCurrent) return false;
     if (dateRangeFirstInner && dateRangeSecondInner) {
@@ -232,10 +244,7 @@ export const MonthRangeCalendar = ({
     if (dateRangeFirstInner && dateCurrent.isSame(dateRangeFirstInner, 'month')) {
       return true;
     }
-    if (dateRangeSecondInner && dateCurrent.isSame(dateRangeSecondInner, 'month')) {
-      return true;
-    }
-    return false;
+    return !!(dateRangeSecondInner && dateCurrent.isSame(dateRangeSecondInner, 'month'));
   };
   const dateIsRangeStart = (dateCurrent?: Dayjs) => {
     if (!dateCurrent || !dateRangeFirstInner || !dateRangeSecondInner) return false;
@@ -276,7 +285,7 @@ export const MonthRangeCalendar = ({
     if (!dateCurrent) return {};
     const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
     const selected = dateIsSelected(dateCurrent);
-    //const disabled = dateIsDisabled(dateCurrent);
+    const disabled = dateIsDisabled(dateCurrent);
     //const hidden = dateIsHidden(dateCurrent);
     const isCurrent = dateCurrent.isSame(getCurrentDate(locale, timezone), 'month');
     const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'month');
@@ -306,6 +315,7 @@ export const MonthRangeCalendar = ({
     return {
       cellContent,
       selected,
+      disabled,
       isCurrent,
       isInRange,
       isRangeStart,

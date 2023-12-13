@@ -16,6 +16,7 @@ const datesArray = Array.from(Array(DATES_ON_SCREEN).keys());
 
 export const Dates = ({ rangeCalendar = false, date, renderCell, ...props }: DatesProps) => {
   const firstDate = setNoon(date.startOf('month').startOf('week'));
+  console.log('render Dates');
 
   return (
     <DatesWrapper {...props} data-container-type="datesWrapper">

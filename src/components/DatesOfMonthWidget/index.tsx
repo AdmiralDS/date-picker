@@ -38,6 +38,7 @@ export const DatesOfMonthWidget = ({
     }
     onClick?.(e);
   };*/
+  console.log('render DatesOfMonthWidget');
 
   return (
     <DatesOfMonthWrapper {...props} data-container-type="datesOfMonthWrapper">
