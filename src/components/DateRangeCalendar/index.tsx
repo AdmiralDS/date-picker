@@ -88,7 +88,7 @@ export const DateRangeCalendar = ({
     if (target.dataset.cellType === 'dateCell') {
       const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
       if (hoveredDate) {
-        if (activeDateInner && (dateIsHidden(hoveredDate) || dateIsDisabled(hoveredDate))) {
+        if (activeDateInner && (target.dataset.hiddenCell || target.dataset.disabledCell)) {
           handleActiveDateChange(undefined);
           return;
         }
@@ -101,7 +101,7 @@ export const DateRangeCalendar = ({
     if (target.dataset.cellType === 'dateCell') {
       const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
       if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
-        if (dateIsHidden(hoveredDate) || dateIsDisabled(hoveredDate)) {
+        if (target.dataset.hiddenCell || target.dataset.disabledCell) {
           if (activeDateInner) {
             handleActiveDateChange(undefined);
           }
@@ -181,9 +181,10 @@ export const DateRangeCalendar = ({
   //</editor-fold>
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    const clickedCell = (e.target as HTMLDivElement).dataset.value;
+    const target = e.target as HTMLDivElement;
+    const clickedCell = target.dataset.value;
     const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
-    if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
+    if (clickedDate && !target.dataset.hiddenCell && !target.dataset.disabledCell) {
       const newSelectedDateRangeValue: [string | undefined, string | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {
         if (dateRangeFirstInner && !dateRangeSecondInner) {
@@ -224,9 +225,6 @@ export const DateRangeCalendar = ({
     onClick?.(e);
   };
 
-  const dateIsOutsideMonth = (dateCurrent?: Dayjs) => {
-    return dateCurrent && dateCurrent.month() !== dateInner.month();
-  };
   const dateIsDisabled = (dateCurrent?: Dayjs) => {
     if (!dateCurrent || !disabledDate) {
       return false;
@@ -274,33 +272,15 @@ export const DateRangeCalendar = ({
     const dates = sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner);
     return dateCurrent.isSame(dates[1], 'date');
   };
-  const dateIsRangeSelectingStart = (dateCurrent?: Dayjs) => {
-    if (
-      dateCurrent &&
-      activeDateInner &&
-      dateRangeActiveEndInner &&
-      !dateIsDisabled(dateCurrent) &&
-      !dateIsHidden(dateCurrent)
-    ) {
+  const dateIsRangeSelectingStart = (dateCurrent?: Dayjs, disabled?: boolean, hidden?: boolean) => {
+    if (dateCurrent && activeDateInner && dateRangeActiveEndInner && !disabled && !hidden) {
       const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
-      /*const res = dateCurrent.isSame(dates[0], 'date');
-      if (res) {
-        //console.log(`range selecting start-${dayjsDateToString(dateCurrent)}`);
-        console.log(`range selecting start-${dayjsDateToString(dateCurrent)}`);
-      }
-      return res;*/
       return dateCurrent.isSame(dates[0], 'date');
     }
     return false;
   };
-  const dateIsRangeSelectingEnd = (dateCurrent?: Dayjs) => {
-    if (
-      dateCurrent &&
-      activeDateInner &&
-      dateRangeActiveEndInner &&
-      !dateIsDisabled(dateCurrent) &&
-      !dateIsHidden(dateCurrent)
-    ) {
+  const dateIsRangeSelectingEnd = (dateCurrent?: Dayjs, disabled?: boolean, hidden?: boolean) => {
+    if (dateCurrent && activeDateInner && dateRangeActiveEndInner && !disabled && !hidden) {
       const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
       return dateCurrent.isSame(dates[1], 'date');
     }
@@ -337,8 +317,8 @@ export const DateRangeCalendar = ({
     const isRangeStart = dateIsRangeStart(dateCurrent);
     const isRangeEnd = dateIsRangeEnd(dateCurrent);
     const isInRangeSelecting = dateIsInRangeSelecting(dateCurrent);
-    const isRangeSelectingStart = dateIsRangeSelectingStart(dateCurrent);
-    const isRangeSelectingEnd = dateIsRangeSelectingEnd(dateCurrent);
+    const isRangeSelectingStart = dateIsRangeSelectingStart(dateCurrent, disabled, hidden);
+    const isRangeSelectingEnd = dateIsRangeSelectingEnd(dateCurrent, disabled, hidden);
     const isStartOfRow =
       dateCurrent.isSame(dateCurrent.startOf('week'), 'date') ||
       dateCurrent.isSame(dateCurrent.startOf('month'), 'date');

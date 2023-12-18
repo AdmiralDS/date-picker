@@ -113,9 +113,10 @@ export const DateCalendar = ({
   //</editor-fold>
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    const clickedCell = (e.target as HTMLDivElement).dataset.value;
+    const target = e.target as HTMLDivElement;
+    const clickedCell = target.dataset.value;
     const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
-    if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
+    if (clickedDate && !target.dataset.disabledCell && !target.dataset.hiddenCell) {
       handleSelectedDateChange(dayjsDateToString(clickedDate));
     }
     onClick?.(e);
@@ -123,9 +124,6 @@ export const DateCalendar = ({
 
   const dateIsSelected = (dateCurrent?: Dayjs) => {
     return dateCurrent && selectedDateInner && dateCurrent.isSame(selectedDateInner, 'date');
-  };
-  const dateIsOutsideMonth = (dateCurrent?: Dayjs) => {
-    return dateCurrent && dateCurrent.month() !== dateInner.month();
   };
   const dateIsDisabled = (dateCurrent?: Dayjs) => {
     if (!dateCurrent || !disabledDate) {
