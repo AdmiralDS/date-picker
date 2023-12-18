@@ -64,10 +64,11 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    const clickedCell = (e.target as HTMLDivElement).dataset.value;
+    const target = e.target as HTMLDivElement;
+    const clickedCell = target.dataset.value;
     console.log(`click on ${clickedCell}`);
     const clickedDate = dateStringToDayjs(clickedCell);
-    if (clickedDate && !dateIsDisabled(clickedDate) && !dateIsOutsideMonth(clickedDate)) {
+    if (clickedDate && !target.dataset.disabledCell && !target.dataset.hiddenCell) {
       setSelectedDate(clickedDate);
     }
   };
@@ -115,9 +116,6 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
 
   const dateIsSelected = (dateCurrent?: Dayjs) => {
     return dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'date');
-  };
-  const dateIsOutsideMonth = (dateCurrent?: Dayjs) => {
-    return dateCurrent && dateCurrent.month() !== dateInner.month();
   };
   const dateIsDisabled = (dateCurrent?: Dayjs) => {
     return !!(
