@@ -10,6 +10,7 @@ import {
   dayjsStateToString,
   getCurrentTimeZone,
   getDayjsDate,
+  setNoon,
 } from '#src/components/utils.ts';
 import {
   CalendarContainer,
@@ -150,7 +151,7 @@ export const DatePickerCalendar = ({
         />
         <MonthCalendarView
           {...props}
-          dateValue={dayjsDateToString(dateInner)}
+          dateValue={dayjsDateToString(setNoon(dateInner.startOf('month')))}
           selectedDateValue={dayjsStateToString(selectedDateInner)}
           onSelectedDateValueChange={handleMonthClick}
           locale={locale}
@@ -158,7 +159,7 @@ export const DatePickerCalendar = ({
         />
         <YearCalendarView
           {...props}
-          dateValue={dayjsDateToString(dateInner)}
+          dateValue={dayjsDateToString(setNoon(dateInner.startOf('year')))}
           selectedDateValue={dayjsStateToString(selectedDateInner)}
           onSelectedDateValueChange={handleYearClick}
           locale={locale}
