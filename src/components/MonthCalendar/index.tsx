@@ -1,6 +1,7 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 import {
   capitalizeFirstLetter,
@@ -9,11 +10,16 @@ import {
   getCurrentDate,
   getCurrentTimeZone,
   getDayjsDate,
+  setNoon,
 } from '#src/components/utils';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
+import { DefaultMonthCell } from '#src/components/DefaultCell';
+import { MONTHS_COLUMNS, MONTHS_ROWS } from '#src/components/MonthsOfYearWidget/constants.ts';
 
 export interface MonthCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+
+const monthsArray = Array.from(Array(MONTHS_ROWS * MONTHS_COLUMNS).keys());
 
 export const MonthCalendar = ({
   selectedDateValue,
@@ -139,7 +145,7 @@ export const MonthCalendar = ({
     return res;
   };
 
-  const renderMonth = (dateString: string) => {
+  /*const renderMonth = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
     if (!dateCurrent) return {};
     const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
@@ -151,6 +157,29 @@ export const MonthCalendar = ({
 
     return { cellContent, disabled, selected, isCurrent: isCurrent, isActive, ...dataAttributes };
     //return <DefaultMonthCell key={dayjsDateToString(dateCurrent)} {...cellProps} />;
+  };*/
+
+  const monthCells = () => {
+    const localDate = getDayjsDate(locale, timezone, dateValue);
+    const firstMonth = setNoon(dayjs(`${localDate.year()}-01-01T12:00:00`));
+    const array = monthsArray.map((v) => {
+      const dateCurrent = firstMonth.add(v, 'month');
+      const isCurrent = dateCurrent.isSame(getCurrentDate(locale, timezone), 'month');
+      const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'month');
+      return (
+        <DefaultMonthCell
+          key={v}
+          cellContent={capitalizeFirstLetter(dateCurrent.format('MMMM'))}
+          disabled={dateIsDisabled(dateCurrent)}
+          selected={selectedDateInner && dateCurrent.isSame(selectedDateInner, 'month')}
+          isCurrent={isCurrent}
+          isActive={isActive}
+          {...getMonthCellDataAttributes(dateCurrent.toISOString(), isCurrent, isActive)}
+        />
+      );
+    });
+    //console.log(`yearCells stop-${dayjs()}`);
+    return <>{array}</>;
   };
 
   return (
@@ -164,7 +193,8 @@ export const MonthCalendar = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
-      renderCell={renderMonth}
+      //renderCell={renderMonth}
+      cells={monthCells()}
     />
   );
 };

@@ -18,18 +18,22 @@ const MonthsWrapper = styled.div`
 
 const monthsArray = Array.from(Array(MONTHS_ROWS * MONTHS_COLUMNS).keys());
 
-export const Months = ({ rangeCalendar, date, renderCell, ...props }: MonthsProps) => {
+export const Months = ({ rangeCalendar, date, cells, renderCell, ...props }: MonthsProps) => {
   const firstMonth = setNoon(dayjs(`${date.year()}-01-01T12:00:00`));
 
   return (
     <MonthsWrapper {...props}>
-      {monthsArray.map((v) =>
-        rangeCalendar ? (
-          <DefaultMonthRangeCell key={v} {...renderCell(dayjsDateToString(firstMonth.add(v, 'month')))} />
-        ) : (
-          <DefaultMonthCell key={v} {...renderCell(dayjsDateToString(firstMonth.add(v, 'month')))} />
-        ),
-      )}
+      {cells
+        ? cells
+        : renderCell
+          ? monthsArray.map((v) =>
+              rangeCalendar ? (
+                <DefaultMonthRangeCell key={v} {...renderCell(dayjsDateToString(firstMonth.add(v, 'month')))} />
+              ) : (
+                <DefaultMonthCell key={v} {...renderCell(dayjsDateToString(firstMonth.add(v, 'month')))} />
+              ),
+            )
+          : null}
     </MonthsWrapper>
   );
 };

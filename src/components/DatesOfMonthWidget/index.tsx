@@ -23,6 +23,7 @@ export const DatesOfMonthWidget = ({
   locale = 'ru',
   timezone = getCurrentTimeZone(),
   dayNamesProps,
+  cells,
   renderCell,
   ...props
 }: DatesOfMonthWidgetProps) => {
@@ -46,6 +47,7 @@ export const DatesOfMonthWidget = ({
       <Dates
         rangeCalendar={rangeCalendar}
         date={localDate}
+        cells={cells}
         renderCell={renderCell}
         data-container-type="datesWrapper"
       />

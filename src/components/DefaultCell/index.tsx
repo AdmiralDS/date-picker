@@ -412,6 +412,7 @@ export const DefaultYearCell = ({ isCurrent, isHoliday, ...props }: DefaultCellP
     isCurrent,
     props.isActive,
   );
+  console.log('render YearCell');
   return (
     <DefaultCell
       width={YEAR_CELL_WIDTH}
