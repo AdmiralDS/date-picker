@@ -21,12 +21,6 @@ export default {
     dateValue: {
       control: { type: 'text' },
     },
-    defaultDateValue: {
-      control: { type: 'text' },
-    },
-    onDateValueChange: {
-      control: false,
-    },
     timezone: {
       control: { type: 'text' },
     },
