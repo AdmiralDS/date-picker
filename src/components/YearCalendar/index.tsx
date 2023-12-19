@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { MouseEventHandler } from 'react';
 import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 import {
   dateStringToDayjs,
@@ -10,11 +11,17 @@ import {
   getDateByDayOfYear,
   getDayjsDate,
   getDaysInYear,
+  setNoon,
+  yearsRange,
 } from '#src/components/utils';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
+import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
+import { DefaultYearCell } from '#src/components/DefaultCell';
 
 export interface YearCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+
+const yearsArray = Array.from(Array(YEARS_ON_SCREEN).keys());
 
 export const YearCalendar = ({
   selectedDateValue,
@@ -141,7 +148,7 @@ export const YearCalendar = ({
     return res;
   };
 
-  const renderYear = (dateString: string) => {
+  /*const renderYear = (dateString: string) => {
     const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
     if (!dateCurrent) return {};
     const cellContent = dateCurrent.year();
@@ -152,6 +159,31 @@ export const YearCalendar = ({
     const dataAttributes = getYearCellDataAttributes(dateCurrent.toISOString(), isCurrent, isActive);
 
     return { cellContent, disabled, selected, isCurrent, isActive, ...dataAttributes };
+  };*/
+
+  const yearCells = () => {
+    //console.log(`yearCells start-${dayjs()}`);
+    const localDate = getDayjsDate(locale, timezone, dateValue);
+    const { start } = yearsRange(localDate, YEARS_ON_SCREEN);
+    const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`));
+    const array = yearsArray.map((v) => {
+      const dateCurrent = firstYear.add(v, 'year');
+      const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'year');
+      const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'year');
+      return (
+        <DefaultYearCell
+          key={v}
+          cellContent={dateCurrent.year()}
+          disabled={dateIsDisabled(dateCurrent)}
+          selected={dateCurrent && selectedDateInner && dateCurrent.isSame(selectedDateInner, 'year')}
+          isCurrent={isCurrent}
+          isActive={isActive}
+          {...getYearCellDataAttributes(dateCurrent.toISOString(), isCurrent, isActive)}
+        />
+      );
+    });
+    //console.log(`yearCells stop-${dayjs()}`);
+    return <>{array}</>;
   };
 
   /*const handleTwentyYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
@@ -177,7 +209,8 @@ export const YearCalendar = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
-      renderCell={renderYear}
+      cells={yearCells()}
+      //renderCell={renderYear}
     />
   );
 };

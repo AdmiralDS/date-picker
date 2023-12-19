@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 import type { Dayjs } from 'dayjs';
 
 import type { DefaultCellProps } from '#src/components/DefaultCell';
@@ -12,13 +12,15 @@ export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
    * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
   timezone?: string;
-  renderCell: (dateString: string) => DefaultCellProps;
+  renderCell?: (dateString: string) => DefaultCellProps;
+  cells?: ReactNode;
 }
 
 export interface BaseInnerWidgetProps extends HTMLAttributes<HTMLDivElement> {
   rangeCalendar?: boolean;
   date: Dayjs;
-  renderCell: (dateString: string) => DefaultCellProps;
+  renderCell?: (dateString: string) => DefaultCellProps;
+  cells?: ReactNode;
 }
 
 export interface BasePanelWidgetProps extends HTMLAttributes<HTMLDivElement> {

@@ -18,19 +18,24 @@ const YearsWrapper = styled.div`
 
 const yearsArray = Array.from(Array(YEARS_ON_SCREEN).keys());
 
-export const Years = ({ rangeCalendar, date, renderCell, ...props }: YearsProps) => {
+export const Years = ({ rangeCalendar, date, renderCell, cells, ...props }: YearsProps) => {
   const { start } = yearsRange(date, YEARS_ON_SCREEN);
   const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`));
+  //console.log('render Years');
 
   return (
     <YearsWrapper {...props}>
-      {yearsArray.map((v) =>
-        rangeCalendar ? (
-          <DefaultYearRangeCell key={v} {...renderCell(dayjsDateToString(firstYear.add(v, 'year')))} />
-        ) : (
-          <DefaultYearCell key={v} {...renderCell(dayjsDateToString(firstYear.add(v, 'year')))} />
-        ),
-      )}
+      {cells
+        ? cells
+        : renderCell
+          ? yearsArray.map((v) =>
+              rangeCalendar ? (
+                <DefaultYearRangeCell key={v} {...renderCell(dayjsDateToString(firstYear.add(v, 'year')))} />
+              ) : (
+                <DefaultYearCell key={v} {...renderCell(dayjsDateToString(firstYear.add(v, 'year')))} />
+              ),
+            )
+          : null}
     </YearsWrapper>
   );
 };

@@ -24,6 +24,7 @@ export const YearsOfTwentyYearsWidget = ({
   timezone = getCurrentTimeZone(),
   onClick,
   renderCell,
+  cells,
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
   const localDate = getDayjsDate(locale, timezone, date);
@@ -34,6 +35,7 @@ export const YearsOfTwentyYearsWidget = ({
         rangeCalendar={rangeCalendar}
         date={localDate}
         renderCell={renderCell}
+        cells={cells}
         data-container-type="yearsWrapper"
       />
     </YearsOfYearWrapper>
