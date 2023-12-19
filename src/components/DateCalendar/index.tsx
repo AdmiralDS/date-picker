@@ -129,7 +129,7 @@ export const DateCalendar = ({
     if (!dateCurrent || !disabledDate) {
       return false;
     }
-    return disabledDate(dayjsDateToString(dateCurrent));
+    return disabledDate(dateCurrent);
   };
   const dateIsHoliday = (dateCurrent?: Dayjs) => {
     return !!(

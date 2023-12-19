@@ -132,7 +132,7 @@ export const MonthCalendar = ({
     //console.log(`start Month Check-${dayjs()}`);
     const res = datesArray.every((v) => {
       const date = dateCurrent.date(v);
-      return disabledDate(dayjsDateToString(date));
+      return disabledDate(date);
     });
     //console.log(`stop Month Check-${dayjs()}`);
     console.log('months checked');

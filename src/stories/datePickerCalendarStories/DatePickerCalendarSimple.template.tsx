@@ -1,15 +1,16 @@
 import type { MouseEventHandler } from 'react';
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 import type { DatePickerCalendarProps } from '@admiral-ds/date-picker';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
-import { dateStringToDayjs, getCurrentTimeZone } from '#src/components/utils.ts';
-import dayjs from 'dayjs';
+//import { dateStringToDayjs, getCurrentTimeZone } from '#src/components/utils.ts';
 
 export const DatePickerCalendarSimpleTemplate = ({ locale, ...props }: DatePickerCalendarProps) => {
   const localeInner = locale || 'ru';
-  const timezone = getCurrentTimeZone();
-  const dateIsDisabled = (dateString: string) => {
-    const date = dateStringToDayjs(dateString, locale, timezone);
+  //const timezone = getCurrentTimeZone();
+  const dateIsDisabled = (date: Dayjs) => {
+    //const date = dateStringToDayjs(dateString, locale, timezone);
     if (!date) return false;
     return date.isBefore(dayjs());
   };

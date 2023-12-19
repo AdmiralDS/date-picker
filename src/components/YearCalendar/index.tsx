@@ -141,7 +141,7 @@ export const YearCalendar = ({
     const res = datesArray.every((v) => {
       const date = getDateByDayOfYear(dateCurrent, v);
       //console.log(date);
-      return disabledDate(dayjsDateToString(date));
+      return disabledDate(date);
     });
     //console.log(`stop Year Check-${dayjs()}`);
     console.log('years checked');

@@ -229,7 +229,7 @@ export const YearRangeCalendar = ({
     const datesArray = Array.from(Array(getDaysInYear(viewDateInner)).keys());
     return datesArray.every((v) => {
       const date = getDateByDayOfYear(viewDateInner, v);
-      return disabledDate(dayjsDateToString(date));
+      return disabledDate(date);
     });
   };
   const dateIsInRange = (dateCurrent?: Dayjs) => {

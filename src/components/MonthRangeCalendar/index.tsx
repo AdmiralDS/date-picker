@@ -228,7 +228,7 @@ export const MonthRangeCalendar = ({
     const datesArray = Array.from(Array(viewDateInner.endOf('month').date()).keys());
     return datesArray.every((v) => {
       const date = viewDateInner.date(v);
-      return disabledDate(dayjsDateToString(date));
+      return disabledDate(date);
     });
   };
   const dateIsInRange = (dateCurrent?: Dayjs) => {
