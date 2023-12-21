@@ -368,7 +368,7 @@ export const DateRangeCalendar = ({
       {...props}
       rangeCalendar={true}
       renderCell={renderDate}
-      date={dayjsDateToString(dateInner)}
+      date={dateInner}
       locale={locale}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}

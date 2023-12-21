@@ -7,8 +7,10 @@ import {
   dayjsDateToString,
   dayjsStateToString,
   getCurrentDate,
-  getCurrentTimeZone, getDateByDayOfYear,
-  getDayjsDate, getDaysInYear,
+  getCurrentTimeZone,
+  getDateByDayOfYear,
+  getDayjsDate,
+  getDaysInYear,
   sortDatesAsc,
 } from '#src/components/utils';
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
@@ -346,7 +348,7 @@ export const YearRangeCalendar = ({
       {...props}
       rangeCalendar={true}
       renderCell={renderDate}
-      date={dayjsDateToString(dateInner)}
+      date={dateInner}
       locale={locale}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}

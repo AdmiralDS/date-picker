@@ -95,7 +95,7 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
       />
       <MonthsOfYearWidget
         {...props}
-        date={dayjsDateToString(dateState)}
+        date={dateState}
         locale={localeInner}
         timezone={timezone}
         onClick={handleClick}

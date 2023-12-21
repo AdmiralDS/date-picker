@@ -40,6 +40,7 @@ export const DateCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   renderDateCell,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
@@ -230,7 +231,7 @@ export const DateCalendar = ({
       rangeCalendar={false}
       cells={dateCells()}
       //renderCell={renderDateCell || renderDefaultDate}
-      date={dayjsDateToString(dateInner)}
+      date={dateInner}
       locale={locale}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}

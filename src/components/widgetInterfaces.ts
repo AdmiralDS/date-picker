@@ -6,8 +6,8 @@ import type { CalendarViewMode } from '#src/components/calendarInterfaces.ts';
 
 export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   rangeCalendar?: boolean;
-  /** Дата в формате ISO */
-  date?: string;
+  /** Дата */
+  date?: Dayjs;
   locale?: string;
   /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
    * (Intl.DateTimeFormat().resolvedOptions().timeZone) */

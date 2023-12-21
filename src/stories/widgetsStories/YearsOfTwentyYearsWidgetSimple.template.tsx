@@ -6,7 +6,7 @@ import type { Dayjs } from 'dayjs';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { capitalizeFirstLetter, dateStringToDayjs, dayjsDateToString, getCurrentDate } from '#src/components/utils';
+import { capitalizeFirstLetter, dateStringToDayjs, getCurrentDate } from '#src/components/utils';
 import { YEARS_OF_YEAR_WIDGET_WIDTH } from '#src/components/YearsOfTwentyYearsWidget/constants';
 import type { YearsOfTwentyYearsWidgetProps } from '#src/components/YearsOfTwentyYearsWidget';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
@@ -29,12 +29,13 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
   date,
   locale = 'ru',
   timezone,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onClick,
   renderCell,
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
   const localeInner = locale || 'ru';
-  const dateInner = dateStringToDayjs(date, localeInner) || dayjs().locale(localeInner);
+  const dateInner = date || dayjs().tz(timezone).locale(locale);
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(localeInner).add(1, 'year'));
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -69,7 +70,7 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
       <MonthYear>Дата: {capitalizeFirstLetter(dateInner.format('D MMMM YYYY'))}</MonthYear>
       <YearsOfTwentyYearsWidget
         {...props}
-        date={dayjsDateToString(dateInner)}
+        date={dateInner}
         locale={localeInner}
         timezone={timezone}
         onClick={handleClick}

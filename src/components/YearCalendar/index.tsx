@@ -49,6 +49,7 @@ export const YearCalendar = ({
     }
   };
   //</editor-fold>*/
+  const dateInner = getDayjsDate(locale, timezone, dateValue);
 
   //<editor-fold desc="Hovered date">
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(
@@ -163,8 +164,7 @@ export const YearCalendar = ({
 
   const yearCells = () => {
     //console.log(`yearCells start-${dayjs()}`);
-    const localDate = getDayjsDate(locale, timezone, dateValue);
-    const { start } = yearsRange(localDate, YEARS_ON_SCREEN);
+    const { start } = yearsRange(dateInner, YEARS_ON_SCREEN);
     const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`));
     const array = yearsArray.map((v) => {
       const dateCurrent = firstYear.add(v, 'year');
@@ -202,7 +202,7 @@ export const YearCalendar = ({
     <YearsOfTwentyYearsWidget
       {...props}
       rangeCalendar={false}
-      date={dateValue}
+      date={dateInner}
       locale={locale}
       timezone={timezone}
       onClick={handleClick}

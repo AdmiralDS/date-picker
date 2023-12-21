@@ -47,6 +47,7 @@ export const MonthCalendar = ({
     }
   };
   //</editor-fold>*/
+  const dateInner = getDayjsDate(locale, timezone, dateValue);
 
   //<editor-fold desc="Hovered date">
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(
@@ -160,8 +161,7 @@ export const MonthCalendar = ({
   };*/
 
   const monthCells = () => {
-    const localDate = getDayjsDate(locale, timezone, dateValue);
-    const firstMonth = setNoon(dayjs(`${localDate.year()}-01-01T12:00:00`));
+    const firstMonth = setNoon(dayjs(`${dateInner.year()}-01-01T12:00:00`));
     const array = monthsArray.map((v) => {
       const dateCurrent = firstMonth.add(v, 'month');
       const isCurrent = dateCurrent.isSame(getCurrentDate(locale, timezone), 'month');
@@ -186,7 +186,7 @@ export const MonthCalendar = ({
     <MonthsOfYearWidget
       {...props}
       rangeCalendar={false}
-      date={dateValue}
+      date={dateInner}
       locale={locale}
       timezone={timezone}
       onClick={handleClick}

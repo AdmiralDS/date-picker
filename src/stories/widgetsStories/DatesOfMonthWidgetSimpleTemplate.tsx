@@ -1,5 +1,6 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
+import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import styled from 'styled-components';
 
@@ -9,7 +10,6 @@ import {
   capitalizeFirstLetter,
   dateStringToDayjs,
   getCurrentTimeZone,
-  getDayjsDate,
   getCurrentDate,
   dayjsDateToString,
 } from '#src/components/utils';
@@ -17,7 +17,6 @@ import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
 import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
-import dayjs from 'dayjs';
 
 const Wrapper = styled.div`
   display: flex;
@@ -56,7 +55,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
   ...props
 }: DatesOfMonthWidgetProps) => {
   const localeInner = locale || 'ru';
-  const dateInner = getDayjsDate(localeInner, timezone, date);
+  const dateInner = date || dayjs().tz(timezone).locale(locale);
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
     getCurrentDate(localeInner, timezone).add(1, 'day'),
   );
