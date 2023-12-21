@@ -500,7 +500,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
   height: 356px;
   background-color: #FFFFFF;
   border-radius: 4px;
-  box-shadow: 0px -1.5px 6px rgba(0, 0, 0, 0.06),0px 0.6px 1.8px rgba(0, 0, 0, 0.1),0px 3.2px 9px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 3.2px 9px 0px rgba(0, 0, 0, 0.16),0px 0.6px 1.8px 0px rgba(0, 0, 0, 0.10),0px -1.5px 6px 0px rgba(0, 0, 0, 0.06);
 }
 
 .c8 {
@@ -947,8 +947,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-is-current-day-cell="true"
-            data-is-holiday-cell="true"
             data-value="2023-12-12T09:00:00.000Z"
           >
             <div
@@ -958,7 +956,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c24"
+              class="c22"
             >
               12
             </div>
@@ -1107,6 +1105,8 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
+            data-is-current-day-cell="true"
+            data-is-holiday-cell="true"
             data-value="2023-12-21T09:00:00.000Z"
           >
             <div
@@ -1116,7 +1116,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c22"
+              class="c24"
             >
               21
             </div>
