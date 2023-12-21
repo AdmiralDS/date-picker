@@ -102,11 +102,8 @@ export const DateCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Selected date">
-  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
-    defaultSelectedDateValue ? dateStringToDayjs(defaultSelectedDateValue, locale, timezone) : undefined,
-  );
-  const selectedDateInner =
-    (selectedDateValue && dateStringToDayjs(selectedDateValue, locale, timezone)) || selectedDateState;
+  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
+  const selectedDateInner = selectedDateValue || selectedDateState;
 
   const handleSelectedDateChange = (dateString: string) => {
     const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);

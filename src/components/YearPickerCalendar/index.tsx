@@ -4,7 +4,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
 import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { dateStringToDayjs, dayjsDateToString, dayjsStateToString, getCurrentTimeZone } from '#src/components/utils.ts';
+import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import { CalendarContainer, SinglePickerCalendarWrapper, YearCalendarView } from '#src/components/calendarStyle.ts';
@@ -39,11 +39,8 @@ export const YearPickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Selected date">
-  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
-    defaultSelectedDateValue ? dateStringToDayjs(defaultSelectedDateValue, locale, timezone) : undefined,
-  );
-  const selectedDateInner =
-    (selectedDateValue && dateStringToDayjs(selectedDateValue, locale, timezone)) || selectedDateState;
+  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
+  const selectedDateInner = selectedDateValue || selectedDateState;
 
   const handleSelectedDateChange = (dateString: string) => {
     const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
@@ -82,7 +79,7 @@ export const YearPickerCalendar = ({
         <YearCalendarView
           {...props}
           dateValue={dateInner}
-          selectedDateValue={dayjsStateToString(selectedDateInner)}
+          selectedDateValue={selectedDateInner}
           onSelectedDateValueChange={handleYearClick}
           locale={locale}
           $isVisible={true}

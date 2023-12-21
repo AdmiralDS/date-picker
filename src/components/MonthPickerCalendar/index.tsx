@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import type { CalendarViewMode, SingleCalendarProps, PickerCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { dateStringToDayjs, dayjsDateToString, dayjsStateToString, getCurrentTimeZone } from '#src/components/utils.ts';
+import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone } from '#src/components/utils.ts';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 import {
   CalendarContainer,
@@ -57,11 +57,8 @@ export const MonthPickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Selected date">
-  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
-    defaultSelectedDateValue ? dateStringToDayjs(defaultSelectedDateValue, locale, timezone) : undefined,
-  );
-  const selectedDateInner =
-    (selectedDateValue && dateStringToDayjs(selectedDateValue, locale, timezone)) || selectedDateState;
+  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
+  const selectedDateInner = selectedDateValue || selectedDateState;
 
   const handleSelectedDateChange = (dateString: string) => {
     const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
@@ -117,7 +114,7 @@ export const MonthPickerCalendar = ({
         <MonthCalendarView
           {...props}
           dateValue={dateInner}
-          selectedDateValue={dayjsStateToString(selectedDateInner)}
+          selectedDateValue={selectedDateInner}
           onSelectedDateValueChange={handleMonthClick}
           locale={locale}
           $isVisible={viewModeInner === 'months'}
@@ -125,7 +122,7 @@ export const MonthPickerCalendar = ({
         <YearCalendarView
           {...props}
           dateValue={dateInner}
-          selectedDateValue={dayjsStateToString(selectedDateInner)}
+          selectedDateValue={selectedDateInner}
           onSelectedDateValueChange={handleYearClick}
           locale={locale}
           $isVisible={viewModeInner === 'years'}

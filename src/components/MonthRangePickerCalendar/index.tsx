@@ -151,7 +151,7 @@ export const MonthRangePickerCalendar = ({
         <YearCalendarView
           {...props}
           dateValue={dateInner}
-          selectedDateValue={selectedRangeEnd}
+          selectedDateValue={dateStringToDayjs(selectedRangeEnd, locale, timezone)}
           onSelectedDateValueChange={handleYearClick}
           locale={locale}
           $isVisible={viewModeInner === 'years'}

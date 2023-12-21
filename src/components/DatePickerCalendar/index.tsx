@@ -5,13 +5,7 @@ import type { Dayjs } from 'dayjs';
 
 import type { CalendarViewMode, SingleCalendarProps, PickerCalendarProps } from '#src/components/calendarInterfaces.ts';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
-import {
-  dateStringToDayjs,
-  dayjsDateToString,
-  dayjsStateToString,
-  getCurrentTimeZone,
-  setNoon,
-} from '#src/components/utils.ts';
+import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, setNoon } from '#src/components/utils.ts';
 import {
   CalendarContainer,
   SinglePickerCalendarWrapper,
@@ -68,11 +62,8 @@ export const DatePickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Selected date">
-  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(
-    defaultSelectedDateValue ? dateStringToDayjs(defaultSelectedDateValue, locale, timezone) : undefined,
-  );
-  const selectedDateInner =
-    (selectedDateValue && dateStringToDayjs(selectedDateValue, locale, timezone)) || selectedDateState;
+  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
+  const selectedDateInner = selectedDateValue || selectedDateState;
 
   const handleSelectedDateChange = (dateString: string) => {
     const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
@@ -144,7 +135,7 @@ export const DatePickerCalendar = ({
         <DateCalendarView
           {...props}
           dateValue={dateInner}
-          selectedDateValue={dayjsStateToString(selectedDateInner)}
+          selectedDateValue={selectedDateInner}
           onSelectedDateValueChange={handleDateClick}
           locale={locale}
           $isVisible={viewModeInner === 'dates'}
@@ -152,7 +143,7 @@ export const DatePickerCalendar = ({
         <MonthCalendarView
           {...props}
           dateValue={setNoon(dateInner.startOf('month'))}
-          selectedDateValue={dayjsStateToString(selectedDateInner)}
+          selectedDateValue={selectedDateInner}
           onSelectedDateValueChange={handleMonthClick}
           locale={locale}
           $isVisible={viewModeInner === 'months'}
@@ -160,7 +151,7 @@ export const DatePickerCalendar = ({
         <YearCalendarView
           {...props}
           dateValue={setNoon(dateInner.startOf('year'))}
-          selectedDateValue={dayjsStateToString(selectedDateInner)}
+          selectedDateValue={selectedDateInner}
           onSelectedDateValueChange={handleYearClick}
           locale={locale}
           $isVisible={viewModeInner === 'years'}

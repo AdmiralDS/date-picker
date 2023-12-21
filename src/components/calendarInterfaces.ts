@@ -31,9 +31,9 @@ export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
 
 export interface SingleCalendarProps extends CalendarProps {
   /** Выбранное значение даты в формате ISO */
-  selectedDateValue?: string;
+  selectedDateValue?: Dayjs;
   /** Выбранное значение даты по умолчанию в формате ISO */
-  defaultSelectedDateValue?: string;
+  defaultSelectedDateValue?: Dayjs;
   /** Коллбэк на изменение выбранной даты */
   onSelectedDateValueChange?: (dateString: string) => void;
 }
