@@ -112,7 +112,7 @@ export const MonthPickerCalendar = ({
   return (
     <SinglePickerCalendarWrapper>
       <YearNavigationPanelWidget
-        date={dayjsDateToString(dateInner)}
+        date={dateInner}
         viewMode={viewModeInner}
         locale={locale}
         timezone={timezone}

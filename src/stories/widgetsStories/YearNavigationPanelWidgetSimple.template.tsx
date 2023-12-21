@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { MouseEventHandler } from 'react';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import {
@@ -35,7 +36,7 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
   ...props
 }: YearNavigationPanelWidgetProps) => {
   const localeInner = locale || 'ru';
-  const [dateState, setDateState] = useState(getDayjsDate(localeInner, timezone, date));
+  const [dateState, setDateState] = useState(date || dayjs().tz(timezone).locale(locale));
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
     getCurrentDate(localeInner, timezone).add(1, 'day'),
   );
@@ -88,7 +89,7 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
   return (
     <CalendarWrapper>
       <YearNavigationPanelWidget
-        date={dayjsDateToString(dateState)}
+        date={dateState}
         locale={localeInner}
         timezone={timezone}
         onClick={handleYearNavigationPanelClick}

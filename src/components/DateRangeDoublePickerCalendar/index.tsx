@@ -242,7 +242,7 @@ export const DateRangeDoublePickerCalendar = ({
     <DoublePickerCalendarWrapper>
       <SingleContainer>
         <MonthNavigationPanelWidget
-          date={dayjsDateToString(dateLeftInner)}
+          date={dateLeftInner}
           viewMode={viewModeLeftInner}
           locale={locale}
           timezone={timezone}
@@ -282,7 +282,7 @@ export const DateRangeDoublePickerCalendar = ({
       </SingleContainer>
       <SingleContainer>
         <MonthNavigationPanelWidget
-          date={dayjsDateToString(dateRightInner)}
+          date={dateRightInner}
           viewMode={viewModeRightInner}
           locale={locale}
           timezone={timezone}

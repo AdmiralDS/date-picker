@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 
 import { IconPlacement, typography } from '@admiral-ds/react-ui';
 import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
-import { getCurrentTimeZone, getDayjsDate } from '#src/components/utils';
+import { getCurrentTimeZone } from '#src/components/utils';
 import type { BasePanelWidgetProps } from '#src/components/widgetInterfaces.ts';
 
 export interface YearNavigationPanelWidgetProps extends BasePanelWidgetProps {}
@@ -38,7 +39,7 @@ export const YearNavigationPanelWidget = ({
   timezone = getCurrentTimeZone(),
   ...props
 }: YearNavigationPanelWidgetProps) => {
-  const dateInner = getDayjsDate(locale, timezone, date);
+  const dateInner = date || dayjs().tz(timezone).locale(locale);
 
   return (
     <YearNavigationPanelWrapper {...props}>

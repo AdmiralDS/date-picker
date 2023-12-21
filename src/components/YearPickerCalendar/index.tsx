@@ -77,7 +77,7 @@ export const YearPickerCalendar = ({
   return (
     <SinglePickerCalendarWrapper>
       <TwentyYearsNavigationPanelWidget
-        date={dayjsDateToString(dateInner)}
+        date={dateInner}
         viewMode={'years'}
         locale={locale}
         timezone={timezone}

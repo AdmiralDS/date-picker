@@ -25,8 +25,8 @@ export interface BaseInnerWidgetProps extends HTMLAttributes<HTMLDivElement> {
 
 export interface BasePanelWidgetProps extends HTMLAttributes<HTMLDivElement> {
   viewMode?: CalendarViewMode;
-  /** Дата в формате ISO */
-  date?: string;
+  /** Дата */
+  date?: Dayjs;
   locale?: string;
   /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
    * (Intl.DateTimeFormat().resolvedOptions().timeZone) */

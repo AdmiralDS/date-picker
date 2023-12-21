@@ -147,7 +147,7 @@ export const DateRangePickerCalendar = ({
   return (
     <SinglePickerCalendarWrapper>
       <MonthNavigationPanelWidget
-        date={dayjsDateToString(dateInner)}
+        date={dateInner}
         viewMode={viewModeInner}
         locale={locale}
         timezone={timezone}
