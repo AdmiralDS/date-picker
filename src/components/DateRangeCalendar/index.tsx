@@ -8,7 +8,6 @@ import {
   dayjsDateToString,
   dayjsStateToString,
   getCurrentTimeZone,
-  getDayjsDate,
   sortDatesAsc,
 } from '#src/components/utils';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
@@ -72,10 +71,8 @@ export const DateRangeCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
-  const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(
-    dateStringToDayjs(defaultActiveDateValue, locale, timezone),
-  );
-  const activeDateInner = (activeDateValue && getDayjsDate(locale, timezone, activeDateValue)) || activeDateState;
+  const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
+  const activeDateInner = activeDateValue || activeDateState;
 
   const handleActiveDateChange = (dateString?: string) => {
     const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);

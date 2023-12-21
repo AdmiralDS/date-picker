@@ -16,10 +16,10 @@ export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   /** Коллбэк на изменение даты отображения на экране */
   onDateValueChange?: (dateString: string) => void;
 
-  /** Активная дата (hover) в формате ISO */
-  activeDateValue?: string;
-  /** Активная дата (hover) по умолчанию в формате ISO */
-  defaultActiveDateValue?: string;
+  /** Активная дата (hover) */
+  activeDateValue?: Dayjs;
+  /** Активная дата (hover) по умолчанию */
+  defaultActiveDateValue?: Dayjs;
   /** Коллбэк на изменение активной даты */
   onActiveDateValueChange?: (dateString?: string) => void;
 

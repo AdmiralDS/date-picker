@@ -76,10 +76,9 @@ export const YearRangeDoublePickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
-  const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(
-    dateStringToDayjs(defaultActiveDateValue, locale, timezone),
-  );
-  const activeDateInner = (activeDateValue && getDayjsDate(locale, timezone, activeDateValue)) || activeDateState;
+  const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
+  const activeDateInner = activeDateValue || activeDateState;
+
   const handleActiveDateChange = (dateString?: string) => {
     const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
     setActiveDateState(dayjsActiveDate);
@@ -143,7 +142,7 @@ export const YearRangeDoublePickerCalendar = ({
             dateValue={dateLeftInner}
             selectedDateRangeValue={selectedDateRangeInner}
             onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
-            activeDateValue={dayjsStateToString(activeDateInner)}
+            activeDateValue={activeDateInner}
             onActiveDateValueChange={handleActiveDateChange}
             activeDateRangeEndValue={dayjsStateToString(dateRangeActiveEndState)}
             onActiveDateRangeEndValueChange={handleDateRangeActiveEndChange}
@@ -166,7 +165,7 @@ export const YearRangeDoublePickerCalendar = ({
             dateValue={dateRightInner}
             selectedDateRangeValue={selectedDateRangeInner}
             onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
-            activeDateValue={dayjsStateToString(activeDateInner)}
+            activeDateValue={activeDateInner}
             onActiveDateValueChange={handleActiveDateChange}
             activeDateRangeEndValue={dayjsStateToString(dateRangeActiveEndState)}
             onActiveDateRangeEndValueChange={handleDateRangeActiveEndChange}
