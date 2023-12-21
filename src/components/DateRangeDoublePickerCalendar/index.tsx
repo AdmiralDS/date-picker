@@ -111,8 +111,12 @@ export const DateRangeDoublePickerCalendar = ({
   //<editor-fold desc="Selected range">
   const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
+
   const handleSelectedDateRangeChange = (dateRangeString: [string | undefined, string | undefined]) => {
-    setSelectedDateRangeState(dateRangeString);
+    setSelectedDateRangeState([
+      dateStringToDayjs(dateRangeString[0], locale, timezone),
+      dateStringToDayjs(dateRangeString[1], locale, timezone),
+    ]);
     onSelectedDateRangeValueChange?.(dateRangeString);
   };
   //</editor-fold>
@@ -216,16 +220,10 @@ export const DateRangeDoublePickerCalendar = ({
 
   const getSelectedRangeEnd = () => {
     if (!dateRangeActiveEndState || !selectedDateRangeInner) return undefined;
-    if (
-      selectedDateRangeInner[0] &&
-      dateRangeActiveEndState.isSame(dateStringToDayjs(selectedDateRangeInner[0], locale, timezone), 'date')
-    ) {
+    if (selectedDateRangeInner[0] && dateRangeActiveEndState.isSame(selectedDateRangeInner[0], 'date')) {
       return selectedDateRangeInner[1];
     }
-    if (
-      selectedDateRangeInner[1] &&
-      dateRangeActiveEndState.isSame(dateStringToDayjs(selectedDateRangeInner[1], locale, timezone), 'date')
-    ) {
+    if (selectedDateRangeInner[1] && dateRangeActiveEndState.isSame(selectedDateRangeInner[1], 'date')) {
       return selectedDateRangeInner[0];
     }
   };
@@ -258,7 +256,7 @@ export const DateRangeDoublePickerCalendar = ({
           <MonthCalendarView
             {...props}
             dateValue={dateLeftInner}
-            selectedDateValue={dateStringToDayjs(selectedRangeEnd, locale, timezone)}
+            selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleLeftMonthClick}
             locale={locale}
             $isVisible={viewModeLeftInner === 'months'}
@@ -266,7 +264,7 @@ export const DateRangeDoublePickerCalendar = ({
           <YearCalendarView
             {...props}
             dateValue={dateLeftInner}
-            selectedDateValue={dateStringToDayjs(selectedRangeEnd, locale, timezone)}
+            selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleLeftYearClick}
             locale={locale}
             $isVisible={viewModeLeftInner === 'years'}
@@ -298,7 +296,7 @@ export const DateRangeDoublePickerCalendar = ({
           <MonthCalendarView
             {...props}
             dateValue={dateLeftInner}
-            selectedDateValue={dateStringToDayjs(selectedRangeEnd, locale, timezone)}
+            selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleRightMonthClick}
             locale={locale}
             $isVisible={viewModeRightInner === 'months'}
@@ -306,7 +304,7 @@ export const DateRangeDoublePickerCalendar = ({
           <YearCalendarView
             {...props}
             dateValue={dateRightInner}
-            selectedDateValue={dateStringToDayjs(selectedRangeEnd, locale, timezone)}
+            selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleRightYearClick}
             locale={locale}
             $isVisible={viewModeRightInner === 'years'}

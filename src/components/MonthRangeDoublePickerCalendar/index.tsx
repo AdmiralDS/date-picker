@@ -111,7 +111,10 @@ export const MonthRangeDoublePickerCalendar = ({
   const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
   const handleSelectedDateRangeChange = (dateRangeString: [string | undefined, string | undefined]) => {
-    setSelectedDateRangeState(dateRangeString);
+    setSelectedDateRangeState([
+      dateStringToDayjs(dateRangeString[0], locale, timezone),
+      dateStringToDayjs(dateRangeString[1], locale, timezone),
+    ]);
     onSelectedDateRangeValueChange?.(dateRangeString);
   };
   //</editor-fold>
@@ -186,16 +189,10 @@ export const MonthRangeDoublePickerCalendar = ({
 
   const getSelectedRangeEnd = () => {
     if (!dateRangeActiveEndState || !selectedDateRangeInner) return undefined;
-    if (
-      selectedDateRangeInner[0] &&
-      dateRangeActiveEndState.isSame(dateStringToDayjs(selectedDateRangeInner[0], locale, timezone), 'month')
-    ) {
+    if (selectedDateRangeInner[0] && dateRangeActiveEndState.isSame(selectedDateRangeInner[0], 'month')) {
       return selectedDateRangeInner[1];
     }
-    if (
-      selectedDateRangeInner[1] &&
-      dateRangeActiveEndState.isSame(dateStringToDayjs(selectedDateRangeInner[1], locale, timezone), 'month')
-    ) {
+    if (selectedDateRangeInner[1] && dateRangeActiveEndState.isSame(selectedDateRangeInner[1], 'month')) {
       return selectedDateRangeInner[0];
     }
   };
@@ -228,7 +225,7 @@ export const MonthRangeDoublePickerCalendar = ({
           <YearCalendarView
             {...props}
             dateValue={dateLeftInner}
-            selectedDateValue={dateStringToDayjs(selectedRangeEnd, locale, timezone)}
+            selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleLeftYearClick}
             locale={locale}
             $isVisible={viewModeLeftInner === 'years'}
@@ -260,7 +257,7 @@ export const MonthRangeDoublePickerCalendar = ({
           <YearCalendarView
             {...props}
             dateValue={dateRightInner}
-            selectedDateValue={dateStringToDayjs(selectedRangeEnd, locale, timezone)}
+            selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleRightYearClick}
             locale={locale}
             $isVisible={viewModeRightInner === 'years'}

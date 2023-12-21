@@ -68,7 +68,10 @@ export const DateRangePickerCalendar = ({
   const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
   const handleSelectedDateRangeChange = (dateRangeString: [string | undefined, string | undefined]) => {
-    setSelectedDateRangeState(dateRangeString);
+    setSelectedDateRangeState([
+      dateStringToDayjs(dateRangeString[0], locale, timezone),
+      dateStringToDayjs(dateRangeString[1], locale, timezone),
+    ]);
     onSelectedDateRangeValueChange?.(dateRangeString);
   };
   //</editor-fold>
@@ -130,16 +133,10 @@ export const DateRangePickerCalendar = ({
   const getSelectedRangeEnd = () => {
     //console.log(`dateRangeActiveEndState-${dateRangeActiveEndState}, selectedDateRangeInner-${selectedDateRangeInner}`);
     if (!dateRangeActiveEndState || !selectedDateRangeInner) return undefined;
-    if (
-      selectedDateRangeInner[0] &&
-      dateRangeActiveEndState.isSame(dateStringToDayjs(selectedDateRangeInner[0], locale, timezone), 'date')
-    ) {
+    if (selectedDateRangeInner[0] && dateRangeActiveEndState.isSame(selectedDateRangeInner[0], 'date')) {
       return selectedDateRangeInner[1];
     }
-    if (
-      selectedDateRangeInner[1] &&
-      dateRangeActiveEndState.isSame(dateStringToDayjs(selectedDateRangeInner[1], locale, timezone), 'date')
-    ) {
+    if (selectedDateRangeInner[1] && dateRangeActiveEndState.isSame(selectedDateRangeInner[1], 'date')) {
       return selectedDateRangeInner[0];
     }
   };
@@ -168,7 +165,7 @@ export const DateRangePickerCalendar = ({
         <MonthCalendarView
           {...props}
           dateValue={dateInner}
-          selectedDateValue={dateStringToDayjs(selectedRangeEnd, locale, timezone)}
+          selectedDateValue={selectedRangeEnd}
           onSelectedDateValueChange={handleMonthClick}
           locale={locale}
           $isVisible={viewModeInner === 'months'}
@@ -176,7 +173,7 @@ export const DateRangePickerCalendar = ({
         <YearCalendarView
           {...props}
           dateValue={dateInner}
-          selectedDateValue={dateStringToDayjs(selectedRangeEnd, locale, timezone)}
+          selectedDateValue={selectedRangeEnd}
           onSelectedDateValueChange={handleYearClick}
           locale={locale}
           $isVisible={viewModeInner === 'years'}

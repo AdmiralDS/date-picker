@@ -121,11 +121,8 @@ export const DateRangeCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="First date of range">
-  const [dateRangeFirstState, setDateRangeFirstState] = useState(
-    dateStringToDayjs(defaultSelectedDateRangeValue?.[0], locale, timezone),
-  );
-  const dateRangeFirstInner =
-    (selectedDateRangeValue && dateStringToDayjs(selectedDateRangeValue?.[0], locale, timezone)) || dateRangeFirstState;
+  const [dateRangeFirstState, setDateRangeFirstState] = useState(defaultSelectedDateRangeValue?.[0]);
+  const dateRangeFirstInner = selectedDateRangeValue?.[0] || dateRangeFirstState;
   const handleDateRangeFirstChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     //console.log(`first-${dateString}`);
@@ -134,12 +131,8 @@ export const DateRangeCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Second date of range">
-  const [dateRangeSecondState, setDateRangeSecondState] = useState(
-    dateStringToDayjs(defaultSelectedDateRangeValue?.[1], locale, timezone),
-  );
-  const dateRangeSecondInner =
-    (selectedDateRangeValue && dateStringToDayjs(selectedDateRangeValue?.[1], locale, timezone)) ||
-    dateRangeSecondState;
+  const [dateRangeSecondState, setDateRangeSecondState] = useState(defaultSelectedDateRangeValue?.[1]);
+  const dateRangeSecondInner = selectedDateRangeValue?.[1] || dateRangeSecondState;
   const handleDateRangeSecondChange = (dateString?: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     //console.log(`second-${dateString}`);

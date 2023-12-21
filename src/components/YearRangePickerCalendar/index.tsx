@@ -46,7 +46,10 @@ export const YearRangePickerCalendar = ({
   const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
   const handleSelectedDateRangeChange = (dateRangeString: [string | undefined, string | undefined]) => {
-    setSelectedDateRangeState(dateRangeString);
+    setSelectedDateRangeState([
+      dateStringToDayjs(dateRangeString[0], locale, timezone),
+      dateStringToDayjs(dateRangeString[1], locale, timezone),
+    ]);
     onSelectedDateRangeValueChange?.(dateRangeString);
   };
   //</editor-fold>

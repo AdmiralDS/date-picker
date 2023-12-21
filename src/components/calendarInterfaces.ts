@@ -39,10 +39,10 @@ export interface SingleCalendarProps extends CalendarProps {
 }
 
 export interface RangeCalendarProps extends CalendarProps {
-  /** Выбранное значение диапазона дат в формате ISO */
-  selectedDateRangeValue?: [string | undefined, string | undefined];
-  /** Выбранное значение диапазона дат по умолчанию в формате ISO */
-  defaultSelectedDateRangeValue?: [string | undefined, string | undefined];
+  /** Выбранное значение диапазона дат */
+  selectedDateRangeValue?: [Dayjs | undefined, Dayjs | undefined];
+  /** Выбранное значение диапазона дат по умолчанию */
+  defaultSelectedDateRangeValue?: [Dayjs | undefined, Dayjs | undefined];
   /** Коллбэк на изменение выбранного диапазона дат */
   onSelectedDateRangeValueChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
 
