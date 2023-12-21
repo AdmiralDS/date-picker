@@ -1,5 +1,6 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
+import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import type { CalendarViewMode, SingleCalendarProps, PickerCalendarProps } from '#src/components/calendarInterfaces.ts';
@@ -9,7 +10,6 @@ import {
   dayjsDateToString,
   dayjsStateToString,
   getCurrentTimeZone,
-  getDayjsDate,
   setNoon,
 } from '#src/components/utils.ts';
 import {
@@ -55,8 +55,8 @@ export const DatePickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
-  const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
+  const [dateState, setDateState] = useState(defaultDateValue || dayjs().tz(timezone).locale(locale));
+  const dateInner = dateValue || dateState;
 
   const handleDateChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
@@ -143,7 +143,7 @@ export const DatePickerCalendar = ({
       <CalendarContainer>
         <DateCalendarView
           {...props}
-          dateValue={dayjsDateToString(dateInner)}
+          dateValue={dateInner}
           selectedDateValue={dayjsStateToString(selectedDateInner)}
           onSelectedDateValueChange={handleDateClick}
           locale={locale}
@@ -151,7 +151,7 @@ export const DatePickerCalendar = ({
         />
         <MonthCalendarView
           {...props}
-          dateValue={dayjsDateToString(setNoon(dateInner.startOf('month')))}
+          dateValue={setNoon(dateInner.startOf('month'))}
           selectedDateValue={dayjsStateToString(selectedDateInner)}
           onSelectedDateValueChange={handleMonthClick}
           locale={locale}
@@ -159,7 +159,7 @@ export const DatePickerCalendar = ({
         />
         <YearCalendarView
           {...props}
-          dateValue={dayjsDateToString(setNoon(dateInner.startOf('year')))}
+          dateValue={setNoon(dateInner.startOf('year'))}
           selectedDateValue={dayjsStateToString(selectedDateInner)}
           onSelectedDateValueChange={handleYearClick}
           locale={locale}

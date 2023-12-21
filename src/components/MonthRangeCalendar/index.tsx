@@ -1,5 +1,6 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
+import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import {
@@ -68,7 +69,7 @@ export const MonthRangeCalendar = ({
   ...props
 }: MonthRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const dateInner = getDayjsDate(locale, timezone, dateValue);
+  const dateInner = dateValue || dayjs().tz(timezone).locale(locale);
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
@@ -221,13 +222,12 @@ export const MonthRangeCalendar = ({
   };
 
   const dateIsDisabled = (dateCurrent?: Dayjs) => {
-    const viewDateInner = dateStringToDayjs(dateValue, locale, timezone);
-    if (!dateCurrent || !disabledDate || !viewDateInner) {
+    if (!dateCurrent || !disabledDate || !dateInner) {
       return false;
     }
-    const datesArray = Array.from(Array(viewDateInner.endOf('month').date()).keys());
+    const datesArray = Array.from(Array(dateInner.endOf('month').date()).keys());
     return datesArray.every((v) => {
-      const date = viewDateInner.date(v);
+      const date = dateInner.date(v);
       return disabledDate(date);
     });
   };

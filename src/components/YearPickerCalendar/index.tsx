@@ -1,15 +1,10 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
-import {
-  dateStringToDayjs,
-  dayjsDateToString,
-  dayjsStateToString,
-  getCurrentTimeZone,
-  getDayjsDate,
-} from '#src/components/utils.ts';
+import { dateStringToDayjs, dayjsDateToString, dayjsStateToString, getCurrentTimeZone } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import { CalendarContainer, SinglePickerCalendarWrapper, YearCalendarView } from '#src/components/calendarStyle.ts';
@@ -31,8 +26,8 @@ export const YearPickerCalendar = ({
   ...props
 }: YearPickerCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
-  const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
+  const [dateState, setDateState] = useState(defaultDateValue || dayjs().tz(timezone).locale(locale));
+  const dateInner = dateValue || dateState;
 
   const handleDateChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
@@ -86,7 +81,7 @@ export const YearPickerCalendar = ({
       <CalendarContainer>
         <YearCalendarView
           {...props}
-          dateValue={dayjsDateToString(dateInner)}
+          dateValue={dateInner}
           selectedDateValue={dayjsStateToString(selectedDateInner)}
           onSelectedDateValueChange={handleYearClick}
           locale={locale}

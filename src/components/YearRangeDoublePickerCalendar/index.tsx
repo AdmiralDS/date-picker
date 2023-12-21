@@ -140,7 +140,7 @@ export const YearRangeDoublePickerCalendar = ({
         <CalendarContainer>
           <YearRangeCalendarView
             {...props}
-            dateValue={dayjsDateToString(dateLeftInner)}
+            dateValue={dateLeftInner}
             selectedDateRangeValue={selectedDateRangeInner}
             onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
             activeDateValue={dayjsStateToString(activeDateInner)}
@@ -163,7 +163,7 @@ export const YearRangeDoublePickerCalendar = ({
         <CalendarContainer>
           <YearRangeCalendarView
             {...props}
-            dateValue={dayjsDateToString(dateRightInner)}
+            dateValue={dateRightInner}
             selectedDateRangeValue={selectedDateRangeInner}
             onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
             activeDateValue={dayjsStateToString(activeDateInner)}

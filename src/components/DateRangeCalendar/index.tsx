@@ -68,7 +68,7 @@ export const DateRangeCalendar = ({
   ...props
 }: DateRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const dateInner = getDayjsDate(locale, timezone, dateValue);
+  const dateInner = dateValue || dayjs().tz(timezone).locale(locale);
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">

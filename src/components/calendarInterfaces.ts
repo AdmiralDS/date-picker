@@ -9,10 +9,10 @@ export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   /** Дата, которая не может быть выбрана */
   disabledDate?: (currentDate: Dayjs) => boolean;
 
-  /** Дата для отображения на экране в формате ISO */
-  dateValue?: string;
-  /** Дата для отображения на экране по умолчанию в формате ISO */
-  defaultDateValue?: string;
+  /** Дата для отображения на экране */
+  dateValue?: Dayjs;
+  /** Дата для отображения на экране по умолчанию */
+  defaultDateValue?: Dayjs;
   /** Коллбэк на изменение даты отображения на экране */
   onDateValueChange?: (dateString: string) => void;
 

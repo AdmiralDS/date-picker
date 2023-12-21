@@ -1,9 +1,10 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
+import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import type { RangeCalendarProps, PickerCalendarProps, CalendarViewMode } from '#src/components/calendarInterfaces.ts';
-import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils.ts';
+import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone } from '#src/components/utils.ts';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import {
   CalendarContainer,
@@ -51,8 +52,8 @@ export const DateRangePickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
-  const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
+  const [dateState, setDateState] = useState(defaultDateValue || dayjs().tz(timezone).locale(locale));
+  const dateInner = dateValue || dateState;
 
   const handleDateChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
@@ -156,7 +157,7 @@ export const DateRangePickerCalendar = ({
       <CalendarContainer>
         <DateRangeCalendarView
           {...props}
-          dateValue={dayjsDateToString(dateInner)}
+          dateValue={dateInner}
           selectedDateRangeValue={selectedDateRangeInner}
           defaultSelectedDateRangeValue={defaultSelectedDateRangeValue}
           onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
@@ -166,7 +167,7 @@ export const DateRangePickerCalendar = ({
         />
         <MonthCalendarView
           {...props}
-          dateValue={dayjsDateToString(dateInner)}
+          dateValue={dateInner}
           selectedDateValue={selectedRangeEnd}
           onSelectedDateValueChange={handleMonthClick}
           locale={locale}
@@ -174,7 +175,7 @@ export const DateRangePickerCalendar = ({
         />
         <YearCalendarView
           {...props}
-          dateValue={dayjsDateToString(dateInner)}
+          dateValue={dateInner}
           selectedDateValue={selectedRangeEnd}
           onSelectedDateValueChange={handleYearClick}
           locale={locale}

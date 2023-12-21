@@ -221,7 +221,7 @@ export const MonthRangeDoublePickerCalendar = ({
         <CalendarContainer>
           <MonthRangeCalendarView
             {...props}
-            dateValue={dayjsDateToString(dateLeftInner)}
+            dateValue={dateLeftInner}
             selectedDateRangeValue={selectedDateRangeInner}
             defaultSelectedDateRangeValue={defaultSelectedDateRangeValue}
             onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
@@ -234,7 +234,7 @@ export const MonthRangeDoublePickerCalendar = ({
           />
           <YearCalendarView
             {...props}
-            dateValue={dayjsDateToString(dateLeftInner)}
+            dateValue={dateLeftInner}
             selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleLeftYearClick}
             locale={locale}
@@ -253,7 +253,7 @@ export const MonthRangeDoublePickerCalendar = ({
         <CalendarContainer>
           <MonthRangeCalendarView
             {...props}
-            dateValue={dayjsDateToString(dateRightInner)}
+            dateValue={dateRightInner}
             selectedDateRangeValue={selectedDateRangeInner}
             defaultSelectedDateRangeValue={defaultSelectedDateRangeValue}
             onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
@@ -266,7 +266,7 @@ export const MonthRangeDoublePickerCalendar = ({
           />
           <YearCalendarView
             {...props}
-            dateValue={dayjsDateToString(dateRightInner)}
+            dateValue={dateRightInner}
             selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleRightYearClick}
             locale={locale}

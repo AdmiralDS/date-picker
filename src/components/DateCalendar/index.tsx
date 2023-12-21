@@ -59,7 +59,7 @@ export const DateCalendar = ({
     }
   };
   //</editor-fold>*/
-  const dateInner = getDayjsDate(locale, timezone, dateValue);
+  const dateInner = dateValue || dayjs().tz(timezone).locale(locale);
 
   //<editor-fold desc="Hovered date">
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(
@@ -193,8 +193,7 @@ export const DateCalendar = ({
   };*/
 
   const dateCells = () => {
-    const localDate = getDayjsDate(locale, timezone, dateValue);
-    const firstDate = setNoon(localDate.startOf('month').startOf('week'));
+    const firstDate = setNoon(dateInner.startOf('month').startOf('week'));
     const array = datesArray.map((v) => {
       const dateCurrent = firstDate.add(v, 'day');
       const isCurrent = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');

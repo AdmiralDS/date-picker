@@ -47,7 +47,7 @@ export const MonthCalendar = ({
     }
   };
   //</editor-fold>*/
-  const dateInner = getDayjsDate(locale, timezone, dateValue);
+  const dateInner = dateValue || dayjs().tz(timezone).locale(locale);
 
   //<editor-fold desc="Hovered date">
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(
