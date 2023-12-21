@@ -56,10 +56,10 @@ export interface RangeCalendarProps extends CalendarProps {
 
 export interface RangeDoubleCalendarProps
   extends Omit<RangeCalendarProps, 'dateValue' | 'defaultDateValue' | 'onDateValueChange'> {
-  /** Выбранное значение диапазона дат в формате ISO */
-  dateRangeValue?: [string, string];
-  /** Выбранное значение диапазона дат по умолчанию в формате ISO */
-  defaultDateRangeValue?: [string | undefined, string | undefined];
+  /** Выбранное значение диапазона дат */
+  dateRangeValue?: [Dayjs, Dayjs];
+  /** Выбранное значение диапазона дат по умолчанию */
+  defaultDateRangeValue?: [Dayjs | undefined, Dayjs | undefined];
   /** Коллбэк на изменение выбранного диапазона дат */
   onDateRangeValueChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
 }

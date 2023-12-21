@@ -1,8 +1,9 @@
 import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils.ts';
+import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces.ts';
@@ -34,8 +35,9 @@ export const YearRangeDoublePickerCalendar = ({
   ...props
 }: YearRangeDoublePickerCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const [dateLeftState, setDateLeftState] = useState(getDayjsDate(locale, timezone, defaultDateRangeValue?.[0]));
-  const dateLeftInner = (dateRangeValue && getDayjsDate(locale, timezone, dateRangeValue[0])) || dateLeftState;
+  const [dateLeftState, setDateLeftState] = useState(defaultDateRangeValue?.[0] || dayjs().tz(timezone).locale(locale));
+  const dateLeftInner = dateRangeValue?.[0] || dateLeftState;
+
   const handleDateLeftChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     if (dayjsDate) {
@@ -43,12 +45,12 @@ export const YearRangeDoublePickerCalendar = ({
       onDateRangeValueChange?.([dateString, dayjsDateToString(dateRightInner)]);
     }
   };
+
   const [dateRightState, setDateRightState] = useState(
-    defaultDateRangeValue && defaultDateRangeValue[1]
-      ? getDayjsDate(locale, timezone, defaultDateRangeValue[1])
-      : dateLeftInner.add(YEARS_ON_SCREEN, 'year'),
+    defaultDateRangeValue?.[1] || dateLeftInner.add(YEARS_ON_SCREEN, 'year'),
   );
-  const dateRightInner = (dateRangeValue && getDayjsDate(locale, timezone, dateRangeValue[1])) || dateRightState;
+  const dateRightInner = dateRangeValue?.[1] || dateRightState;
+
   const handleDateRightChange = (dateString: string) => {
     const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
     if (dayjsDate) {
