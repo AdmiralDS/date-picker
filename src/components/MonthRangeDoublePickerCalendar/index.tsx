@@ -2,13 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import {
-  dateStringToDayjs,
-  dayjsDateToString,
-  dayjsStateToString,
-  getCurrentTimeZone,
-  getDayjsDate,
-} from '#src/components/utils.ts';
+import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils.ts';
 import type {
   RangeDoubleCalendarProps,
   CalendarViewMode,
@@ -224,7 +218,7 @@ export const MonthRangeDoublePickerCalendar = ({
             selectedDateRangeValue={selectedDateRangeInner}
             defaultSelectedDateRangeValue={defaultSelectedDateRangeValue}
             onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
-            activeDateRangeEndValue={dayjsStateToString(dateRangeActiveEndState)}
+            activeDateRangeEndValue={dateRangeActiveEndState}
             onActiveDateRangeEndValueChange={handleDateRangeActiveEndChange}
             activeDateValue={activeDateInner}
             onActiveDateValueChange={handleActiveDateChange}
@@ -256,7 +250,7 @@ export const MonthRangeDoublePickerCalendar = ({
             selectedDateRangeValue={selectedDateRangeInner}
             defaultSelectedDateRangeValue={defaultSelectedDateRangeValue}
             onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
-            activeDateRangeEndValue={dayjsStateToString(dateRangeActiveEndState)}
+            activeDateRangeEndValue={dateRangeActiveEndState}
             onActiveDateRangeEndValueChange={handleDateRangeActiveEndChange}
             activeDateValue={activeDateInner}
             onActiveDateValueChange={handleActiveDateChange}

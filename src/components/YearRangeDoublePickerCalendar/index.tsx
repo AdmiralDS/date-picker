@@ -2,13 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import {
-  dateStringToDayjs,
-  dayjsDateToString,
-  dayjsStateToString,
-  getCurrentTimeZone,
-  getDayjsDate,
-} from '#src/components/utils.ts';
+import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, getDayjsDate } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces.ts';
@@ -144,7 +138,7 @@ export const YearRangeDoublePickerCalendar = ({
             onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
             activeDateValue={activeDateInner}
             onActiveDateValueChange={handleActiveDateChange}
-            activeDateRangeEndValue={dayjsStateToString(dateRangeActiveEndState)}
+            activeDateRangeEndValue={dateRangeActiveEndState}
             onActiveDateRangeEndValueChange={handleDateRangeActiveEndChange}
             locale={locale}
             $isVisible={true}
@@ -167,7 +161,7 @@ export const YearRangeDoublePickerCalendar = ({
             onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
             activeDateValue={activeDateInner}
             onActiveDateValueChange={handleActiveDateChange}
-            activeDateRangeEndValue={dayjsStateToString(dateRangeActiveEndState)}
+            activeDateRangeEndValue={dateRangeActiveEndState}
             onActiveDateRangeEndValueChange={handleDateRangeActiveEndChange}
             locale={locale}
             $isVisible={true}

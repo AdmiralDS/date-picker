@@ -149,7 +149,7 @@ export const MonthRangeCalendar = ({
   //<editor-fold desc="Active end of range">
   const setInitialDateRangeActiveEndState = () => {
     if (defaultActiveDateRangeEndValue) {
-      return dateStringToDayjs(defaultActiveDateRangeEndValue, locale, timezone);
+      return defaultActiveDateRangeEndValue;
     }
     if (dateRangeFirstInner && dateRangeSecondInner) {
       return dateRangeSecondInner;
@@ -165,9 +165,7 @@ export const MonthRangeCalendar = ({
   const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>(
     setInitialDateRangeActiveEndState(),
   );
-  const dateRangeActiveEndInner = activeDateRangeEndValue
-    ? dateStringToDayjs(activeDateRangeEndValue, locale, timezone)
-    : dateRangeActiveEndState;
+  const dateRangeActiveEndInner = activeDateRangeEndValue || dateRangeActiveEndState;
   const handleDateRangeActiveEndChange = (dateString?: string) => {
     const dateDayjs = dateStringToDayjs(dateString, locale, timezone);
     setDateRangeActiveEndState(dateDayjs);

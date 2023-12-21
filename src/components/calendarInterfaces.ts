@@ -46,10 +46,10 @@ export interface RangeCalendarProps extends CalendarProps {
   /** Коллбэк на изменение выбранного диапазона дат */
   onSelectedDateRangeValueChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
 
-  /** Значение активного конца диапазона дат в формате ISO */
-  activeDateRangeEndValue?: string;
-  /** Значение активного конца диапазона дат по умолчанию в формате ISO */
-  defaultActiveDateRangeEndValue?: string;
+  /** Значение активного конца диапазона дат */
+  activeDateRangeEndValue?: Dayjs;
+  /** Значение активного конца диапазона дат по умолчанию */
+  defaultActiveDateRangeEndValue?: Dayjs;
   /** Коллбэк на изменение значения активного конца диапазона дат */
   onActiveDateRangeEndValueChange?: (dateString: string | undefined) => void;
 }
