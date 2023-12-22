@@ -14,9 +14,7 @@ import {
 } from '#src/components/calendarStyle.ts';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 
-export interface MonthPickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {
-  onYearChange?: (dateString: string) => void;
-}
+export interface MonthPickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {}
 
 export const MonthPickerCalendar = ({
   viewModeValue,
@@ -28,7 +26,6 @@ export const MonthPickerCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
-  onYearChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
@@ -60,22 +57,19 @@ export const MonthPickerCalendar = ({
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
   const selectedDateInner = selectedDateValue || selectedDateState;
 
-  const handleSelectedDateChange = (dateString: string) => {
-    const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
-    setSelectedDateState(dayjsSelectedDate);
-    onSelectedDateValueChange?.(dateString);
+  const handleSelectedDateChange = (date: Dayjs) => {
+    setSelectedDateState(date);
+    onSelectedDateValueChange?.(date);
   };
   //</editor-fold>
 
-  const handleMonthClick = (dateString: string) => {
-    handleSelectedDateChange(dateString);
+  const handleMonthClick = (date: Dayjs) => {
+    handleSelectedDateChange(date);
   };
-  const handleYearClick = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    const newDate = dayjsDate ? dayjsDateToString(dateInner.year(dayjsDate.year())) : dateString;
-    handleDateChange(newDate);
+  const handleYearClick = (date: Dayjs) => {
+    const newDate = dateInner.year(date.year());
+    handleDateChange(dayjsDateToString(newDate));
     handleViewModeChange('months');
-    onYearChange?.(newDate);
   };
 
   const handleYearNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {

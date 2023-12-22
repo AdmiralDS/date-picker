@@ -15,11 +15,7 @@ import {
 } from '#src/components/calendarStyle.ts';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 
-export interface DatePickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {
-  onDateChange?: (dateString: string) => void;
-  onMonthChange?: (dateString: string) => void;
-  onYearChange?: (dateString: string) => void;
-}
+export interface DatePickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {}
 
 export const DatePickerCalendar = ({
   viewModeValue,
@@ -31,9 +27,6 @@ export const DatePickerCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
-  onDateChange,
-  onMonthChange,
-  onYearChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
@@ -65,30 +58,24 @@ export const DatePickerCalendar = ({
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
   const selectedDateInner = selectedDateValue || selectedDateState;
 
-  const handleSelectedDateChange = (dateString: string) => {
-    const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
-    setSelectedDateState(dayjsSelectedDate);
-    onSelectedDateValueChange?.(dateString);
+  const handleSelectedDateChange = (date: Dayjs) => {
+    setSelectedDateState(date);
+    onSelectedDateValueChange?.(date);
   };
   //</editor-fold>
 
-  const handleDateClick = (dateString: string) => {
-    handleSelectedDateChange(dateString);
-    onDateChange?.(dateString);
+  const handleDateClick = (date: Dayjs) => {
+    handleSelectedDateChange(date);
   };
-  const handleMonthClick = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    const newDate = dayjsDate ? dayjsDateToString(dateInner.month(dayjsDate.month())) : dateString;
-    handleDateChange(newDate);
+  const handleMonthClick = (date: Dayjs) => {
+    const newDate = dateInner.month(date.month());
+    handleDateChange(dayjsDateToString(newDate));
     handleViewModeChange('dates');
-    onMonthChange?.(newDate);
   };
-  const handleYearClick = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    const newDate = dayjsDate ? dayjsDateToString(dateInner.year(dayjsDate.year())) : dateString;
-    handleDateChange(newDate);
+  const handleYearClick = (date: Dayjs) => {
+    const newDate = dateInner.year(date.year());
+    handleDateChange(dayjsDateToString(newDate));
     handleViewModeChange('dates');
-    onYearChange?.(newDate);
   };
 
   const handleMonthNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {

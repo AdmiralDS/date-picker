@@ -20,10 +20,7 @@ export interface DateRangePickerCalendarProps
       RangeCalendarProps,
       'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
     >,
-    PickerCalendarProps {
-  onMonthChange?: (dateString: string) => void;
-  onYearChange?: (dateString: string) => void;
-}
+    PickerCalendarProps {}
 
 export const DateRangePickerCalendar = ({
   viewModeValue,
@@ -35,8 +32,6 @@ export const DateRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
-  onMonthChange,
-  onYearChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
@@ -85,19 +80,15 @@ export const DateRangePickerCalendar = ({
   };
   //</editor-fold>
 
-  const handleMonthClick = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    const newDate = dayjsDate ? dayjsDateToString(dateInner.month(dayjsDate.month())) : dateString;
-    handleDateChange(newDate);
+  const handleMonthClick = (date: Dayjs) => {
+    const newDate = dateInner.month(date.month());
+    handleDateChange(dayjsDateToString(newDate));
     handleViewModeChange('dates');
-    onMonthChange?.(newDate);
   };
-  const handleYearClick = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    const newDate = dayjsDate ? dayjsDateToString(dateInner.year(dayjsDate.year())) : dateString;
-    handleDateChange(newDate);
+  const handleYearClick = (date: Dayjs) => {
+    const newDate = dateInner.year(date.year());
+    handleDateChange(dayjsDateToString(newDate));
     handleViewModeChange('dates');
-    onYearChange?.(newDate);
   };
 
   const handleMonthNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {

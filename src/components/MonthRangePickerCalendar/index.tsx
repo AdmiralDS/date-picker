@@ -19,9 +19,7 @@ export interface MonthRangePickerCalendarProps
       RangeCalendarProps,
       'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
     >,
-    PickerCalendarProps {
-  onYearChange?: (dateString: string) => void;
-}
+    PickerCalendarProps {}
 
 export const MonthRangePickerCalendar = ({
   viewModeValue,
@@ -33,7 +31,6 @@ export const MonthRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
-  onYearChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
@@ -82,12 +79,10 @@ export const MonthRangePickerCalendar = ({
   };
   //</editor-fold>
 
-  const handleYearClick = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    const newDate = dayjsDate ? dayjsDateToString(dateInner.year(dayjsDate.year())) : dateString;
-    handleDateChange(newDate);
+  const handleYearClick = (date: Dayjs) => {
+    const newDate = dateInner.year(date.year());
+    handleDateChange(dayjsDateToString(newDate));
     handleViewModeChange('months');
-    onYearChange?.(newDate);
   };
 
   const handleYearNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {

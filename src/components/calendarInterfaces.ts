@@ -35,7 +35,7 @@ export interface SingleCalendarProps extends CalendarProps {
   /** Выбранное значение даты по умолчанию в формате ISO */
   defaultSelectedDateValue?: Dayjs;
   /** Коллбэк на изменение выбранной даты */
-  onSelectedDateValueChange?: (dateString: string) => void;
+  onSelectedDateValueChange?: (date: Dayjs) => void;
 }
 
 export interface RangeCalendarProps extends CalendarProps {

@@ -127,19 +127,15 @@ export const MonthRangeDoublePickerCalendar = ({
   };
   //</editor-fold>
 
-  const handleLeftYearClick = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    const newDate = dayjsDate ? dayjsDateToString(dateLeftInner.year(dayjsDate.year())) : dateString;
-    handleDateLeftChange(newDate);
+  const handleLeftYearClick = (date: Dayjs) => {
+    const newDate = dateLeftInner.year(date.year());
+    handleDateLeftChange(dayjsDateToString(newDate));
     handleViewModeLeftChange('months');
-    //onYearChange?.(newDate);
   };
-  const handleRightYearClick = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    const newDate = dayjsDate ? dayjsDateToString(dateRightInner.year(dayjsDate.year())) : dateString;
-    handleDateRightChange(newDate);
+  const handleRightYearClick = (date: Dayjs) => {
+    const newDate = dateRightInner.year(date.year());
+    handleDateRightChange(dayjsDateToString(newDate));
     handleViewModeRightChange('months');
-    //onYearChange?.(newDate);
   };
 
   const handleLeftYearNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {

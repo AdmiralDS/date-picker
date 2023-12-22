@@ -101,10 +101,9 @@ export const MonthCalendar = ({
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
   const selectedDateInner = selectedDateValue || selectedDateState;
 
-  const handleSelectedDateChange = (dateString: string) => {
-    const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
-    setSelectedDateState(dayjsSelectedDate);
-    onSelectedDateValueChange?.(dateString);
+  const handleSelectedDateChange = (date: Dayjs) => {
+    setSelectedDateState(date);
+    onSelectedDateValueChange?.(date);
   };
   //</editor-fold>
 
@@ -112,7 +111,7 @@ export const MonthCalendar = ({
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
     if (clickedDate) {
-      handleSelectedDateChange(dayjsDateToString(clickedDate));
+      handleSelectedDateChange(clickedDate);
     }
     onClick?.(e);
   };

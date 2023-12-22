@@ -9,9 +9,7 @@ import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNav
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import { CalendarContainer, SinglePickerCalendarWrapper, YearCalendarView } from '#src/components/calendarStyle.ts';
 
-export interface YearPickerCalendarProps extends SingleCalendarProps {
-  onYearChange?: (dateString: string) => void;
-}
+export interface YearPickerCalendarProps extends SingleCalendarProps {}
 
 export const YearPickerCalendar = ({
   dateValue,
@@ -20,7 +18,6 @@ export const YearPickerCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
-  onYearChange,
   timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
@@ -42,16 +39,14 @@ export const YearPickerCalendar = ({
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
   const selectedDateInner = selectedDateValue || selectedDateState;
 
-  const handleSelectedDateChange = (dateString: string) => {
-    const dayjsSelectedDate = dateStringToDayjs(dateString, locale, timezone);
-    setSelectedDateState(dayjsSelectedDate);
-    onSelectedDateValueChange?.(dateString);
+  const handleSelectedDateChange = (date: Dayjs) => {
+    setSelectedDateState(date);
+    onSelectedDateValueChange?.(date);
   };
   //</editor-fold>
 
-  const handleYearClick = (dateString: string) => {
-    handleSelectedDateChange(dateString);
-    onYearChange?.(dateString);
+  const handleYearClick = (date: Dayjs) => {
+    handleSelectedDateChange(date);
   };
 
   const handleTwentyYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
