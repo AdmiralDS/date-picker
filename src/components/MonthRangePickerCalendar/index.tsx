@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import type { RangeCalendarProps, PickerCalendarProps, CalendarViewMode } from '#src/components/calendarInterfaces.ts';
-import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone } from '#src/components/utils.ts';
+import { dateStringToDayjs, getCurrentTimeZone } from '#src/components/utils.ts';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 import {
   CalendarContainer,
@@ -49,12 +49,9 @@ export const MonthRangePickerCalendar = ({
   const [dateState, setDateState] = useState(defaultDateValue || dayjs().tz(timezone).locale(locale));
   const dateInner = dateValue || dateState;
 
-  const handleDateChange = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    if (dayjsDate) {
-      setDateState(dayjsDate);
-      onDateValueChange?.(dateString);
-    }
+  const handleDateChange = (date: Dayjs) => {
+    setDateState(date);
+    onDateValueChange?.(date);
   };
   //</editor-fold>
 
@@ -81,7 +78,7 @@ export const MonthRangePickerCalendar = ({
 
   const handleYearClick = (date: Dayjs) => {
     const newDate = dateInner.year(date.year());
-    handleDateChange(dayjsDateToString(newDate));
+    handleDateChange(newDate);
     handleViewModeChange('months');
   };
 
@@ -90,16 +87,16 @@ export const MonthRangePickerCalendar = ({
     switch (targetType) {
       case 'left':
         if (viewModeInner === 'months') {
-          handleDateChange(dayjsDateToString(dateInner.subtract(1, 'year')));
+          handleDateChange(dateInner.subtract(1, 'year'));
         } else {
-          handleDateChange(dayjsDateToString(dateInner.subtract(YEARS_ON_SCREEN, 'year')));
+          handleDateChange(dateInner.subtract(YEARS_ON_SCREEN, 'year'));
         }
         break;
       case 'right':
         if (viewModeInner === 'months') {
-          handleDateChange(dayjsDateToString(dateInner.add(1, 'year')));
+          handleDateChange(dateInner.add(1, 'year'));
         } else {
-          handleDateChange(dayjsDateToString(dateInner.add(YEARS_ON_SCREEN, 'year')));
+          handleDateChange(dateInner.add(YEARS_ON_SCREEN, 'year'));
         }
         break;
       case 'year':

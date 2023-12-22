@@ -4,7 +4,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
 import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone } from '#src/components/utils.ts';
+import { getCurrentTimeZone } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import { CalendarContainer, SinglePickerCalendarWrapper, YearCalendarView } from '#src/components/calendarStyle.ts';
@@ -26,12 +26,9 @@ export const YearPickerCalendar = ({
   const [dateState, setDateState] = useState(defaultDateValue || dayjs().tz(timezone).locale(locale));
   const dateInner = dateValue || dateState;
 
-  const handleDateChange = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    if (dayjsDate) {
-      setDateState(dayjsDate);
-      onDateValueChange?.(dateString);
-    }
+  const handleDateChange = (date: Dayjs) => {
+    setDateState(date);
+    onDateValueChange?.(date);
   };
   //</editor-fold>
 
@@ -53,10 +50,10 @@ export const YearPickerCalendar = ({
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
-        handleDateChange(dayjsDateToString(dateInner.subtract(YEARS_ON_SCREEN, 'year')));
+        handleDateChange(dateInner.subtract(YEARS_ON_SCREEN, 'year'));
         break;
       case 'right':
-        handleDateChange(dayjsDateToString(dateInner.add(YEARS_ON_SCREEN, 'year')));
+        handleDateChange(dateInner.add(YEARS_ON_SCREEN, 'year'));
         break;
     }
   };
