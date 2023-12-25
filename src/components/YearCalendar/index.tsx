@@ -158,7 +158,9 @@ export const YearCalendar = ({
   const yearCells = () => {
     //console.log(`yearCells start-${dayjs()}`);
     const { start } = yearsRange(dateInner, YEARS_ON_SCREEN);
-    const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`));
+    console.log(dateInner);
+    //const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`));
+    const firstYear = setNoon(dateInner.year(start).startOf('year'));
     const array = yearsArray.map((v) => {
       const dateCurrent = firstYear.add(v, 'year');
       const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'year');
