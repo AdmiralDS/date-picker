@@ -22,9 +22,6 @@ export default {
     dateValue: {
       control: { type: 'text' },
     },
-    timezone: {
-      control: { type: 'text' },
-    },
     locale: {
       control: { type: 'text' },
     },

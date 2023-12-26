@@ -1,9 +1,8 @@
 import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import { dateStringToDayjs, dayjsDateToString, getCurrentDate, getCurrentTimeZone } from '#src/components/utils.ts';
+import { dateStringToDayjs, dayjsDateToString, getCurrentDate } from '#src/components/utils.ts';
 import type {
   RangeDoubleCalendarProps,
   CalendarViewMode,
@@ -39,8 +38,6 @@ export const MonthRangeDoublePickerCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  timezone,
-  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
 }: MonthRangeDoublePickerCalendarProps) => {
@@ -63,11 +60,11 @@ export const MonthRangeDoublePickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Date shown on calendar">
-  const [dateLeftState, setDateLeftState] = useState(defaultDateRangeValue?.[0] || getCurrentDate(locale, timezone));
+  const [dateLeftState, setDateLeftState] = useState(defaultDateRangeValue?.[0] || getCurrentDate(locale));
   const dateLeftInner = dateRangeValue?.[0] || dateLeftState;
 
   const handleDateLeftChange = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsDate = dateStringToDayjs(dateString, locale);
     if (dayjsDate) {
       setDateLeftState(dayjsDate);
       onDateRangeValueChange?.([dateString, dayjsDateToString(dateRightInner)]);
@@ -78,7 +75,7 @@ export const MonthRangeDoublePickerCalendar = ({
   const dateRightInner = dateRangeValue?.[1] || dateRightState;
 
   const handleDateRightChange = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsDate = dateStringToDayjs(dateString, locale);
     if (dayjsDate) {
       setDateRightState(dayjsDate);
       onDateRangeValueChange?.([dayjsDateToString(dateLeftInner), dateString]);
@@ -102,7 +99,7 @@ export const MonthRangeDoublePickerCalendar = ({
   const activeDateInner = activeDateValue || activeDateState;
 
   const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsActiveDate = dateStringToDayjs(dateString, locale);
     setActiveDateState(dayjsActiveDate);
     onActiveDateValueChange?.(dateString);
   };
@@ -113,8 +110,8 @@ export const MonthRangeDoublePickerCalendar = ({
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
   const handleSelectedDateRangeChange = (dateRangeString: [string | undefined, string | undefined]) => {
     setSelectedDateRangeState([
-      dateStringToDayjs(dateRangeString[0], locale, timezone),
-      dateStringToDayjs(dateRangeString[1], locale, timezone),
+      dateStringToDayjs(dateRangeString[0], locale),
+      dateStringToDayjs(dateRangeString[1], locale),
     ]);
     onSelectedDateRangeValueChange?.(dateRangeString);
   };
@@ -123,7 +120,7 @@ export const MonthRangeDoublePickerCalendar = ({
   //<editor-fold desc="Active end of range">
   const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>();
   const handleDateRangeActiveEndChange = (dateString?: string) => {
-    const dateDayjs = dateStringToDayjs(dateString, locale, timezone);
+    const dateDayjs = dateStringToDayjs(dateString, locale);
     setDateRangeActiveEndState(dateDayjs);
   };
   //</editor-fold>
@@ -202,7 +199,6 @@ export const MonthRangeDoublePickerCalendar = ({
           date={dateLeftInner}
           viewMode={viewModeLeftInner}
           locale={locale}
-          timezone={timezone}
           onClick={handleLeftYearNavigationPanelClick}
         />
         <CalendarContainer>
@@ -234,7 +230,6 @@ export const MonthRangeDoublePickerCalendar = ({
           date={dateRightInner}
           viewMode={viewModeRightInner}
           locale={locale}
-          timezone={timezone}
           onClick={handleRightYearNavigationPanelClick}
         />
         <CalendarContainer>

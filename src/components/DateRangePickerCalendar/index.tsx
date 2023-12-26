@@ -1,10 +1,9 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import type { RangeCalendarProps, PickerCalendarProps, CalendarViewMode } from '#src/components/calendarInterfaces.ts';
-import { dateStringToDayjs, getCurrentDate, getCurrentTimeZone } from '#src/components/utils.ts';
+import { dateStringToDayjs, getCurrentDate } from '#src/components/utils.ts';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
 import {
   CalendarContainer,
@@ -17,10 +16,10 @@ import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/consta
 
 export interface DateRangePickerCalendarProps
   extends Omit<
-      RangeCalendarProps,
-      'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
-    >,
-    PickerCalendarProps {}
+    RangeCalendarProps,
+    'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
+  >,
+  PickerCalendarProps { }
 
 export const DateRangePickerCalendar = ({
   viewModeValue,
@@ -32,8 +31,6 @@ export const DateRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
-  timezone,
-  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
 }: DateRangePickerCalendarProps) => {
@@ -48,7 +45,7 @@ export const DateRangePickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale, timezone));
+  const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale));
   const dateInner = dateValue || dateState;
 
   const handleDateChange = (date: Dayjs) => {
@@ -62,8 +59,8 @@ export const DateRangePickerCalendar = ({
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
   const handleSelectedDateRangeChange = (dateRangeString: [string | undefined, string | undefined]) => {
     setSelectedDateRangeState([
-      dateStringToDayjs(dateRangeString[0], locale, timezone),
-      dateStringToDayjs(dateRangeString[1], locale, timezone),
+      dateStringToDayjs(dateRangeString[0], locale),
+      dateStringToDayjs(dateRangeString[1], locale),
     ]);
     onSelectedDateRangeValueChange?.(dateRangeString);
   };
@@ -72,7 +69,7 @@ export const DateRangePickerCalendar = ({
   //<editor-fold desc="Active end of range">
   const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>();
   const handleDateRangeActiveEndChange = (dateString?: string) => {
-    const dateDayjs = dateStringToDayjs(dateString, locale, timezone);
+    const dateDayjs = dateStringToDayjs(dateString, locale);
     //console.log(`activeEnd-${dateString}`);
     setDateRangeActiveEndState(dateDayjs);
   };
@@ -137,7 +134,6 @@ export const DateRangePickerCalendar = ({
         date={dateInner}
         viewMode={viewModeInner}
         locale={locale}
-        timezone={timezone}
         onClick={handleMonthNavigationPanelClick}
       />
       <CalendarContainer>

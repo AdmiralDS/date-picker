@@ -1,15 +1,14 @@
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 
 import { IconPlacement, typography } from '@admiral-ds/react-ui';
 import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
-import { capitalizeFirstLetter, getCurrentDate, getCurrentTimeZone } from '#src/components/utils';
+import { capitalizeFirstLetter, getCurrentDate } from '#src/components/utils';
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import type { BasePanelWidgetProps } from '#src/components/widgetInterfaces.ts';
 
-export interface MonthNavigationPanelWidgetProps extends BasePanelWidgetProps {}
+export interface MonthNavigationPanelWidgetProps extends BasePanelWidgetProps { }
 
 const MonthNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
@@ -39,12 +38,10 @@ const TextWrapper = styled.div<{ $isActive?: boolean }>`
 export const MonthNavigationPanelWidget = ({
   viewMode,
   date,
-  timezone,
-  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
 }: MonthNavigationPanelWidgetProps) => {
-  const dateInner = date || getCurrentDate(locale, timezone);
+  const dateInner = date || getCurrentDate(locale);
 
   return (
     <MonthNavigationPanelWrapper {...props}>

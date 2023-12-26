@@ -4,7 +4,6 @@ import localeData from 'dayjs/plugin/localeData';
 import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
 import isLeapYear from 'dayjs/plugin/isLeapYear';
 import DayOfYear from 'dayjs/plugin/dayOfYear';
 //import isBetween from 'dayjs/plugin/isBetween';
@@ -13,7 +12,6 @@ dayjs.extend(localeData);
 dayjs.extend(CustomParseFormat);
 dayjs.extend(LocalizedFormat);
 dayjs.extend(utc);
-dayjs.extend(timezone);
 dayjs.extend(isLeapYear);
 dayjs.extend(DayOfYear);
 //dayjs.extend(isBetween);
@@ -26,38 +24,22 @@ export const getDateByDayOfYear = (date: Dayjs, dayOfYear: number) => {
   return date.dayOfYear(dayOfYear);
 };
 
-export const getCurrentTimeZone = () => {
-  return Intl.DateTimeFormat().resolvedOptions().timeZone;
-};
-
-export const getCurrentDate = (locale?: string, timezone?: string) => {
-  if (locale && timezone) return setNoon(dayjs().tz(timezone).locale(locale));
+export const getCurrentDate = (locale?: string) => {
   if (locale) return setNoon(dayjs().locale(locale));
-  if (timezone) return setNoon(dayjs().tz(timezone));
   return setNoon(dayjs());
 };
 
-export const dateStringToDayjs = (dateString?: string, locale?: string, timezone?: string) => {
+export const dateStringToDayjs = (dateString?: string, locale?: string) => {
   if (dateString === undefined) return undefined;
   const date = setNoon(dayjs(dateString));
   if (!date.isValid()) return undefined;
-  if (locale && timezone) return date.tz(timezone).locale(locale);
-  if (timezone) return date.tz(timezone);
   if (locale) return date.locale(locale);
   return date;
 };
 
-export const getDayjsDateWithoutTimezone = (date: Dayjs) => {
-  return dayjs(`${date.year()}-${date.month()}-${date.date()}T12:00:00`);
-};
-
-export const getDayjsDate = (locale?: string, timezone?: string, dateString?: string) => {
+export const getDayjsDate = (locale?: string, dateString?: string) => {
   const localeInner = locale || 'ru';
-  const timezoneInner = timezone || getCurrentTimeZone();
-  return setNoon(
-    dateStringToDayjs(dateString)?.tz(timezoneInner).locale(localeInner) ||
-      dayjs().tz(timezoneInner).locale(localeInner),
-  );
+  return setNoon(dateStringToDayjs(dateString)?.locale(localeInner) || dayjs().locale(localeInner));
 };
 
 export const dayjsDateToString = (date: Dayjs) => {

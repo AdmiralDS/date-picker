@@ -1,10 +1,9 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import type { CalendarViewMode, SingleCalendarProps, PickerCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { getCurrentDate, getCurrentTimeZone } from '#src/components/utils.ts';
+import { getCurrentDate } from '#src/components/utils.ts';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 import {
   CalendarContainer,
@@ -14,7 +13,7 @@ import {
 } from '#src/components/calendarStyle.ts';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 
-export interface MonthPickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {}
+export interface MonthPickerCalendarProps extends SingleCalendarProps, PickerCalendarProps { }
 
 export const MonthPickerCalendar = ({
   viewModeValue,
@@ -26,8 +25,6 @@ export const MonthPickerCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
-  timezone,
-  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
 }: MonthPickerCalendarProps) => {
@@ -42,7 +39,7 @@ export const MonthPickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale, timezone));
+  const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale));
   const dateInner = dateValue || dateState;
 
   const handleDateChange = (date: Dayjs) => {
@@ -99,7 +96,6 @@ export const MonthPickerCalendar = ({
         date={dateInner}
         viewMode={viewModeInner}
         locale={locale}
-        timezone={timezone}
         onClick={handleYearNavigationPanelClick}
       />
       <CalendarContainer>

@@ -9,7 +9,6 @@ import { typography } from '@admiral-ds/react-ui';
 import {
   capitalizeFirstLetter,
   dateStringToDayjs,
-  getCurrentTimeZone,
   getCurrentDate,
   dayjsDateToString,
 } from '#src/components/utils';
@@ -51,14 +50,12 @@ const getDateCellDataAttributes = (
 export const DatesOfMonthWidgetSimpleTemplate = ({
   date,
   locale = 'ru',
-  timezone,
-  //timezone = getCurrentTimeZone(),
   ...props
 }: DatesOfMonthWidgetProps) => {
   const localeInner = locale || 'ru';
-  const dateInner = date || getCurrentDate(locale, timezone);
+  const dateInner = date || getCurrentDate(locale);
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
-    getCurrentDate(localeInner, timezone).add(1, 'day'),
+    getCurrentDate(localeInner).add(1, 'day'),
   );
 
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
@@ -74,14 +71,14 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
   };
 
   const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, localeInner, timezone);
+    const dayjsActiveDate = dateStringToDayjs(dateString, localeInner);
     //console.log(`set active ${dayjsActiveDate}`);
     setActiveDateInner(dayjsActiveDate);
   };
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, localeInner, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, localeInner);
       if (hoveredDate) {
         handleActiveDateChange(dayjsDateToString(hoveredDate));
       }
@@ -90,7 +87,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
   const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, localeInner, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, localeInner);
       if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
         handleActiveDateChange(dayjsDateToString(hoveredDate));
       }
@@ -136,7 +133,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
     return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
   };
   const renderDefaultDate = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
+    const dateCurrent = dateStringToDayjs(dateString, localeInner);
     if (!dateCurrent) return {};
     const cellContent = dateCurrent.date();
     const selected = dateIsSelected(dateCurrent);
@@ -178,7 +175,6 @@ export const DatesOfMonthWidgetSimpleTemplate = ({
       <DatesOfMonthWidget
         {...props}
         locale={localeInner}
-        timezone={timezone}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

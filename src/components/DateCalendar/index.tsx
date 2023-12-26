@@ -3,13 +3,7 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import {
-  dateStringToDayjs,
-  dayjsDateToString,
-  getCurrentDate,
-  getCurrentTimeZone,
-  setNoon,
-} from '#src/components/utils';
+import { dateStringToDayjs, dayjsDateToString, getCurrentDate, setNoon } from '#src/components/utils';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
@@ -48,39 +42,27 @@ export const DateCalendar = ({
   onActiveDateValueChange,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   renderDateCell,
-  timezone,
-  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
   ...props
 }: DateCalendarProps) => {
-  /*//<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
-  const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
-
-  const handleDateChange = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    if (dayjsDate) {
-      setDateState(dayjsDate);
-      onDateValueChange?.(dateString);
-    }
-  };
-  //</editor-fold>*/
-  const dateInner = dateValue || getCurrentDate(locale, timezone);
+  //<editor-fold desc="Date shown on calendar">
+  const dateInner = dateValue || getCurrentDate(locale);
+  //</editor-fold>
 
   //<editor-fold desc="Hovered date">
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
   const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsActiveDate = dateStringToDayjs(dateString, locale);
     setActiveDateState(dayjsActiveDate);
     onActiveDateValueChange?.(dateString);
   };
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate) {
         handleActiveDateChange(dayjsDateToString(hoveredDate));
       }
@@ -89,7 +71,7 @@ export const DateCalendar = ({
   const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
         handleActiveDateChange(dayjsDateToString(hoveredDate));
       }
@@ -121,7 +103,7 @@ export const DateCalendar = ({
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     const clickedCell = target.dataset.value;
-    const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
+    const clickedDate = dateStringToDayjs(clickedCell, locale);
     if (clickedDate && !target.dataset.disabledCell && !target.dataset.hiddenCell) {
       handleSelectedDateChange(clickedDate);
     }
@@ -158,7 +140,7 @@ export const DateCalendar = ({
 
   /*//useMemo
   const renderDefaultDate = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
+    const dateCurrent = dateStringToDayjs(dateString, locale);
     if (!dateCurrent) return {};
     const cellContent = dateCurrent.date();
     const selected = dateIsSelected(dateCurrent);

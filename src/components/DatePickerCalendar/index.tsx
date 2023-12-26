@@ -4,7 +4,7 @@ import type { Dayjs } from 'dayjs';
 
 import type { CalendarViewMode, SingleCalendarProps, PickerCalendarProps } from '#src/components/calendarInterfaces.ts';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
-import { getCurrentDate, getCurrentTimeZone, setNoon } from '#src/components/utils.ts';
+import { getCurrentDate, setNoon } from '#src/components/utils.ts';
 import {
   CalendarContainer,
   SinglePickerCalendarWrapper,
@@ -26,8 +26,6 @@ export const DatePickerCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
-  timezone,
-  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
 }: DatePickerCalendarProps) => {
@@ -42,7 +40,7 @@ export const DatePickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale, timezone));
+  const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale));
   const dateInner = dateValue || dateState;
 
   const handleDateChange = (date: Dayjs) => {
@@ -112,7 +110,6 @@ export const DatePickerCalendar = ({
         date={dateInner}
         viewMode={viewModeInner}
         locale={locale}
-        timezone={timezone}
         onClick={handleMonthNavigationPanelClick}
       />
       <CalendarContainer>

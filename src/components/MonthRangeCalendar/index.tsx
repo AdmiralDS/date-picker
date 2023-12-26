@@ -1,6 +1,5 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import {
@@ -9,14 +8,13 @@ import {
   dayjsDateToString,
   dayjsStateToString,
   getCurrentDate,
-  getCurrentTimeZone,
   sortDatesAsc,
 } from '#src/components/utils';
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import { MONTHS_COLUMNS } from '#src/components/MonthsOfYearWidget/constants.ts';
 
-export interface MonthRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface MonthRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> { }
 
 const getMonthCellDataAttributes = (
   value?: string,
@@ -62,14 +60,12 @@ export const MonthRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  timezone,
-  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
   ...props
 }: MonthRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const dateInner = dateValue || getCurrentDate(locale, timezone);
+  const dateInner = dateValue || getCurrentDate(locale);
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
@@ -77,14 +73,14 @@ export const MonthRangeCalendar = ({
   const activeDateInner = activeDateValue || activeDateState;
 
   const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsActiveDate = dateStringToDayjs(dateString, locale);
     setActiveDateState(dayjsActiveDate);
     onActiveDateValueChange?.(dateString);
   };
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'monthCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate) {
         if (activeDateInner) {
           handleActiveDateChange(undefined);
@@ -97,7 +93,7 @@ export const MonthRangeCalendar = ({
   const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'monthCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'month'))) {
         if (activeDateInner) {
           handleActiveDateChange(undefined);
@@ -124,7 +120,7 @@ export const MonthRangeCalendar = ({
   const dateRangeFirstInner = selectedDateRangeValue?.[0] || dateRangeFirstState;
 
   const handleDateRangeFirstChange = (dateString?: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsDate = dateStringToDayjs(dateString, locale);
     setDateRangeFirstState(dayjsDate);
   };
   //</editor-fold>
@@ -134,7 +130,7 @@ export const MonthRangeCalendar = ({
   const dateRangeSecondInner = selectedDateRangeValue?.[1] || dateRangeSecondState;
 
   const handleDateRangeSecondChange = (dateString?: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsDate = dateStringToDayjs(dateString, locale);
     setDateRangeSecondState(dayjsDate);
   };
   //</editor-fold>
@@ -160,7 +156,7 @@ export const MonthRangeCalendar = ({
   );
   const dateRangeActiveEndInner = activeDateRangeEndValue || dateRangeActiveEndState;
   const handleDateRangeActiveEndChange = (dateString?: string) => {
-    const dateDayjs = dateStringToDayjs(dateString, locale, timezone);
+    const dateDayjs = dateStringToDayjs(dateString, locale);
     setDateRangeActiveEndState(dateDayjs);
     onActiveDateRangeEndValueChange?.(dateString);
   };
@@ -168,7 +164,7 @@ export const MonthRangeCalendar = ({
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
-    const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
+    const clickedDate = dateStringToDayjs(clickedCell, locale);
     if (clickedDate) {
       const newSelectedDateRangeValue: [string | undefined, string | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {
@@ -269,13 +265,13 @@ export const MonthRangeCalendar = ({
 
   //useMemo
   const renderDate = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
+    const dateCurrent = dateStringToDayjs(dateString, locale);
     if (!dateCurrent) return {};
     const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
     const selected = dateIsSelected(dateCurrent);
     const disabled = dateIsDisabled(dateCurrent);
     //const hidden = dateIsHidden(dateCurrent);
-    const isCurrent = dateCurrent.isSame(getCurrentDate(locale, timezone), 'month');
+    const isCurrent = dateCurrent.isSame(getCurrentDate(locale), 'month');
     const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'month');
     const isInRange = dateIsInRange(dateCurrent);
     const isRangeStart = dateIsRangeStart(dateCurrent);

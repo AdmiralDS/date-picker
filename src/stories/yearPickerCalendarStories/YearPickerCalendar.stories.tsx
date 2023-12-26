@@ -27,9 +27,6 @@ export default {
     onDateValueChange: {
       control: false,
     },
-    timezone: {
-      control: { type: 'text' },
-    },
     locale: {
       control: { type: 'text' },
     },

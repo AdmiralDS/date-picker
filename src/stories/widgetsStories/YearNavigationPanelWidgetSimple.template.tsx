@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import type { MouseEventHandler } from 'react';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import {
@@ -9,7 +8,6 @@ import {
   dateStringToDayjs,
   dayjsDateToString,
   getCurrentDate,
-  getCurrentTimeZone,
   getDayjsDate,
 } from '#src/components/utils';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
@@ -31,21 +29,17 @@ const CalendarWrapper = styled.div`
 
 export const YearNavigationPanelWidgetSimpleTemplate = ({
   locale = 'ru',
-  timezone,
-  //timezone = getCurrentTimeZone(),
   date,
   ...props
 }: YearNavigationPanelWidgetProps) => {
   const localeInner = locale || 'ru';
-  const [dateState, setDateState] = useState(date || getCurrentDate(locale, timezone));
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
-    getCurrentDate(localeInner, timezone).add(1, 'day'),
-  );
+  const [dateState, setDateState] = useState(date || getCurrentDate(locale));
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(localeInner).add(1, 'day'));
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
-    const clickedDate = dateStringToDayjs(clickedCell, localeInner, timezone);
+    const clickedDate = dateStringToDayjs(clickedCell, localeInner);
     if (clickedDate) {
       setSelectedDate(clickedDate);
     }
@@ -59,18 +53,18 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
   };
 
   const renderMonth = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
+    const dateCurrent = dateStringToDayjs(dateString, localeInner);
     if (!dateCurrent) return {};
     const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
     const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'month');
-    const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner, timezone), 'month');
+    const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner), 'month');
     const dataAttributes = getMonthCellDataAttributes(dateCurrent.toISOString(), isCurrent);
 
     return { cellContent, selected, isCurrent, ...dataAttributes };
   };
 
   const handleDateChange = (dateString: string) => {
-    const dayjsDate = getDayjsDate(localeInner, timezone, dateString);
+    const dayjsDate = getDayjsDate(localeInner, dateString);
     setDateState(dayjsDate);
     //onDateChange?.(dayjsDateToString(dayjsDate));
   };
@@ -89,17 +83,11 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
 
   return (
     <CalendarWrapper>
-      <YearNavigationPanelWidget
-        date={dateState}
-        locale={localeInner}
-        timezone={timezone}
-        onClick={handleYearNavigationPanelClick}
-      />
+      <YearNavigationPanelWidget date={dateState} locale={localeInner} onClick={handleYearNavigationPanelClick} />
       <MonthsOfYearWidget
         {...props}
         date={dateState}
         locale={localeInner}
-        timezone={timezone}
         onClick={handleClick}
         renderCell={renderMonth}
       />

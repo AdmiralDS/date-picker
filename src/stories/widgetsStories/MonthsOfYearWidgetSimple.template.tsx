@@ -28,20 +28,19 @@ const MonthYear = styled.div`
 export const MonthsOfYearWidgetSimpleTemplate = ({
   date,
   locale = 'ru',
-  timezone,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onClick,
   renderCell,
   ...props
 }: MonthsOfYearWidgetProps) => {
   const localeInner = locale || 'ru';
-  const dateInner = date || getCurrentDate(locale, timezone);
+  const dateInner = date || getCurrentDate(locale);
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(localeInner).add(1, 'day'));
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
-    const clickedDate = dateStringToDayjs(clickedCell, localeInner, timezone);
+    const clickedDate = dateStringToDayjs(clickedCell, localeInner);
     if (clickedDate) {
       setSelectedDate(clickedDate);
     }
@@ -55,11 +54,11 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
   };
 
   const renderMonth = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, localeInner, timezone);
+    const dateCurrent = dateStringToDayjs(dateString, localeInner);
     if (!dateCurrent) return {};
     const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
     const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'month');
-    const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner, timezone), 'month');
+    const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner), 'month');
     const dataAttributes = getMonthCellDataAttributes(dateCurrent.toISOString(), isCurrent);
 
     return { cellContent, selected, isCurrent, ...dataAttributes };
@@ -72,7 +71,6 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
         {...props}
         date={dateInner}
         locale={localeInner}
-        timezone={timezone}
         onClick={handleClick}
         renderCell={renderCell || renderMonth}
       />

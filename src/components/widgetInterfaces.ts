@@ -9,9 +9,6 @@ export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   /** Дата */
   date?: Dayjs;
   locale?: string;
-  /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
-   * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
-  timezone?: string;
   renderCell?: (dateString: string) => DefaultCellProps;
   cells?: ReactNode;
 }
@@ -28,7 +25,4 @@ export interface BasePanelWidgetProps extends HTMLAttributes<HTMLDivElement> {
   /** Дата */
   date?: Dayjs;
   locale?: string;
-  /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
-   * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
-  timezone?: string;
 }

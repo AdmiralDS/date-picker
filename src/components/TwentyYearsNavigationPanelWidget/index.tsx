@@ -1,16 +1,15 @@
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 
 import { IconPlacement, typography } from '@admiral-ds/react-ui';
 import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
-import { getCurrentDate, getCurrentTimeZone, yearsRange } from '#src/components/utils';
+import { getCurrentDate, yearsRange } from '#src/components/utils';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { BasePanelWidgetProps } from '#src/components/widgetInterfaces.ts';
 
-export interface TwentyYearsNavigationPanelWidgetProps extends BasePanelWidgetProps {}
+export interface TwentyYearsNavigationPanelWidgetProps extends BasePanelWidgetProps { }
 
 const TwentyYearsNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
@@ -33,11 +32,9 @@ export const TwentyYearsNavigationPanelWidget = ({
   viewMode,
   date,
   locale = 'ru',
-  timezone,
-  //timezone = getCurrentTimeZone(),
   ...props
 }: TwentyYearsNavigationPanelWidgetProps) => {
-  const dateInner = date || getCurrentDate(locale, timezone);
+  const dateInner = date || getCurrentDate(locale);
   const { start, end } = yearsRange(dateInner, YEARS_ON_SCREEN);
 
   return (

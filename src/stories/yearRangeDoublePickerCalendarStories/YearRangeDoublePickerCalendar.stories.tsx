@@ -19,9 +19,6 @@ export default {
     },
   },
   argTypes: {
-    timezone: {
-      control: { type: 'text' },
-    },
     locale: {
       control: { type: 'text' },
     },

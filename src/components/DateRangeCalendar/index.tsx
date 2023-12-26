@@ -8,7 +8,6 @@ import {
   dayjsDateToString,
   dayjsStateToString,
   getCurrentDate,
-  getCurrentTimeZone,
   sortDatesAsc,
 } from '#src/components/utils';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
@@ -16,7 +15,7 @@ import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfac
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 
-export interface DateRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface DateRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> { }
 
 const getDateCellDataAttributes = (
   value?: string,
@@ -62,14 +61,12 @@ export const DateRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  timezone,
-  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
   ...props
 }: DateRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const dateInner = dateValue || getCurrentDate(locale, timezone);
+  const dateInner = dateValue || getCurrentDate(locale);
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
@@ -77,7 +74,7 @@ export const DateRangeCalendar = ({
   const activeDateInner = activeDateValue || activeDateState;
 
   const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsActiveDate = dateStringToDayjs(dateString, locale);
     //console.log(`set active ${dayjsActiveDate}`);
     setActiveDateState(dayjsActiveDate);
     onActiveDateValueChange?.(dateString);
@@ -85,7 +82,7 @@ export const DateRangeCalendar = ({
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate) {
         if (activeDateInner && (target.dataset.hiddenCell || target.dataset.disabledCell)) {
           handleActiveDateChange(undefined);
@@ -98,7 +95,7 @@ export const DateRangeCalendar = ({
   const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
         if (target.dataset.hiddenCell || target.dataset.disabledCell) {
           if (activeDateInner) {
@@ -126,7 +123,7 @@ export const DateRangeCalendar = ({
   const [dateRangeFirstState, setDateRangeFirstState] = useState(defaultSelectedDateRangeValue?.[0]);
   const dateRangeFirstInner = selectedDateRangeValue?.[0] || dateRangeFirstState;
   const handleDateRangeFirstChange = (dateString?: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsDate = dateStringToDayjs(dateString, locale);
     //console.log(`first-${dateString}`);
     setDateRangeFirstState(dayjsDate);
   };
@@ -136,7 +133,7 @@ export const DateRangeCalendar = ({
   const [dateRangeSecondState, setDateRangeSecondState] = useState(defaultSelectedDateRangeValue?.[1]);
   const dateRangeSecondInner = selectedDateRangeValue?.[1] || dateRangeSecondState;
   const handleDateRangeSecondChange = (dateString?: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsDate = dateStringToDayjs(dateString, locale);
     //console.log(`second-${dateString}`);
     setDateRangeSecondState(dayjsDate);
   };
@@ -163,7 +160,7 @@ export const DateRangeCalendar = ({
   );
   const dateRangeActiveEndInner = activeDateRangeEndValue || dateRangeActiveEndState;
   const handleDateRangeActiveEndChange = (dateString?: string) => {
-    const dateDayjs = dateStringToDayjs(dateString, locale, timezone);
+    const dateDayjs = dateStringToDayjs(dateString, locale);
     //console.log(`activeEnd-${dateString}`);
     setDateRangeActiveEndState(dateDayjs);
     onActiveDateRangeEndValueChange?.(dateString);
@@ -173,7 +170,7 @@ export const DateRangeCalendar = ({
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     const clickedCell = target.dataset.value;
-    const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
+    const clickedDate = dateStringToDayjs(clickedCell, locale);
     if (clickedDate && !target.dataset.hiddenCell && !target.dataset.disabledCell) {
       const newSelectedDateRangeValue: [string | undefined, string | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {
@@ -294,7 +291,7 @@ export const DateRangeCalendar = ({
 
   //useMemo
   const renderDate = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
+    const dateCurrent = dateStringToDayjs(dateString, locale);
     if (!dateCurrent) return {};
     const cellContent = dateCurrent.date();
     const selected = dateIsSelected(dateCurrent);

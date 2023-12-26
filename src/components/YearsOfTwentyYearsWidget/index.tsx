@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { getCurrentDate, getCurrentTimeZone } from '#src/components/utils';
+import { getCurrentDate } from '#src/components/utils';
 import { Years } from '#src/components/YearsOfTwentyYearsWidget/Years.tsx';
 import { YEARS_OF_YEAR_WIDGET_WIDTH } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
@@ -22,14 +21,12 @@ export const YearsOfTwentyYearsWidget = ({
   rangeCalendar = false,
   date,
   locale = 'ru',
-  timezone,
-  //timezone = getCurrentTimeZone(),
   onClick,
   renderCell,
   cells,
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
-  const localDate = date || getCurrentDate(locale, timezone);
+  const localDate = date || getCurrentDate(locale);
 
   return (
     <YearsOfYearWrapper {...props} onClick={onClick} data-container-type="yearsOfYearWrapper">

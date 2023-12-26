@@ -1,14 +1,12 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
-import dayjs from 'dayjs';
 
 import {
   capitalizeFirstLetter,
   dateStringToDayjs,
   dayjsDateToString,
   getCurrentDate,
-  getCurrentTimeZone,
   setNoon,
 } from '#src/components/utils';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
@@ -16,7 +14,7 @@ import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts'
 import { DefaultMonthCell } from '#src/components/DefaultCell';
 import { MONTHS_COLUMNS, MONTHS_ROWS } from '#src/components/MonthsOfYearWidget/constants.ts';
 
-export interface MonthCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface MonthCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> { }
 
 const monthsArray = Array.from(Array(MONTHS_ROWS * MONTHS_COLUMNS).keys());
 
@@ -31,30 +29,18 @@ export const MonthCalendar = ({
   onActiveDateValueChange,
   onClick,
   locale = 'ru',
-  timezone,
-  //timezone = getCurrentTimeZone(),
   ...props
 }: MonthCalendarProps) => {
-  /*//<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
-  const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
-
-  const handleDateChange = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    if (dayjsDate) {
-      setDateState(dayjsDate);
-      onDateValueChange?.(dateString);
-    }
-  };
-  //</editor-fold>*/
-  const dateInner = dateValue || getCurrentDate(locale, timezone);
+  //<editor-fold desc="Date shown on calendar">
+  const dateInner = dateValue || getCurrentDate(locale);
+  //</editor-fold>
 
   //<editor-fold desc="Hovered date">
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
   const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsActiveDate = dateStringToDayjs(dateString, locale);
     //console.log(`set active ${dayjsActiveDate}`);
     setActiveDateState(dayjsActiveDate);
     onActiveDateValueChange?.(dateString);
@@ -63,7 +49,7 @@ export const MonthCalendar = ({
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'monthCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate) {
         if (activeDateInner) {
           handleActiveDateChange(undefined);
@@ -76,7 +62,7 @@ export const MonthCalendar = ({
   const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'monthCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
         if (activeDateInner) {
           handleActiveDateChange(undefined);
@@ -110,7 +96,7 @@ export const MonthCalendar = ({
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
-    const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
+    const clickedDate = dateStringToDayjs(clickedCell, locale);
     if (clickedDate) {
       handleSelectedDateChange(clickedDate);
     }
@@ -141,12 +127,12 @@ export const MonthCalendar = ({
   };
 
   /*const renderMonth = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
+    const dateCurrent = dateStringToDayjs(dateString, locale);
     if (!dateCurrent) return {};
     const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
     const disabled = dateIsDisabled(dateCurrent);
     const selected = selectedDateInner && dateCurrent.isSame(selectedDateInner, 'month');
-    const isCurrent = dateCurrent.isSame(getCurrentDate(locale, timezone), 'month');
+    const isCurrent = dateCurrent.isSame(getCurrentDate(locale), 'month');
     const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'month');
     const dataAttributes = getMonthCellDataAttributes(dateCurrent.toISOString(), isCurrent, isActive);
 
@@ -158,7 +144,7 @@ export const MonthCalendar = ({
     const firstMonth = setNoon(dateInner.startOf('year'));
     const array = monthsArray.map((v) => {
       const dateCurrent = firstMonth.add(v, 'month');
-      const isCurrent = dateCurrent.isSame(getCurrentDate(locale, timezone), 'month');
+      const isCurrent = dateCurrent.isSame(getCurrentDate(locale), 'month');
       const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'month');
       return (
         <DefaultMonthCell
@@ -182,7 +168,6 @@ export const MonthCalendar = ({
       rangeCalendar={false}
       date={dateInner}
       locale={locale}
-      timezone={timezone}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

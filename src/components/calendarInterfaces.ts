@@ -24,9 +24,6 @@ export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   onActiveDateValueChange?: (dateString?: string) => void;
 
   locale?: string;
-  /** Таймзона в формате IANA, например 'Europe/Moscow' или текущая таймзона
-   * (Intl.DateTimeFormat().resolvedOptions().timeZone) */
-  timezone?: string;
 }
 
 export interface SingleCalendarProps extends CalendarProps {

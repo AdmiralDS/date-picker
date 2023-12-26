@@ -7,11 +7,8 @@ import {
   dateStringToDayjs,
   dayjsDateToString,
   getCurrentDate,
-  getCurrentTimeZone,
   getDateByDayOfYear,
-  getDayjsDateWithoutTimezone,
   getDaysInYear,
-  setNoon,
   yearsRange,
 } from '#src/components/utils';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
@@ -34,30 +31,18 @@ export const YearCalendar = ({
   onActiveDateValueChange,
   onClick,
   locale = 'ru',
-  timezone,
-  //timezone = getCurrentTimeZone(),
   ...props
 }: YearCalendarProps) => {
-  /*//<editor-fold desc="Date shown on calendar">
-  const [dateState] = useState(getDayjsDate(locale, timezone, defaultDateValue));
-  const dateInner = (dateValue && getDayjsDate(locale, timezone, dateValue)) || dateState;
-
-  const handleDateChange = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
-    if (dayjsDate) {
-      setDateState(dayjsDate);
-      onDateValueChange?.(dateString);
-    }
-  };
-  //</editor-fold>*/
-  const dateInner = dateValue || getCurrentDate(locale, timezone);
+  //<editor-fold desc="Date shown on calendar">
+  const dateInner = dateValue || getCurrentDate(locale);
+  //</editor-fold>
 
   //<editor-fold desc="Hovered date">
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
   const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsActiveDate = dateStringToDayjs(dateString, locale);
     //console.log(`set active ${dayjsActiveDate}`);
     setActiveDateState(dayjsActiveDate);
     onActiveDateValueChange?.(dateString);
@@ -66,7 +51,7 @@ export const YearCalendar = ({
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'yearCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate) {
         if (activeDateInner) {
           handleActiveDateChange(undefined);
@@ -79,7 +64,7 @@ export const YearCalendar = ({
   const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'yearCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
         if (activeDateInner) {
           handleActiveDateChange(undefined);
@@ -113,7 +98,7 @@ export const YearCalendar = ({
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
-    const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
+    const clickedDate = dateStringToDayjs(clickedCell, locale);
     if (clickedDate) {
       handleSelectedDateChange(clickedDate);
     }
@@ -145,12 +130,12 @@ export const YearCalendar = ({
   };
 
   /*const renderYear = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
+    const dateCurrent = dateStringToDayjs(dateString, locale);
     if (!dateCurrent) return {};
     const cellContent = dateCurrent.year();
     const disabled = dateIsDisabled(dateCurrent);
     const selected = dateCurrent && selectedDateInner && dateCurrent.isSame(selectedDateInner, 'year');
-    const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'year');
+    const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(locale), 'year');
     const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'year');
     const dataAttributes = getYearCellDataAttributes(dateCurrent.toISOString(), isCurrent, isActive);
 
@@ -160,16 +145,31 @@ export const YearCalendar = ({
   const yearCells = () => {
     //console.log(`yearCells start-${dayjs()}`);
     const { start } = yearsRange(dateInner, YEARS_ON_SCREEN);
-    //const firstYear = dayjs(`${start}-01-01T12:00:00`).locale(locale);
-    const firstYearWithTimezone = setNoon(dateInner.year(start).startOf('year'));
+    const firstYear = dayjs(`${start}-01-01T12:00:00`).locale(locale);
+    /* const firstYearWithTimezone = setNoon(dateInner.year(start).startOf('year'));
     console.log(firstYearWithTimezone.toISOString());
-    const firstYear = getDayjsDateWithoutTimezone(firstYearWithTimezone);
+    const firstYear = getDayjsDateWithoutTimezone(firstYearWithTimezone); */
 
-    console.log(firstYear);
+    /* console.log(firstYear);
+    const base = dayjs('2024-01-01T01:00:00Z');
+    const one = base;
+    const two = base.tz('America/Toronto');
+    const americanDate = dayjs.tz('2023-12-31 20:00:00', 'America/Toronto');
+    console.log(americanDate);
+
+    console.log(base.isSame(americanDate, 'date'));
+
+    //console.log(one.toString());
+    console.log(one);
+    //console.log(two.toString());
+    console.log(two);
+
+    const res = one.isSame(two, 'hour');
+    console.log(`res-${res}`); */
     const array = yearsArray.map((v) => {
       const dateCurrent = firstYear.add(v, 'year');
       //console.log(dateCurrent);
-      const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'year');
+      const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(locale), 'year');
       const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'year');
       return (
         <DefaultYearCell
@@ -205,7 +205,6 @@ export const YearCalendar = ({
       rangeCalendar={false}
       date={dateInner}
       locale={locale}
-      timezone={timezone}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

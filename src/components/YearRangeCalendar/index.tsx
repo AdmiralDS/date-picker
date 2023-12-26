@@ -1,6 +1,5 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import {
@@ -8,7 +7,6 @@ import {
   dayjsDateToString,
   dayjsStateToString,
   getCurrentDate,
-  getCurrentTimeZone,
   getDateByDayOfYear,
   getDaysInYear,
   sortDatesAsc,
@@ -63,14 +61,12 @@ export const YearRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  timezone,
-  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
   ...props
 }: YearRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const dateInner = dateValue || getCurrentDate(locale, timezone);
+  const dateInner = dateValue || getCurrentDate(locale);
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
@@ -78,7 +74,7 @@ export const YearRangeCalendar = ({
   const activeDateInner = activeDateValue || activeDateState;
 
   const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsActiveDate = dateStringToDayjs(dateString, locale);
     //console.log(`set active ${dayjsActiveDate}`);
     setActiveDateState(dayjsActiveDate);
     onActiveDateValueChange?.(dateString);
@@ -86,7 +82,7 @@ export const YearRangeCalendar = ({
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'yearCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate) {
         if (activeDateInner) {
           handleActiveDateChange(undefined);
@@ -99,7 +95,7 @@ export const YearRangeCalendar = ({
   const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'yearCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale, timezone);
+      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'year'))) {
         if (activeDateInner) {
           handleActiveDateChange(undefined);
@@ -126,7 +122,7 @@ export const YearRangeCalendar = ({
   const dateRangeFirstInner = selectedDateRangeValue?.[0] || dateRangeFirstState;
 
   const handleDateRangeFirstChange = (dateString?: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsDate = dateStringToDayjs(dateString, locale);
     //console.log(`first-${dateString}`);
     setDateRangeFirstState(dayjsDate);
   };
@@ -137,7 +133,7 @@ export const YearRangeCalendar = ({
   const dateRangeSecondInner = selectedDateRangeValue?.[1] || dateRangeSecondState;
 
   const handleDateRangeSecondChange = (dateString?: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale, timezone);
+    const dayjsDate = dateStringToDayjs(dateString, locale);
     //console.log(`second-${dateString}`);
     setDateRangeSecondState(dayjsDate);
   };
@@ -164,7 +160,7 @@ export const YearRangeCalendar = ({
   );
   const dateRangeActiveEndInner = activeDateRangeEndValue || dateRangeActiveEndState;
   const handleDateRangeActiveEndChange = (dateString?: string) => {
-    const dateDayjs = dateStringToDayjs(dateString, locale, timezone);
+    const dateDayjs = dateStringToDayjs(dateString, locale);
     //console.log(`activeEnd-${dateString}`);
     setDateRangeActiveEndState(dateDayjs);
     onActiveDateRangeEndValueChange?.(dateString);
@@ -173,7 +169,7 @@ export const YearRangeCalendar = ({
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
-    const clickedDate = dateStringToDayjs(clickedCell, locale, timezone);
+    const clickedDate = dateStringToDayjs(clickedCell, locale);
     if (clickedDate) {
       const newSelectedDateRangeValue: [string | undefined, string | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {
@@ -285,13 +281,13 @@ export const YearRangeCalendar = ({
 
   //useMemo
   const renderDate = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, locale, timezone);
+    const dateCurrent = dateStringToDayjs(dateString, locale);
     if (!dateCurrent) return {};
     const cellContent = dateCurrent.year();
     const selected = dateIsSelected(dateCurrent);
     const disabled = dateIsDisabled(dateCurrent);
     //const hidden = dateIsHidden(dateCurrent);
-    const isCurrent = dateCurrent.isSame(getCurrentDate(locale, timezone), 'year');
+    const isCurrent = dateCurrent.isSame(getCurrentDate(locale), 'year');
     const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'year');
     const isInRange = dateIsInRange(dateCurrent);
     const isRangeStart = dateIsRangeStart(dateCurrent);

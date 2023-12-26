@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { getCurrentDate, getCurrentTimeZone } from '#src/components/utils';
+import { getCurrentDate } from '#src/components/utils';
 import type { DatesOfMonthWidgetProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
 import { Days } from '#src/components/DatesOfMonthWidget/Days';
@@ -22,15 +21,13 @@ export const DatesOfMonthWidget = ({
   date,
   //onClick,
   locale = 'ru',
-  timezone,
-  //timezone = getCurrentTimeZone(),
   dayNamesProps,
   cells,
   renderCell,
   ...props
 }: DatesOfMonthWidgetProps) => {
   const { dayNameCellState } = dayNamesProps;
-  const localDate = date || getCurrentDate(locale, timezone);
+  const localDate = date || getCurrentDate(locale);
 
   /*const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;

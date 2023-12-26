@@ -4,11 +4,9 @@ import dayjs from 'dayjs';
 
 import type { DatePickerCalendarProps } from '@admiral-ds/date-picker';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
-import { getCurrentTimeZone } from '#src/components/utils';
 
-export const DatePickerCalendarSimpleTemplate = ({ locale, timezone, ...props }: DatePickerCalendarProps) => {
+export const DatePickerCalendarSimpleTemplate = ({ locale, ...props }: DatePickerCalendarProps) => {
   const localeInner = locale || 'ru';
-  const timezoneInner = timezone || getCurrentTimeZone();
 
   const dateIsDisabled = (date: Dayjs) => {
     return date.isBefore(dayjs());
@@ -19,14 +17,5 @@ export const DatePickerCalendarSimpleTemplate = ({ locale, timezone, ...props }:
     console.log(`click on ${clickedCell}`);
   };
 
-  return (
-    <DatePickerCalendar
-      {...props}
-      onClick={handleClick}
-      locale={localeInner}
-      disabledDate={dateIsDisabled}
-      timezone={timezoneInner}
-      //timezone="America/Toronto"
-    />
-  );
+  return <DatePickerCalendar {...props} onClick={handleClick} locale={localeInner} disabledDate={dateIsDisabled} />;
 };
