@@ -2,7 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import { dateStringToDayjs, dayjsDateToString, getCurrentDate } from '#src/components/utils.ts';
+import { getCurrentDate } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces.ts';
@@ -36,12 +36,9 @@ export const YearRangeDoublePickerCalendar = ({
   const [dateLeftState, setDateLeftState] = useState(defaultDateRangeValue?.[0] || getCurrentDate(locale));
   const dateLeftInner = dateRangeValue?.[0] || dateLeftState;
 
-  const handleDateLeftChange = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale);
-    if (dayjsDate) {
-      setDateLeftState(dayjsDate);
-      onDateRangeValueChange?.([dateString, dayjsDateToString(dateRightInner)]);
-    }
+  const handleDateLeftChange = (date: Dayjs) => {
+    setDateLeftState(date);
+    onDateRangeValueChange?.([date, dateRightInner]);
   };
 
   const [dateRightState, setDateRightState] = useState(
@@ -49,22 +46,19 @@ export const YearRangeDoublePickerCalendar = ({
   );
   const dateRightInner = dateRangeValue?.[1] || dateRightState;
 
-  const handleDateRightChange = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale);
-    if (dayjsDate) {
-      setDateRightState(dayjsDate);
-      onDateRangeValueChange?.([dayjsDateToString(dateLeftInner), dateString]);
-    }
+  const handleDateRightChange = (date: Dayjs) => {
+    setDateRightState(date);
+    onDateRangeValueChange?.([dateLeftInner, date]);
   };
 
   useEffect(() => {
     if (dateLeftInner.isSameOrAfter(dateRightInner)) {
-      handleDateRightChange(dayjsDateToString(dateLeftInner.add(YEARS_ON_SCREEN, 'year')));
+      handleDateRightChange(dateLeftInner.add(YEARS_ON_SCREEN, 'year'));
     }
   }, [dateLeftInner]);
   useEffect(() => {
     if (dateRightInner.isSameOrBefore(dateLeftInner)) {
-      handleDateLeftChange(dayjsDateToString(dateRightInner.subtract(YEARS_ON_SCREEN, 'year')));
+      handleDateLeftChange(dateRightInner.subtract(YEARS_ON_SCREEN, 'year'));
     }
   }, [dateRightInner]);
   //</editor-fold>
@@ -101,10 +95,10 @@ export const YearRangeDoublePickerCalendar = ({
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
-        handleDateLeftChange(dayjsDateToString(dateLeftInner.subtract(YEARS_ON_SCREEN, 'year')));
+        handleDateLeftChange(dateLeftInner.subtract(YEARS_ON_SCREEN, 'year'));
         break;
       case 'right':
-        handleDateLeftChange(dayjsDateToString(dateLeftInner.add(YEARS_ON_SCREEN, 'year')));
+        handleDateLeftChange(dateLeftInner.add(YEARS_ON_SCREEN, 'year'));
         break;
     }
   };
@@ -112,10 +106,10 @@ export const YearRangeDoublePickerCalendar = ({
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
-        handleDateRightChange(dayjsDateToString(dateRightInner.subtract(YEARS_ON_SCREEN, 'year')));
+        handleDateRightChange(dateRightInner.subtract(YEARS_ON_SCREEN, 'year'));
         break;
       case 'right':
-        handleDateRightChange(dayjsDateToString(dateRightInner.add(YEARS_ON_SCREEN, 'year')));
+        handleDateRightChange(dateRightInner.add(YEARS_ON_SCREEN, 'year'));
         break;
     }
   };

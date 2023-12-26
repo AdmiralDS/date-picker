@@ -2,7 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import { dateStringToDayjs, dayjsDateToString, getCurrentDate } from '#src/components/utils.ts';
+import { getCurrentDate } from '#src/components/utils.ts';
 import type {
   RangeDoubleCalendarProps,
   CalendarViewMode,
@@ -64,33 +64,27 @@ export const DateRangeDoublePickerCalendar = ({
   const [dateLeftState, setDateLeftState] = useState(defaultDateRangeValue?.[0] || getCurrentDate(locale));
   const dateLeftInner = dateRangeValue?.[0] || dateLeftState;
 
-  const handleDateLeftChange = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale);
-    if (dayjsDate) {
-      setDateLeftState(dayjsDate);
-      onDateRangeValueChange?.([dateString, dayjsDateToString(dateRightInner)]);
-    }
+  const handleDateLeftChange = (date: Dayjs) => {
+    setDateLeftState(date);
+    onDateRangeValueChange?.([date, dateRightInner]);
   };
 
   const [dateRightState, setDateRightState] = useState(defaultDateRangeValue?.[1] || dateLeftInner.add(1, 'month'));
   const dateRightInner = dateRangeValue?.[1] || dateRightState;
 
-  const handleDateRightChange = (dateString: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale);
-    if (dayjsDate) {
-      setDateRightState(dayjsDate);
-      onDateRangeValueChange?.([dayjsDateToString(dateLeftInner), dateString]);
-    }
+  const handleDateRightChange = (date: Dayjs) => {
+    setDateRightState(date);
+    onDateRangeValueChange?.([dateLeftInner, date]);
   };
 
   useEffect(() => {
     if (dateLeftInner.isSameOrAfter(dateRightInner)) {
-      handleDateRightChange(dayjsDateToString(dateLeftInner.add(1, 'month')));
+      handleDateRightChange(dateLeftInner.add(1, 'month'));
     }
   }, [dateLeftInner]);
   useEffect(() => {
     if (dateRightInner.isSameOrBefore(dateLeftInner)) {
-      handleDateLeftChange(dayjsDateToString(dateRightInner.subtract(1, 'month')));
+      handleDateLeftChange(dateRightInner.subtract(1, 'month'));
     }
   }, [dateRightInner]);
   //</editor-fold>
@@ -125,24 +119,24 @@ export const DateRangeDoublePickerCalendar = ({
 
   const handleLeftMonthClick = (date: Dayjs) => {
     const newDate = dateLeftInner.month(date.month());
-    handleDateLeftChange(dayjsDateToString(newDate));
+    handleDateLeftChange(newDate);
     handleViewModeLeftChange('dates');
     //onMonthChange?.(newDate);
   };
   const handleRightMonthClick = (date: Dayjs) => {
     const newDate = dateRightInner.month(date.month());
-    handleDateRightChange(dayjsDateToString(newDate));
+    handleDateRightChange(newDate);
     handleViewModeRightChange('dates');
   };
 
   const handleLeftYearClick = (date: Dayjs) => {
     const newDate = dateLeftInner.year(date.year());
-    handleDateLeftChange(dayjsDateToString(newDate));
+    handleDateLeftChange(newDate);
     handleViewModeLeftChange('months');
   };
   const handleRightYearClick = (date: Dayjs) => {
     const newDate = dateRightInner.year(date.year());
-    handleDateRightChange(dayjsDateToString(newDate));
+    handleDateRightChange(newDate);
     handleViewModeRightChange('months');
   };
 
@@ -151,20 +145,20 @@ export const DateRangeDoublePickerCalendar = ({
     switch (targetType) {
       case 'left':
         if (viewModeLeftInner === 'dates') {
-          handleDateLeftChange(dayjsDateToString(dateLeftInner.subtract(1, 'month')));
+          handleDateLeftChange(dateLeftInner.subtract(1, 'month'));
         } else if (viewModeLeftInner === 'months') {
-          handleDateLeftChange(dayjsDateToString(dateLeftInner.subtract(1, 'year')));
+          handleDateLeftChange(dateLeftInner.subtract(1, 'year'));
         } else {
-          handleDateLeftChange(dayjsDateToString(dateLeftInner.subtract(YEARS_ON_SCREEN, 'year')));
+          handleDateLeftChange(dateLeftInner.subtract(YEARS_ON_SCREEN, 'year'));
         }
         break;
       case 'right':
         if (viewModeLeftInner === 'dates') {
-          handleDateLeftChange(dayjsDateToString(dateLeftInner.add(1, 'month')));
+          handleDateLeftChange(dateLeftInner.add(1, 'month'));
         } else if (viewModeLeftInner === 'months') {
-          handleDateLeftChange(dayjsDateToString(dateLeftInner.add(1, 'year')));
+          handleDateLeftChange(dateLeftInner.add(1, 'year'));
         } else {
-          handleDateLeftChange(dayjsDateToString(dateLeftInner.add(YEARS_ON_SCREEN, 'year')));
+          handleDateLeftChange(dateLeftInner.add(YEARS_ON_SCREEN, 'year'));
         }
         break;
       case 'month':
@@ -180,20 +174,20 @@ export const DateRangeDoublePickerCalendar = ({
     switch (targetType) {
       case 'left':
         if (viewModeRightInner === 'dates') {
-          handleDateRightChange(dayjsDateToString(dateRightInner.subtract(1, 'month')));
+          handleDateRightChange(dateRightInner.subtract(1, 'month'));
         } else if (viewModeRightInner === 'months') {
-          handleDateRightChange(dayjsDateToString(dateRightInner.subtract(1, 'year')));
+          handleDateRightChange(dateRightInner.subtract(1, 'year'));
         } else {
-          handleDateRightChange(dayjsDateToString(dateRightInner.subtract(YEARS_ON_SCREEN, 'year')));
+          handleDateRightChange(dateRightInner.subtract(YEARS_ON_SCREEN, 'year'));
         }
         break;
       case 'right':
         if (viewModeRightInner === 'dates') {
-          handleDateRightChange(dayjsDateToString(dateRightInner.add(1, 'month')));
+          handleDateRightChange(dateRightInner.add(1, 'month'));
         } else if (viewModeRightInner === 'months') {
-          handleDateRightChange(dayjsDateToString(dateRightInner.add(1, 'year')));
+          handleDateRightChange(dateRightInner.add(1, 'year'));
         } else {
-          handleDateRightChange(dayjsDateToString(dateRightInner.add(YEARS_ON_SCREEN, 'year')));
+          handleDateRightChange(dateRightInner.add(YEARS_ON_SCREEN, 'year'));
         }
         break;
       case 'month':

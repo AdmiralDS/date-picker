@@ -58,7 +58,7 @@ export interface RangeDoubleCalendarProps
   /** Выбранное значение диапазона дат по умолчанию */
   defaultDateRangeValue?: [Dayjs | undefined, Dayjs | undefined];
   /** Коллбэк на изменение выбранного диапазона дат */
-  onDateRangeValueChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
+  onDateRangeValueChange?: (dateRange: [Dayjs | undefined, Dayjs | undefined]) => void;
 }
 
 export interface PickerCalendarProps {
