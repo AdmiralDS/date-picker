@@ -17,7 +17,7 @@ import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { YEARS_COLUMNS } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 
-export interface YearRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface YearRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> { }
 
 const getYearCellDataAttributes = (
   value?: string,
@@ -63,13 +63,14 @@ export const YearRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  timezone = getCurrentTimeZone(),
+  timezone,
+  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
   ...props
 }: YearRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const dateInner = dateValue || dayjs().tz(timezone).locale(locale);
+  const dateInner = dateValue || getCurrentDate(locale, timezone);
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">

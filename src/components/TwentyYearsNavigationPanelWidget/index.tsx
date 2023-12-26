@@ -6,7 +6,7 @@ import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutlin
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
-import { getCurrentTimeZone, yearsRange } from '#src/components/utils';
+import { getCurrentDate, getCurrentTimeZone, yearsRange } from '#src/components/utils';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { BasePanelWidgetProps } from '#src/components/widgetInterfaces.ts';
 
@@ -33,10 +33,11 @@ export const TwentyYearsNavigationPanelWidget = ({
   viewMode,
   date,
   locale = 'ru',
-  timezone = getCurrentTimeZone(),
+  timezone,
+  //timezone = getCurrentTimeZone(),
   ...props
 }: TwentyYearsNavigationPanelWidgetProps) => {
-  const dateInner = date || dayjs().tz(timezone).locale(locale);
+  const dateInner = date || getCurrentDate(locale, timezone);
   const { start, end } = yearsRange(dateInner, YEARS_ON_SCREEN);
 
   return (

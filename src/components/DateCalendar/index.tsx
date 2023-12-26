@@ -3,7 +3,13 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone, setNoon } from '#src/components/utils';
+import {
+  dateStringToDayjs,
+  dayjsDateToString,
+  getCurrentDate,
+  getCurrentTimeZone,
+  setNoon,
+} from '#src/components/utils';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
@@ -42,7 +48,8 @@ export const DateCalendar = ({
   onActiveDateValueChange,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   renderDateCell,
-  timezone = getCurrentTimeZone(),
+  timezone,
+  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
   ...props
@@ -59,7 +66,7 @@ export const DateCalendar = ({
     }
   };
   //</editor-fold>*/
-  const dateInner = dateValue || dayjs().tz(timezone).locale(locale);
+  const dateInner = dateValue || getCurrentDate(locale, timezone);
 
   //<editor-fold desc="Hovered date">
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);

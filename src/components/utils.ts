@@ -47,6 +47,10 @@ export const dateStringToDayjs = (dateString?: string, locale?: string, timezone
   return date;
 };
 
+export const getDayjsDateWithoutTimezone = (date: Dayjs) => {
+  return dayjs(`${date.year()}-${date.month()}-${date.date()}T12:00:00`);
+};
+
 export const getDayjsDate = (locale?: string, timezone?: string, dateString?: string) => {
   const localeInner = locale || 'ru';
   const timezoneInner = timezone || getCurrentTimeZone();

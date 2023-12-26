@@ -35,7 +35,7 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
   const localeInner = locale || 'ru';
-  const dateInner = date || dayjs().tz(timezone).locale(locale);
+  const dateInner = date || getCurrentDate(locale, timezone);
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(localeInner).add(1, 'year'));
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {

@@ -51,11 +51,12 @@ const getDateCellDataAttributes = (
 export const DatesOfMonthWidgetSimpleTemplate = ({
   date,
   locale = 'ru',
-  timezone = getCurrentTimeZone(),
+  timezone,
+  //timezone = getCurrentTimeZone(),
   ...props
 }: DatesOfMonthWidgetProps) => {
   const localeInner = locale || 'ru';
-  const dateInner = date || dayjs().tz(timezone).locale(locale);
+  const dateInner = date || getCurrentDate(locale, timezone);
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
     getCurrentDate(localeInner, timezone).add(1, 'day'),
   );

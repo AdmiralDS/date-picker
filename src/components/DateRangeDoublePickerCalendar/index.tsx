@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone } from '#src/components/utils.ts';
+import { dateStringToDayjs, dayjsDateToString, getCurrentDate, getCurrentTimeZone } from '#src/components/utils.ts';
 import type {
   RangeDoubleCalendarProps,
   CalendarViewMode,
@@ -40,7 +40,8 @@ export const DateRangeDoublePickerCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  timezone = getCurrentTimeZone(),
+  timezone,
+  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
 }: DateRangeDoublePickerCalendarProps) => {
@@ -63,7 +64,7 @@ export const DateRangeDoublePickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Date shown on calendar">
-  const [dateLeftState, setDateLeftState] = useState(defaultDateRangeValue?.[0] || dayjs().tz(timezone).locale(locale));
+  const [dateLeftState, setDateLeftState] = useState(defaultDateRangeValue?.[0] || getCurrentDate(locale, timezone));
   const dateLeftInner = dateRangeValue?.[0] || dateLeftState;
 
   const handleDateLeftChange = (dateString: string) => {

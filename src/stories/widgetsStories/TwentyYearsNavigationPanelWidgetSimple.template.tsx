@@ -31,12 +31,13 @@ const CalendarWrapper = styled.div`
 
 export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
   locale = 'ru',
-  timezone = getCurrentTimeZone(),
+  timezone,
+  //timezone = getCurrentTimeZone(),
   date,
   ...props
 }: TwentyYearsNavigationPanelWidgetProps) => {
   const localeInner = locale || 'ru';
-  const [dateState, setDateState] = useState(date || dayjs().tz(timezone).locale(locale));
+  const [dateState, setDateState] = useState(date || getCurrentDate(locale, timezone));
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
     getCurrentDate(localeInner, timezone).add(1, 'day'),
   );

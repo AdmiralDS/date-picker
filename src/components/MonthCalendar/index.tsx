@@ -31,7 +31,8 @@ export const MonthCalendar = ({
   onActiveDateValueChange,
   onClick,
   locale = 'ru',
-  timezone = getCurrentTimeZone(),
+  timezone,
+  //timezone = getCurrentTimeZone(),
   ...props
 }: MonthCalendarProps) => {
   /*//<editor-fold desc="Date shown on calendar">
@@ -46,7 +47,7 @@ export const MonthCalendar = ({
     }
   };
   //</editor-fold>*/
-  const dateInner = dateValue || dayjs().tz(timezone).locale(locale);
+  const dateInner = dateValue || getCurrentDate(locale, timezone);
 
   //<editor-fold desc="Hovered date">
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
@@ -154,7 +155,7 @@ export const MonthCalendar = ({
   };*/
 
   const monthCells = () => {
-    const firstMonth = setNoon(dayjs(`${dateInner.year()}-01-01T12:00:00`));
+    const firstMonth = setNoon(dateInner.startOf('year'));
     const array = monthsArray.map((v) => {
       const dateCurrent = firstMonth.add(v, 'month');
       const isCurrent = dateCurrent.isSame(getCurrentDate(locale, timezone), 'month');

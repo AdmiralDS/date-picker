@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import { dateStringToDayjs, dayjsDateToString, getCurrentTimeZone } from '#src/components/utils.ts';
+import { dateStringToDayjs, dayjsDateToString, getCurrentDate, getCurrentTimeZone } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces.ts';
@@ -18,7 +18,7 @@ export interface YearRangeDoublePickerCalendarProps
   extends Omit<
     RangeDoubleCalendarProps,
     'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
-  > {}
+  > { }
 
 export const YearRangeDoublePickerCalendar = ({
   dateRangeValue,
@@ -30,12 +30,13 @@ export const YearRangeDoublePickerCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  timezone = getCurrentTimeZone(),
+  timezone,
+  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
 }: YearRangeDoublePickerCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const [dateLeftState, setDateLeftState] = useState(defaultDateRangeValue?.[0] || dayjs().tz(timezone).locale(locale));
+  const [dateLeftState, setDateLeftState] = useState(defaultDateRangeValue?.[0] || getCurrentDate(locale, timezone));
   const dateLeftInner = dateRangeValue?.[0] || dateLeftState;
 
   const handleDateLeftChange = (dateString: string) => {

@@ -1,11 +1,10 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import type { CalendarViewMode, SingleCalendarProps, PickerCalendarProps } from '#src/components/calendarInterfaces.ts';
 import { MonthNavigationPanelWidget } from '#src/components/MonthNavigationPanelWidget';
-import { getCurrentTimeZone, setNoon } from '#src/components/utils.ts';
+import { getCurrentDate, getCurrentTimeZone, setNoon } from '#src/components/utils.ts';
 import {
   CalendarContainer,
   SinglePickerCalendarWrapper,
@@ -27,7 +26,8 @@ export const DatePickerCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
-  timezone = getCurrentTimeZone(),
+  timezone,
+  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   ...props
 }: DatePickerCalendarProps) => {
@@ -42,7 +42,7 @@ export const DatePickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(defaultDateValue || dayjs().tz(timezone).locale(locale));
+  const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale, timezone));
   const dateInner = dateValue || dateState;
 
   const handleDateChange = (date: Dayjs) => {

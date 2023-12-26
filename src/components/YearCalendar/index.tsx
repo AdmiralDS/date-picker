@@ -9,6 +9,7 @@ import {
   getCurrentDate,
   getCurrentTimeZone,
   getDateByDayOfYear,
+  getDayjsDateWithoutTimezone,
   getDaysInYear,
   setNoon,
   yearsRange,
@@ -33,7 +34,8 @@ export const YearCalendar = ({
   onActiveDateValueChange,
   onClick,
   locale = 'ru',
-  timezone = getCurrentTimeZone(),
+  timezone,
+  //timezone = getCurrentTimeZone(),
   ...props
 }: YearCalendarProps) => {
   /*//<editor-fold desc="Date shown on calendar">
@@ -48,7 +50,7 @@ export const YearCalendar = ({
     }
   };
   //</editor-fold>*/
-  const dateInner = dateValue || dayjs().tz(timezone).locale(locale);
+  const dateInner = dateValue || getCurrentDate(locale, timezone);
 
   //<editor-fold desc="Hovered date">
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
@@ -158,11 +160,15 @@ export const YearCalendar = ({
   const yearCells = () => {
     //console.log(`yearCells start-${dayjs()}`);
     const { start } = yearsRange(dateInner, YEARS_ON_SCREEN);
-    console.log(dateInner);
-    //const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`));
-    const firstYear = setNoon(dateInner.year(start).startOf('year'));
+    //const firstYear = dayjs(`${start}-01-01T12:00:00`).locale(locale);
+    const firstYearWithTimezone = setNoon(dateInner.year(start).startOf('year'));
+    console.log(firstYearWithTimezone.toISOString());
+    const firstYear = getDayjsDateWithoutTimezone(firstYearWithTimezone);
+
+    console.log(firstYear);
     const array = yearsArray.map((v) => {
       const dateCurrent = firstYear.add(v, 'year');
+      //console.log(dateCurrent);
       const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(locale, timezone), 'year');
       const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'year');
       return (

@@ -7,6 +7,7 @@ import {
   dateStringToDayjs,
   dayjsDateToString,
   dayjsStateToString,
+  getCurrentDate,
   getCurrentTimeZone,
   sortDatesAsc,
 } from '#src/components/utils';
@@ -61,13 +62,14 @@ export const DateRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  timezone = getCurrentTimeZone(),
+  timezone,
+  //timezone = getCurrentTimeZone(),
   locale = 'ru',
   onClick,
   ...props
 }: DateRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const dateInner = dateValue || dayjs().tz(timezone).locale(locale);
+  const dateInner = dateValue || getCurrentDate(locale, timezone);
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
