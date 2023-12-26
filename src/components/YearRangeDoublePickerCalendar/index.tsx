@@ -82,12 +82,10 @@ export const YearRangeDoublePickerCalendar = ({
   //<editor-fold desc="Selected range">
   const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
-  const handleSelectedDateRangeChange = (dateRangeString: [string | undefined, string | undefined]) => {
-    setSelectedDateRangeState([
-      dateStringToDayjs(dateRangeString[0], locale),
-      dateStringToDayjs(dateRangeString[1], locale),
-    ]);
-    onSelectedDateRangeValueChange?.(dateRangeString);
+
+  const handleSelectedDateRangeChange = (dateRange: [Dayjs | undefined, Dayjs | undefined]) => {
+    setSelectedDateRangeState(dateRange);
+    onSelectedDateRangeValueChange?.(dateRange);
   };
   //</editor-fold>
 

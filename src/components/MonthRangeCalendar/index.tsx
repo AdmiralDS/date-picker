@@ -5,7 +5,6 @@ import type { Dayjs } from 'dayjs';
 import {
   capitalizeFirstLetter,
   dateStringToDayjs,
-  dayjsStateToString,
   getCurrentDate,
   sortDatesAsc,
 } from '#src/components/utils';
@@ -117,9 +116,8 @@ export const MonthRangeCalendar = ({
   const [dateRangeFirstState, setDateRangeFirstState] = useState(defaultSelectedDateRangeValue?.[0]);
   const dateRangeFirstInner = selectedDateRangeValue?.[0] || dateRangeFirstState;
 
-  const handleDateRangeFirstChange = (dateString?: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale);
-    setDateRangeFirstState(dayjsDate);
+  const handleDateRangeFirstChange = (date?: Dayjs) => {
+    setDateRangeFirstState(date);
   };
   //</editor-fold>
 
@@ -127,9 +125,8 @@ export const MonthRangeCalendar = ({
   const [dateRangeSecondState, setDateRangeSecondState] = useState(defaultSelectedDateRangeValue?.[1]);
   const dateRangeSecondInner = selectedDateRangeValue?.[1] || dateRangeSecondState;
 
-  const handleDateRangeSecondChange = (dateString?: string) => {
-    const dayjsDate = dateStringToDayjs(dateString, locale);
-    setDateRangeSecondState(dayjsDate);
+  const handleDateRangeSecondChange = (date?: Dayjs) => {
+    setDateRangeSecondState(date);
   };
   //</editor-fold>
 
@@ -164,37 +161,37 @@ export const MonthRangeCalendar = ({
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     const clickedDate = dateStringToDayjs(clickedCell, locale);
     if (clickedDate) {
-      const newSelectedDateRangeValue: [string | undefined, string | undefined] = [undefined, undefined];
+      const newSelectedDateRangeValue: [Dayjs | undefined, Dayjs | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {
         if (dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeSecondChange(clickedCell);
-          newSelectedDateRangeValue[0] = dayjsStateToString(dateRangeFirstInner);
-          newSelectedDateRangeValue[1] = clickedCell;
+          handleDateRangeSecondChange(clickedDate);
+          newSelectedDateRangeValue[0] = dateRangeFirstInner;
+          newSelectedDateRangeValue[1] = clickedDate;
         } else {
-          handleDateRangeFirstChange(clickedCell);
-          newSelectedDateRangeValue[0] = clickedCell;
-          newSelectedDateRangeValue[1] = dayjsStateToString(dateRangeSecondInner);
+          handleDateRangeFirstChange(clickedDate);
+          newSelectedDateRangeValue[0] = clickedDate;
+          newSelectedDateRangeValue[1] = dateRangeSecondInner;
         }
       } else {
         if (dateRangeFirstInner && dateRangeSecondInner) {
           if (dateRangeActiveEndInner.isSame(dateRangeFirstInner, 'month')) {
-            handleDateRangeSecondChange(clickedCell);
-            newSelectedDateRangeValue[0] = dayjsStateToString(dateRangeFirstInner);
-            newSelectedDateRangeValue[1] = clickedCell;
+            handleDateRangeSecondChange(clickedDate);
+            newSelectedDateRangeValue[0] = dateRangeFirstInner;
+            newSelectedDateRangeValue[1] = clickedDate;
           }
           if (dateRangeActiveEndInner.isSame(dateRangeSecondInner, 'month')) {
-            handleDateRangeFirstChange(clickedCell);
-            newSelectedDateRangeValue[0] = clickedCell;
-            newSelectedDateRangeValue[1] = dayjsStateToString(dateRangeSecondInner);
+            handleDateRangeFirstChange(clickedDate);
+            newSelectedDateRangeValue[0] = clickedDate;
+            newSelectedDateRangeValue[1] = dateRangeSecondInner;
           }
         } else if (dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeSecondChange(clickedCell);
-          newSelectedDateRangeValue[0] = dayjsStateToString(dateRangeFirstInner);
-          newSelectedDateRangeValue[1] = clickedCell;
+          handleDateRangeSecondChange(clickedDate);
+          newSelectedDateRangeValue[0] = dateRangeFirstInner;
+          newSelectedDateRangeValue[1] = clickedDate;
         } else {
-          handleDateRangeFirstChange(clickedCell);
-          newSelectedDateRangeValue[0] = clickedCell;
-          newSelectedDateRangeValue[1] = dayjsStateToString(dateRangeSecondInner);
+          handleDateRangeFirstChange(clickedDate);
+          newSelectedDateRangeValue[0] = clickedDate;
+          newSelectedDateRangeValue[1] = dateRangeSecondInner;
         }
       }
       handleDateRangeActiveEndChange(clickedDate);

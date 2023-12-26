@@ -3,7 +3,7 @@ import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { dateStringToDayjs, getCurrentDate } from '#src/components/utils.ts';
+import { getCurrentDate } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import {
@@ -41,12 +41,10 @@ export const YearRangePickerCalendar = ({
   //<editor-fold desc="Selected range">
   const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
-  const handleSelectedDateRangeChange = (dateRangeString: [string | undefined, string | undefined]) => {
-    setSelectedDateRangeState([
-      dateStringToDayjs(dateRangeString[0], locale),
-      dateStringToDayjs(dateRangeString[1], locale),
-    ]);
-    onSelectedDateRangeValueChange?.(dateRangeString);
+
+  const handleSelectedDateRangeChange = (dateRange: [Dayjs | undefined, Dayjs | undefined]) => {
+    setSelectedDateRangeState(dateRange);
+    onSelectedDateRangeValueChange?.(dateRange);
   };
   //</editor-fold>
 

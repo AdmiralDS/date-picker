@@ -41,7 +41,7 @@ export interface RangeCalendarProps extends CalendarProps {
   /** Выбранное значение диапазона дат по умолчанию */
   defaultSelectedDateRangeValue?: [Dayjs | undefined, Dayjs | undefined];
   /** Коллбэк на изменение выбранного диапазона дат */
-  onSelectedDateRangeValueChange?: (dateRangeString: [string | undefined, string | undefined]) => void;
+  onSelectedDateRangeValueChange?: (dateRange: [Dayjs | undefined, Dayjs | undefined]) => void;
 
   /** Значение активного конца диапазона дат */
   activeDateRangeEndValue?: Dayjs;
