@@ -15,7 +15,7 @@ import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfac
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 
-export interface DateRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> { }
+export interface DateRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 const getDateCellDataAttributes = (
   value?: string,

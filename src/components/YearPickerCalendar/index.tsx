@@ -8,7 +8,7 @@ import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNav
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import { CalendarContainer, SinglePickerCalendarWrapper, YearCalendarView } from '#src/components/calendarStyle.ts';
 
-export interface YearPickerCalendarProps extends SingleCalendarProps { }
+export interface YearPickerCalendarProps extends SingleCalendarProps {}
 
 export const YearPickerCalendar = ({
   dateValue,

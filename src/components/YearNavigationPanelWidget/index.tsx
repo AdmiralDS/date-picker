@@ -8,7 +8,7 @@ import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { getCurrentDate } from '#src/components/utils';
 import type { BasePanelWidgetProps } from '#src/components/widgetInterfaces.ts';
 
-export interface YearNavigationPanelWidgetProps extends BasePanelWidgetProps { }
+export interface YearNavigationPanelWidgetProps extends BasePanelWidgetProps {}
 
 const YearNavigationPanelWrapper = styled.div`
   box-sizing: border-box;

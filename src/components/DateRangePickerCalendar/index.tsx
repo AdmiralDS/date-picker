@@ -16,10 +16,10 @@ import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/consta
 
 export interface DateRangePickerCalendarProps
   extends Omit<
-    RangeCalendarProps,
-    'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
-  >,
-  PickerCalendarProps { }
+      RangeCalendarProps,
+      'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
+    >,
+    PickerCalendarProps {}
 
 export const DateRangePickerCalendar = ({
   viewModeValue,

@@ -14,7 +14,7 @@ import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import { MONTHS_COLUMNS } from '#src/components/MonthsOfYearWidget/constants.ts';
 
-export interface MonthRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> { }
+export interface MonthRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 const getMonthCellDataAttributes = (
   value?: string,

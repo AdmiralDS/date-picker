@@ -6,12 +6,7 @@ import styled from 'styled-components';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import {
-  capitalizeFirstLetter,
-  dateStringToDayjs,
-  getCurrentDate,
-  dayjsDateToString,
-} from '#src/components/utils';
+import { capitalizeFirstLetter, dateStringToDayjs, getCurrentDate, dayjsDateToString } from '#src/components/utils';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
 import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
@@ -47,16 +42,10 @@ const getDateCellDataAttributes = (
   };
 };
 
-export const DatesOfMonthWidgetSimpleTemplate = ({
-  date,
-  locale = 'ru',
-  ...props
-}: DatesOfMonthWidgetProps) => {
+export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props }: DatesOfMonthWidgetProps) => {
   const localeInner = locale || 'ru';
   const dateInner = date || getCurrentDate(locale);
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(
-    getCurrentDate(localeInner).add(1, 'day'),
-  );
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(localeInner).add(1, 'day'));
 
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
 

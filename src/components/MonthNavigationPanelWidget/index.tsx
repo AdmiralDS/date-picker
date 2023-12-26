@@ -8,7 +8,7 @@ import { capitalizeFirstLetter, getCurrentDate } from '#src/components/utils';
 import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import type { BasePanelWidgetProps } from '#src/components/widgetInterfaces.ts';
 
-export interface MonthNavigationPanelWidgetProps extends BasePanelWidgetProps { }
+export interface MonthNavigationPanelWidgetProps extends BasePanelWidgetProps {}
 
 const MonthNavigationPanelWrapper = styled.div`
   box-sizing: border-box;

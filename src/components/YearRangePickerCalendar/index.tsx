@@ -16,7 +16,7 @@ export interface YearRangePickerCalendarProps
   extends Omit<
     RangeCalendarProps,
     'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
-  > { }
+  > {}
 
 export const YearRangePickerCalendar = ({
   dateValue,

@@ -15,7 +15,7 @@ import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { YEARS_COLUMNS } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 
-export interface YearRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> { }
+export interface YearRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 const getYearCellDataAttributes = (
   value?: string,

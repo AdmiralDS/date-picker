@@ -14,7 +14,7 @@ import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts'
 import { DefaultMonthCell } from '#src/components/DefaultCell';
 import { MONTHS_COLUMNS, MONTHS_ROWS } from '#src/components/MonthsOfYearWidget/constants.ts';
 
-export interface MonthCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> { }
+export interface MonthCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 const monthsArray = Array.from(Array(MONTHS_ROWS * MONTHS_COLUMNS).keys());
 

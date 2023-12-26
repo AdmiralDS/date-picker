@@ -8,7 +8,7 @@ import { Years } from '#src/components/YearsOfTwentyYearsWidget/Years.tsx';
 import { YEARS_OF_YEAR_WIDGET_WIDTH } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
 
-export interface YearsOfTwentyYearsWidgetProps extends BaseWidgetProps { }
+export interface YearsOfTwentyYearsWidgetProps extends BaseWidgetProps {}
 
 const YearsOfYearWrapper = styled.div`
   background-color: ${({ theme }) => theme.color['Special/Elevated BG']};

@@ -8,7 +8,7 @@ import { MONTHS_OF_YEAR_WIDGET_WIDTH } from '#src/components/MonthsOfYearWidget/
 import { Months } from '#src/components/MonthsOfYearWidget/Months';
 import type { BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
 
-export interface MonthsOfYearWidgetProps extends BaseWidgetProps { }
+export interface MonthsOfYearWidgetProps extends BaseWidgetProps {}
 
 const MonthsOfYearWrapper = styled.div`
   background-color: ${({ theme }) => theme.color['Special/Elevated BG']};

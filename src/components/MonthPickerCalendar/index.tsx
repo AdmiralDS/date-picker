@@ -13,7 +13,7 @@ import {
 } from '#src/components/calendarStyle.ts';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 
-export interface MonthPickerCalendarProps extends SingleCalendarProps, PickerCalendarProps { }
+export interface MonthPickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {}
 
 export const MonthPickerCalendar = ({
   viewModeValue,

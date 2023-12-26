@@ -9,7 +9,7 @@ import { getCurrentDate, yearsRange } from '#src/components/utils';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { BasePanelWidgetProps } from '#src/components/widgetInterfaces.ts';
 
-export interface TwentyYearsNavigationPanelWidgetProps extends BasePanelWidgetProps { }
+export interface TwentyYearsNavigationPanelWidgetProps extends BasePanelWidgetProps {}
 
 const TwentyYearsNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
