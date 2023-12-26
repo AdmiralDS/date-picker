@@ -156,11 +156,10 @@ export const DateRangeCalendar = ({
     setInitialDateRangeActiveEndState(),
   );
   const dateRangeActiveEndInner = activeDateRangeEndValue || dateRangeActiveEndState;
-  const handleDateRangeActiveEndChange = (dateString?: string) => {
-    const dateDayjs = dateStringToDayjs(dateString, locale);
-    //console.log(`activeEnd-${dateString}`);
-    setDateRangeActiveEndState(dateDayjs);
-    onActiveDateRangeEndValueChange?.(dateString);
+
+  const handleDateRangeActiveEndChange = (date?: Dayjs) => {
+    setDateRangeActiveEndState(date);
+    onActiveDateRangeEndValueChange?.(date);
   };
   //</editor-fold>
 
@@ -202,7 +201,7 @@ export const DateRangeCalendar = ({
           newSelectedDateRangeValue[1] = dayjsStateToString(dateRangeSecondInner);
         }
       }
-      handleDateRangeActiveEndChange(clickedCell);
+      handleDateRangeActiveEndChange(clickedDate);
       onSelectedDateRangeValueChange?.(newSelectedDateRangeValue);
       //console.log(`first-${dateRangeFirstInner}, second-${dateRangeSecondInner}, activeEnd-${dateRangeActiveEnd}`);
     }

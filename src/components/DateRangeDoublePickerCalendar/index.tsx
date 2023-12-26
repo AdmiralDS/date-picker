@@ -120,9 +120,9 @@ export const DateRangeDoublePickerCalendar = ({
 
   //<editor-fold desc="Active end of range">
   const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>();
-  const handleDateRangeActiveEndChange = (dateString?: string) => {
-    const dateDayjs = dateStringToDayjs(dateString, locale);
-    setDateRangeActiveEndState(dateDayjs);
+
+  const handleDateRangeActiveEndChange = (date?: Dayjs) => {
+    setDateRangeActiveEndState(date);
   };
   //</editor-fold>
 

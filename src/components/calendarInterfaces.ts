@@ -48,7 +48,7 @@ export interface RangeCalendarProps extends CalendarProps {
   /** Значение активного конца диапазона дат по умолчанию */
   defaultActiveDateRangeEndValue?: Dayjs;
   /** Коллбэк на изменение значения активного конца диапазона дат */
-  onActiveDateRangeEndValueChange?: (dateString: string | undefined) => void;
+  onActiveDateRangeEndValueChange?: (date: Dayjs | undefined) => void;
 }
 
 export interface RangeDoubleCalendarProps

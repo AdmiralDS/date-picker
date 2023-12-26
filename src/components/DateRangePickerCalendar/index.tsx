@@ -68,10 +68,9 @@ export const DateRangePickerCalendar = ({
 
   //<editor-fold desc="Active end of range">
   const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>();
-  const handleDateRangeActiveEndChange = (dateString?: string) => {
-    const dateDayjs = dateStringToDayjs(dateString, locale);
-    //console.log(`activeEnd-${dateString}`);
-    setDateRangeActiveEndState(dateDayjs);
+
+  const handleDateRangeActiveEndChange = (date?: Dayjs) => {
+    setDateRangeActiveEndState(date);
   };
   //</editor-fold>
 
