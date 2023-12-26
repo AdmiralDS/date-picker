@@ -98,10 +98,9 @@ export const MonthRangeDoublePickerCalendar = ({
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
-  const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, locale);
-    setActiveDateState(dayjsActiveDate);
-    onActiveDateValueChange?.(dateString);
+  const handleActiveDateChange = (date?: Dayjs) => {
+    setActiveDateState(date);
+    onActiveDateValueChange?.(date);
   };
   //</editor-fold>
 

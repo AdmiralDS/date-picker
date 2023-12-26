@@ -21,7 +21,7 @@ export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   /** Активная дата (hover) по умолчанию */
   defaultActiveDateValue?: Dayjs;
   /** Коллбэк на изменение активной даты */
-  onActiveDateValueChange?: (dateString?: string) => void;
+  onActiveDateValueChange?: (date?: Dayjs) => void;
 
   locale?: string;
 }

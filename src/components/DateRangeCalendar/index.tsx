@@ -5,7 +5,6 @@ import type { Dayjs } from 'dayjs';
 
 import {
   dateStringToDayjs,
-  dayjsDateToString,
   dayjsStateToString,
   getCurrentDate,
   sortDatesAsc,
@@ -73,11 +72,9 @@ export const DateRangeCalendar = ({
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
-  const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, locale);
-    //console.log(`set active ${dayjsActiveDate}`);
-    setActiveDateState(dayjsActiveDate);
-    onActiveDateValueChange?.(dateString);
+  const handleActiveDateChange = (date?: Dayjs) => {
+    setActiveDateState(date);
+    onActiveDateValueChange?.(date);
   };
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
@@ -88,7 +85,7 @@ export const DateRangeCalendar = ({
           handleActiveDateChange(undefined);
           return;
         }
-        handleActiveDateChange(dayjsDateToString(hoveredDate));
+        handleActiveDateChange(hoveredDate);
       }
     }
   };
@@ -103,7 +100,7 @@ export const DateRangeCalendar = ({
           }
           return;
         }
-        handleActiveDateChange(dayjsDateToString(hoveredDate));
+        handleActiveDateChange(hoveredDate);
       }
       return;
     }

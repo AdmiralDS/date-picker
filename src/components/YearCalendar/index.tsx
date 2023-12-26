@@ -5,7 +5,6 @@ import dayjs from 'dayjs';
 
 import {
   dateStringToDayjs,
-  dayjsDateToString,
   getCurrentDate,
   getDateByDayOfYear,
   getDaysInYear,
@@ -41,11 +40,9 @@ export const YearCalendar = ({
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
-  const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, locale);
-    //console.log(`set active ${dayjsActiveDate}`);
-    setActiveDateState(dayjsActiveDate);
-    onActiveDateValueChange?.(dateString);
+  const handleActiveDateChange = (date?: Dayjs) => {
+    setActiveDateState(date);
+    onActiveDateValueChange?.(date);
   };
 
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -57,7 +54,7 @@ export const YearCalendar = ({
           handleActiveDateChange(undefined);
           return;
         }
-        handleActiveDateChange(dayjsDateToString(hoveredDate));
+        handleActiveDateChange(hoveredDate);
       }
     }
   };
@@ -70,7 +67,7 @@ export const YearCalendar = ({
           handleActiveDateChange(undefined);
           return;
         }
-        handleActiveDateChange(dayjsDateToString(hoveredDate));
+        handleActiveDateChange(hoveredDate);
       }
       return;
     }

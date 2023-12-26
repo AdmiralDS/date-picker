@@ -3,7 +3,7 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import { dateStringToDayjs, dayjsDateToString, getCurrentDate, setNoon } from '#src/components/utils';
+import { dateStringToDayjs, getCurrentDate, setNoon } from '#src/components/utils';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
@@ -54,17 +54,16 @@ export const DateCalendar = ({
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
-  const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, locale);
-    setActiveDateState(dayjsActiveDate);
-    onActiveDateValueChange?.(dateString);
+  const handleActiveDateChange = (date?: Dayjs) => {
+    setActiveDateState(date);
+    onActiveDateValueChange?.(date);
   };
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
     if (target.dataset.cellType === 'dateCell') {
       const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate) {
-        handleActiveDateChange(dayjsDateToString(hoveredDate));
+        handleActiveDateChange(hoveredDate);
       }
     }
   };
@@ -73,7 +72,7 @@ export const DateCalendar = ({
     if (target.dataset.cellType === 'dateCell') {
       const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
       if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
-        handleActiveDateChange(dayjsDateToString(hoveredDate));
+        handleActiveDateChange(hoveredDate);
       }
       return;
     }
