@@ -2,12 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import {
-  capitalizeFirstLetter,
-  dateStringToDayjs,
-  getCurrentDate,
-  sortDatesAsc,
-} from '#src/components/utils';
+import { capitalizeFirstLetter, dateStringToDayjs, getCurrentDate, sortDatesAsc } from '#src/components/utils';
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import { MONTHS_COLUMNS } from '#src/components/MonthsOfYearWidget/constants.ts';

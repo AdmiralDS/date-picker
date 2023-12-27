@@ -2,12 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import {
-  capitalizeFirstLetter,
-  dateStringToDayjs,
-  getCurrentDate,
-  setNoon,
-} from '#src/components/utils';
+import { capitalizeFirstLetter, dateStringToDayjs, getCurrentDate, setNoon } from '#src/components/utils';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
 import { DefaultMonthCell } from '#src/components/DefaultCell';
