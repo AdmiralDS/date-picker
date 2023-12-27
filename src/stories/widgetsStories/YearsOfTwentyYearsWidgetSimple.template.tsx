@@ -6,10 +6,11 @@ import type { Dayjs } from 'dayjs';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { capitalizeFirstLetter, dateStringToDayjs, getCurrentDate } from '#src/components/utils';
+import { capitalizeFirstLetter, getCurrentDate, getDateByDayOfYear, getDaysInYear } from '#src/components/utils';
 import { YEARS_OF_YEAR_WIDGET_WIDTH } from '#src/components/YearsOfTwentyYearsWidget/constants';
 import type { YearsOfTwentyYearsWidgetProps } from '#src/components/YearsOfTwentyYearsWidget';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
+import { DefaultYearCell } from '#src/components/DefaultCell';
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,40 +29,58 @@ const MonthYear = styled.div`
 export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
   date,
   locale = 'ru',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onClick,
-  renderCellWithString,
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
   const localeInner = locale || 'ru';
   const dateInner = date || getCurrentDate(locale);
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(localeInner).add(1, 'year'));
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    const clickedCell = (e.target as HTMLDivElement).dataset.value;
-    console.log(`click on ${clickedCell}`);
-    const clickedDate = dateStringToDayjs(clickedCell, localeInner);
-    if (clickedDate) {
-      setSelectedDate(clickedDate);
-    }
+  const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
+
+  const handleActiveDateChange = (date?: Dayjs) => {
+    setActiveDateInner(date);
   };
 
-  const getYearCellDataAttributes = (value?: string, isCurrent?: boolean): Record<string, any> => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (_) => {
+    handleActiveDateChange(undefined);
+  };
+
+  const getYearCellDataAttributes = (value?: string, isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
     return {
       'data-value': value ? value : undefined,
       'data-is-current-year': isCurrent ? isCurrent : undefined,
+      'data-is-active-year': isActive ? isActive : undefined,
     };
   };
 
-  const renderYear = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, localeInner);
-    if (!dateCurrent) return {};
-    const cellContent = dateCurrent.year();
-    const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'year');
-    const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner), 'year');
-    const dataAttributes = getYearCellDataAttributes(dateCurrent.toISOString(), isCurrent);
+  const dateIsDisabled = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent) {
+      return false;
+    }
+    const datesArray = Array.from(Array(getDaysInYear(dateCurrent)).keys());
+    return datesArray.every((v) => {
+      const date = getDateByDayOfYear(dateCurrent, v);
+      return date && date.month() === dateInner.month() && (date.day() === 6 || date.date() < 5);
+    });
+  };
 
-    return { cellContent, selected, isCurrent, ...dataAttributes };
+  const renderDefaultYearCell = (date: Dayjs) => {
+    const isCurrent = date && date.isSame(getCurrentDate(locale), 'year');
+    const isActive = activeDateInner && date.isSame(activeDateInner, 'year');
+    return (
+      <DefaultYearCell
+        key={date.toString()}
+        cellContent={date.year()}
+        disabled={dateIsDisabled(date)}
+        selected={date && selectedDate && date.isSame(selectedDate, 'year')}
+        isCurrent={isCurrent}
+        isActive={isActive}
+        onMouseEnter={() => handleActiveDateChange(date)}
+        onClick={() => setSelectedDate(date)}
+        {...getYearCellDataAttributes(date.toString(), isCurrent, isActive)}
+      />
+    );
   };
 
   return (
@@ -71,8 +90,8 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
         {...props}
         date={dateInner}
         locale={localeInner}
-        onClick={handleClick}
-        renderCellWithString={renderCellWithString || renderYear}
+        onMouseLeave={handleMouseLeave}
+        renderCell={renderDefaultYearCell}
       />
     </Wrapper>
   );

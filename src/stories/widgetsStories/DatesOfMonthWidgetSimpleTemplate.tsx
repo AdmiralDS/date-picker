@@ -6,11 +6,12 @@ import styled from 'styled-components';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { capitalizeFirstLetter, dateStringToDayjs, getCurrentDate, dayjsDateToString } from '#src/components/utils';
+import { capitalizeFirstLetter, getCurrentDate } from '#src/components/utils';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
 import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
+import { DefaultDateCell } from '#src/components/DefaultCell';
 
 const Wrapper = styled.div`
   display: flex;
@@ -49,46 +50,10 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
 
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLDivElement;
-    const clickedCell = target.dataset.value;
-    console.log(`click on ${clickedCell}`);
-    const clickedDate = dateStringToDayjs(clickedCell);
-    if (clickedDate && !target.dataset.disabledCell && !target.dataset.hiddenCell) {
-      setSelectedDate(clickedDate);
-    }
+  const handleActiveDateChange = (date?: Dayjs) => {
+    setActiveDateInner(date);
   };
 
-  const handleActiveDateChange = (dateString?: string) => {
-    const dayjsActiveDate = dateStringToDayjs(dateString, localeInner);
-    //console.log(`set active ${dayjsActiveDate}`);
-    setActiveDateInner(dayjsActiveDate);
-  };
-  const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLDivElement;
-    if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, localeInner);
-      if (hoveredDate) {
-        handleActiveDateChange(dayjsDateToString(hoveredDate));
-      }
-    }
-  };
-  const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLDivElement;
-    if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, localeInner);
-      if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
-        handleActiveDateChange(dayjsDateToString(hoveredDate));
-      }
-      return;
-    }
-    if (target.dataset.containerType !== 'datesWrapper') {
-      if (activeDateInner) {
-        handleActiveDateChange(undefined);
-        return;
-      }
-    }
-  };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (_) => {
     handleActiveDateChange(undefined);
@@ -121,41 +86,34 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
   const dateIsHidden = (dateCurrent?: Dayjs) => {
     return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
   };
-  const renderDefaultDate = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, localeInner);
-    if (!dateCurrent) return {};
-    const cellContent = dateCurrent.date();
-    const selected = dateIsSelected(dateCurrent);
-    const disabled = dateIsDisabled(dateCurrent);
-    const hidden = dateIsHidden(dateCurrent);
-    const isCurrent = dateCurrent && dateCurrent.isSame(dayjs().locale(localeInner), 'date');
-    const isHoliday = dateIsHoliday(dateCurrent);
+
+  const renderDefaultDateCell = (date: Dayjs) => {
+    const cellContent = date.date();
+    const isCurrent = date && date.isSame(dayjs().locale(locale), 'date');
+    const isHoliday = dateIsHoliday(date);
     //const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
-    const isStartOfRow = dateCurrent.isSame(dateCurrent.startOf('week'), 'date');
-    const isEndOfRow = dateCurrent.isSame(dateCurrent.endOf('week'), 'date');
-    const isActive = activeDateInner?.isSame(dateCurrent, 'date');
-
-    const dataAttributes = getDateCellDataAttributes(
-      dateCurrent.toISOString(),
-      isHoliday,
-      //isOutsideMonth,
-      isCurrent,
-      isActive,
+    const isActive = activeDateInner?.isSame(date, 'date');
+    return (
+      <DefaultDateCell
+        key={date.toString()}
+        cellContent={cellContent}
+        disabled={dateIsDisabled(date)}
+        selected={dateIsSelected(date)}
+        hidden={dateIsHidden(date)}
+        isCurrent={isCurrent}
+        isActive={isActive}
+        isHoliday={isHoliday}
+        onMouseEnter={() => handleActiveDateChange(date)}
+        onClick={() => setSelectedDate(date)}
+        {...getDateCellDataAttributes(
+          date.toString(),
+          isHoliday,
+          //isOutsideMonth,
+          isCurrent,
+          isActive,
+        )}
+      />
     );
-
-    return {
-      cellContent,
-      selected,
-      disabled,
-      hidden,
-      isCurrent,
-      isHoliday,
-      //isOutsideMonth,
-      isStartOfRow,
-      isEndOfRow,
-      isActive,
-      ...dataAttributes,
-    };
   };
 
   return (
@@ -164,12 +122,9 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
       <DatesOfMonthWidget
         {...props}
         locale={localeInner}
-        onClick={handleClick}
-        onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
         dayNamesProps={{ dayNameCellState: getDayNameCellState }}
-        renderCellWithString={renderDefaultDate}
+        renderCell={renderDefaultDateCell}
       />
     </Wrapper>
   );

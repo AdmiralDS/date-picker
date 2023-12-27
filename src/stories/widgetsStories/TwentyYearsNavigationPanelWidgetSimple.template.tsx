@@ -3,12 +3,13 @@ import type { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
-import { dateStringToDayjs, dayjsDateToString, getCurrentDate, getDayjsDate } from '#src/components/utils';
+import { getCurrentDate, getDateByDayOfYear, getDaysInYear } from '#src/components/utils';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import type { TwentyYearsNavigationPanelWidgetProps } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
+import { DefaultYearCell } from '#src/components/DefaultCell';
 
 const CalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -31,47 +32,62 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
   const [dateState, setDateState] = useState(date || getCurrentDate(locale));
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(localeInner).add(1, 'day'));
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    const clickedCell = (e.target as HTMLDivElement).dataset.value;
-    console.log(`click on ${clickedCell}`);
-    const clickedDate = dateStringToDayjs(clickedCell, localeInner);
-    if (clickedDate) {
-      setSelectedDate(clickedDate);
-    }
+  const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
+
+  const handleActiveDateChange = (date?: Dayjs) => {
+    setActiveDateInner(date);
   };
 
-  const getYearCellDataAttributes = (value?: string, isCurrent?: boolean): Record<string, any> => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (_) => {
+    handleActiveDateChange(undefined);
+  };
+
+  const getYearCellDataAttributes = (value?: string, isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
     return {
       'data-value': value ? value : undefined,
       'data-is-current-year': isCurrent ? isCurrent : undefined,
+      'data-is-active-year': isActive ? isActive : undefined,
     };
   };
 
-  const renderYear = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, localeInner);
-    if (!dateCurrent) return {};
-    const cellContent = dateCurrent.year();
-    const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'year');
-    const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner), 'year');
-    const dataAttributes = getYearCellDataAttributes(dateCurrent.toISOString(), isCurrent);
-
-    return { cellContent, selected, isCurrent, ...dataAttributes };
+  const dateIsDisabled = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent) {
+      return false;
+    }
+    const datesArray = Array.from(Array(getDaysInYear(dateCurrent)).keys());
+    return datesArray.every((v) => {
+      const date = getDateByDayOfYear(dateCurrent, v);
+      return date && date.month() === dateState.month() && (date.day() === 6 || date.date() < 5);
+    });
   };
 
-  const handleDateChange = (dateString: string) => {
-    const dayjsDate = getDayjsDate(localeInner, dateString);
-    setDateState(dayjsDate);
-    //onDateChange?.(dayjsDateToString(dayjsDate));
+  const renderDefaultYearCell = (date: Dayjs) => {
+    const isCurrent = date && date.isSame(getCurrentDate(locale), 'year');
+    const isActive = activeDateInner && date.isSame(activeDateInner, 'year');
+    return (
+      <DefaultYearCell
+        key={date.toString()}
+        cellContent={date.year()}
+        disabled={dateIsDisabled(date)}
+        selected={date && selectedDate && date.isSame(selectedDate, 'year')}
+        isCurrent={isCurrent}
+        isActive={isActive}
+        onMouseEnter={() => handleActiveDateChange(date)}
+        onClick={() => setSelectedDate(date)}
+        {...getYearCellDataAttributes(date.toString(), isCurrent, isActive)}
+      />
+    );
   };
 
   const handleTwentyYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
-        handleDateChange(dayjsDateToString(dateState.subtract(YEARS_ON_SCREEN, 'year')));
+        setDateState(dateState.subtract(YEARS_ON_SCREEN, 'year'));
         break;
       case 'right':
-        handleDateChange(dayjsDateToString(dateState.add(YEARS_ON_SCREEN, 'year')));
+        setDateState(dateState.add(YEARS_ON_SCREEN, 'year'));
         break;
     }
   };
@@ -87,8 +103,8 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
         {...props}
         date={dateState}
         locale={localeInner}
-        onClick={handleClick}
-        renderCellWithString={renderYear}
+        onMouseLeave={handleMouseLeave}
+        renderCell={renderDefaultYearCell}
       />
     </CalendarWrapper>
   );

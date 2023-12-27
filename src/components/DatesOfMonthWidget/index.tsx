@@ -17,39 +17,19 @@ const DatesOfMonthWrapper = styled.div`
 `;
 
 export const DatesOfMonthWidget = ({
-  rangeCalendar = false,
   date,
-  //onClick,
   locale = 'ru',
   dayNamesProps,
-  cells,
-  renderCellWithString,
+  renderCell,
   ...props
 }: DatesOfMonthWidgetProps) => {
   const { dayNameCellState } = dayNamesProps;
   const localDate = date || getCurrentDate(locale);
 
-  /*const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLDivElement;
-    if (target.dataset.disabled || target.dataset.hidden) {
-      console.log(`click on disabled or hidden`);
-      e.stopPropagation();
-      return;
-    }
-    onClick?.(e);
-  };*/
-  console.log('render DatesOfMonthWidget');
-
   return (
     <DatesOfMonthWrapper {...props} data-container-type="datesOfMonthWrapper">
       <Days locale={locale} dayNameCellState={dayNameCellState} />
-      <Dates
-        rangeCalendar={rangeCalendar}
-        date={localDate}
-        cells={cells}
-        renderCellWithString={renderCellWithString}
-        data-container-type="datesWrapper"
-      />
+      <Dates date={localDate} renderCell={renderCell} data-container-type="datesWrapper" />
     </DatesOfMonthWrapper>
   );
 };

@@ -1,15 +1,16 @@
-import { useState } from 'react';
 import type { MouseEventHandler } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { capitalizeFirstLetter, dateStringToDayjs, getCurrentDate } from '#src/components/utils';
+import { capitalizeFirstLetter, getCurrentDate } from '#src/components/utils';
 import { MONTHS_OF_YEAR_WIDGET_WIDTH } from '#src/components/MonthsOfYearWidget/constants';
 import type { MonthsOfYearWidgetProps } from '#src/components/MonthsOfYearWidget';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
+import { DefaultMonthCell } from '#src/components/DefaultCell';
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,40 +29,60 @@ const MonthYear = styled.div`
 export const MonthsOfYearWidgetSimpleTemplate = ({
   date,
   locale = 'ru',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onClick,
-  renderCellWithString,
+
+  renderCell,
   ...props
 }: MonthsOfYearWidgetProps) => {
   const localeInner = locale || 'ru';
   const dateInner = date || getCurrentDate(locale);
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(localeInner).add(1, 'day'));
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    const clickedCell = (e.target as HTMLDivElement).dataset.value;
-    console.log(`click on ${clickedCell}`);
-    const clickedDate = dateStringToDayjs(clickedCell, localeInner);
-    if (clickedDate) {
-      setSelectedDate(clickedDate);
-    }
+  const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
+
+  const handleActiveDateChange = (date?: Dayjs) => {
+    setActiveDateInner(date);
   };
 
-  const getMonthCellDataAttributes = (value?: string, isCurrent?: boolean): Record<string, any> => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (_) => {
+    handleActiveDateChange(undefined);
+  };
+
+  const getMonthCellDataAttributes = (value?: string, isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
     return {
       'data-value': value ? value : undefined,
       'data-is-current-month': isCurrent ? isCurrent : undefined,
+      'data-is-active-month': isActive ? isActive : undefined,
     };
   };
 
-  const renderMonth = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, localeInner);
-    if (!dateCurrent) return {};
-    const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
-    const selected = dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'month');
-    const isCurrent = dateCurrent && dateCurrent.isSame(getCurrentDate(localeInner), 'month');
-    const dataAttributes = getMonthCellDataAttributes(dateCurrent.toISOString(), isCurrent);
+  const dateIsDisabled = (dateCurrent?: Dayjs) => {
+    if (!dateCurrent) {
+      return false;
+    }
+    const datesArray = Array.from(Array(dateCurrent.endOf('month').date()).keys());
+    return datesArray.every((v) => {
+      const date = dateCurrent.date(v);
+      return date && date.month() === dateInner.month() && (date.day() === 6 || date.date() < 5);
+    });
+  };
 
-    return { cellContent, selected, isCurrent, ...dataAttributes };
+  const renderDefaultMonthCell = (date: Dayjs) => {
+    const isCurrent = date.isSame(getCurrentDate(locale), 'month');
+    const isActive = activeDateInner && date.isSame(activeDateInner, 'month');
+    return (
+      <DefaultMonthCell
+        key={date.toISOString()}
+        cellContent={capitalizeFirstLetter(date.format('MMMM'))}
+        disabled={dateIsDisabled(date)}
+        selected={selectedDate && date.isSame(selectedDate, 'month')}
+        isCurrent={isCurrent}
+        isActive={isActive}
+        onMouseEnter={() => handleActiveDateChange(date)}
+        onClick={() => setSelectedDate(date)}
+        {...getMonthCellDataAttributes(date.toString(), isCurrent, isActive)}
+      />
+    );
   };
 
   return (
@@ -71,8 +92,8 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
         {...props}
         date={dateInner}
         locale={localeInner}
-        onClick={handleClick}
-        renderCellWithString={renderCellWithString || renderMonth}
+        renderCell={renderCell || renderDefaultMonthCell}
+        onMouseLeave={handleMouseLeave}
       />
     </Wrapper>
   );

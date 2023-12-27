@@ -18,25 +18,16 @@ const YearsOfYearWrapper = styled.div`
 `;
 
 export const YearsOfTwentyYearsWidget = ({
-  rangeCalendar = false,
   date,
   locale = 'ru',
-  onClick,
-  renderCellWithString,
-  cells,
+  renderCell,
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
   const localDate = date || getCurrentDate(locale);
 
   return (
-    <YearsOfYearWrapper {...props} onClick={onClick} data-container-type="yearsOfYearWrapper">
-      <Years
-        rangeCalendar={rangeCalendar}
-        date={localDate}
-        renderCellWithString={renderCellWithString}
-        cells={cells}
-        data-container-type="yearsWrapper"
-      />
+    <YearsOfYearWrapper {...props} data-container-type="yearsOfYearWrapper">
+      <Years date={localDate} renderCell={renderCell} data-container-type="yearsWrapper" />
     </YearsOfYearWrapper>
   );
 };

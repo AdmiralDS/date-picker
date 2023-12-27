@@ -2,10 +2,11 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import { capitalizeFirstLetter, dateStringToDayjs, getCurrentDate, sortDatesAsc } from '#src/components/utils';
+import { capitalizeFirstLetter, getCurrentDate, sortDatesAsc } from '#src/components/utils';
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import { MONTHS_COLUMNS } from '#src/components/MonthsOfYearWidget/constants.ts';
+import { DefaultMonthCell } from '#src/components/DefaultCell';
 
 export interface MonthRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
@@ -54,7 +55,7 @@ export const MonthRangeCalendar = ({
   defaultActiveDateValue,
   onActiveDateValueChange,
   locale = 'ru',
-  onClick,
+  renderCell,
   ...props
 }: MonthRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -69,39 +70,13 @@ export const MonthRangeCalendar = ({
     setActiveDateState(date);
     onActiveDateValueChange?.(date);
   };
-  const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLDivElement;
-    if (target.dataset.cellType === 'monthCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
-      if (hoveredDate) {
-        if (activeDateInner) {
-          handleActiveDateChange(undefined);
-          return;
-        }
-        handleActiveDateChange(hoveredDate);
-      }
+
+  const handleMouseEnter = (date: Dayjs, disabled: boolean) => {
+    if (!disabled) {
+      handleActiveDateChange(date);
     }
   };
-  const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLDivElement;
-    if (target.dataset.cellType === 'monthCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
-      if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'month'))) {
-        if (activeDateInner) {
-          handleActiveDateChange(undefined);
-          return;
-        }
-        handleActiveDateChange(hoveredDate);
-      }
-      return;
-    }
-    if (target.dataset.containerType !== 'monthsWrapper') {
-      if (activeDateInner) {
-        handleActiveDateChange(undefined);
-        return;
-      }
-    }
-  };
+
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
     handleActiveDateChange(undefined);
   };
@@ -152,47 +127,44 @@ export const MonthRangeCalendar = ({
   };
   //</editor-fold>
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    const clickedCell = (e.target as HTMLDivElement).dataset.value;
-    const clickedDate = dateStringToDayjs(clickedCell, locale);
-    if (clickedDate) {
+  const handleDateClick = (date: Dayjs, disabled: boolean) => {
+    if (!disabled) {
       const newSelectedDateRangeValue: [Dayjs | undefined, Dayjs | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {
         if (dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeSecondChange(clickedDate);
+          handleDateRangeSecondChange(date);
           newSelectedDateRangeValue[0] = dateRangeFirstInner;
-          newSelectedDateRangeValue[1] = clickedDate;
+          newSelectedDateRangeValue[1] = date;
         } else {
-          handleDateRangeFirstChange(clickedDate);
-          newSelectedDateRangeValue[0] = clickedDate;
+          handleDateRangeFirstChange(date);
+          newSelectedDateRangeValue[0] = date;
           newSelectedDateRangeValue[1] = dateRangeSecondInner;
         }
       } else {
         if (dateRangeFirstInner && dateRangeSecondInner) {
           if (dateRangeActiveEndInner.isSame(dateRangeFirstInner, 'month')) {
-            handleDateRangeSecondChange(clickedDate);
+            handleDateRangeSecondChange(date);
             newSelectedDateRangeValue[0] = dateRangeFirstInner;
-            newSelectedDateRangeValue[1] = clickedDate;
+            newSelectedDateRangeValue[1] = date;
           }
           if (dateRangeActiveEndInner.isSame(dateRangeSecondInner, 'month')) {
-            handleDateRangeFirstChange(clickedDate);
-            newSelectedDateRangeValue[0] = clickedDate;
+            handleDateRangeFirstChange(date);
+            newSelectedDateRangeValue[0] = date;
             newSelectedDateRangeValue[1] = dateRangeSecondInner;
           }
         } else if (dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeSecondChange(clickedDate);
+          handleDateRangeSecondChange(date);
           newSelectedDateRangeValue[0] = dateRangeFirstInner;
-          newSelectedDateRangeValue[1] = clickedDate;
+          newSelectedDateRangeValue[1] = date;
         } else {
-          handleDateRangeFirstChange(clickedDate);
-          newSelectedDateRangeValue[0] = clickedDate;
+          handleDateRangeFirstChange(date);
+          newSelectedDateRangeValue[0] = date;
           newSelectedDateRangeValue[1] = dateRangeSecondInner;
         }
       }
-      handleDateRangeActiveEndChange(clickedDate);
+      handleDateRangeActiveEndChange(date);
       onSelectedDateRangeValueChange?.(newSelectedDateRangeValue);
     }
-    onClick?.(e);
   };
 
   const dateIsDisabled = (dateCurrent?: Dayjs) => {
@@ -253,68 +225,63 @@ export const MonthRangeCalendar = ({
     return false;
   };
 
-  //useMemo
-  const renderDate = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, locale);
-    if (!dateCurrent) return {};
-    const cellContent = capitalizeFirstLetter(dateCurrent.format('MMMM'));
-    const selected = dateIsSelected(dateCurrent);
-    const disabled = dateIsDisabled(dateCurrent);
+  const renderDefaultMonthRangeCell = (date: Dayjs) => {
+    const cellContent = capitalizeFirstLetter(date.locale(locale).format('MMMM'));
+    const selected = dateIsSelected(date);
+    const disabled = dateIsDisabled(date);
     //const hidden = dateIsHidden(dateCurrent);
-    const isCurrent = dateCurrent.isSame(getCurrentDate(locale), 'month');
-    const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'month');
-    const isInRange = dateIsInRange(dateCurrent);
-    const isRangeStart = dateIsRangeStart(dateCurrent);
-    const isRangeEnd = dateIsRangeEnd(dateCurrent);
-    const isInRangeSelecting = dateIsInRangeSelecting(dateCurrent);
-    const isRangeSelectingStart = dateIsRangeSelectingStart(dateCurrent);
-    const isRangeSelectingEnd = dateIsRangeSelectingEnd(dateCurrent);
-    const isStartOfRow = dateCurrent.month() % MONTHS_COLUMNS === 0;
-    const isEndOfRow = dateCurrent.month() % MONTHS_COLUMNS === 2;
-
-    const dataAttributes = getMonthCellDataAttributes(
-      dateCurrent.toISOString(),
-      isCurrent,
-      isActive,
-      isInRange,
-      isRangeStart,
-      isRangeEnd,
-      isInRangeSelecting,
-      isRangeSelectingStart,
-      isRangeSelectingEnd,
-      isStartOfRow,
-      isEndOfRow,
+    const isCurrent = date.isSame(getCurrentDate(locale), 'month');
+    const isActive = activeDateInner && date.isSame(activeDateInner, 'month');
+    const isInRange = dateIsInRange(date);
+    const isRangeStart = dateIsRangeStart(date);
+    const isRangeEnd = dateIsRangeEnd(date);
+    const isInRangeSelecting = dateIsInRangeSelecting(date);
+    const isRangeSelectingStart = dateIsRangeSelectingStart(date);
+    const isRangeSelectingEnd = dateIsRangeSelectingEnd(date);
+    const isStartOfRow = date.month() % MONTHS_COLUMNS === 0;
+    const isEndOfRow = date.month() % MONTHS_COLUMNS === 2;
+    return (
+      <DefaultMonthCell
+        key={date.toString()}
+        cellContent={cellContent}
+        selected={selected}
+        disabled={disabled}
+        isCurrent={isCurrent}
+        isActive={isActive}
+        isInRange={isInRange}
+        isRangeStart={isRangeStart}
+        isRangeEnd={isRangeEnd}
+        isInRangeSelecting={isInRangeSelecting}
+        isRangeSelectingStart={isRangeSelectingStart}
+        isRangeSelectingEnd={isRangeSelectingEnd}
+        isStartOfRow={isStartOfRow}
+        isEndOfRow={isEndOfRow}
+        onMouseEnter={() => handleMouseEnter(date, disabled)}
+        onClick={() => handleDateClick(date, disabled)}
+        {...getMonthCellDataAttributes(
+          date.toString(),
+          isCurrent,
+          isActive,
+          isInRange,
+          isRangeStart,
+          isRangeEnd,
+          isInRangeSelecting,
+          isRangeSelectingStart,
+          isRangeSelectingEnd,
+          isStartOfRow,
+          isEndOfRow,
+        )}
+      />
     );
-
-    return {
-      cellContent,
-      selected,
-      disabled,
-      isCurrent,
-      isInRange,
-      isRangeStart,
-      isRangeEnd,
-      isInRangeSelecting,
-      isRangeSelectingStart,
-      isRangeSelectingEnd,
-      isStartOfRow,
-      isEndOfRow,
-      isActive,
-      ...dataAttributes,
-    };
   };
 
   return (
     <MonthsOfYearWidget
       {...props}
-      rangeCalendar={true}
-      renderCellWithString={renderDate}
       date={dateInner}
       locale={locale}
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onMouseMove={handleMouseMove}
+      renderCell={renderCell || renderDefaultMonthRangeCell}
     />
   );
 };

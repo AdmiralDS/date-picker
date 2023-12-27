@@ -3,11 +3,12 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import { dateStringToDayjs, getCurrentDate, sortDatesAsc } from '#src/components/utils';
+import { getCurrentDate, sortDatesAsc } from '#src/components/utils';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
+import { DefaultDateRangeCell } from '#src/components/DefaultCell';
 
 export interface DateRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
@@ -55,8 +56,8 @@ export const DateRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
+  renderCell,
   locale = 'ru',
-  onClick,
   ...props
 }: DateRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -71,41 +72,13 @@ export const DateRangeCalendar = ({
     setActiveDateState(date);
     onActiveDateValueChange?.(date);
   };
-  const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLDivElement;
-    if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
-      if (hoveredDate) {
-        if (activeDateInner && (target.dataset.hiddenCell || target.dataset.disabledCell)) {
-          handleActiveDateChange(undefined);
-          return;
-        }
-        handleActiveDateChange(hoveredDate);
-      }
+
+  const handleMouseEnter = (date: Dayjs, hidden: boolean, disabled: boolean) => {
+    if (!hidden && !disabled) {
+      handleActiveDateChange(date);
     }
   };
-  const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLDivElement;
-    if (target.dataset.cellType === 'dateCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
-      if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'date'))) {
-        if (target.dataset.hiddenCell || target.dataset.disabledCell) {
-          if (activeDateInner) {
-            handleActiveDateChange(undefined);
-          }
-          return;
-        }
-        handleActiveDateChange(hoveredDate);
-      }
-      return;
-    }
-    if (target.dataset.containerType !== 'datesWrapper') {
-      if (activeDateInner) {
-        handleActiveDateChange(undefined);
-        return;
-      }
-    }
-  };
+
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
     handleActiveDateChange(undefined);
   };
@@ -156,49 +129,44 @@ export const DateRangeCalendar = ({
   };
   //</editor-fold>
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLDivElement;
-    const clickedCell = target.dataset.value;
-    const clickedDate = dateStringToDayjs(clickedCell, locale);
-    if (clickedDate && !target.dataset.hiddenCell && !target.dataset.disabledCell) {
+  const handleDateClick = (date: Dayjs, hidden: boolean, disabled: boolean) => {
+    if (!hidden && !disabled) {
       const newSelectedDateRangeValue: [Dayjs | undefined, Dayjs | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {
         if (dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeSecondChange(clickedDate);
+          handleDateRangeSecondChange(date);
           newSelectedDateRangeValue[0] = dateRangeFirstInner;
-          newSelectedDateRangeValue[1] = clickedDate;
+          newSelectedDateRangeValue[1] = date;
         } else {
-          handleDateRangeFirstChange(clickedDate);
-          newSelectedDateRangeValue[0] = clickedDate;
+          handleDateRangeFirstChange(date);
+          newSelectedDateRangeValue[0] = date;
           newSelectedDateRangeValue[1] = dateRangeSecondInner;
         }
       } else {
         if (dateRangeFirstInner && dateRangeSecondInner) {
           if (dateRangeActiveEndInner.isSame(dateRangeFirstInner, 'date')) {
-            handleDateRangeSecondChange(clickedDate);
+            handleDateRangeSecondChange(date);
             newSelectedDateRangeValue[0] = dateRangeFirstInner;
-            newSelectedDateRangeValue[1] = clickedDate;
+            newSelectedDateRangeValue[1] = date;
           }
           if (dateRangeActiveEndInner.isSame(dateRangeSecondInner, 'date')) {
-            handleDateRangeFirstChange(clickedDate);
-            newSelectedDateRangeValue[0] = clickedDate;
+            handleDateRangeFirstChange(date);
+            newSelectedDateRangeValue[0] = date;
             newSelectedDateRangeValue[1] = dateRangeSecondInner;
           }
         } else if (dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeSecondChange(clickedDate);
+          handleDateRangeSecondChange(date);
           newSelectedDateRangeValue[0] = dateRangeFirstInner;
-          newSelectedDateRangeValue[1] = clickedDate;
+          newSelectedDateRangeValue[1] = date;
         } else {
-          handleDateRangeFirstChange(clickedDate);
-          newSelectedDateRangeValue[0] = clickedDate;
+          handleDateRangeFirstChange(date);
+          newSelectedDateRangeValue[0] = date;
           newSelectedDateRangeValue[1] = dateRangeSecondInner;
         }
       }
-      handleDateRangeActiveEndChange(clickedDate);
+      handleDateRangeActiveEndChange(date);
       onSelectedDateRangeValueChange?.(newSelectedDateRangeValue);
-      //console.log(`first-${dateRangeFirstInner}, second-${dateRangeSecondInner}, activeEnd-${dateRangeActiveEnd}`);
     }
-    onClick?.(e);
   };
 
   const dateIsDisabled = (dateCurrent?: Dayjs) => {
@@ -207,14 +175,14 @@ export const DateRangeCalendar = ({
     }
     return disabledDate(dateCurrent);
   };
-  const dateIsHoliday = (dateCurrent?: Dayjs) => {
+  /*const dateIsHoliday = (dateCurrent?: Dayjs) => {
     return !!(
       dateCurrent &&
       dateCurrent.month() === dateInner.month() &&
       dateCurrent.date() !== 14 &&
       (dateCurrent.day() === 6 || dateCurrent.day() === 0 || dateCurrent.isSame(dayjs().locale(locale), 'date'))
     );
-  };
+  };*/
   const dateIsHidden = (dateCurrent?: Dayjs) => {
     //return dateCurrent && (dateCurrent.isBefore(dateInner, 'month') || dateCurrent.isAfter(dateInner, 'month'));
     return dateCurrent && dateCurrent.month() !== dateInner.month();
@@ -278,78 +246,69 @@ export const DateRangeCalendar = ({
     return { cellMixin };
   };
 
-  //useMemo
-  const renderDate = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, locale);
-    if (!dateCurrent) return {};
-    const cellContent = dateCurrent.date();
-    const selected = dateIsSelected(dateCurrent);
-    const disabled = dateIsDisabled(dateCurrent);
-    const hidden = dateIsHidden(dateCurrent);
-    const isCurrent = dateCurrent && dateCurrent.isSame(dayjs().locale(locale), 'date');
-    const isHoliday = dateIsHoliday(dateCurrent);
+  const renderDefaultRangeDateCell = (date: Dayjs) => {
+    const cellContent = date.date();
+    const selected = dateIsSelected(date);
+    const disabled = dateIsDisabled(date);
+    const hidden = dateIsHidden(date);
+    const isCurrent = date && date.isSame(dayjs().locale(locale), 'date');
+    //const isHoliday = dateIsHoliday(dateCurrent);
     //const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
-    const isInRange = dateIsInRange(dateCurrent);
-    const isRangeStart = dateIsRangeStart(dateCurrent);
-    const isRangeEnd = dateIsRangeEnd(dateCurrent);
-    const isInRangeSelecting = dateIsInRangeSelecting(dateCurrent);
-    const isRangeSelectingStart = dateIsRangeSelectingStart(dateCurrent, disabled, hidden);
-    const isRangeSelectingEnd = dateIsRangeSelectingEnd(dateCurrent, disabled, hidden);
-    const isStartOfRow =
-      dateCurrent.isSame(dateCurrent.startOf('week'), 'date') ||
-      dateCurrent.isSame(dateCurrent.startOf('month'), 'date');
-    const isEndOfRow =
-      dateCurrent.isSame(dateCurrent.endOf('week'), 'date') || dateCurrent.isSame(dateCurrent.endOf('month'), 'date');
-    const isActive = activeDateInner?.isSame(dateCurrent, 'date');
+    const isInRange = dateIsInRange(date);
+    const isRangeStart = dateIsRangeStart(date);
+    const isRangeEnd = dateIsRangeEnd(date);
+    const isInRangeSelecting = dateIsInRangeSelecting(date);
+    const isRangeSelectingStart = dateIsRangeSelectingStart(date, disabled, hidden);
+    const isRangeSelectingEnd = dateIsRangeSelectingEnd(date, disabled, hidden);
+    const isStartOfRow = date.isSame(date.startOf('week'), 'date') || date.isSame(date.startOf('month'), 'date');
+    const isEndOfRow = date.isSame(date.endOf('week'), 'date') || date.isSame(date.endOf('month'), 'date');
+    const isActive = activeDateInner?.isSame(date, 'date');
 
-    const dataAttributes = getDateCellDataAttributes(
-      dateCurrent.toISOString(),
-      isHoliday,
-      //isOutsideMonth,
-      isCurrent,
-      isActive,
-      isInRange,
-      isRangeStart,
-      isRangeEnd,
-      isInRangeSelecting,
-      isRangeSelectingStart,
-      isRangeSelectingEnd,
-      isStartOfRow,
-      isEndOfRow,
+    return (
+      <DefaultDateRangeCell
+        key={date.toString()}
+        cellContent={cellContent}
+        selected={selected}
+        disabled={disabled}
+        hidden={hidden}
+        isCurrent={isCurrent}
+        isActive={isActive}
+        isInRange={isInRange}
+        isRangeStart={isRangeStart}
+        isRangeEnd={isRangeEnd}
+        isInRangeSelecting={isInRangeSelecting}
+        isRangeSelectingStart={isRangeSelectingStart}
+        isRangeSelectingEnd={isRangeSelectingEnd}
+        isStartOfRow={isStartOfRow}
+        isEndOfRow={isEndOfRow}
+        onMouseEnter={() => handleMouseEnter(date, !!hidden, disabled)}
+        onClick={() => handleDateClick(date, !!hidden, disabled)}
+        {...getDateCellDataAttributes(
+          date.toString(),
+          false,
+          //isOutsideMonth,
+          isCurrent,
+          isActive,
+          isInRange,
+          isRangeStart,
+          isRangeEnd,
+          isInRangeSelecting,
+          isRangeSelectingStart,
+          isRangeSelectingEnd,
+          isStartOfRow,
+          isEndOfRow,
+        )}
+      />
     );
-
-    return {
-      cellContent,
-      selected,
-      disabled,
-      hidden,
-      isCurrent,
-      isHoliday,
-      //isOutsideMonth,
-      isInRange,
-      isRangeStart,
-      isRangeEnd,
-      isInRangeSelecting,
-      isRangeSelectingStart,
-      isRangeSelectingEnd,
-      isStartOfRow,
-      isEndOfRow,
-      isActive,
-      ...dataAttributes,
-    };
   };
 
   return (
     <DatesOfMonthWidget
       {...props}
-      rangeCalendar={true}
-      renderCellWithString={renderDate}
       date={dateInner}
       locale={locale}
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onMouseMove={handleMouseMove}
+      renderCell={renderCell || renderDefaultRangeDateCell}
       dayNamesProps={{ dayNameCellState: getDayNameCellState }}
     />
   );

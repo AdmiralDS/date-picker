@@ -2,16 +2,11 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import {
-  dateStringToDayjs,
-  getCurrentDate,
-  getDateByDayOfYear,
-  getDaysInYear,
-  sortDatesAsc,
-} from '#src/components/utils';
+import { getCurrentDate, getDateByDayOfYear, getDaysInYear, sortDatesAsc } from '#src/components/utils';
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { YEARS_COLUMNS } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
+import { DefaultYearRangeCell } from '#src/components/DefaultCell';
 
 export interface YearRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
@@ -60,7 +55,7 @@ export const YearRangeCalendar = ({
   defaultActiveDateValue,
   onActiveDateValueChange,
   locale = 'ru',
-  onClick,
+  renderCell,
   ...props
 }: YearRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -75,39 +70,13 @@ export const YearRangeCalendar = ({
     setActiveDateState(date);
     onActiveDateValueChange?.(date);
   };
-  const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLDivElement;
-    if (target.dataset.cellType === 'yearCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
-      if (hoveredDate) {
-        if (activeDateInner) {
-          handleActiveDateChange(undefined);
-          return;
-        }
-        handleActiveDateChange(hoveredDate);
-      }
+
+  const handleMouseEnter = (date: Dayjs, disabled: boolean) => {
+    if (!disabled) {
+      handleActiveDateChange(date);
     }
   };
-  const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLDivElement;
-    if (target.dataset.cellType === 'yearCell') {
-      const hoveredDate = dateStringToDayjs(target.dataset.value, locale);
-      if (hoveredDate && (!activeDateInner || !hoveredDate.isSame(activeDateInner, 'year'))) {
-        if (activeDateInner) {
-          handleActiveDateChange(undefined);
-          return;
-        }
-        handleActiveDateChange(hoveredDate);
-      }
-      return;
-    }
-    if (target.dataset.containerType !== 'yearsWrapper') {
-      if (activeDateInner) {
-        handleActiveDateChange(undefined);
-        return;
-      }
-    }
-  };
+
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
     handleActiveDateChange(undefined);
   };
@@ -158,48 +127,44 @@ export const YearRangeCalendar = ({
   };
   //</editor-fold>
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    const clickedCell = (e.target as HTMLDivElement).dataset.value;
-    const clickedDate = dateStringToDayjs(clickedCell, locale);
-    if (clickedDate) {
+  const handleDateClick = (date: Dayjs, disabled: boolean) => {
+    if (!disabled) {
       const newSelectedDateRangeValue: [Dayjs | undefined, Dayjs | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {
         if (dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeSecondChange(clickedDate);
+          handleDateRangeSecondChange(date);
           newSelectedDateRangeValue[0] = dateRangeFirstInner;
-          newSelectedDateRangeValue[1] = clickedDate;
+          newSelectedDateRangeValue[1] = date;
         } else {
-          handleDateRangeFirstChange(clickedDate);
-          newSelectedDateRangeValue[0] = clickedDate;
+          handleDateRangeFirstChange(date);
+          newSelectedDateRangeValue[0] = date;
           newSelectedDateRangeValue[1] = dateRangeSecondInner;
         }
       } else {
         if (dateRangeFirstInner && dateRangeSecondInner) {
           if (dateRangeActiveEndInner.isSame(dateRangeFirstInner, 'year')) {
-            handleDateRangeSecondChange(clickedDate);
+            handleDateRangeSecondChange(date);
             newSelectedDateRangeValue[0] = dateRangeFirstInner;
-            newSelectedDateRangeValue[1] = clickedDate;
+            newSelectedDateRangeValue[1] = date;
           }
           if (dateRangeActiveEndInner.isSame(dateRangeSecondInner, 'year')) {
-            handleDateRangeFirstChange(clickedDate);
-            newSelectedDateRangeValue[0] = clickedDate;
+            handleDateRangeFirstChange(date);
+            newSelectedDateRangeValue[0] = date;
             newSelectedDateRangeValue[1] = dateRangeSecondInner;
           }
         } else if (dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeSecondChange(clickedDate);
+          handleDateRangeSecondChange(date);
           newSelectedDateRangeValue[0] = dateRangeFirstInner;
-          newSelectedDateRangeValue[1] = clickedDate;
+          newSelectedDateRangeValue[1] = date;
         } else {
-          handleDateRangeFirstChange(clickedDate);
-          newSelectedDateRangeValue[0] = clickedDate;
+          handleDateRangeFirstChange(date);
+          newSelectedDateRangeValue[0] = date;
           newSelectedDateRangeValue[1] = dateRangeSecondInner;
         }
       }
-      handleDateRangeActiveEndChange(clickedDate);
+      handleDateRangeActiveEndChange(date);
       onSelectedDateRangeValueChange?.(newSelectedDateRangeValue);
-      //console.log(`first-${dateRangeFirstInner}, second-${dateRangeSecondInner}, activeEnd-${dateRangeActiveEnd}`);
     }
-    onClick?.(e);
   };
 
   const dateIsDisabled = (dateCurrent?: Dayjs) => {
@@ -243,12 +208,6 @@ export const YearRangeCalendar = ({
   const dateIsRangeSelectingStart = (dateCurrent?: Dayjs) => {
     if (dateCurrent && activeDateInner && dateRangeActiveEndInner) {
       const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
-      /*const res = dateCurrent.isSame(dates[0], 'year');
-      if (res) {
-        //console.log(`range selecting start-${dayjsDateToString(dateCurrent)}`);
-        console.log(`range selecting start-${dayjsDateToString(dateCurrent)}`);
-      }
-      return res;*/
       return dateCurrent.isSame(dates[0], 'year');
     }
     return false;
@@ -265,73 +224,67 @@ export const YearRangeCalendar = ({
     if (dateRangeActiveEndInner && activeDateInner) {
       const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
       return dateCurrent.isBetween(dates[0], dates[1], 'year', '()');
-      //return dateCurrent.isBetween(dateRangeFirstInner, activeDateInner, 'year', '()');
     }
     return false;
   };
 
-  //useMemo
-  const renderDate = (dateString: string) => {
-    const dateCurrent = dateStringToDayjs(dateString, locale);
-    if (!dateCurrent) return {};
-    const cellContent = dateCurrent.year();
-    const selected = dateIsSelected(dateCurrent);
-    const disabled = dateIsDisabled(dateCurrent);
+  const renderDefaultYearRangeCell = (date: Dayjs) => {
+    const cellContent = date.year();
+    const selected = dateIsSelected(date);
+    const disabled = dateIsDisabled(date);
     //const hidden = dateIsHidden(dateCurrent);
-    const isCurrent = dateCurrent.isSame(getCurrentDate(locale), 'year');
-    const isActive = activeDateInner && dateCurrent.isSame(activeDateInner, 'year');
-    const isInRange = dateIsInRange(dateCurrent);
-    const isRangeStart = dateIsRangeStart(dateCurrent);
-    const isRangeEnd = dateIsRangeEnd(dateCurrent);
-    const isInRangeSelecting = dateIsInRangeSelecting(dateCurrent);
-    const isRangeSelectingStart = dateIsRangeSelectingStart(dateCurrent);
-    const isRangeSelectingEnd = dateIsRangeSelectingEnd(dateCurrent);
-    const isStartOfRow = (dateCurrent.year() - 1) % YEARS_COLUMNS === 0;
-    const isEndOfRow = (dateCurrent.year() - 1) % YEARS_COLUMNS === 3;
-
-    const dataAttributes = getYearCellDataAttributes(
-      dateCurrent.toISOString(),
-      isCurrent,
-      isActive,
-      isInRange,
-      isRangeStart,
-      isRangeEnd,
-      isInRangeSelecting,
-      isRangeSelectingStart,
-      isRangeSelectingEnd,
-      isStartOfRow,
-      isEndOfRow,
+    const isCurrent = date.isSame(getCurrentDate(locale), 'year');
+    const isActive = activeDateInner && date.isSame(activeDateInner, 'year');
+    const isInRange = dateIsInRange(date);
+    const isRangeStart = dateIsRangeStart(date);
+    const isRangeEnd = dateIsRangeEnd(date);
+    const isInRangeSelecting = dateIsInRangeSelecting(date);
+    const isRangeSelectingStart = dateIsRangeSelectingStart(date);
+    const isRangeSelectingEnd = dateIsRangeSelectingEnd(date);
+    const isStartOfRow = (date.year() - 1) % YEARS_COLUMNS === 0;
+    const isEndOfRow = (date.year() - 1) % YEARS_COLUMNS === 3;
+    return (
+      <DefaultYearRangeCell
+        key={date.toString()}
+        cellContent={cellContent}
+        selected={selected}
+        disabled={disabled}
+        isCurrent={isCurrent}
+        isActive={isActive}
+        isInRange={isInRange}
+        isRangeStart={isRangeStart}
+        isRangeEnd={isRangeEnd}
+        isInRangeSelecting={isInRangeSelecting}
+        isRangeSelectingStart={isRangeSelectingStart}
+        isRangeSelectingEnd={isRangeSelectingEnd}
+        isStartOfRow={isStartOfRow}
+        isEndOfRow={isEndOfRow}
+        onMouseEnter={() => handleMouseEnter(date, disabled)}
+        onClick={() => handleDateClick(date, disabled)}
+        {...getYearCellDataAttributes(
+          date.toISOString(),
+          isCurrent,
+          isActive,
+          isInRange,
+          isRangeStart,
+          isRangeEnd,
+          isInRangeSelecting,
+          isRangeSelectingStart,
+          isRangeSelectingEnd,
+          isStartOfRow,
+          isEndOfRow,
+        )}
+      />
     );
-
-    return {
-      cellContent,
-      disabled,
-      selected,
-      isCurrent,
-      isInRange,
-      isRangeStart,
-      isRangeEnd,
-      isInRangeSelecting,
-      isRangeSelectingStart,
-      isRangeSelectingEnd,
-      isStartOfRow,
-      isEndOfRow,
-      isActive,
-      ...dataAttributes,
-    };
   };
 
   return (
     <YearsOfTwentyYearsWidget
       {...props}
-      rangeCalendar={true}
-      renderCellWithString={renderDate}
       date={dateInner}
       locale={locale}
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onMouseMove={handleMouseMove}
+      renderCell={renderCell || renderDefaultYearRangeCell}
     />
   );
 };

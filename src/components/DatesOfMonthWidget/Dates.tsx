@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
-import { dayjsDateToString, setNoon } from '#src/components/utils';
+import { setNoon } from '#src/components/utils';
 import { DATES_ON_SCREEN, DATES_WRAPPER_HEIGHT } from '#src/components/DatesOfMonthWidget/constants';
 import type { DatesProps } from '#src/components/DatesOfMonthWidget/interfaces';
-import { DefaultDateCell, DefaultDateRangeCell } from '#src/components/DefaultCell';
 
 const DatesWrapper = styled.div`
   box-sizing: border-box;
@@ -14,23 +13,13 @@ const DatesWrapper = styled.div`
 `;
 const datesArray = Array.from(Array(DATES_ON_SCREEN).keys());
 
-export const Dates = ({ rangeCalendar = false, date, cells, renderCellWithString, ...props }: DatesProps) => {
+export const Dates = ({ date, renderCell, ...props }: DatesProps) => {
   const firstDate = setNoon(date.startOf('month').startOf('week'));
   console.log('render Dates');
 
   return (
     <DatesWrapper {...props} data-container-type="datesWrapper">
-      {cells
-        ? cells
-        : renderCellWithString
-          ? datesArray.map((v) =>
-              rangeCalendar ? (
-                <DefaultDateRangeCell key={v} {...renderCellWithString(dayjsDateToString(firstDate.add(v, 'day')))} />
-              ) : (
-                <DefaultDateCell key={v} {...renderCellWithString(dayjsDateToString(firstDate.add(v, 'day')))} />
-              ),
-            )
-          : null}
+      {datesArray.map((v) => renderCell(firstDate.add(v, 'day')))}
     </DatesWrapper>
   );
 };

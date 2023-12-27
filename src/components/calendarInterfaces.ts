@@ -1,11 +1,10 @@
-import type { HTMLAttributes } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 import type { Dayjs } from 'dayjs';
-import type { DefaultCellProps } from '#src/components/DefaultCell';
 
 export type CalendarViewMode = 'dates' | 'months' | 'years';
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
-  renderDateCellWithString?: (dateString: string) => DefaultCellProps;
+  renderCell?: (date: Dayjs) => ReactNode;
   /** Дата, которая не может быть выбрана */
   disabledDate?: (currentDate: Dayjs) => boolean;
 
