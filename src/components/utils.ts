@@ -6,7 +6,6 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import utc from 'dayjs/plugin/utc';
 import isLeapYear from 'dayjs/plugin/isLeapYear';
 import DayOfYear from 'dayjs/plugin/dayOfYear';
-//import isBetween from 'dayjs/plugin/isBetween';
 
 dayjs.extend(localeData);
 dayjs.extend(CustomParseFormat);
@@ -14,7 +13,6 @@ dayjs.extend(LocalizedFormat);
 dayjs.extend(utc);
 dayjs.extend(isLeapYear);
 dayjs.extend(DayOfYear);
-//dayjs.extend(isBetween);
 
 export const getDaysInYear = (date: Dayjs) => {
   return date.isLeapYear() ? 366 : 365;
@@ -37,18 +35,8 @@ export const dateStringToDayjs = (dateString?: string, locale?: string) => {
   return date;
 };
 
-export const getDayjsDate = (locale?: string, dateString?: string) => {
-  const localeInner = locale || 'ru';
-  return setNoon(dateStringToDayjs(dateString)?.locale(localeInner) || dayjs().locale(localeInner));
-};
-
 export const dayjsDateToString = (date: Dayjs) => {
   return date.toISOString();
-};
-
-export const dayjsStateToString = (date?: Dayjs) => {
-  if (!date) return undefined;
-  return dayjsDateToString(date);
 };
 
 export const setNoon = (date: Dayjs) => {
@@ -66,11 +54,6 @@ export const getDayNamesList = (locale: string): string[] => {
   });
 };
 
-/*export const getMonthNamesList = (locale: string, format: 'long' | 'short' = 'long'): string[] => {
-  const globalLocaleData = dayjs.localeData();
-  return format === 'short' ? globalLocaleData.monthsShort() : globalLocaleData.months();
-};*/
-
 export const getMonthNamesList = (locale?: string, format: 'long' | 'short' = 'long') => {
   const localisedDate = dayjs()
     .locale(locale || 'ru')
@@ -81,14 +64,6 @@ export const getMonthNamesList = (locale?: string, format: 'long' | 'short' = 'l
 export const valid = (date: Dayjs | null): boolean => {
   return dayjs(date, 'DD.MM.YYYY', true).isValid();
 };
-
-/*export const isWithinInterval = (date: Dayjs, interval: { start: Dayjs; end: Dayjs }): boolean => {
-  if (interval.start.isAfter(interval.end)) {
-    throw new RangeError('Invalid interval');
-  }
-
-  return date.isBetween(interval.start, interval.end, null, '[]');
-};*/
 
 const unitDifference = (dateLeft: Dayjs, dateRight: Dayjs, unit: ManipulateType | undefined): number => {
   return dateLeft.diff(dateRight, unit);
@@ -125,7 +100,6 @@ export const yearsRange = (date: Dayjs, yearCount: number) => {
 };
 
 export const sortDatesAsc = (date1: Dayjs, date2: Dayjs) => {
-  //if (!date1 || !date2) return undefined;
   const dateFirst = date1.isBefore(date2, 'date') ? date1 : date2;
   const dateSecond = dateFirst.isSame(date1, 'date') ? date2 : date1;
   return [dateFirst, dateSecond];
