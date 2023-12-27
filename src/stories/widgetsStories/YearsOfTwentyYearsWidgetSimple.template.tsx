@@ -30,7 +30,7 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
   locale = 'ru',
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onClick,
-  renderCell,
+  renderCellWithString,
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
   const localeInner = locale || 'ru';
@@ -72,7 +72,7 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
         date={dateInner}
         locale={localeInner}
         onClick={handleClick}
-        renderCell={renderCell || renderYear}
+        renderCellWithString={renderCellWithString || renderYear}
       />
     </Wrapper>
   );

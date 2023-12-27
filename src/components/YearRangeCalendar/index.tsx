@@ -325,7 +325,7 @@ export const YearRangeCalendar = ({
     <YearsOfTwentyYearsWidget
       {...props}
       rangeCalendar={true}
-      renderCell={renderDate}
+      renderCellWithString={renderDate}
       date={dateInner}
       locale={locale}
       onClick={handleClick}

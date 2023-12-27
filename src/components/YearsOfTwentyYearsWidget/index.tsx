@@ -22,7 +22,7 @@ export const YearsOfTwentyYearsWidget = ({
   date,
   locale = 'ru',
   onClick,
-  renderCell,
+  renderCellWithString,
   cells,
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
@@ -33,7 +33,7 @@ export const YearsOfTwentyYearsWidget = ({
       <Years
         rangeCalendar={rangeCalendar}
         date={localDate}
-        renderCell={renderCell}
+        renderCellWithString={renderCellWithString}
         cells={cells}
         data-container-type="yearsWrapper"
       />

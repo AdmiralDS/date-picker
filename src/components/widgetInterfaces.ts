@@ -9,14 +9,14 @@ export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   /** Дата */
   date?: Dayjs;
   locale?: string;
-  renderCell?: (dateString: string) => DefaultCellProps;
+  renderCellWithString?: (dateString: string) => DefaultCellProps;
   cells?: ReactNode;
 }
 
 export interface BaseInnerWidgetProps extends HTMLAttributes<HTMLDivElement> {
   rangeCalendar?: boolean;
   date: Dayjs;
-  renderCell?: (dateString: string) => DefaultCellProps;
+  renderCellWithString?: (dateString: string) => DefaultCellProps;
   cells?: ReactNode;
 }
 

@@ -169,7 +169,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
         dayNamesProps={{ dayNameCellState: getDayNameCellState }}
-        renderCell={renderDefaultDate}
+        renderCellWithString={renderDefaultDate}
       />
     </Wrapper>
   );

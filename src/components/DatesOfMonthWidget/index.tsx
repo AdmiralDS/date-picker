@@ -23,7 +23,7 @@ export const DatesOfMonthWidget = ({
   locale = 'ru',
   dayNamesProps,
   cells,
-  renderCell,
+  renderCellWithString,
   ...props
 }: DatesOfMonthWidgetProps) => {
   const { dayNameCellState } = dayNamesProps;
@@ -47,7 +47,7 @@ export const DatesOfMonthWidget = ({
         rangeCalendar={rangeCalendar}
         date={localDate}
         cells={cells}
-        renderCell={renderCell}
+        renderCellWithString={renderCellWithString}
         data-container-type="datesWrapper"
       />
     </DatesOfMonthWrapper>

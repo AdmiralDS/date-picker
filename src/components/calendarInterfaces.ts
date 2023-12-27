@@ -5,7 +5,7 @@ import type { DefaultCellProps } from '#src/components/DefaultCell';
 export type CalendarViewMode = 'dates' | 'months' | 'years';
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
-  renderDateCell?: (dateString: string) => DefaultCellProps;
+  renderDateCellWithString?: (dateString: string) => DefaultCellProps;
   /** Дата, которая не может быть выбрана */
   disabledDate?: (currentDate: Dayjs) => boolean;
 

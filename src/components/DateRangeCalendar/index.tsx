@@ -343,7 +343,7 @@ export const DateRangeCalendar = ({
     <DatesOfMonthWidget
       {...props}
       rangeCalendar={true}
-      renderCell={renderDate}
+      renderCellWithString={renderDate}
       date={dateInner}
       locale={locale}
       onClick={handleClick}

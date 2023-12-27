@@ -41,7 +41,7 @@ export const DateCalendar = ({
   defaultActiveDateValue,
   onActiveDateValueChange,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  renderDateCell,
+  renderDateCellWithString,
   locale = 'ru',
   onClick,
   ...props

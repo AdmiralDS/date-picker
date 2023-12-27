@@ -14,7 +14,7 @@ const DatesWrapper = styled.div`
 `;
 const datesArray = Array.from(Array(DATES_ON_SCREEN).keys());
 
-export const Dates = ({ rangeCalendar = false, date, cells, renderCell, ...props }: DatesProps) => {
+export const Dates = ({ rangeCalendar = false, date, cells, renderCellWithString, ...props }: DatesProps) => {
   const firstDate = setNoon(date.startOf('month').startOf('week'));
   console.log('render Dates');
 
@@ -22,12 +22,12 @@ export const Dates = ({ rangeCalendar = false, date, cells, renderCell, ...props
     <DatesWrapper {...props} data-container-type="datesWrapper">
       {cells
         ? cells
-        : renderCell
+        : renderCellWithString
           ? datesArray.map((v) =>
               rangeCalendar ? (
-                <DefaultDateRangeCell key={v} {...renderCell(dayjsDateToString(firstDate.add(v, 'day')))} />
+                <DefaultDateRangeCell key={v} {...renderCellWithString(dayjsDateToString(firstDate.add(v, 'day')))} />
               ) : (
-                <DefaultDateCell key={v} {...renderCell(dayjsDateToString(firstDate.add(v, 'day')))} />
+                <DefaultDateCell key={v} {...renderCellWithString(dayjsDateToString(firstDate.add(v, 'day')))} />
               ),
             )
           : null}

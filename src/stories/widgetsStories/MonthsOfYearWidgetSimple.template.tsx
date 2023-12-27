@@ -30,7 +30,7 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
   locale = 'ru',
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onClick,
-  renderCell,
+  renderCellWithString,
   ...props
 }: MonthsOfYearWidgetProps) => {
   const localeInner = locale || 'ru';
@@ -72,7 +72,7 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
         date={dateInner}
         locale={localeInner}
         onClick={handleClick}
-        renderCell={renderCell || renderMonth}
+        renderCellWithString={renderCellWithString || renderMonth}
       />
     </Wrapper>
   );
