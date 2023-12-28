@@ -81,16 +81,16 @@ export const MonthCalendar = ({
     });
   };
 
-  const renderDefaultMonthCell = (date: Dayjs) => {
+  const renderDefaultMonthCell = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => {
     const disabled = dateIsDisabled(date);
     const isCurrent = date.isSame(getCurrentDate(locale), 'month');
-    const isActive = activeDateInner && date.isSame(activeDateInner, 'month');
+    const isActive = date.isSame(active, 'month');
     return (
       <DefaultMonthCell
         key={date.toString()}
         cellContent={capitalizeFirstLetter(date.locale(locale).format('MMMM'))}
         disabled={disabled}
-        selected={selectedDateInner && date.isSame(selectedDateInner, 'month')}
+        selected={date.isSame(selected, 'month')}
         isCurrent={isCurrent}
         isActive={isActive}
         onMouseEnter={() => handleMouseEnter(date, disabled)}
@@ -104,6 +104,8 @@ export const MonthCalendar = ({
     <MonthsOfYearWidget
       {...props}
       date={dateInner}
+      selected={selectedDateInner}
+      active={activeDateInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
       renderCell={renderCell || renderDefaultMonthCell}

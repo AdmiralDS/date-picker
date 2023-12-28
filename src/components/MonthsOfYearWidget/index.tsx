@@ -17,12 +17,25 @@ const MonthsOfYearWrapper = styled.div`
   ${typography['Body/Body 2 Long']}
 `;
 
-export const MonthsOfYearWidget = ({ date, locale = 'ru', renderCell, ...props }: MonthsOfYearWidgetProps) => {
+export const MonthsOfYearWidget = ({
+  date,
+  selected,
+  active,
+  locale = 'ru',
+  renderCell,
+  ...props
+}: MonthsOfYearWidgetProps) => {
   const localDate = date || getCurrentDate(locale);
 
   return (
     <MonthsOfYearWrapper {...props} data-container-type="monthsOfYearWrapper">
-      <Months date={localDate} renderCell={renderCell} data-container-type="monthsWrapper" />
+      <Months
+        date={localDate}
+        selected={selected}
+        active={active}
+        renderCell={renderCell}
+        data-container-type="monthsWrapper"
+      />
     </MonthsOfYearWrapper>
   );
 };

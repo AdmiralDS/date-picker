@@ -18,6 +18,8 @@ const DatesOfMonthWrapper = styled.div`
 
 export const DatesOfMonthWidget = ({
   date,
+  selected,
+  active,
   locale = 'ru',
   dayNamesProps,
   renderCell,
@@ -29,7 +31,13 @@ export const DatesOfMonthWidget = ({
   return (
     <DatesOfMonthWrapper {...props} data-container-type="datesOfMonthWrapper">
       <Days locale={locale} dayNameCellState={dayNameCellState} />
-      <Dates date={localDate} renderCell={renderCell} data-container-type="datesWrapper" />
+      <Dates
+        date={localDate}
+        selected={selected}
+        active={active}
+        renderCell={renderCell}
+        data-container-type="datesWrapper"
+      />
     </DatesOfMonthWrapper>
   );
 };

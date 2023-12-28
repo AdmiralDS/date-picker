@@ -81,16 +81,16 @@ export const YearCalendar = ({
     });
   };
 
-  const renderDefaultYearCell = (date: Dayjs) => {
+  const renderDefaultYearCell = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => {
     const disabled = dateIsDisabled(date);
-    const isCurrent = date && date.isSame(getCurrentDate(locale), 'year');
-    const isActive = activeDateInner && date.isSame(activeDateInner, 'year');
+    const isCurrent = date.isSame(getCurrentDate(locale), 'year');
+    const isActive = date.isSame(active, 'year');
     return (
       <DefaultYearCell
         key={date.toString()}
         cellContent={date.year()}
         disabled={disabled}
-        selected={date && selectedDateInner && date.isSame(selectedDateInner, 'year')}
+        selected={date.isSame(selected, 'year')}
         isCurrent={isCurrent}
         isActive={isActive}
         onMouseEnter={() => handleMouseEnter(date, disabled)}
@@ -104,6 +104,8 @@ export const YearCalendar = ({
     <YearsOfTwentyYearsWidget
       {...props}
       date={dateInner}
+      selected={selectedDateInner}
+      active={activeDateInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
       renderCell={renderCell || renderDefaultYearCell}

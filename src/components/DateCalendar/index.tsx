@@ -82,9 +82,6 @@ export const DateCalendar = ({
   };
   //</editor-fold>
 
-  const dateIsSelected = (dateCurrent?: Dayjs) => {
-    return dateCurrent && selectedDateInner && dateCurrent.isSame(selectedDateInner, 'date');
-  };
   const dateIsDisabled = (dateCurrent?: Dayjs) => {
     if (!dateCurrent || !disabledDate) {
       return false;
@@ -110,20 +107,20 @@ export const DateCalendar = ({
     return { cellMixin };
   };
 
-  const renderDefaultDateCell = (date: Dayjs) => {
+  const renderDefaultDateCell = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => {
     const cellContent = date.date();
     const hidden = dateIsHidden(date);
     const disabled = dateIsDisabled(date);
-    const isCurrent = date && date.isSame(dayjs().locale(locale), 'date');
+    const isCurrent = date.isSame(dayjs().locale(locale), 'date');
     const isHoliday = dateIsHoliday(date);
     //const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
-    const isActive = activeDateInner?.isSame(date, 'date');
+    const isActive = date.isSame(active, 'date');
     return (
       <DefaultDateCell
         key={date.toString()}
         cellContent={cellContent}
         disabled={disabled}
-        selected={dateIsSelected(date)}
+        selected={date.isSame(selected, 'date')}
         hidden={hidden}
         isCurrent={isCurrent}
         isActive={isActive}
@@ -146,6 +143,8 @@ export const DateCalendar = ({
       {...props}
       renderCell={renderCell || renderDefaultDateCell}
       date={dateInner}
+      selected={selectedDateInner}
+      active={activeDateInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
       dayNamesProps={{ dayNameCellState: getDayNameCellState }}

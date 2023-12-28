@@ -3,7 +3,7 @@ import type { Dayjs } from 'dayjs';
 
 export type CalendarViewMode = 'dates' | 'months' | 'years';
 
-export type renderFunctionType = (date: Dayjs) => ReactNode;
+export type renderFunctionType = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => ReactNode;
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   renderCell?: renderFunctionType;

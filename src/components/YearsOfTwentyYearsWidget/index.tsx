@@ -19,6 +19,8 @@ const YearsOfYearWrapper = styled.div`
 
 export const YearsOfTwentyYearsWidget = ({
   date,
+  selected,
+  active,
   locale = 'ru',
   renderCell,
   ...props
@@ -27,7 +29,13 @@ export const YearsOfTwentyYearsWidget = ({
 
   return (
     <YearsOfYearWrapper {...props} data-container-type="yearsOfYearWrapper">
-      <Years date={localDate} renderCell={renderCell} data-container-type="yearsWrapper" />
+      <Years
+        date={localDate}
+        selected={selected}
+        active={active}
+        renderCell={renderCell}
+        data-container-type="yearsWrapper"
+      />
     </YearsOfYearWrapper>
   );
 };
