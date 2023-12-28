@@ -6,7 +6,7 @@ import { capitalizeFirstLetter, getCurrentDate, sortDatesAsc } from '#src/compon
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import { MONTHS_COLUMNS } from '#src/components/MonthsOfYearWidget/constants.ts';
-import { DefaultMonthCell } from '#src/components/DefaultCell';
+import { DefaultMonthRangeCell } from '#src/components/DefaultCell';
 
 export interface MonthRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
@@ -241,7 +241,7 @@ export const MonthRangeCalendar = ({
     const isStartOfRow = date.month() % MONTHS_COLUMNS === 0;
     const isEndOfRow = date.month() % MONTHS_COLUMNS === 2;
     return (
-      <DefaultMonthCell
+      <DefaultMonthRangeCell
         key={date.toString()}
         cellContent={cellContent}
         selected={selected}
