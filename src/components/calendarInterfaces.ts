@@ -3,8 +3,10 @@ import type { Dayjs } from 'dayjs';
 
 export type CalendarViewMode = 'dates' | 'months' | 'years';
 
+export type renderFunctionType = (date: Dayjs) => ReactNode;
+
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
-  renderCell?: (date: Dayjs) => ReactNode;
+  renderCell?: renderFunctionType;
   /** Дата, которая не может быть выбрана */
   disabledDate?: (currentDate: Dayjs) => boolean;
 
@@ -60,6 +62,12 @@ export interface RangeDoubleCalendarProps
   onDateRangeValueChange?: (dateRange: [Dayjs | undefined, Dayjs | undefined]) => void;
 }
 
+export type renderCellProps = {
+  renderDateCell?: renderFunctionType;
+  renderMonthCell?: renderFunctionType;
+  renderYearCell?: renderFunctionType;
+};
+
 export interface PickerCalendarProps {
   /** Экран выбора дат, месяцев, лет */
   viewModeValue?: CalendarViewMode;
@@ -67,4 +75,6 @@ export interface PickerCalendarProps {
   defaultViewModeValue?: CalendarViewMode;
   /** Коллбэк на переключение экрана */
   onViewModeChange?: (mode: CalendarViewMode) => void;
+  /** Кастомное отображение ячеек */
+  renderCell?: renderCellProps;
 }

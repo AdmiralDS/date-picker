@@ -13,7 +13,7 @@ import {
 } from '#src/components/calendarStyle.ts';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 
-export interface MonthPickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {}
+export interface MonthPickerCalendarProps extends Omit<SingleCalendarProps, 'renderCell'>, PickerCalendarProps {}
 
 export const MonthPickerCalendar = ({
   viewModeValue,
@@ -25,6 +25,7 @@ export const MonthPickerCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
+  renderCell,
   locale = 'ru',
   ...props
 }: MonthPickerCalendarProps) => {
@@ -101,6 +102,7 @@ export const MonthPickerCalendar = ({
       <CalendarContainer>
         <MonthCalendarView
           {...props}
+          renderCell={renderCell?.renderMonthCell}
           dateValue={dateInner}
           selectedDateValue={selectedDateInner}
           onSelectedDateValueChange={handleMonthClick}
@@ -109,6 +111,7 @@ export const MonthPickerCalendar = ({
         />
         <YearCalendarView
           {...props}
+          renderCell={renderCell?.renderYearCell}
           dateValue={dateInner}
           selectedDateValue={selectedDateInner}
           onSelectedDateValueChange={handleYearClick}

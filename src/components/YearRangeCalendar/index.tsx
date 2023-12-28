@@ -190,10 +190,7 @@ export const YearRangeCalendar = ({
     if (dateRangeFirstInner && dateCurrent.isSame(dateRangeFirstInner, 'year')) {
       return true;
     }
-    if (dateRangeSecondInner && dateCurrent.isSame(dateRangeSecondInner, 'year')) {
-      return true;
-    }
-    return false;
+    return !!(dateRangeSecondInner && dateCurrent.isSame(dateRangeSecondInner, 'year'));
   };
   const dateIsRangeStart = (dateCurrent?: Dayjs) => {
     if (!dateCurrent || !dateRangeFirstInner || !dateRangeSecondInner) return false;

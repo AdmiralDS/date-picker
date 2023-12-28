@@ -14,7 +14,7 @@ import {
 } from '#src/components/calendarStyle.ts';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 
-export interface DatePickerCalendarProps extends SingleCalendarProps, PickerCalendarProps {}
+export interface DatePickerCalendarProps extends Omit<SingleCalendarProps, 'renderCell'>, PickerCalendarProps {}
 
 export const DatePickerCalendar = ({
   viewModeValue,
@@ -26,6 +26,7 @@ export const DatePickerCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
+  renderCell,
   locale = 'ru',
   ...props
 }: DatePickerCalendarProps) => {
@@ -115,6 +116,7 @@ export const DatePickerCalendar = ({
       <CalendarContainer>
         <DateCalendarView
           {...props}
+          renderCell={renderCell?.renderDateCell}
           dateValue={dateInner}
           selectedDateValue={selectedDateInner}
           onSelectedDateValueChange={handleDateClick}
@@ -123,6 +125,7 @@ export const DatePickerCalendar = ({
         />
         <MonthCalendarView
           {...props}
+          renderCell={renderCell?.renderMonthCell}
           dateValue={setNoon(dateInner.startOf('month'))}
           selectedDateValue={selectedDateInner}
           onSelectedDateValueChange={handleMonthClick}
@@ -131,6 +134,7 @@ export const DatePickerCalendar = ({
         />
         <YearCalendarView
           {...props}
+          renderCell={renderCell?.renderYearCell}
           dateValue={setNoon(dateInner.startOf('year'))}
           selectedDateValue={selectedDateInner}
           onSelectedDateValueChange={handleYearClick}
