@@ -65,9 +65,6 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
     return { cellMixin };
   };
 
-  const dateIsSelected = (dateCurrent?: Dayjs) => {
-    return dateCurrent && selectedDate && dateCurrent.isSame(selectedDate, 'date');
-  };
   const dateIsDisabled = (dateCurrent?: Dayjs) => {
     return !!(
       dateCurrent &&
@@ -87,18 +84,18 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
     return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
   };
 
-  const renderDefaultDateCell = (date: Dayjs) => {
+  const renderDefaultDateCell = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => {
     const cellContent = date.date();
-    const isCurrent = date && date.isSame(dayjs().locale(locale), 'date');
+    const isCurrent = date.isSame(dayjs().locale(locale), 'date');
     const isHoliday = dateIsHoliday(date);
     //const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
-    const isActive = activeDateInner?.isSame(date, 'date');
+    const isActive = date.isSame(active, 'date');
     return (
       <DefaultDateCell
         key={date.toString()}
         cellContent={cellContent}
         disabled={dateIsDisabled(date)}
-        selected={dateIsSelected(date)}
+        selected={date.isSame(selected, 'date')}
         hidden={dateIsHidden(date)}
         isCurrent={isCurrent}
         isActive={isActive}
@@ -121,6 +118,9 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
       <MonthYear>Дата: {capitalizeFirstLetter(dateInner.format('D MMMM YYYY'))}</MonthYear>
       <DatesOfMonthWidget
         {...props}
+        date={dateInner}
+        selected={selectedDate}
+        active={activeDateInner}
         locale={localeInner}
         onMouseLeave={handleMouseLeave}
         dayNamesProps={{ dayNameCellState: getDayNameCellState }}

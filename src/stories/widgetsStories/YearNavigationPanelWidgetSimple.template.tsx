@@ -61,15 +61,15 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
     });
   };
 
-  const renderDefaultMonthCell = (date: Dayjs) => {
+  const renderDefaultMonthCell = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => {
     const isCurrent = date.isSame(getCurrentDate(locale), 'month');
-    const isActive = activeDateInner && date.isSame(activeDateInner, 'month');
+    const isActive = date.isSame(active, 'month');
     return (
       <DefaultMonthCell
         key={date.toISOString()}
         cellContent={capitalizeFirstLetter(date.format('MMMM'))}
         disabled={dateIsDisabled(date)}
-        selected={selectedDate && date.isSame(selectedDate, 'month')}
+        selected={date.isSame(selected, 'month')}
         isCurrent={isCurrent}
         isActive={isActive}
         onMouseEnter={() => handleActiveDateChange(date)}
@@ -97,6 +97,8 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
       <MonthsOfYearWidget
         {...props}
         date={dateState}
+        selected={selectedDate}
+        active={activeDateInner}
         locale={localeInner}
         onMouseLeave={handleMouseLeave}
         renderCell={renderDefaultMonthCell}

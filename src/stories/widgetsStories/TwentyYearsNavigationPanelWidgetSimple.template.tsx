@@ -62,15 +62,15 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
     });
   };
 
-  const renderDefaultYearCell = (date: Dayjs) => {
+  const renderDefaultYearCell = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => {
     const isCurrent = date && date.isSame(getCurrentDate(locale), 'year');
-    const isActive = activeDateInner && date.isSame(activeDateInner, 'year');
+    const isActive = date.isSame(active, 'year');
     return (
       <DefaultYearCell
         key={date.toString()}
         cellContent={date.year()}
         disabled={dateIsDisabled(date)}
-        selected={date && selectedDate && date.isSame(selectedDate, 'year')}
+        selected={date.isSame(selected, 'year')}
         isCurrent={isCurrent}
         isActive={isActive}
         onMouseEnter={() => handleActiveDateChange(date)}
@@ -102,6 +102,8 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
       <YearsOfTwentyYearsWidget
         {...props}
         date={dateState}
+        selected={selectedDate}
+        active={activeDateInner}
         locale={localeInner}
         onMouseLeave={handleMouseLeave}
         renderCell={renderDefaultYearCell}
