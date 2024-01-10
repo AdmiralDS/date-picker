@@ -99,8 +99,111 @@ export const yearsRange = (date: Dayjs, yearCount: number) => {
   return { start, end };
 };
 
-export const sortDatesAsc = (date1: Dayjs, date2: Dayjs) => {
-  const dateFirst = date1.isBefore(date2, 'date') ? date1 : date2;
-  const dateSecond = dateFirst.isSame(date1, 'date') ? date2 : date1;
+export const sortDatesAsc = (date1: Dayjs, date2: Dayjs, unit: dayjs.OpUnitType | undefined) => {
+  const dateFirst = date1.isBefore(date2, unit) ? date1 : date2;
+  const dateSecond = dateFirst.isSame(date1, unit) ? date2 : date1;
   return [dateFirst, dateSecond];
+};
+
+export const dateIsInRange = (
+  unit: dayjs.OpUnitType | undefined,
+  dateCurrent?: Dayjs,
+  selectedDateRange?: [Dayjs | undefined, Dayjs | undefined],
+) => {
+  if (!dateCurrent || !selectedDateRange) return false;
+  if (selectedDateRange[0] && selectedDateRange[1]) {
+    const dates = sortDatesAsc(selectedDateRange[0], selectedDateRange[1], unit);
+    return dateCurrent.isBetween(dates[0], dates[1], unit, '()');
+  }
+  return false;
+};
+export const dateIsSelected = (
+  unit: dayjs.OpUnitType | undefined,
+  dateCurrent?: Dayjs,
+  selectedDateRange?: [Dayjs | undefined, Dayjs | undefined],
+) => {
+  if (!dateCurrent || !selectedDateRange) return false;
+  if (dateCurrent.isSame(selectedDateRange[0], unit)) {
+    return true;
+  }
+  return dateCurrent.isSame(selectedDateRange[1], unit);
+};
+export const dateIsRangeStart = (
+  unit: dayjs.OpUnitType | undefined,
+  dateCurrent?: Dayjs,
+  selectedDateRange?: [Dayjs | undefined, Dayjs | undefined],
+) => {
+  if (!dateCurrent || !selectedDateRange || !selectedDateRange[0] || !selectedDateRange[1]) return false;
+  const dates = sortDatesAsc(selectedDateRange[0], selectedDateRange[1], unit);
+  return dateCurrent.isSame(dates[0], unit);
+};
+export const dateIsRangeEnd = (
+  unit: dayjs.OpUnitType | undefined,
+  dateCurrent?: Dayjs,
+  selectedDateRange?: [Dayjs | undefined, Dayjs | undefined],
+) => {
+  if (!dateCurrent || !selectedDateRange || !selectedDateRange[0] || !selectedDateRange[1]) return false;
+  const dates = sortDatesAsc(selectedDateRange[0], selectedDateRange[1], unit);
+  return dateCurrent.isSame(dates[1], unit);
+};
+
+export const dateIsInRangeSelecting = (
+  unit: dayjs.OpUnitType | undefined,
+  dateCurrent?: Dayjs,
+  active?: Dayjs,
+  activeRangeEnd?: Dayjs,
+) => {
+  if (!dateCurrent || !active || !activeRangeEnd) return false;
+  const dates = sortDatesAsc(activeRangeEnd, active, unit);
+  return dateCurrent.isBetween(dates[0], dates[1], unit, '()');
+};
+export const dateIsRangeSelectingStart = (
+  unit: dayjs.OpUnitType | undefined,
+  dateCurrent?: Dayjs,
+  active?: Dayjs,
+  activeRangeEnd?: Dayjs,
+  disabled?: boolean,
+  hidden?: boolean,
+) => {
+  if (dateCurrent && active && activeRangeEnd && !disabled && !hidden) {
+    const dates = sortDatesAsc(activeRangeEnd, active, unit);
+    return dateCurrent.isSame(dates[0], unit);
+  }
+  return false;
+};
+export const dateIsRangeSelectingEnd = (
+  unit: dayjs.OpUnitType | undefined,
+  dateCurrent?: Dayjs,
+  active?: Dayjs,
+  activeRangeEnd?: Dayjs,
+  disabled?: boolean,
+  hidden?: boolean,
+) => {
+  if (dateCurrent && active && activeRangeEnd && !disabled && !hidden) {
+    const dates = sortDatesAsc(activeRangeEnd, active, unit);
+    return dateCurrent.isSame(dates[1], unit);
+  }
+  return false;
+};
+
+export const monthIsDisabled = (dateCurrent?: Dayjs, disabledDate?: (currentDate: Dayjs) => boolean) => {
+  if (!dateCurrent || !disabledDate) {
+    return false;
+  }
+  const datesArray = Array.from(Array(dateCurrent.endOf('month').date()).keys());
+  return datesArray.every((v) => {
+    const date = dateCurrent.date(v);
+    return disabledDate(date);
+  });
+};
+
+export const yearIsDisabled = (dateCurrent?: Dayjs, disabledDate?: (currentDate: Dayjs) => boolean) => {
+  if (!dateCurrent || !disabledDate) {
+    return false;
+  }
+  const datesArray = Array.from(Array(getDaysInYear(dateCurrent)).keys());
+  return datesArray.every((v) => {
+    const date = getDateByDayOfYear(dateCurrent, v);
+    return disabledDate(date);
+  });
 };
