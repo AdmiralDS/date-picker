@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs, { isDayjs } from 'dayjs';
 import type { Dayjs, ManipulateType } from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
 import CustomParseFormat from 'dayjs/plugin/customParseFormat';
@@ -206,4 +206,11 @@ export const yearIsDisabled = (dateCurrent?: Dayjs, disabledDate?: (currentDate:
     const date = getDateByDayOfYear(dateCurrent, v);
     return disabledDate(date);
   });
+};
+
+export const getSelectedDate = (selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined]) => {
+  return isDayjs(selected) ? selected : undefined;
+};
+export const getSelectedDateRange = (selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined]) => {
+  return isDayjs(selected) ? undefined : selected;
 };

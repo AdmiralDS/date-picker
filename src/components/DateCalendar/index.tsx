@@ -3,11 +3,11 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import { getCurrentDate } from '#src/components/utils';
+import { getCurrentDate, getSelectedDate } from '#src/components/utils';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
-import type { SingleCalendarProps } from '#src/components/calendarInterfaces';
+import type { RenderFunctionProps, SingleCalendarProps } from '#src/components/calendarInterfaces';
 import { DefaultDateCell } from '#src/components/DefaultCell';
 
 export interface DateCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
@@ -107,7 +107,8 @@ export const DateCalendar = ({
     return { cellMixin };
   };
 
-  const renderDefaultDateCell = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => {
+  const renderDefaultDateCell = ({ date, selected, active }: RenderFunctionProps) => {
+    const selectedDate = getSelectedDate(selected);
     const cellContent = date.date();
     const hidden = dateIsHidden(date);
     const disabled = dateIsDisabled(date);
@@ -120,7 +121,7 @@ export const DateCalendar = ({
         key={date.toString()}
         cellContent={cellContent}
         disabled={disabled}
-        selected={date.isSame(selected, 'date')}
+        selected={date.isSame(selectedDate, 'date')}
         hidden={hidden}
         isCurrent={isCurrent}
         isActive={isActive}

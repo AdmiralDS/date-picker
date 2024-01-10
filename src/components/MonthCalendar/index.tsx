@@ -2,9 +2,9 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import { capitalizeFirstLetter, getCurrentDate } from '#src/components/utils';
+import { capitalizeFirstLetter, getCurrentDate, getSelectedDate, monthIsDisabled } from '#src/components/utils';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
-import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
+import type { RenderFunctionProps, SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
 import { DefaultMonthCell } from '#src/components/DefaultCell';
 
 export interface MonthCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
@@ -70,19 +70,9 @@ export const MonthCalendar = ({
     };
   };
 
-  const dateIsDisabled = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !disabledDate) {
-      return false;
-    }
-    const datesArray = Array.from(Array(dateCurrent.endOf('month').date()).keys());
-    return datesArray.every((v) => {
-      const date = dateCurrent.date(v);
-      return disabledDate(date);
-    });
-  };
-
-  const renderDefaultMonthCell = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => {
-    const disabled = dateIsDisabled(date);
+  const renderDefaultMonthCell = ({ date, selected, active }: RenderFunctionProps) => {
+    const selectedDate = getSelectedDate(selected);
+    const disabled = monthIsDisabled(date, disabledDate);
     const isCurrent = date.isSame(getCurrentDate(locale), 'month');
     const isActive = date.isSame(active, 'month');
     return (
@@ -90,7 +80,7 @@ export const MonthCalendar = ({
         key={date.toString()}
         cellContent={capitalizeFirstLetter(date.locale(locale).format('MMMM'))}
         disabled={disabled}
-        selected={date.isSame(selected, 'month')}
+        selected={date.isSame(selectedDate, 'month')}
         isCurrent={isCurrent}
         isActive={isActive}
         onMouseEnter={() => handleMouseEnter(date, disabled)}

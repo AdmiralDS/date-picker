@@ -2,9 +2,9 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import { getCurrentDate, getDateByDayOfYear, getDaysInYear } from '#src/components/utils';
+import { getCurrentDate, getSelectedDate, yearIsDisabled } from '#src/components/utils';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
-import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
+import type { RenderFunctionProps, SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
 import { DefaultYearCell } from '#src/components/DefaultCell';
 
 export interface YearCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
@@ -70,19 +70,9 @@ export const YearCalendar = ({
     };
   };
 
-  const dateIsDisabled = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !disabledDate) {
-      return false;
-    }
-    const datesArray = Array.from(Array(getDaysInYear(dateCurrent)).keys());
-    return datesArray.every((v) => {
-      const date = getDateByDayOfYear(dateCurrent, v);
-      return disabledDate(date);
-    });
-  };
-
-  const renderDefaultYearCell = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => {
-    const disabled = dateIsDisabled(date);
+  const renderDefaultYearCell = ({ date, selected, active }: RenderFunctionProps) => {
+    const selectedDate = getSelectedDate(selected);
+    const disabled = yearIsDisabled(date, disabledDate);
     const isCurrent = date.isSame(getCurrentDate(locale), 'year');
     const isActive = date.isSame(active, 'year');
     return (
@@ -90,7 +80,7 @@ export const YearCalendar = ({
         key={date.toString()}
         cellContent={date.year()}
         disabled={disabled}
-        selected={date.isSame(selected, 'year')}
+        selected={date.isSame(selectedDate, 'year')}
         isCurrent={isCurrent}
         isActive={isActive}
         onMouseEnter={() => handleMouseEnter(date, disabled)}

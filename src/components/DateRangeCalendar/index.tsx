@@ -3,11 +3,21 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import { getCurrentDate, sortDatesAsc } from '#src/components/utils';
+import {
+  dateIsInRange,
+  dateIsInRangeSelecting,
+  dateIsRangeEnd,
+  dateIsRangeSelectingEnd,
+  dateIsRangeSelectingStart,
+  dateIsRangeStart,
+  dateIsSelected,
+  getCurrentDate,
+  getSelectedDateRange,
+} from '#src/components/utils';
 import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
 import type { CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
-import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
+import type { RangeCalendarProps, RenderFunctionProps } from '#src/components/calendarInterfaces';
 import { DefaultDateRangeCell } from '#src/components/DefaultCell';
 
 export interface DateRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
@@ -188,81 +198,35 @@ export const DateRangeCalendar = ({
     return dateCurrent && dateCurrent.month() !== dateInner.month();
   };
 
-  const dateIsInRange = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent) return false;
-    if (dateRangeFirstInner && dateRangeSecondInner) {
-      const dates = sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner);
-      return dateCurrent.isBetween(dates[0], dates[1], 'date', '()');
-    }
-    return false;
-  };
-  const dateIsSelected = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent) return false;
-    if (dateRangeFirstInner && dateCurrent.isSame(dateRangeFirstInner, 'date')) {
-      return true;
-    }
-    if (dateRangeSecondInner && dateCurrent.isSame(dateRangeSecondInner, 'date')) {
-      return true;
-    }
-    return false;
-  };
-  const dateIsRangeStart = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !dateRangeFirstInner || !dateRangeSecondInner) return false;
-    const dates = sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner);
-    return dateCurrent.isSame(dates[0], 'date');
-  };
-  const dateIsRangeEnd = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !dateRangeFirstInner || !dateRangeSecondInner) return false;
-    const dates = sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner);
-    return dateCurrent.isSame(dates[1], 'date');
-  };
-  const dateIsRangeSelectingStart = (dateCurrent?: Dayjs, disabled?: boolean, hidden?: boolean) => {
-    if (dateCurrent && activeDateInner && dateRangeActiveEndInner && !disabled && !hidden) {
-      const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
-      return dateCurrent.isSame(dates[0], 'date');
-    }
-    return false;
-  };
-  const dateIsRangeSelectingEnd = (dateCurrent?: Dayjs, disabled?: boolean, hidden?: boolean) => {
-    if (dateCurrent && activeDateInner && dateRangeActiveEndInner && !disabled && !hidden) {
-      const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
-      return dateCurrent.isSame(dates[1], 'date');
-    }
-    return false;
-  };
-  const dateIsInRangeSelecting = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent) return false;
-    if (dateRangeActiveEndInner && activeDateInner) {
-      const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
-      return dateCurrent.isBetween(dates[0], dates[1], 'date', '()');
-      //return dateCurrent.isBetween(dateRangeFirstInner, activeDateInner, 'date', '()');
-    }
-    return false;
-  };
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getDayNameCellState = (_: number): CellStateProps => {
     const cellMixin = baseDayNameCellMixin;
     return { cellMixin };
   };
 
-  const renderDefaultRangeDateCell = (date: Dayjs) => {
+  const renderDefaultRangeDateCell = ({
+    date,
+    selected: selectedRange,
+    active,
+    activeRangeEnd,
+  }: RenderFunctionProps) => {
+    const selectedDateRange = getSelectedDateRange(selectedRange);
     const cellContent = date.date();
-    const selected = dateIsSelected(date);
+    const selected = dateIsSelected('date', date, selectedDateRange);
     const disabled = dateIsDisabled(date);
     const hidden = dateIsHidden(date);
-    const isCurrent = date && date.isSame(dayjs().locale(locale), 'date');
+    const isCurrent = date.isSame(dayjs().locale(locale), 'date');
     //const isHoliday = dateIsHoliday(dateCurrent);
     //const isOutsideMonth = dateIsOutsideMonth(dateCurrent);
-    const isInRange = dateIsInRange(date);
-    const isRangeStart = dateIsRangeStart(date);
-    const isRangeEnd = dateIsRangeEnd(date);
-    const isInRangeSelecting = dateIsInRangeSelecting(date);
-    const isRangeSelectingStart = dateIsRangeSelectingStart(date, disabled, hidden);
-    const isRangeSelectingEnd = dateIsRangeSelectingEnd(date, disabled, hidden);
+    const isInRange = dateIsInRange('date', date, selectedDateRange);
+    const isRangeStart = dateIsRangeStart('date', date, selectedDateRange);
+    const isRangeEnd = dateIsRangeEnd('date', date, selectedDateRange);
+    const isInRangeSelecting = dateIsInRangeSelecting('date', date, active, activeRangeEnd);
+    const isRangeSelectingStart = dateIsRangeSelectingStart('date', date, active, activeRangeEnd, disabled, hidden);
+    const isRangeSelectingEnd = dateIsRangeSelectingEnd('date', date, active, activeRangeEnd, disabled, hidden);
     const isStartOfRow = date.isSame(date.startOf('week'), 'date') || date.isSame(date.startOf('month'), 'date');
     const isEndOfRow = date.isSame(date.endOf('week'), 'date') || date.isSame(date.endOf('month'), 'date');
-    const isActive = activeDateInner?.isSame(date, 'date');
+    const isActive = date.isSame(active, 'date');
 
     return (
       <DefaultDateRangeCell
@@ -306,6 +270,9 @@ export const DateRangeCalendar = ({
     <DatesOfMonthWidget
       {...props}
       date={dateInner}
+      selected={[dateRangeFirstInner, dateRangeSecondInner]}
+      active={activeDateInner}
+      activeRangeEnd={dateRangeActiveEndInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
       renderCell={renderCell || renderDefaultRangeDateCell}

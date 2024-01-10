@@ -17,13 +17,13 @@ const YearsWrapper = styled.div`
 
 const yearsArray = Array.from(Array(YEARS_ON_SCREEN).keys());
 
-export const Years = ({ date, selected, active, renderCell, ...props }: YearsProps) => {
+export const Years = ({ date, selected, active, activeRangeEnd, renderCell, ...props }: YearsProps) => {
   const { start } = yearsRange(date, YEARS_ON_SCREEN);
   const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`));
 
   return (
     <YearsWrapper {...props}>
-      {yearsArray.map((v) => renderCell(firstYear.add(v, 'year'), selected, active))}
+      {yearsArray.map((v) => renderCell({ date: firstYear.add(v, 'year'), selected, active, activeRangeEnd }))}
     </YearsWrapper>
   );
 };

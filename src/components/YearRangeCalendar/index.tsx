@@ -2,8 +2,19 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import { getCurrentDate, getDateByDayOfYear, getDaysInYear, sortDatesAsc } from '#src/components/utils';
-import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
+import {
+  dateIsInRange,
+  dateIsInRangeSelecting,
+  dateIsRangeEnd,
+  dateIsRangeSelectingEnd,
+  dateIsRangeSelectingStart,
+  dateIsRangeStart,
+  dateIsSelected,
+  getCurrentDate,
+  getSelectedDateRange,
+  yearIsDisabled,
+} from '#src/components/utils';
+import type { RangeCalendarProps, RenderFunctionProps } from '#src/components/calendarInterfaces';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { YEARS_COLUMNS } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import { DefaultYearRangeCell } from '#src/components/DefaultCell';
@@ -167,77 +178,25 @@ export const YearRangeCalendar = ({
     }
   };
 
-  const dateIsDisabled = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !disabledDate || !dateInner) {
-      return false;
-    }
-    const datesArray = Array.from(Array(getDaysInYear(dateInner)).keys());
-    return datesArray.every((v) => {
-      const date = getDateByDayOfYear(dateInner, v);
-      return disabledDate(date);
-    });
-  };
-  const dateIsInRange = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent) return false;
-    if (dateRangeFirstInner && dateRangeSecondInner) {
-      const dates = sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner);
-      return dateCurrent.isBetween(dates[0], dates[1], 'year', '()');
-    }
-    return false;
-  };
-  const dateIsSelected = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent) return false;
-    if (dateRangeFirstInner && dateCurrent.isSame(dateRangeFirstInner, 'year')) {
-      return true;
-    }
-    return !!(dateRangeSecondInner && dateCurrent.isSame(dateRangeSecondInner, 'year'));
-  };
-  const dateIsRangeStart = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !dateRangeFirstInner || !dateRangeSecondInner) return false;
-    const dates = sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner);
-    return dateCurrent.isSame(dates[0], 'year');
-  };
-  const dateIsRangeEnd = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent || !dateRangeFirstInner || !dateRangeSecondInner) return false;
-    const dates = sortDatesAsc(dateRangeFirstInner, dateRangeSecondInner);
-    return dateCurrent.isSame(dates[1], 'year');
-  };
-  const dateIsRangeSelectingStart = (dateCurrent?: Dayjs) => {
-    if (dateCurrent && activeDateInner && dateRangeActiveEndInner) {
-      const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
-      return dateCurrent.isSame(dates[0], 'year');
-    }
-    return false;
-  };
-  const dateIsRangeSelectingEnd = (dateCurrent?: Dayjs) => {
-    if (dateCurrent && activeDateInner && dateRangeActiveEndInner) {
-      const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
-      return dateCurrent.isSame(dates[1], 'year');
-    }
-    return false;
-  };
-  const dateIsInRangeSelecting = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent) return false;
-    if (dateRangeActiveEndInner && activeDateInner) {
-      const dates = sortDatesAsc(dateRangeActiveEndInner, activeDateInner);
-      return dateCurrent.isBetween(dates[0], dates[1], 'year', '()');
-    }
-    return false;
-  };
-
-  const renderDefaultYearRangeCell = (date: Dayjs) => {
+  const renderDefaultYearRangeCell = ({
+    date,
+    selected: selectedRange,
+    active,
+    activeRangeEnd,
+  }: RenderFunctionProps) => {
+    const selectedDateRange = getSelectedDateRange(selectedRange);
     const cellContent = date.year();
-    const selected = dateIsSelected(date);
-    const disabled = dateIsDisabled(date);
+    const selected = dateIsSelected('year', date, selectedDateRange);
+    const disabled = yearIsDisabled(date, disabledDate);
     //const hidden = dateIsHidden(dateCurrent);
     const isCurrent = date.isSame(getCurrentDate(locale), 'year');
     const isActive = activeDateInner && date.isSame(activeDateInner, 'year');
-    const isInRange = dateIsInRange(date);
-    const isRangeStart = dateIsRangeStart(date);
-    const isRangeEnd = dateIsRangeEnd(date);
-    const isInRangeSelecting = dateIsInRangeSelecting(date);
-    const isRangeSelectingStart = dateIsRangeSelectingStart(date);
-    const isRangeSelectingEnd = dateIsRangeSelectingEnd(date);
+    const isInRange = dateIsInRange('year', date, selectedDateRange);
+    const isRangeStart = dateIsRangeStart('year', date, selectedDateRange);
+    const isRangeEnd = dateIsRangeEnd('year', date, selectedDateRange);
+    const isInRangeSelecting = dateIsInRangeSelecting('year', date, active, activeRangeEnd);
+    const isRangeSelectingStart = dateIsRangeSelectingStart('year', date, active, activeRangeEnd, disabled);
+    const isRangeSelectingEnd = dateIsRangeSelectingEnd('year', date, active, activeRangeEnd, disabled);
     const isStartOfRow = (date.year() - 1) % YEARS_COLUMNS === 0;
     const isEndOfRow = (date.year() - 1) % YEARS_COLUMNS === 3;
     return (
@@ -279,6 +238,9 @@ export const YearRangeCalendar = ({
     <YearsOfTwentyYearsWidget
       {...props}
       date={dateInner}
+      selected={[dateRangeFirstInner, dateRangeSecondInner]}
+      active={activeDateInner}
+      activeRangeEnd={dateRangeActiveEndInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
       renderCell={renderCell || renderDefaultYearRangeCell}
