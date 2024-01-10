@@ -3,10 +3,17 @@ import type { Dayjs } from 'dayjs';
 
 export type CalendarViewMode = 'dates' | 'months' | 'years';
 
-export type renderFunctionType = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => ReactNode;
+export interface RenderFunctionProps {
+  date: Dayjs;
+  selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined];
+  active?: Dayjs;
+  activeRangeEnd?: Dayjs;
+}
+
+export type RenderFunctionType = (props: RenderFunctionProps) => ReactNode;
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
-  renderCell?: renderFunctionType;
+  renderCell?: RenderFunctionType;
   /** Дата, которая не может быть выбрана */
   disabledDate?: (currentDate: Dayjs) => boolean;
 
@@ -63,9 +70,9 @@ export interface RangeDoubleCalendarProps
 }
 
 export type renderCellProps = {
-  renderDateCell?: renderFunctionType;
-  renderMonthCell?: renderFunctionType;
-  renderYearCell?: renderFunctionType;
+  renderDateCell?: RenderFunctionType;
+  renderMonthCell?: RenderFunctionType;
+  renderYearCell?: RenderFunctionType;
 };
 
 export interface PickerCalendarProps {

@@ -1,22 +1,24 @@
 import type { HTMLAttributes } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import type { CalendarViewMode, renderFunctionType } from '#src/components/calendarInterfaces.ts';
+import type { CalendarViewMode, RenderFunctionType } from '#src/components/calendarInterfaces.ts';
 
 export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   /** Дата */
   date: Dayjs;
-  selected?: Dayjs;
+  selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined];
   active?: Dayjs;
+  activeRangeEnd?: Dayjs;
+  renderCell: RenderFunctionType;
   locale?: string;
-  renderCell: renderFunctionType;
 }
 
 export interface BaseInnerWidgetProps extends HTMLAttributes<HTMLDivElement> {
   date: Dayjs;
-  selected?: Dayjs;
+  selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined];
   active?: Dayjs;
-  renderCell: renderFunctionType;
+  activeRangeEnd?: Dayjs;
+  renderCell: RenderFunctionType;
 }
 
 export interface BasePanelWidgetProps extends HTMLAttributes<HTMLDivElement> {
