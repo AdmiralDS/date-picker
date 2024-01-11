@@ -1,6 +1,6 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import dayjs from 'dayjs';
+import dayjs, { isDayjs } from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import styled from 'styled-components';
 
@@ -12,6 +12,7 @@ import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/
 import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
 import { DefaultDateCell } from '#src/components/DefaultCell';
+import { RenderFunctionProps } from '#src/components/calendarInterfaces.ts';
 
 const Wrapper = styled.div`
   display: flex;
@@ -84,7 +85,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
     return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
   };
 
-  const renderDefaultDateCell = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => {
+  const renderDefaultDateCell = ({ date, selected, active }: RenderFunctionProps) => {
     const cellContent = date.date();
     const isCurrent = date.isSame(dayjs().locale(locale), 'date');
     const isHoliday = dateIsHoliday(date);
@@ -95,7 +96,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
         key={date.toString()}
         cellContent={cellContent}
         disabled={dateIsDisabled(date)}
-        selected={date.isSame(selected, 'date')}
+        selected={isDayjs(selected) ? date.isSame(selected, 'date') : undefined}
         hidden={dateIsHidden(date)}
         isCurrent={isCurrent}
         isActive={isActive}

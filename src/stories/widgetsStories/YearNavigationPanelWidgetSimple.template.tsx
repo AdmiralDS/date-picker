@@ -3,12 +3,13 @@ import type { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
-import { capitalizeFirstLetter, getCurrentDate } from '#src/components/utils';
+import { capitalizeFirstLetter, getCurrentDate, getSelectedDate, monthIsDisabled } from '#src/components/utils';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import type { YearNavigationPanelWidgetProps } from '#src/components/YearNavigationPanelWidget';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
 import { DefaultMonthCell } from '#src/components/DefaultCell';
+import type { RenderFunctionProps } from '#src/components/calendarInterfaces.ts';
 
 const CalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -37,9 +38,21 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
     setActiveDateInner(date);
   };
 
+  const handleMouseEnter = (date: Dayjs, disabled: boolean) => {
+    if (!disabled) {
+      handleActiveDateChange(date);
+    }
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (_) => {
     handleActiveDateChange(undefined);
+  };
+
+  const handleDateClick = (date: Dayjs, disabled: boolean) => {
+    if (!disabled) {
+      setSelectedDate(date);
+    }
   };
 
   const getMonthCellDataAttributes = (value?: string, isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
@@ -50,30 +63,21 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
     };
   };
 
-  const dateIsDisabled = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent) {
-      return false;
-    }
-    const datesArray = Array.from(Array(dateCurrent.endOf('month').date()).keys());
-    return datesArray.every((v) => {
-      const date = dateCurrent.date(v);
-      return date && date.month() === dateState.month() && (date.day() === 6 || date.date() < 5);
-    });
-  };
-
-  const renderDefaultMonthCell = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => {
+  const renderDefaultMonthCell = ({ date, selected, active }: RenderFunctionProps) => {
+    const selectedDate = getSelectedDate(selected);
+    const disabled = monthIsDisabled(date);
     const isCurrent = date.isSame(getCurrentDate(locale), 'month');
     const isActive = date.isSame(active, 'month');
     return (
       <DefaultMonthCell
-        key={date.toISOString()}
-        cellContent={capitalizeFirstLetter(date.format('MMMM'))}
-        disabled={dateIsDisabled(date)}
-        selected={date.isSame(selected, 'month')}
+        key={date.toString()}
+        cellContent={capitalizeFirstLetter(date.locale(locale).format('MMMM'))}
+        disabled={disabled}
+        selected={date.isSame(selectedDate, 'month')}
         isCurrent={isCurrent}
         isActive={isActive}
-        onMouseEnter={() => handleActiveDateChange(date)}
-        onClick={() => setSelectedDate(date)}
+        onMouseEnter={() => handleMouseEnter(date, disabled)}
+        onClick={() => handleDateClick(date, disabled)}
         {...getMonthCellDataAttributes(date.toString(), isCurrent, isActive)}
       />
     );

@@ -3,13 +3,14 @@ import type { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 
-import { getCurrentDate, getDateByDayOfYear, getDaysInYear } from '#src/components/utils';
+import { getCurrentDate, getSelectedDate, yearIsDisabled } from '#src/components/utils';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
 import type { TwentyYearsNavigationPanelWidgetProps } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import { DefaultYearCell } from '#src/components/DefaultCell';
+import type { RenderFunctionProps } from '#src/components/calendarInterfaces.ts';
 
 const CalendarWrapper = styled.div`
   box-sizing: border-box;
@@ -34,13 +35,21 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
 
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
 
-  const handleActiveDateChange = (date?: Dayjs) => {
-    setActiveDateInner(date);
+  const handleActiveDateChange = (date?: Dayjs, disabled?: boolean) => {
+    if (!disabled) {
+      setActiveDateInner(date);
+    }
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (_) => {
     handleActiveDateChange(undefined);
+  };
+
+  const handleDateClick = (date: Dayjs, disabled: boolean) => {
+    if (!disabled) {
+      setSelectedDate(date);
+    }
   };
 
   const getYearCellDataAttributes = (value?: string, isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
@@ -51,30 +60,21 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
     };
   };
 
-  const dateIsDisabled = (dateCurrent?: Dayjs) => {
-    if (!dateCurrent) {
-      return false;
-    }
-    const datesArray = Array.from(Array(getDaysInYear(dateCurrent)).keys());
-    return datesArray.every((v) => {
-      const date = getDateByDayOfYear(dateCurrent, v);
-      return date && date.month() === dateState.month() && (date.day() === 6 || date.date() < 5);
-    });
-  };
-
-  const renderDefaultYearCell = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => {
-    const isCurrent = date && date.isSame(getCurrentDate(locale), 'year');
+  const renderDefaultYearCell = ({ date, selected, active }: RenderFunctionProps) => {
+    const selectedDate = getSelectedDate(selected);
+    const disabled = yearIsDisabled(date);
+    const isCurrent = date.isSame(getCurrentDate(locale), 'year');
     const isActive = date.isSame(active, 'year');
     return (
       <DefaultYearCell
         key={date.toString()}
         cellContent={date.year()}
-        disabled={dateIsDisabled(date)}
-        selected={date.isSame(selected, 'year')}
+        disabled={disabled}
+        selected={date.isSame(selectedDate, 'year')}
         isCurrent={isCurrent}
         isActive={isActive}
-        onMouseEnter={() => handleActiveDateChange(date)}
-        onClick={() => setSelectedDate(date)}
+        onMouseEnter={() => handleActiveDateChange(date, disabled)}
+        onClick={() => handleDateClick(date, disabled)}
         {...getYearCellDataAttributes(date.toString(), isCurrent, isActive)}
       />
     );
