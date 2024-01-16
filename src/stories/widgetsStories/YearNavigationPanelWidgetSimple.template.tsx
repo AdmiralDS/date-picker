@@ -38,7 +38,7 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
     setActiveDateInner(date);
   };
 
-  const handleMouseEnter = (date: Dayjs, disabled: boolean) => {
+  const handleMouseEnter = (date: Dayjs, disabled?: boolean) => {
     if (!disabled) {
       handleActiveDateChange(date);
     }
@@ -49,7 +49,7 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
     handleActiveDateChange(undefined);
   };
 
-  const handleDateClick = (date: Dayjs, disabled: boolean) => {
+  const handleDateClick = (date: Dayjs, disabled?: boolean) => {
     if (!disabled) {
       setSelectedDate(date);
     }
@@ -63,7 +63,7 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
     };
   };
 
-  const renderDefaultMonthCell = ({ date, selected, active }: RenderFunctionProps) => {
+  const renderDefaultMonthCell = ({ date, selected, active, onCellMouseEnter, onCellClick }: RenderFunctionProps) => {
     const selectedDate = getSelectedDate(selected);
     const disabled = monthIsDisabled(date);
     const isCurrent = date.isSame(getCurrentDate(locale), 'month');
@@ -76,8 +76,8 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
         selected={date.isSame(selectedDate, 'month')}
         isCurrent={isCurrent}
         isActive={isActive}
-        onMouseEnter={() => handleMouseEnter(date, disabled)}
-        onClick={() => handleDateClick(date, disabled)}
+        onMouseEnter={() => onCellMouseEnter?.(date, disabled)}
+        onClick={() => onCellClick?.(date, disabled)}
         {...getMonthCellDataAttributes(date.toString(), isCurrent, isActive)}
       />
     );
@@ -105,6 +105,8 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
         active={activeDateInner}
         locale={localeInner}
         onMouseLeave={handleMouseLeave}
+        onCellMouseEnter={handleMouseEnter}
+        onCellClick={handleDateClick}
         renderCell={renderDefaultMonthCell}
       />
     </CalendarWrapper>

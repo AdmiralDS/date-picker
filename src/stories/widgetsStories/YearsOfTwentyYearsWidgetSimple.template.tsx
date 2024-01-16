@@ -42,7 +42,7 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
     setActiveDateInner(date);
   };
 
-  const handleMouseEnter = (date: Dayjs, disabled: boolean) => {
+  const handleMouseEnter = (date: Dayjs, disabled?: boolean) => {
     if (!disabled) {
       handleActiveDateChange(date);
     }
@@ -53,7 +53,7 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
     handleActiveDateChange(undefined);
   };
 
-  const handleDateClick = (date: Dayjs, disabled: boolean) => {
+  const handleDateClick = (date: Dayjs, disabled?: boolean) => {
     if (!disabled) {
       setSelectedDate(date);
     }
@@ -67,7 +67,7 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
     };
   };
 
-  const renderDefaultYearCell = ({ date, selected, active }: RenderFunctionProps) => {
+  const renderDefaultYearCell = ({ date, selected, active, onCellMouseEnter, onCellClick }: RenderFunctionProps) => {
     const selectedDate = getSelectedDate(selected);
     const disabled = yearIsDisabled(date);
     const isCurrent = date.isSame(getCurrentDate(locale), 'year');
@@ -80,8 +80,8 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
         selected={date.isSame(selectedDate, 'year')}
         isCurrent={isCurrent}
         isActive={isActive}
-        onMouseEnter={() => handleMouseEnter(date, disabled)}
-        onClick={() => handleDateClick(date, disabled)}
+        onMouseEnter={() => onCellMouseEnter?.(date, disabled)}
+        onClick={() => onCellClick?.(date, disabled)}
         {...getYearCellDataAttributes(date.toString(), isCurrent, isActive)}
       />
     );
@@ -97,6 +97,8 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
         active={activeDateInner}
         locale={localeInner}
         onMouseLeave={handleMouseLeave}
+        onCellMouseEnter={handleMouseEnter}
+        onCellClick={handleDateClick}
         renderCell={renderDefaultYearCell}
       />
     </Wrapper>

@@ -1,7 +1,7 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
-import type { Dayjs } from 'dayjs';
+import { Dayjs, isDayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
 import { typography } from '@admiral-ds/react-ui';
@@ -11,6 +11,7 @@ import { MONTHS_OF_YEAR_WIDGET_WIDTH } from '#src/components/MonthsOfYearWidget/
 import type { MonthsOfYearWidgetProps } from '#src/components/MonthsOfYearWidget';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import { DefaultMonthCell } from '#src/components/DefaultCell';
+import type { RenderFunctionProps } from '#src/components/calendarInterfaces.ts';
 
 const Wrapper = styled.div`
   display: flex;
@@ -67,19 +68,19 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
     });
   };
 
-  const renderDefaultMonthCell = (date: Dayjs, selected?: Dayjs, active?: Dayjs) => {
+  const renderDefaultMonthCell = ({ date, selected, active, onCellMouseEnter, onCellClick }: RenderFunctionProps) => {
     const isCurrent = date.isSame(getCurrentDate(locale), 'month');
     const isActive = date.isSame(active, 'month');
     return (
       <DefaultMonthCell
-        key={date.toISOString()}
+        key={date.toString()}
         cellContent={capitalizeFirstLetter(date.format('MMMM'))}
         disabled={dateIsDisabled(date)}
-        selected={date.isSame(selected, 'month')}
+        selected={isDayjs(selected) ? date.isSame(selected, 'month') : undefined}
         isCurrent={isCurrent}
         isActive={isActive}
-        onMouseEnter={() => handleActiveDateChange(date)}
-        onClick={() => setSelectedDate(date)}
+        onMouseEnter={() => onCellMouseEnter?.(date)}
+        onClick={() => onCellClick?.(date)}
         {...getMonthCellDataAttributes(date.toString(), isCurrent, isActive)}
       />
     );
@@ -94,6 +95,8 @@ export const MonthsOfYearWidgetSimpleTemplate = ({
         selected={selectedDate}
         active={activeDateInner}
         locale={localeInner}
+        onCellMouseEnter={handleActiveDateChange}
+        onCellClick={setSelectedDate}
         renderCell={renderCell || renderDefaultMonthCell}
         onMouseLeave={handleMouseLeave}
       />

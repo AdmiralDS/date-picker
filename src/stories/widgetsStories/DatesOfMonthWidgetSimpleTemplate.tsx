@@ -12,7 +12,7 @@ import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/
 import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
 import { DefaultDateCell } from '#src/components/DefaultCell';
-import { RenderFunctionProps } from '#src/components/calendarInterfaces.ts';
+import type { RenderFunctionProps } from '#src/components/calendarInterfaces.ts';
 
 const Wrapper = styled.div`
   display: flex;
@@ -85,7 +85,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
     return dateCurrent && dateCurrent.isAfter(dateInner, 'month');
   };
 
-  const renderDefaultDateCell = ({ date, selected, active }: RenderFunctionProps) => {
+  const renderDefaultDateCell = ({ date, selected, active, onCellMouseEnter, onCellClick }: RenderFunctionProps) => {
     const cellContent = date.date();
     const isCurrent = date.isSame(dayjs().locale(locale), 'date');
     const isHoliday = dateIsHoliday(date);
@@ -101,8 +101,8 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
         isCurrent={isCurrent}
         isActive={isActive}
         isHoliday={isHoliday}
-        onMouseEnter={() => handleActiveDateChange(date)}
-        onClick={() => setSelectedDate(date)}
+        onMouseEnter={() => onCellMouseEnter?.(date)}
+        onClick={() => onCellClick?.(date)}
         {...getDateCellDataAttributes(
           date.toString(),
           isHoliday,
@@ -124,6 +124,8 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
         active={activeDateInner}
         locale={localeInner}
         onMouseLeave={handleMouseLeave}
+        onCellMouseEnter={handleActiveDateChange}
+        onCellClick={setSelectedDate}
         dayNamesProps={{ dayNameCellState: getDayNameCellState }}
         renderCell={renderDefaultDateCell}
       />
