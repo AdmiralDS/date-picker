@@ -66,8 +66,6 @@ export const MonthRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  onCellMouseEnter,
-  onCellClick,
   locale = 'ru',
   renderCell,
   ...props
@@ -248,8 +246,8 @@ export const MonthRangeCalendar = ({
       activeRangeEnd={dateRangeActiveEndInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
-      onCellMouseEnter={onCellMouseEnter || handleMouseEnter}
-      onCellClick={onCellClick || handleDateClick}
+      onCellMouseEnter={handleMouseEnter}
+      onCellClick={handleDateClick}
       renderCell={renderCell || renderDefaultMonthRangeCell}
     />
   );

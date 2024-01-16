@@ -65,8 +65,6 @@ export const YearRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  onCellMouseEnter,
-  onCellClick,
   locale = 'ru',
   renderCell,
   ...props
@@ -247,8 +245,8 @@ export const YearRangeCalendar = ({
       activeRangeEnd={dateRangeActiveEndInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
-      onCellMouseEnter={onCellMouseEnter || handleMouseEnter}
-      onCellClick={onCellClick || handleDateClick}
+      onCellMouseEnter={handleMouseEnter}
+      onCellClick={handleDateClick}
       renderCell={renderCell || renderDefaultYearRangeCell}
     />
   );

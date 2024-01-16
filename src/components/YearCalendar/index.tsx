@@ -18,8 +18,6 @@ export const YearCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  onCellMouseEnter,
-  onCellClick,
   renderCell,
   locale = 'ru',
   ...props
@@ -100,8 +98,8 @@ export const YearCalendar = ({
       active={activeDateInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
-      onCellMouseEnter={onCellMouseEnter || handleMouseEnter}
-      onCellClick={onCellClick || handleDateClick}
+      onCellMouseEnter={handleMouseEnter}
+      onCellClick={handleDateClick}
       renderCell={renderCell || renderDefaultYearCell}
     />
   );

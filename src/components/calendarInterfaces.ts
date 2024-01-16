@@ -16,8 +16,6 @@ export type RenderFunctionType = (props: RenderFunctionProps) => ReactNode;
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   renderCell?: RenderFunctionType;
-  onCellMouseEnter?: (date: Dayjs, disabled?: boolean) => void;
-  onCellClick?: (date: Dayjs, disabled?: boolean) => void;
   /** Дата, которая не может быть выбрана */
   disabledDate?: (currentDate: Dayjs) => boolean;
 

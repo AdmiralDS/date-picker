@@ -66,8 +66,6 @@ export const DateRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  onCellMouseEnter,
-  onCellClick,
   renderCell,
   locale = 'ru',
   ...props
@@ -279,8 +277,8 @@ export const DateRangeCalendar = ({
       activeRangeEnd={dateRangeActiveEndInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
-      onCellMouseEnter={onCellMouseEnter || handleMouseEnter}
-      onCellClick={onCellClick || handleDateClick}
+      onCellMouseEnter={handleMouseEnter}
+      onCellClick={handleDateClick}
       renderCell={renderCell || renderDefaultRangeDateCell}
       dayNamesProps={{ dayNameCellState: getDayNameCellState }}
     />

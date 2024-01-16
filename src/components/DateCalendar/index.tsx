@@ -37,8 +37,6 @@ export const DateCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  onCellMouseEnter,
-  onCellClick,
   renderCell,
   locale = 'ru',
   ...props
@@ -150,8 +148,8 @@ export const DateCalendar = ({
       active={activeDateInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
-      onCellMouseEnter={onCellMouseEnter || handleMouseEnter}
-      onCellClick={onCellClick || handleDateClick}
+      onCellMouseEnter={handleMouseEnter}
+      onCellClick={handleDateClick}
       dayNamesProps={{ dayNameCellState: getDayNameCellState }}
     />
   );
