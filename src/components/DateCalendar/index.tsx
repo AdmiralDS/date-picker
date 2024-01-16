@@ -37,6 +37,8 @@ export const DateCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
+  onCellMouseEnter,
+  onCellClick,
   renderCell,
   locale = 'ru',
   ...props
@@ -54,8 +56,8 @@ export const DateCalendar = ({
     onActiveDateValueChange?.(date);
   };
 
-  const handleMouseEnter = (date: Dayjs, hidden: boolean, disabled: boolean) => {
-    if (!hidden && !disabled) {
+  const handleMouseEnter = (date: Dayjs, disabled?: boolean) => {
+    if (!disabled) {
       handleActiveDateChange(date);
     }
   };
@@ -75,8 +77,8 @@ export const DateCalendar = ({
     onSelectedDateValueChange?.(date);
   };
 
-  const handleDateClick = (date: Dayjs, hidden: boolean, disabled: boolean) => {
-    if (!hidden && !disabled) {
+  const handleDateClick = (date: Dayjs, disabled?: boolean) => {
+    if (!disabled) {
       handleSelectedDateChange(date);
     }
   };
@@ -107,7 +109,7 @@ export const DateCalendar = ({
     return { cellMixin };
   };
 
-  const renderDefaultDateCell = ({ date, selected, active }: RenderFunctionProps) => {
+  const renderDefaultDateCell = ({ date, selected, active, onCellMouseEnter, onCellClick }: RenderFunctionProps) => {
     const selectedDate = getSelectedDate(selected);
     const cellContent = date.date();
     const hidden = dateIsHidden(date);
@@ -126,8 +128,8 @@ export const DateCalendar = ({
         isCurrent={isCurrent}
         isActive={isActive}
         isHoliday={isHoliday}
-        onMouseEnter={() => handleMouseEnter(date, !!hidden, disabled)}
-        onClick={() => handleDateClick(date, !!hidden, disabled)}
+        onMouseEnter={() => onCellMouseEnter?.(date, disabled || !!hidden)}
+        onClick={() => onCellClick?.(date, disabled || !!hidden)}
         {...getDateCellDataAttributes(
           date.toString(),
           isHoliday,
@@ -148,6 +150,8 @@ export const DateCalendar = ({
       active={activeDateInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
+      onCellMouseEnter={onCellMouseEnter || handleMouseEnter}
+      onCellClick={onCellClick || handleDateClick}
       dayNamesProps={{ dayNameCellState: getDayNameCellState }}
     />
   );

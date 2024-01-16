@@ -13,13 +13,24 @@ const DatesWrapper = styled.div`
 `;
 const datesArray = Array.from(Array(DATES_ON_SCREEN).keys());
 
-export const Dates = ({ date, selected, active, activeRangeEnd, renderCell, ...props }: DatesProps) => {
+export const Dates = ({
+  date,
+  selected,
+  active,
+  activeRangeEnd,
+  onCellMouseEnter,
+  onCellClick,
+  renderCell,
+  ...props
+}: DatesProps) => {
   const firstDate = setNoon(date.startOf('month').startOf('week'));
   console.log('render Dates');
 
   return (
     <DatesWrapper {...props} data-container-type="datesWrapper">
-      {datesArray.map((v) => renderCell({ date: firstDate.add(v, 'day'), selected, active, activeRangeEnd }))}
+      {datesArray.map((v) =>
+        renderCell({ date: firstDate.add(v, 'day'), selected, active, activeRangeEnd, onCellMouseEnter, onCellClick }),
+      )}
     </DatesWrapper>
   );
 };

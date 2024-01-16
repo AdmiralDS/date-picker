@@ -17,12 +17,30 @@ const MonthsWrapper = styled.div`
 
 const monthsArray = Array.from(Array(MONTHS_ROWS * MONTHS_COLUMNS).keys());
 
-export const Months = ({ date, selected, active, activeRangeEnd, renderCell, ...props }: MonthsProps) => {
+export const Months = ({
+  date,
+  selected,
+  active,
+  activeRangeEnd,
+  onCellMouseEnter,
+  onCellClick,
+  renderCell,
+  ...props
+}: MonthsProps) => {
   const firstMonth = setNoon(dayjs(`${date.year()}-01-01T12:00:00`));
 
   return (
     <MonthsWrapper {...props}>
-      {monthsArray.map((v) => renderCell({ date: firstMonth.add(v, 'month'), selected, active, activeRangeEnd }))}
+      {monthsArray.map((v) =>
+        renderCell({
+          date: firstMonth.add(v, 'month'),
+          selected,
+          active,
+          activeRangeEnd,
+          onCellMouseEnter,
+          onCellClick,
+        }),
+      )}
     </MonthsWrapper>
   );
 };

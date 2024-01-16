@@ -65,6 +65,8 @@ export const YearRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
+  onCellMouseEnter,
+  onCellClick,
   locale = 'ru',
   renderCell,
   ...props
@@ -82,7 +84,7 @@ export const YearRangeCalendar = ({
     onActiveDateValueChange?.(date);
   };
 
-  const handleMouseEnter = (date: Dayjs, disabled: boolean) => {
+  const handleMouseEnter = (date: Dayjs, disabled?: boolean) => {
     if (!disabled) {
       handleActiveDateChange(date);
     }
@@ -138,7 +140,7 @@ export const YearRangeCalendar = ({
   };
   //</editor-fold>
 
-  const handleDateClick = (date: Dayjs, disabled: boolean) => {
+  const handleDateClick = (date: Dayjs, disabled?: boolean) => {
     if (!disabled) {
       const newSelectedDateRangeValue: [Dayjs | undefined, Dayjs | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {
@@ -183,6 +185,8 @@ export const YearRangeCalendar = ({
     selected: selectedRange,
     active,
     activeRangeEnd,
+    onCellMouseEnter,
+    onCellClick,
   }: RenderFunctionProps) => {
     const selectedDateRange = getSelectedDateRange(selectedRange);
     const cellContent = date.year();
@@ -215,10 +219,10 @@ export const YearRangeCalendar = ({
         isRangeSelectingEnd={isRangeSelectingEnd}
         isStartOfRow={isStartOfRow}
         isEndOfRow={isEndOfRow}
-        onMouseEnter={() => handleMouseEnter(date, disabled)}
-        onClick={() => handleDateClick(date, disabled)}
+        onMouseEnter={() => onCellMouseEnter?.(date, disabled)}
+        onClick={() => onCellClick?.(date, disabled)}
         {...getYearCellDataAttributes(
-          date.toISOString(),
+          date.toString(),
           isCurrent,
           isActive,
           isInRange,
@@ -243,6 +247,8 @@ export const YearRangeCalendar = ({
       activeRangeEnd={dateRangeActiveEndInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
+      onCellMouseEnter={onCellMouseEnter || handleMouseEnter}
+      onCellClick={onCellClick || handleDateClick}
       renderCell={renderCell || renderDefaultYearRangeCell}
     />
   );

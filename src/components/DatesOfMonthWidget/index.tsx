@@ -21,6 +21,8 @@ export const DatesOfMonthWidget = ({
   selected,
   active,
   activeRangeEnd,
+  onCellMouseEnter,
+  onCellClick,
   locale = 'ru',
   dayNamesProps,
   renderCell,
@@ -37,6 +39,8 @@ export const DatesOfMonthWidget = ({
         selected={selected}
         active={active}
         activeRangeEnd={activeRangeEnd}
+        onCellMouseEnter={onCellMouseEnter}
+        onCellClick={onCellClick}
         renderCell={renderCell}
         data-container-type="datesWrapper"
       />

@@ -18,6 +18,8 @@ export const MonthCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
+  onCellMouseEnter,
+  onCellClick,
   renderCell,
   locale = 'ru',
   ...props
@@ -35,7 +37,7 @@ export const MonthCalendar = ({
     onActiveDateValueChange?.(date);
   };
 
-  const handleMouseEnter = (date: Dayjs, disabled: boolean) => {
+  const handleMouseEnter = (date: Dayjs, disabled?: boolean) => {
     if (!disabled) {
       handleActiveDateChange(date);
     }
@@ -55,7 +57,7 @@ export const MonthCalendar = ({
     onSelectedDateValueChange?.(date);
   };
 
-  const handleDateClick = (date: Dayjs, disabled: boolean) => {
+  const handleDateClick = (date: Dayjs, disabled?: boolean) => {
     if (!disabled) {
       handleSelectedDateChange(date);
     }
@@ -70,7 +72,7 @@ export const MonthCalendar = ({
     };
   };
 
-  const renderDefaultMonthCell = ({ date, selected, active }: RenderFunctionProps) => {
+  const renderDefaultMonthCell = ({ date, selected, active, onCellMouseEnter, onCellClick }: RenderFunctionProps) => {
     const selectedDate = getSelectedDate(selected);
     const disabled = monthIsDisabled(date, disabledDate);
     const isCurrent = date.isSame(getCurrentDate(locale), 'month');
@@ -83,8 +85,8 @@ export const MonthCalendar = ({
         selected={date.isSame(selectedDate, 'month')}
         isCurrent={isCurrent}
         isActive={isActive}
-        onMouseEnter={() => handleMouseEnter(date, disabled)}
-        onClick={() => handleDateClick(date, disabled)}
+        onMouseEnter={() => onCellMouseEnter?.(date, disabled)}
+        onClick={() => onCellClick?.(date, disabled)}
         {...getMonthCellDataAttributes(date.toString(), isCurrent, isActive)}
       />
     );
@@ -98,6 +100,8 @@ export const MonthCalendar = ({
       active={activeDateInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
+      onCellMouseEnter={onCellMouseEnter || handleMouseEnter}
+      onCellClick={onCellClick || handleDateClick}
       renderCell={renderCell || renderDefaultMonthCell}
     />
   );

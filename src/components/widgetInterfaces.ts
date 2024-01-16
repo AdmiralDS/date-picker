@@ -9,6 +9,8 @@ export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined];
   active?: Dayjs;
   activeRangeEnd?: Dayjs;
+  onCellMouseEnter?: (date: Dayjs, disabled?: boolean) => void;
+  onCellClick?: (date: Dayjs, disabled?: boolean) => void;
   renderCell: RenderFunctionType;
   locale?: string;
 }
@@ -18,6 +20,8 @@ export interface BaseInnerWidgetProps extends HTMLAttributes<HTMLDivElement> {
   selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined];
   active?: Dayjs;
   activeRangeEnd?: Dayjs;
+  onCellMouseEnter?: (date: Dayjs, disabled?: boolean) => void;
+  onCellClick?: (date: Dayjs, disabled?: boolean) => void;
   renderCell: RenderFunctionType;
 }
 

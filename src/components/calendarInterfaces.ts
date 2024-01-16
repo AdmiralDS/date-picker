@@ -8,12 +8,16 @@ export interface RenderFunctionProps {
   selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined];
   active?: Dayjs;
   activeRangeEnd?: Dayjs;
+  onCellMouseEnter?: (date: Dayjs, disabled?: boolean) => void;
+  onCellClick?: (date: Dayjs, disabled?: boolean) => void;
 }
 
 export type RenderFunctionType = (props: RenderFunctionProps) => ReactNode;
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   renderCell?: RenderFunctionType;
+  onCellMouseEnter?: (date: Dayjs, disabled?: boolean) => void;
+  onCellClick?: (date: Dayjs, disabled?: boolean) => void;
   /** Дата, которая не может быть выбрана */
   disabledDate?: (currentDate: Dayjs) => boolean;
 

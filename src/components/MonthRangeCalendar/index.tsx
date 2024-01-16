@@ -66,6 +66,8 @@ export const MonthRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
+  onCellMouseEnter,
+  onCellClick,
   locale = 'ru',
   renderCell,
   ...props
@@ -83,7 +85,7 @@ export const MonthRangeCalendar = ({
     onActiveDateValueChange?.(date);
   };
 
-  const handleMouseEnter = (date: Dayjs, disabled: boolean) => {
+  const handleMouseEnter = (date: Dayjs, disabled?: boolean) => {
     if (!disabled) {
       handleActiveDateChange(date);
     }
@@ -139,7 +141,7 @@ export const MonthRangeCalendar = ({
   };
   //</editor-fold>
 
-  const handleDateClick = (date: Dayjs, disabled: boolean) => {
+  const handleDateClick = (date: Dayjs, disabled?: boolean) => {
     if (!disabled) {
       const newSelectedDateRangeValue: [Dayjs | undefined, Dayjs | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {
@@ -184,6 +186,8 @@ export const MonthRangeCalendar = ({
     selected: selectedRange,
     active,
     activeRangeEnd,
+    onCellMouseEnter,
+    onCellClick,
   }: RenderFunctionProps) => {
     const selectedDateRange = getSelectedDateRange(selectedRange);
     const cellContent = capitalizeFirstLetter(date.locale(locale).format('MMMM'));
@@ -216,8 +220,8 @@ export const MonthRangeCalendar = ({
         isRangeSelectingEnd={isRangeSelectingEnd}
         isStartOfRow={isStartOfRow}
         isEndOfRow={isEndOfRow}
-        onMouseEnter={() => handleMouseEnter(date, disabled)}
-        onClick={() => handleDateClick(date, disabled)}
+        onMouseEnter={() => onCellMouseEnter?.(date, disabled)}
+        onClick={() => onCellClick?.(date, disabled)}
         {...getMonthCellDataAttributes(
           date.toString(),
           isCurrent,
@@ -244,6 +248,8 @@ export const MonthRangeCalendar = ({
       activeRangeEnd={dateRangeActiveEndInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
+      onCellMouseEnter={onCellMouseEnter || handleMouseEnter}
+      onCellClick={onCellClick || handleDateClick}
       renderCell={renderCell || renderDefaultMonthRangeCell}
     />
   );

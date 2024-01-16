@@ -66,6 +66,8 @@ export const DateRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
+  onCellMouseEnter,
+  onCellClick,
   renderCell,
   locale = 'ru',
   ...props
@@ -83,8 +85,8 @@ export const DateRangeCalendar = ({
     onActiveDateValueChange?.(date);
   };
 
-  const handleMouseEnter = (date: Dayjs, hidden: boolean, disabled: boolean) => {
-    if (!hidden && !disabled) {
+  const handleMouseEnter = (date: Dayjs, disabled?: boolean) => {
+    if (!disabled) {
       handleActiveDateChange(date);
     }
   };
@@ -139,8 +141,8 @@ export const DateRangeCalendar = ({
   };
   //</editor-fold>
 
-  const handleDateClick = (date: Dayjs, hidden: boolean, disabled: boolean) => {
-    if (!hidden && !disabled) {
+  const handleDateClick = (date: Dayjs, disabled?: boolean) => {
+    if (!disabled) {
       const newSelectedDateRangeValue: [Dayjs | undefined, Dayjs | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {
         if (dateRangeFirstInner && !dateRangeSecondInner) {
@@ -209,6 +211,8 @@ export const DateRangeCalendar = ({
     selected: selectedRange,
     active,
     activeRangeEnd,
+    onCellMouseEnter,
+    onCellClick,
   }: RenderFunctionProps) => {
     const selectedDateRange = getSelectedDateRange(selectedRange);
     const cellContent = date.date();
@@ -245,8 +249,8 @@ export const DateRangeCalendar = ({
         isRangeSelectingEnd={isRangeSelectingEnd}
         isStartOfRow={isStartOfRow}
         isEndOfRow={isEndOfRow}
-        onMouseEnter={() => handleMouseEnter(date, !!hidden, disabled)}
-        onClick={() => handleDateClick(date, !!hidden, disabled)}
+        onMouseEnter={() => onCellMouseEnter?.(date, disabled || !!hidden)}
+        onClick={() => onCellClick?.(date, disabled || !!hidden)}
         {...getDateCellDataAttributes(
           date.toString(),
           false,
@@ -275,6 +279,8 @@ export const DateRangeCalendar = ({
       activeRangeEnd={dateRangeActiveEndInner}
       locale={locale}
       onMouseLeave={handleMouseLeave}
+      onCellMouseEnter={onCellMouseEnter || handleMouseEnter}
+      onCellClick={onCellClick || handleDateClick}
       renderCell={renderCell || renderDefaultRangeDateCell}
       dayNamesProps={{ dayNameCellState: getDayNameCellState }}
     />
