@@ -22,8 +22,9 @@ export const getDateByDayOfYear = (date: Dayjs, dayOfYear: number) => {
   return date.dayOfYear(dayOfYear);
 };
 
-export const getCurrentDate = (locale?: string) => {
-  if (locale) return setNoon(dayjs().locale(locale));
+//export const getCurrentDate = (locale?: string) => {
+export const getCurrentDate = () => {
+  //if (locale) return setNoon(dayjs().locale(locale));
   return setNoon(dayjs());
 };
 
@@ -36,7 +37,7 @@ export const dateStringToDayjs = (dateString?: string, locale?: string) => {
 };
 
 export const dayjsDateToString = (date: Dayjs) => {
-  return date.toISOString();
+  return date.toString();
 };
 
 export const setNoon = (date: Dayjs) => {

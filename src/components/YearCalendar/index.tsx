@@ -1,10 +1,10 @@
 import type { MouseEventHandler } from 'react';
-import { useState } from 'react';
-import type { Dayjs } from 'dayjs';
+import { memo, useState } from 'react';
+import dayjs, { Dayjs } from 'dayjs';
 
-import { getCurrentDate, getSelectedDate, yearIsDisabled } from '#src/components/utils';
+import { getCurrentDate } from '#src/components/utils';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
-import type { RenderFunctionProps, SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
+import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
 import { DefaultYearCell } from '#src/components/DefaultCell';
 
 export interface YearCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
@@ -18,12 +18,12 @@ export const YearCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  renderCell,
+  cell,
   locale = 'ru',
   ...props
 }: YearCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const dateInner = dateValue || getCurrentDate(locale);
+  const dateInner = dateValue || getCurrentDate();
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
@@ -36,9 +36,14 @@ export const YearCalendar = ({
   };
 
   const handleMouseEnter = (date: Dayjs, disabled?: boolean) => {
-    if (!disabled) {
+    if (!disabled && !date.isSame(activeDateInner)) {
       handleActiveDateChange(date);
     }
+  };
+  const zzz: MouseEventHandler<HTMLDivElement> = (e) => {
+    const date = dayjs((e.target as HTMLDivElement).dataset['value']);
+    const disabled = (e.target as HTMLDivElement).dataset['disabled'] === 'true';
+    handleMouseEnter(date, disabled);
   };
 
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
@@ -60,9 +65,14 @@ export const YearCalendar = ({
       handleSelectedDateChange(date);
     }
   };
+  const yyy: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    const date = dayjs((e.target as HTMLDivElement).dataset['value']);
+    const disabled = (e.target as HTMLDivElement).dataset['disabled'] === 'true';
+    handleDateClick(date, disabled);
+  };
   //</editor-fold>
 
-  const getYearCellDataAttributes = (value?: string, isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
+  /*const getYearCellDataAttributes = (value?: string, isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
     return {
       'data-value': value ? value : undefined,
       'data-is-current-year': isCurrent ? isCurrent : undefined,
@@ -70,7 +80,7 @@ export const YearCalendar = ({
     };
   };
 
-  const renderDefaultYearCell = ({ date, selected, active, onCellMouseEnter, onCellClick }: RenderFunctionProps) => {
+  const YearCell = ({ date, selected, active, onCellMouseEnter, onCellClick }: RenderFunctionProps) => {
     const selectedDate = getSelectedDate(selected);
     const disabled = yearIsDisabled(date, disabledDate);
     const isCurrent = date.isSame(getCurrentDate(locale), 'year');
@@ -89,6 +99,8 @@ export const YearCalendar = ({
       />
     );
   };
+  const MemoCell = memo(cell ? cell : YearCell);*/
+  const MemoCell = memo(cell ? cell : DefaultYearCell);
 
   return (
     <YearsOfTwentyYearsWidget
@@ -96,11 +108,14 @@ export const YearCalendar = ({
       date={dateInner}
       selected={selectedDateInner}
       active={activeDateInner}
+      disabledDate={disabledDate}
       locale={locale}
       onMouseLeave={handleMouseLeave}
-      onCellMouseEnter={handleMouseEnter}
-      onCellClick={handleDateClick}
-      renderCell={renderCell || renderDefaultYearCell}
+      onMouseOver={zzz}
+      onClick={yyy}
+      //onCellMouseEnter={handleMouseEnter}
+      //onCellClick={handleDateClick}
+      cell={MemoCell}
     />
   );
 };

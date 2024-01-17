@@ -1,5 +1,7 @@
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import type { Dayjs } from 'dayjs';
+
+import type { DefaultCellProps } from '#src/components/DefaultCell';
 
 export type CalendarViewMode = 'dates' | 'months' | 'years';
 
@@ -12,9 +14,12 @@ export interface RenderFunctionProps {
   onCellClick?: (date: Dayjs, disabled?: boolean) => void;
 }
 
+export interface DateCellProps extends DefaultCellProps {}
+
 export type RenderFunctionType = (props: RenderFunctionProps) => ReactNode;
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
+  cell?: FunctionComponent<DateCellProps>;
   renderCell?: RenderFunctionType;
   /** Дата, которая не может быть выбрана */
   disabledDate?: (currentDate: Dayjs) => boolean;
@@ -77,6 +82,12 @@ export type renderCellProps = {
   renderYearCell?: RenderFunctionType;
 };
 
+export type cellProps = {
+  dateCell?: FunctionComponent<DateCellProps>;
+  monthCell?: FunctionComponent<DateCellProps>;
+  yearCell?: FunctionComponent<DateCellProps>;
+};
+
 export interface PickerCalendarProps {
   /** Экран выбора дат, месяцев, лет */
   viewModeValue?: CalendarViewMode;
@@ -86,4 +97,5 @@ export interface PickerCalendarProps {
   onViewModeChange?: (mode: CalendarViewMode) => void;
   /** Кастомное отображение ячеек */
   renderCell?: renderCellProps;
+  cell?: cellProps;
 }

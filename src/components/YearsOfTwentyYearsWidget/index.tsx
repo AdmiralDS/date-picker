@@ -1,3 +1,4 @@
+//import { memo } from 'react';
 import styled from 'styled-components';
 import 'dayjs/locale/ru';
 
@@ -22,13 +23,15 @@ export const YearsOfTwentyYearsWidget = ({
   selected,
   active,
   activeRangeEnd,
+  disabledDate,
   onCellMouseEnter,
   onCellClick,
   locale = 'ru',
-  renderCell,
+  cell,
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
-  const localDate = date || getCurrentDate(locale);
+  const localDate = date || getCurrentDate();
+  //const cc = memo(cell);
 
   return (
     <YearsOfYearWrapper {...props} data-container-type="yearsOfYearWrapper">
@@ -37,9 +40,11 @@ export const YearsOfTwentyYearsWidget = ({
         selected={selected}
         active={active}
         activeRangeEnd={activeRangeEnd}
-        onCellMouseEnter={onCellMouseEnter}
-        onCellClick={onCellClick}
-        renderCell={renderCell}
+        disabledDate={disabledDate}
+        //onCellMouseEnter={onCellMouseEnter}
+        //onCellClick={onCellClick}
+        //cell={cc}
+        cell={cell}
         data-container-type="yearsWrapper"
       />
     </YearsOfYearWrapper>

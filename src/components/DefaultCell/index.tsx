@@ -1,6 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import type { RuleSet } from 'styled-components';
 import styled, { css } from 'styled-components';
+import type { Dayjs } from 'dayjs';
 
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 
@@ -115,6 +116,7 @@ export interface CellProps extends HTMLAttributes<HTMLDivElement> {
   selected?: boolean;
   disabled?: boolean;
   hidden?: boolean;
+  date: Dayjs;
 
   isInRange?: boolean;
   isRangeStart?: boolean;
@@ -125,9 +127,12 @@ export interface CellProps extends HTMLAttributes<HTMLDivElement> {
   isStartOfRow?: boolean;
   isEndOfRow?: boolean;
   isActive?: boolean;
+  isCurrent?: boolean;
+  isHoliday?: boolean;
 }
 
 export const DefaultCell = ({
+  date,
   width,
   height,
   cellMixin,
@@ -144,15 +149,23 @@ export const DefaultCell = ({
   isStartOfRow,
   isEndOfRow,
   isActive,
+  isCurrent,
+  isHoliday,
   ...props
 }: CellProps) => {
   return (
     <CellContainer
       $width={width}
       $height={height}
+      data-value={date.toString()}
       data-selected-cell={selected ? true : undefined}
       data-disabled-cell={disabled ? true : undefined}
       data-hidden-cell={hidden ? true : undefined}
+      data-is-current-date={isCurrent ? isCurrent : undefined}
+      data-is-active-date={isActive ? isActive : undefined}
+      data-is-holyday-date={isHoliday ? isHoliday : undefined}
+      //onMouseEnter={() => onCellMouseEnter?.(date, disabled)}
+      //onClick={() => onCellClick?.(date, disabled)}
       {...props}
     >
       <LeftHalf
@@ -192,10 +205,7 @@ export const DefaultCell = ({
   );
 };
 
-export interface DefaultCellProps extends Omit<CellProps, 'width' | 'height' | 'cellMixin'> {
-  isCurrent?: boolean;
-  isHoliday?: boolean;
-}
+export interface DefaultCellProps extends Omit<CellProps, 'width' | 'height' | 'cellMixin'> {}
 
 const getDefaultDateCellMixin = (
   selected?: boolean,
