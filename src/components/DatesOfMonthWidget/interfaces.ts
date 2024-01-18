@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from 'react';
 import type { RuleSet } from 'styled-components';
 
-import type { BaseInnerWidgetProps, BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
+import type { BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
 
 export interface CellStateProps {
   selected?: boolean;
@@ -21,7 +21,7 @@ export interface DayNameCellProps extends HTMLAttributes<HTMLDivElement> {
 export interface DatesOfMonthWidgetProps extends BaseWidgetProps {
   dayNamesProps: DayNameCellProps;
 }
-export interface DatesProps extends BaseInnerWidgetProps {}
+export interface DatesProps extends BaseWidgetProps {}
 
 export interface DaysProps {
   locale: string;

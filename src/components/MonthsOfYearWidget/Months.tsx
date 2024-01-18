@@ -3,9 +3,9 @@ import dayjs from 'dayjs';
 
 import { setNoon } from '#src/components/utils';
 import { MONTHS_COLUMNS, MONTHS_ROWS, MONTHS_WRAPPER_HEIGHT } from '#src/components/MonthsOfYearWidget/constants';
-import type { BaseInnerWidgetProps } from '#src/components/widgetInterfaces.ts';
+import type { BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
 
-interface MonthsProps extends BaseInnerWidgetProps {}
+interface MonthsProps extends BaseWidgetProps {}
 
 const MonthsWrapper = styled.div`
   height: ${MONTHS_WRAPPER_HEIGHT}px;

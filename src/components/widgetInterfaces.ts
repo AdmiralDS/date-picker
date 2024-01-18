@@ -17,18 +17,6 @@ export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   locale?: string;
 }
 
-export interface BaseInnerWidgetProps extends HTMLAttributes<HTMLDivElement> {
-  date: Dayjs;
-  selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined];
-  active?: Dayjs;
-  activeRangeEnd?: Dayjs;
-  disabledDate?: (currentDate: Dayjs) => boolean;
-  onCellMouseEnter?: (date: Dayjs, disabled?: boolean) => void;
-  onCellClick?: (date: Dayjs, disabled?: boolean) => void;
-  //renderCell: RenderFunctionType;
-  cell: FunctionComponent<DateCellProps>;
-}
-
 export interface BasePanelWidgetProps extends HTMLAttributes<HTMLDivElement> {
   viewMode?: CalendarViewMode;
   /** Дата */

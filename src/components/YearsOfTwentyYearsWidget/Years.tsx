@@ -3,10 +3,10 @@ import dayjs from 'dayjs';
 
 import { getCurrentDate, getSelectedDate, setNoon, yearIsDisabled, yearsRange } from '#src/components/utils';
 import { YEARS_ON_SCREEN, YEARS_WRAPPER_HEIGHT } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
-import type { BaseInnerWidgetProps } from '#src/components/widgetInterfaces.ts';
+import type { BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
 import { createElement } from 'react';
 
-interface YearsProps extends BaseInnerWidgetProps {}
+interface YearsProps extends BaseWidgetProps {}
 
 const YearsWrapper = styled.div`
   height: ${YEARS_WRAPPER_HEIGHT}px;
