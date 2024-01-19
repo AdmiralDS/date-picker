@@ -1,57 +1,14 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
-import {
-  dateIsInRange,
-  dateIsInRangeSelecting,
-  dateIsRangeEnd,
-  dateIsRangeSelectingEnd,
-  dateIsRangeSelectingStart,
-  dateIsRangeStart,
-  dateIsSelected,
-  getCurrentDate,
-  getSelectedDateRange,
-  yearIsDisabled,
-} from '#src/components/utils';
-import type { RangeCalendarProps, RenderFunctionProps } from '#src/components/calendarInterfaces';
+import { getCurrentDate } from '#src/components/utils';
+import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
-import { YEARS_COLUMNS } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
-import { DefaultYearRangeCell } from '#src/components/DefaultCell';
+import { MemoDefaultYearRangeCell } from '#src/components/DefaultCell';
 
 export interface YearRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
-
-const getYearCellDataAttributes = (
-  value?: string,
-  //isHoliday?: boolean,
-  //isOutsideMonth?: boolean,
-  isCurrent?: boolean,
-  isActive?: boolean,
-  isInRange?: boolean,
-  isRangeStart?: boolean,
-  isRangeEnd?: boolean,
-  isInRangeSelecting?: boolean,
-  isRangeSelectingStart?: boolean,
-  isRangeSelectingEnd?: boolean,
-  isStartOfRow?: boolean,
-  isEndOfRow?: boolean,
-) => {
-  return {
-    'data-value': value ? value : undefined,
-    //'data-is-holiday-cell': isHoliday ? isHoliday : undefined,
-    //'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
-    'data-is-current-day-cell': isCurrent ? isCurrent : undefined,
-    'data-is-active-cell': isActive ? isActive : undefined,
-    'data-is-in-range-cell': isInRange ? isInRange : undefined,
-    'data-is-range-start-cell': isRangeStart ? isRangeStart : undefined,
-    'data-is-range-end-cell': isRangeEnd ? isRangeEnd : undefined,
-    'data-is-in-range-selecting-cell': isInRangeSelecting ? isInRangeSelecting : undefined,
-    'data-is-range-selecting-start-cell': isRangeSelectingStart ? isRangeSelectingStart : undefined,
-    'data-is-range-selecting-end-cell': isRangeSelectingEnd ? isRangeSelectingEnd : undefined,
-    'data-is-start-of-week-cell': isStartOfRow ? isStartOfRow : undefined,
-    'data-is-end-of-week-cell': isEndOfRow ? isEndOfRow : undefined,
-  };
-};
 
 export const YearRangeCalendar = ({
   selectedDateRangeValue,
@@ -66,11 +23,11 @@ export const YearRangeCalendar = ({
   defaultActiveDateValue,
   onActiveDateValueChange,
   locale = 'ru',
-  renderCell,
+  cell,
   ...props
 }: YearRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const dateInner = dateValue || getCurrentDate(locale);
+  const dateInner = dateValue || getCurrentDate();
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
@@ -82,7 +39,13 @@ export const YearRangeCalendar = ({
     onActiveDateValueChange?.(date);
   };
 
-  const handleMouseEnter = (date: Dayjs, disabled?: boolean) => {
+  const handleMouseOver: MouseEventHandler<HTMLDivElement> = (e) => {
+    const targetDataAttributes = (e.target as HTMLDivElement).dataset;
+    if (targetDataAttributes['cellType'] !== 'yearCell') {
+      return;
+    }
+    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const disabled = targetDataAttributes['disabled'] === 'true';
     if (!disabled) {
       handleActiveDateChange(date);
     }
@@ -138,7 +101,13 @@ export const YearRangeCalendar = ({
   };
   //</editor-fold>
 
-  const handleDateClick = (date: Dayjs, disabled?: boolean) => {
+  const handleDateClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    const targetDataAttributes = (e.target as HTMLDivElement).dataset;
+    if (targetDataAttributes['cellType'] !== 'yearCell') {
+      return;
+    }
+    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const disabled = targetDataAttributes['disabled'] === 'true';
     if (!disabled) {
       const newSelectedDateRangeValue: [Dayjs | undefined, Dayjs | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {
@@ -178,64 +147,6 @@ export const YearRangeCalendar = ({
     }
   };
 
-  const renderDefaultYearRangeCell = ({
-    date,
-    selected: selectedRange,
-    active,
-    activeRangeEnd,
-    onCellMouseEnter,
-    onCellClick,
-  }: RenderFunctionProps) => {
-    const selectedDateRange = getSelectedDateRange(selectedRange);
-    const cellContent = date.year();
-    const selected = dateIsSelected('year', date, selectedDateRange);
-    const disabled = yearIsDisabled(date, disabledDate);
-    //const hidden = dateIsHidden(dateCurrent);
-    const isCurrent = date.isSame(getCurrentDate(locale), 'year');
-    const isActive = activeDateInner && date.isSame(activeDateInner, 'year');
-    const isInRange = dateIsInRange('year', date, selectedDateRange);
-    const isRangeStart = dateIsRangeStart('year', date, selectedDateRange);
-    const isRangeEnd = dateIsRangeEnd('year', date, selectedDateRange);
-    const isInRangeSelecting = dateIsInRangeSelecting('year', date, active, activeRangeEnd);
-    const isRangeSelectingStart = dateIsRangeSelectingStart('year', date, active, activeRangeEnd, disabled);
-    const isRangeSelectingEnd = dateIsRangeSelectingEnd('year', date, active, activeRangeEnd, disabled);
-    const isStartOfRow = (date.year() - 1) % YEARS_COLUMNS === 0;
-    const isEndOfRow = (date.year() - 1) % YEARS_COLUMNS === 3;
-    return (
-      <DefaultYearRangeCell
-        key={date.toString()}
-        cellContent={cellContent}
-        selected={selected}
-        disabled={disabled}
-        isCurrent={isCurrent}
-        isActive={isActive}
-        isInRange={isInRange}
-        isRangeStart={isRangeStart}
-        isRangeEnd={isRangeEnd}
-        isInRangeSelecting={isInRangeSelecting}
-        isRangeSelectingStart={isRangeSelectingStart}
-        isRangeSelectingEnd={isRangeSelectingEnd}
-        isStartOfRow={isStartOfRow}
-        isEndOfRow={isEndOfRow}
-        onMouseEnter={() => onCellMouseEnter?.(date, disabled)}
-        onClick={() => onCellClick?.(date, disabled)}
-        {...getYearCellDataAttributes(
-          date.toString(),
-          isCurrent,
-          isActive,
-          isInRange,
-          isRangeStart,
-          isRangeEnd,
-          isInRangeSelecting,
-          isRangeSelectingStart,
-          isRangeSelectingEnd,
-          isStartOfRow,
-          isEndOfRow,
-        )}
-      />
-    );
-  };
-
   return (
     <YearsOfTwentyYearsWidget
       {...props}
@@ -243,11 +154,13 @@ export const YearRangeCalendar = ({
       selected={[dateRangeFirstInner, dateRangeSecondInner]}
       active={activeDateInner}
       activeRangeEnd={dateRangeActiveEndInner}
+      disabledDate={disabledDate}
       locale={locale}
       onMouseLeave={handleMouseLeave}
-      onCellMouseEnter={handleMouseEnter}
-      onCellClick={handleDateClick}
-      renderCell={renderCell || renderDefaultYearRangeCell}
+      onMouseOver={handleMouseOver}
+      onClick={handleDateClick}
+      cell={cell || MemoDefaultYearRangeCell}
+      range={true}
     />
   );
 };

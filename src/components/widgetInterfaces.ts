@@ -10,11 +10,9 @@ export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   active?: Dayjs;
   activeRangeEnd?: Dayjs;
   disabledDate?: (currentDate: Dayjs) => boolean;
-  onCellMouseEnter?: (date: Dayjs, disabled?: boolean) => void;
-  onCellClick?: (date: Dayjs, disabled?: boolean) => void;
-  //renderCell: RenderFunctionType;
   cell: FunctionComponent<DateCellProps>;
   locale?: string;
+  range?: boolean;
 }
 
 export interface BasePanelWidgetProps extends HTMLAttributes<HTMLDivElement> {

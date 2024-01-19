@@ -1,7 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react';
+import { memo } from 'react';
 import type { RuleSet } from 'styled-components';
 import styled, { css } from 'styled-components';
-import type { Dayjs } from 'dayjs';
 
 import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
 
@@ -116,7 +116,7 @@ export interface CellProps extends HTMLAttributes<HTMLDivElement> {
   selected?: boolean;
   disabled?: boolean;
   hidden?: boolean;
-  date: Dayjs;
+  dateValue: string;
 
   isInRange?: boolean;
   isRangeStart?: boolean;
@@ -132,7 +132,7 @@ export interface CellProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const DefaultCell = ({
-  date,
+  dateValue,
   width,
   height,
   cellMixin,
@@ -157,7 +157,7 @@ export const DefaultCell = ({
     <CellContainer
       $width={width}
       $height={height}
-      data-value={date.toString()}
+      data-value={dateValue}
       data-selected-cell={selected ? true : undefined}
       data-disabled-cell={disabled ? true : undefined}
       data-hidden-cell={hidden ? true : undefined}
@@ -279,6 +279,8 @@ export const DefaultDateCell = ({ isCurrent, isHoliday, ...props }: DefaultCellP
     />
   );
 };
+export const MemoDefaultDateCell = memo(DefaultDateCell);
+
 export const DefaultDateRangeCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const dateCellMixin = getDefaultDateRangeCellMixin(
     props.selected,
@@ -301,6 +303,7 @@ export const DefaultDateRangeCell = ({ isCurrent, isHoliday, ...props }: Default
     />
   );
 };
+export const MemoDefaultDateRangeCell = memo(DefaultDateRangeCell);
 
 const getDefaultMonthCellMixin = (
   selected?: boolean,
@@ -355,6 +358,7 @@ export const DefaultMonthCell = ({ isCurrent, isHoliday, ...props }: DefaultCell
     />
   );
 };
+export const MemoDefaultMonthCell = memo(DefaultMonthCell);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DefaultMonthRangeCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
@@ -378,6 +382,7 @@ export const DefaultMonthRangeCell = ({ isCurrent, isHoliday, ...props }: Defaul
     />
   );
 };
+export const MemoDefaultMonthRangeCell = memo(DefaultMonthRangeCell);
 
 const getDefaultYearCellMixin = (
   selected?: boolean,
@@ -413,6 +418,13 @@ const getDefaultYearRangeCellMixin = (
   return baseYearCellMixin;
 };
 
+const getYearCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
+  return {
+    'data-is-current-year': isCurrent ? isCurrent : undefined,
+    'data-is-active-year': isActive ? isActive : undefined,
+  };
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DefaultYearCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const yearCellMixin = getDefaultYearCellMixin(
@@ -429,10 +441,39 @@ export const DefaultYearCell = ({ isCurrent, isHoliday, ...props }: DefaultCellP
       height={YEAR_CELL_HEIGHT}
       cellMixin={yearCellMixin}
       data-cell-type="yearCell"
+      {...getYearCellDataAttributes(!!isCurrent, props.isActive)}
       {...props}
     />
   );
 };
+export const MemoDefaultYearCell = memo(DefaultYearCell);
+
+const getYearRangeCellDataAttributes = (
+  isCurrent?: boolean,
+  isActive?: boolean,
+  isInRange?: boolean,
+  isRangeStart?: boolean,
+  isRangeEnd?: boolean,
+  isInRangeSelecting?: boolean,
+  isRangeSelectingStart?: boolean,
+  isRangeSelectingEnd?: boolean,
+  isStartOfRow?: boolean,
+  isEndOfRow?: boolean,
+) => {
+  return {
+    'data-is-current-day-cell': isCurrent ? isCurrent : undefined,
+    'data-is-active-cell': isActive ? isActive : undefined,
+    'data-is-in-range-cell': isInRange ? isInRange : undefined,
+    'data-is-range-start-cell': isRangeStart ? isRangeStart : undefined,
+    'data-is-range-end-cell': isRangeEnd ? isRangeEnd : undefined,
+    'data-is-in-range-selecting-cell': isInRangeSelecting ? isInRangeSelecting : undefined,
+    'data-is-range-selecting-start-cell': isRangeSelectingStart ? isRangeSelectingStart : undefined,
+    'data-is-range-selecting-end-cell': isRangeSelectingEnd ? isRangeSelectingEnd : undefined,
+    'data-is-start-of-week-cell': isStartOfRow ? isStartOfRow : undefined,
+    'data-is-end-of-week-cell': isEndOfRow ? isEndOfRow : undefined,
+  };
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DefaultYearRangeCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const yearCellMixin = getDefaultYearRangeCellMixin(
@@ -451,7 +492,20 @@ export const DefaultYearRangeCell = ({ isCurrent, isHoliday, ...props }: Default
       height={YEAR_CELL_HEIGHT}
       cellMixin={yearCellMixin}
       data-cell-type="yearCell"
+      {...getYearRangeCellDataAttributes(
+        !!isCurrent,
+        props.isActive,
+        props.isInRange,
+        props.isRangeStart,
+        props.isRangeEnd,
+        props.isInRangeSelecting,
+        props.isRangeSelectingStart,
+        props.isRangeSelectingEnd,
+        props.isStartOfRow,
+        props.isEndOfRow,
+      )}
       {...props}
     />
   );
 };
+export const MemoDefaultYearRangeCell = memo(DefaultYearRangeCell);

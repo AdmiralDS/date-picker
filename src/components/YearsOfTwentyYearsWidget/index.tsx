@@ -24,14 +24,12 @@ export const YearsOfTwentyYearsWidget = ({
   active,
   activeRangeEnd,
   disabledDate,
-  onCellMouseEnter,
-  onCellClick,
   locale = 'ru',
   cell,
+  range = false,
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
   const localDate = date || getCurrentDate();
-  //const cc = memo(cell);
 
   return (
     <YearsOfYearWrapper {...props} data-container-type="yearsOfYearWrapper">
@@ -41,11 +39,10 @@ export const YearsOfTwentyYearsWidget = ({
         active={active}
         activeRangeEnd={activeRangeEnd}
         disabledDate={disabledDate}
-        //onCellMouseEnter={onCellMouseEnter}
-        //onCellClick={onCellClick}
-        //cell={cc}
         cell={cell}
         data-container-type="yearsWrapper"
+        locale={locale}
+        range={range}
       />
     </YearsOfYearWrapper>
   );

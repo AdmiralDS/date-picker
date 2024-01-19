@@ -1,11 +1,12 @@
 import type { MouseEventHandler } from 'react';
-import { memo, useState } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import { useState } from 'react';
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 import { getCurrentDate } from '#src/components/utils';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
-import { DefaultYearCell } from '#src/components/DefaultCell';
+import { MemoDefaultYearCell } from '#src/components/DefaultCell';
 
 export interface YearCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
@@ -35,15 +36,16 @@ export const YearCalendar = ({
     onActiveDateValueChange?.(date);
   };
 
-  const handleMouseEnter = (date: Dayjs, disabled?: boolean) => {
+  const handleMouseOver: MouseEventHandler<HTMLDivElement> = (e) => {
+    const targetDataAttributes = (e.target as HTMLDivElement).dataset;
+    if (targetDataAttributes['cellType'] !== 'yearCell') {
+      return;
+    }
+    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const disabled = targetDataAttributes['disabled'] === 'true';
     if (!disabled && !date.isSame(activeDateInner)) {
       handleActiveDateChange(date);
     }
-  };
-  const zzz: MouseEventHandler<HTMLDivElement> = (e) => {
-    const date = dayjs((e.target as HTMLDivElement).dataset['value']);
-    const disabled = (e.target as HTMLDivElement).dataset['disabled'] === 'true';
-    handleMouseEnter(date, disabled);
   };
 
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
@@ -60,47 +62,18 @@ export const YearCalendar = ({
     onSelectedDateValueChange?.(date);
   };
 
-  const handleDateClick = (date: Dayjs, disabled?: boolean) => {
+  const handleDateClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    const targetDataAttributes = (e.target as HTMLDivElement).dataset;
+    if (targetDataAttributes['cellType'] !== 'yearCell') {
+      return;
+    }
+    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const disabled = targetDataAttributes['disabled'] === 'true';
     if (!disabled) {
       handleSelectedDateChange(date);
     }
   };
-  const yyy: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    const date = dayjs((e.target as HTMLDivElement).dataset['value']);
-    const disabled = (e.target as HTMLDivElement).dataset['disabled'] === 'true';
-    handleDateClick(date, disabled);
-  };
   //</editor-fold>
-
-  /*const getYearCellDataAttributes = (value?: string, isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
-    return {
-      'data-value': value ? value : undefined,
-      'data-is-current-year': isCurrent ? isCurrent : undefined,
-      'data-is-active-year': isActive ? isActive : undefined,
-    };
-  };
-
-  const YearCell = ({ date, selected, active, onCellMouseEnter, onCellClick }: RenderFunctionProps) => {
-    const selectedDate = getSelectedDate(selected);
-    const disabled = yearIsDisabled(date, disabledDate);
-    const isCurrent = date.isSame(getCurrentDate(locale), 'year');
-    const isActive = date.isSame(active, 'year');
-    return (
-      <DefaultYearCell
-        key={date.toString()}
-        cellContent={date.year()}
-        disabled={disabled}
-        selected={date.isSame(selectedDate, 'year')}
-        isCurrent={isCurrent}
-        isActive={isActive}
-        onMouseEnter={() => onCellMouseEnter?.(date, disabled)}
-        onClick={() => onCellClick?.(date, disabled)}
-        {...getYearCellDataAttributes(date.toString(), isCurrent, isActive)}
-      />
-    );
-  };
-  const MemoCell = memo(cell ? cell : YearCell);*/
-  const MemoCell = memo(cell ? cell : DefaultYearCell);
 
   return (
     <YearsOfTwentyYearsWidget
@@ -111,11 +84,9 @@ export const YearCalendar = ({
       disabledDate={disabledDate}
       locale={locale}
       onMouseLeave={handleMouseLeave}
-      onMouseOver={zzz}
-      onClick={yyy}
-      //onCellMouseEnter={handleMouseEnter}
-      //onCellClick={handleDateClick}
-      cell={MemoCell}
+      onMouseOver={handleMouseOver}
+      onClick={handleDateClick}
+      cell={cell || MemoDefaultYearCell}
     />
   );
 };

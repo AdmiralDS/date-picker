@@ -23,9 +23,9 @@ export const getDateByDayOfYear = (date: Dayjs, dayOfYear: number) => {
 };
 
 //export const getCurrentDate = (locale?: string) => {
-export const getCurrentDate = () => {
-  //if (locale) return setNoon(dayjs().locale(locale));
-  return setNoon(dayjs());
+export const getCurrentDate = (locale?: string) => {
+  if (locale) return setNoon(dayjs().locale(locale));
+  return setNoon(dayjs()).locale('ru');
 };
 
 export const dateStringToDayjs = (dateString?: string, locale?: string) => {
@@ -124,10 +124,10 @@ export const dateIsSelected = (
   selectedDateRange?: [Dayjs | undefined, Dayjs | undefined],
 ) => {
   if (!dateCurrent || !selectedDateRange) return false;
-  if (dateCurrent.isSame(selectedDateRange[0], unit)) {
-    return true;
+  if (selectedDateRange[0]) {
+    return dateCurrent.isSame(selectedDateRange[0], unit);
   }
-  return dateCurrent.isSame(selectedDateRange[1], unit);
+  return selectedDateRange[1] && dateCurrent.isSame(selectedDateRange[1], unit);
 };
 export const dateIsRangeStart = (
   unit: dayjs.OpUnitType | undefined,
