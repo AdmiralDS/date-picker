@@ -1,3 +1,4 @@
+import { createElement } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
@@ -22,7 +23,6 @@ import {
   YEARS_WRAPPER_HEIGHT,
 } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
-import { createElement } from 'react';
 
 interface YearsProps extends BaseWidgetProps {}
 

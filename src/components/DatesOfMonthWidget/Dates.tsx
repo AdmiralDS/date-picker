@@ -1,6 +1,19 @@
+import { createElement } from 'react';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 
-import { setNoon } from '#src/components/utils';
+import {
+  dateIsInRange,
+  dateIsInRangeSelecting,
+  dateIsRangeEnd,
+  dateIsRangeSelectingEnd,
+  dateIsRangeSelectingStart,
+  dateIsRangeStart,
+  dateIsSelected,
+  getSelectedDate,
+  getSelectedDateRange,
+  setNoon,
+} from '#src/components/utils';
 import { DATES_ON_SCREEN, DATES_WRAPPER_HEIGHT } from '#src/components/DatesOfMonthWidget/constants';
 import type { DatesProps } from '#src/components/DatesOfMonthWidget/interfaces';
 
@@ -14,23 +27,76 @@ const DatesWrapper = styled.div`
 const datesArray = Array.from(Array(DATES_ON_SCREEN).keys());
 
 export const Dates = ({
-  date,
+  date: dateInner,
   selected,
   active,
   activeRangeEnd,
-  onCellMouseEnter,
-  onCellClick,
-  renderCell,
+  disabledDate,
+  cell,
+  locale = 'ru',
+  range = false,
   ...props
 }: DatesProps) => {
-  const firstDate = setNoon(date.startOf('month').startOf('week'));
-  console.log('render Dates');
+  const firstDate = setNoon(dateInner.startOf('month').startOf('week'));
+  const cellModel = datesArray.map((v) => {
+    const date = firstDate.add(v, 'day');
+    const dateValue = date.toString();
+    const disabled = disabledDate?.(date);
+    const isCurrent = date.isSame(dayjs().locale(locale), 'date');
+    const isActive = active ? date.isSame(active, 'date') : false;
+    const cellContent = date.date();
+    const hidden = date.month() !== dateInner.month();
+    // TODO:
+    //const isHoliday = dateIsHoliday(date);
+    if (range) {
+      const selectedDateRange = getSelectedDateRange(selected);
+      const isInRange = dateIsInRange('date', date, selectedDateRange);
+      const isRangeStart = dateIsRangeStart('date', date, selectedDateRange);
+      const isRangeEnd = dateIsRangeEnd('date', date, selectedDateRange);
+      const isInRangeSelecting = dateIsInRangeSelecting('date', date, active, activeRangeEnd);
+      const isRangeSelectingStart = dateIsRangeSelectingStart('date', date, active, activeRangeEnd, disabled);
+      const isRangeSelectingEnd = dateIsRangeSelectingEnd('date', date, active, activeRangeEnd, disabled);
+      const isStartOfRow = date.isSame(date.startOf('week'), 'date') || date.isSame(date.startOf('month'), 'date');
+      const isEndOfRow = date.isSame(date.endOf('week'), 'date') || date.isSame(date.endOf('month'), 'date');
+      return {
+        dateValue,
+        key: dateValue,
+        cellContent,
+        disabled,
+        hidden,
+        selected: dateIsSelected('date', date, selectedDateRange),
+        isCurrent,
+        isActive,
+
+        isInRange,
+        isRangeStart,
+        isRangeEnd,
+        isInRangeSelecting,
+        isRangeSelectingStart,
+        isRangeSelectingEnd,
+        isStartOfRow,
+        isEndOfRow,
+      };
+    }
+    const selectedDate = getSelectedDate(selected);
+    return {
+      dateValue,
+      key: dateValue,
+      cellContent,
+      disabled,
+      hidden,
+      selected: selectedDate ? date.isSame(selectedDate, 'date') : false,
+      isCurrent,
+      isActive,
+    };
+  });
+  const cells = cellModel.map((model) => {
+    return createElement(cell, model);
+  });
 
   return (
     <DatesWrapper {...props} data-container-type="datesWrapper">
-      {datesArray.map((v) =>
-        renderCell({ date: firstDate.add(v, 'day'), selected, active, activeRangeEnd, onCellMouseEnter, onCellClick }),
-      )}
+      {cells}
     </DatesWrapper>
   );
 };

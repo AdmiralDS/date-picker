@@ -111,12 +111,16 @@ const Cell = styled.div<{
 export interface CellProps extends HTMLAttributes<HTMLDivElement> {
   width: number;
   height: number;
-  cellMixin: RuleSet<object>;
+
+  dateValue: string;
   cellContent?: ReactNode;
+  cellMixin: RuleSet<object>;
   selected?: boolean;
   disabled?: boolean;
   hidden?: boolean;
-  dateValue: string;
+  isActive?: boolean;
+  isCurrent?: boolean;
+  isHoliday?: boolean;
 
   isInRange?: boolean;
   isRangeStart?: boolean;
@@ -126,9 +130,6 @@ export interface CellProps extends HTMLAttributes<HTMLDivElement> {
   isRangeSelectingEnd?: boolean;
   isStartOfRow?: boolean;
   isEndOfRow?: boolean;
-  isActive?: boolean;
-  isCurrent?: boolean;
-  isHoliday?: boolean;
 }
 
 export const DefaultCell = ({
@@ -164,8 +165,6 @@ export const DefaultCell = ({
       data-is-current-date={isCurrent ? isCurrent : undefined}
       data-is-active-date={isActive ? isActive : undefined}
       data-is-holyday-date={isHoliday ? isHoliday : undefined}
-      //onMouseEnter={() => onCellMouseEnter?.(date, disabled)}
-      //onClick={() => onCellClick?.(date, disabled)}
       {...props}
     >
       <LeftHalf
@@ -213,13 +212,11 @@ const getDefaultDateCellMixin = (
   hidden?: boolean,
   isCurrent?: boolean,
   isHoliday?: boolean,
-  //isOutsideMonth?: boolean,
   isActive?: boolean,
 ) => {
   if (hidden) return hiddenDateCellMixin;
   if (disabled && isHoliday) return disabledHolidayDateCellMixin;
   if (disabled) return disabledDateCellMixin;
-  //if (isOutsideMonth) return outsideMonthDateCellMixin;
   if (selected) return selectedDateCellMixin;
   if (isActive) return baseDateCellMixin;
   if (isHoliday && isCurrent) return currentDateHolidayDateCellMixin;
@@ -233,7 +230,6 @@ const getDefaultDateRangeCellMixin = (
   hidden?: boolean,
   isCurrent?: boolean,
   isHoliday?: boolean,
-  //isOutsideMonth?: boolean,
   isInRange?: boolean,
   isRangeStart?: boolean,
   isRangeEnd?: boolean,
@@ -248,7 +244,6 @@ const getDefaultDateRangeCellMixin = (
   if (disabled && isHoliday) return disabledHolidayDateCellMixin;
   if (disabled) return disabledDateCellMixin;
   if (isActive) return baseDateCellMixin;
-  //if (isOutsideMonth) return outsideMonthDateCellMixin;
   if (selected || isRangeStart || isRangeEnd) return selectedDateCellMixin;
   //if (isRangeStart || isRangeEnd) return rangeEndsDateCellMixin;
   if (isInRange && isHoliday) return rangeHolidayDateCellMixin;
@@ -258,6 +253,15 @@ const getDefaultDateRangeCellMixin = (
   if (isInRange) return rangeDateCellMixin;
   return baseDateCellMixin;
 };
+
+const getDateCellDataAttributes = (isHoliday?: boolean, isCurrent?: boolean, isActive?: boolean) => {
+  return {
+    'data-is-holiday-cell': isHoliday ? isHoliday : undefined,
+    'data-is-current-day-cell': isCurrent ? isCurrent : undefined,
+    'data-is-active-cell': isActive ? isActive : undefined,
+  };
+};
+
 export const DefaultDateCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const dateCellMixin = getDefaultDateCellMixin(
     props.selected,
@@ -275,11 +279,40 @@ export const DefaultDateCell = ({ isCurrent, isHoliday, ...props }: DefaultCellP
       height={DATE_CELL_HEIGHT}
       cellMixin={dateCellMixin}
       data-cell-type="dateCell"
+      {...getDateCellDataAttributes(isHoliday, isCurrent, props.isActive)}
       {...props}
     />
   );
 };
 export const MemoDefaultDateCell = memo(DefaultDateCell);
+
+const getDateRangeCellDataAttributes = (
+  isHoliday?: boolean,
+  isCurrent?: boolean,
+  isActive?: boolean,
+  isInRange?: boolean,
+  isRangeStart?: boolean,
+  isRangeEnd?: boolean,
+  isInRangeSelecting?: boolean,
+  isRangeSelectingStart?: boolean,
+  isRangeSelectingEnd?: boolean,
+  isStartOfRow?: boolean,
+  isEndOfRow?: boolean,
+) => {
+  return {
+    'data-is-holiday-cell': isHoliday ? isHoliday : undefined,
+    'data-is-current-day-cell': isCurrent ? isCurrent : undefined,
+    'data-is-active-cell': isActive ? isActive : undefined,
+    'data-is-in-range-cell': isInRange ? isInRange : undefined,
+    'data-is-range-start-cell': isRangeStart ? isRangeStart : undefined,
+    'data-is-range-end-cell': isRangeEnd ? isRangeEnd : undefined,
+    'data-is-in-range-selecting-cell': isInRangeSelecting ? isInRangeSelecting : undefined,
+    'data-is-range-selecting-start-cell': isRangeSelectingStart ? isRangeSelectingStart : undefined,
+    'data-is-range-selecting-end-cell': isRangeSelectingEnd ? isRangeSelectingEnd : undefined,
+    'data-is-start-of-week-cell': isStartOfRow ? isStartOfRow : undefined,
+    'data-is-end-of-week-cell': isEndOfRow ? isEndOfRow : undefined,
+  };
+};
 
 export const DefaultDateRangeCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const dateCellMixin = getDefaultDateRangeCellMixin(
@@ -300,6 +333,19 @@ export const DefaultDateRangeCell = ({ isCurrent, isHoliday, ...props }: Default
       height={DATE_CELL_HEIGHT}
       cellMixin={dateCellMixin}
       data-cell-type="dateCell"
+      {...getDateRangeCellDataAttributes(
+        isHoliday,
+        isCurrent,
+        props.isActive,
+        props.isInRange,
+        props.isRangeStart,
+        props.isRangeEnd,
+        props.isInRangeSelecting,
+        props.isRangeSelectingStart,
+        props.isRangeSelectingEnd,
+        props.isStartOfRow,
+        props.isEndOfRow,
+      )}
       {...props}
     />
   );
