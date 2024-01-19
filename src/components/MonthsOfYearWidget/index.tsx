@@ -22,10 +22,10 @@ export const MonthsOfYearWidget = ({
   selected,
   active,
   activeRangeEnd,
-  onCellMouseEnter,
-  onCellClick,
+  disabledDate,
   locale = 'ru',
-  renderCell,
+  cell,
+  range,
   ...props
 }: MonthsOfYearWidgetProps) => {
   const localDate = date || getCurrentDate(locale);
@@ -37,10 +37,11 @@ export const MonthsOfYearWidget = ({
         selected={selected}
         active={active}
         activeRangeEnd={activeRangeEnd}
-        onCellMouseEnter={onCellMouseEnter}
-        onCellClick={onCellClick}
-        renderCell={renderCell}
+        disabledDate={disabledDate}
+        cell={cell}
         data-container-type="monthsWrapper"
+        locale={locale}
+        range={range}
       />
     </MonthsOfYearWrapper>
   );

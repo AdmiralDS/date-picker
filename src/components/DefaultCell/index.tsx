@@ -293,6 +293,7 @@ export const DefaultDateRangeCell = ({ isCurrent, isHoliday, ...props }: Default
     props.isRangeEnd || props.isRangeSelectingEnd,
     props.isActive,
   );
+  console.log('render Cell');
   return (
     <DefaultCell
       width={DATE_CELL_WIDTH}
@@ -339,6 +340,13 @@ const getDefaultMonthRangeCellMixin = (
   return baseMonthCellMixin;
 };
 
+const getMonthCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
+  return {
+    'data-is-current-month': isCurrent ? isCurrent : undefined,
+    'data-is-active-month': isActive ? isActive : undefined,
+  };
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DefaultMonthCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const monthCellMixin = getDefaultMonthCellMixin(
@@ -354,12 +362,38 @@ export const DefaultMonthCell = ({ isCurrent, isHoliday, ...props }: DefaultCell
       height={MONTH_CELL_HEIGHT}
       cellMixin={monthCellMixin}
       data-cell-type="monthCell"
+      {...getMonthCellDataAttributes(isCurrent, props.isActive)}
       {...props}
     />
   );
 };
 export const MemoDefaultMonthCell = memo(DefaultMonthCell);
 
+const getMonthRangeCellDataAttributes = (
+  isCurrent?: boolean,
+  isActive?: boolean,
+  isInRange?: boolean,
+  isRangeStart?: boolean,
+  isRangeEnd?: boolean,
+  isInRangeSelecting?: boolean,
+  isRangeSelectingStart?: boolean,
+  isRangeSelectingEnd?: boolean,
+  isStartOfRow?: boolean,
+  isEndOfRow?: boolean,
+) => {
+  return {
+    'data-is-current-day-cell': isCurrent ? isCurrent : undefined,
+    'data-is-active-cell': isActive ? isActive : undefined,
+    'data-is-in-range-cell': isInRange ? isInRange : undefined,
+    'data-is-range-start-cell': isRangeStart ? isRangeStart : undefined,
+    'data-is-range-end-cell': isRangeEnd ? isRangeEnd : undefined,
+    'data-is-in-range-selecting-cell': isInRangeSelecting ? isInRangeSelecting : undefined,
+    'data-is-range-selecting-start-cell': isRangeSelectingStart ? isRangeSelectingStart : undefined,
+    'data-is-range-selecting-end-cell': isRangeSelectingEnd ? isRangeSelectingEnd : undefined,
+    'data-is-start-of-week-cell': isStartOfRow ? isStartOfRow : undefined,
+    'data-is-end-of-week-cell': isEndOfRow ? isEndOfRow : undefined,
+  };
+};
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DefaultMonthRangeCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const monthCellMixin = getDefaultMonthRangeCellMixin(
@@ -378,6 +412,18 @@ export const DefaultMonthRangeCell = ({ isCurrent, isHoliday, ...props }: Defaul
       height={MONTH_CELL_HEIGHT}
       cellMixin={monthCellMixin}
       data-cell-type="monthCell"
+      {...getMonthRangeCellDataAttributes(
+        isCurrent,
+        props.isActive,
+        props.isInRange,
+        props.isRangeStart,
+        props.isRangeEnd,
+        props.isInRangeSelecting,
+        props.isRangeSelectingStart,
+        props.isRangeSelectingEnd,
+        props.isStartOfRow,
+        props.isEndOfRow,
+      )}
       {...props}
     />
   );
@@ -434,7 +480,6 @@ export const DefaultYearCell = ({ isCurrent, isHoliday, ...props }: DefaultCellP
     isCurrent,
     props.isActive,
   );
-  console.log('render YearCell');
   return (
     <DefaultCell
       width={YEAR_CELL_WIDTH}

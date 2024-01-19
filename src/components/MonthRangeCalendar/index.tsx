@@ -1,58 +1,14 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
-import {
-  capitalizeFirstLetter,
-  dateIsInRange,
-  dateIsInRangeSelecting,
-  dateIsRangeEnd,
-  dateIsRangeSelectingEnd,
-  dateIsRangeSelectingStart,
-  dateIsRangeStart,
-  dateIsSelected,
-  getCurrentDate,
-  getSelectedDateRange,
-  monthIsDisabled,
-} from '#src/components/utils';
-import type { RangeCalendarProps, RenderFunctionProps } from '#src/components/calendarInterfaces';
+import { getCurrentDate } from '#src/components/utils';
+import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
-import { MONTHS_COLUMNS } from '#src/components/MonthsOfYearWidget/constants.ts';
-import { DefaultMonthRangeCell } from '#src/components/DefaultCell';
+import { MemoDefaultMonthRangeCell } from '#src/components/DefaultCell';
 
 export interface MonthRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
-
-const getMonthCellDataAttributes = (
-  value?: string,
-  //isHoliday?: boolean,
-  //isOutsideMonth?: boolean,
-  isCurrent?: boolean,
-  isActive?: boolean,
-  isInRange?: boolean,
-  isRangeStart?: boolean,
-  isRangeEnd?: boolean,
-  isInRangeSelecting?: boolean,
-  isRangeSelectingStart?: boolean,
-  isRangeSelectingEnd?: boolean,
-  isStartOfRow?: boolean,
-  isEndOfRow?: boolean,
-) => {
-  return {
-    'data-value': value ? value : undefined,
-    //'data-is-holiday-cell': isHoliday ? isHoliday : undefined,
-    //'data-is-outside-month-cell': isOutsideMonth ? isOutsideMonth : undefined,
-    'data-is-current-day-cell': isCurrent ? isCurrent : undefined,
-    'data-is-active-cell': isActive ? isActive : undefined,
-    'data-is-in-range-cell': isInRange ? isInRange : undefined,
-    'data-is-range-start-cell': isRangeStart ? isRangeStart : undefined,
-    'data-is-range-end-cell': isRangeEnd ? isRangeEnd : undefined,
-    'data-is-in-range-selecting-cell': isInRangeSelecting ? isInRangeSelecting : undefined,
-    'data-is-range-selecting-start-cell': isRangeSelectingStart ? isRangeSelectingStart : undefined,
-    'data-is-range-selecting-end-cell': isRangeSelectingEnd ? isRangeSelectingEnd : undefined,
-    'data-is-start-of-week-cell': isStartOfRow ? isStartOfRow : undefined,
-    'data-is-end-of-week-cell': isEndOfRow ? isEndOfRow : undefined,
-  };
-};
 
 export const MonthRangeCalendar = ({
   selectedDateRangeValue,
@@ -67,7 +23,7 @@ export const MonthRangeCalendar = ({
   defaultActiveDateValue,
   onActiveDateValueChange,
   locale = 'ru',
-  renderCell,
+  cell,
   ...props
 }: MonthRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -83,7 +39,13 @@ export const MonthRangeCalendar = ({
     onActiveDateValueChange?.(date);
   };
 
-  const handleMouseEnter = (date: Dayjs, disabled?: boolean) => {
+  const handleMouseOver: MouseEventHandler<HTMLDivElement> = (e) => {
+    const targetDataAttributes = (e.target as HTMLDivElement).dataset;
+    if (targetDataAttributes['cellType'] !== 'monthCell') {
+      return;
+    }
+    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const disabled = targetDataAttributes['disabled'] === 'true';
     if (!disabled) {
       handleActiveDateChange(date);
     }
@@ -139,7 +101,13 @@ export const MonthRangeCalendar = ({
   };
   //</editor-fold>
 
-  const handleDateClick = (date: Dayjs, disabled?: boolean) => {
+  const handleDateClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    const targetDataAttributes = (e.target as HTMLDivElement).dataset;
+    if (targetDataAttributes['cellType'] !== 'monthCell') {
+      return;
+    }
+    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const disabled = targetDataAttributes['disabled'] === 'true';
     if (!disabled) {
       const newSelectedDateRangeValue: [Dayjs | undefined, Dayjs | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {
@@ -179,64 +147,6 @@ export const MonthRangeCalendar = ({
     }
   };
 
-  const renderDefaultMonthRangeCell = ({
-    date,
-    selected: selectedRange,
-    active,
-    activeRangeEnd,
-    onCellMouseEnter,
-    onCellClick,
-  }: RenderFunctionProps) => {
-    const selectedDateRange = getSelectedDateRange(selectedRange);
-    const cellContent = capitalizeFirstLetter(date.locale(locale).format('MMMM'));
-    const selected = dateIsSelected('month', date, selectedDateRange);
-    const disabled = monthIsDisabled(date, disabledDate);
-    //const hidden = dateIsHidden(dateCurrent);
-    const isCurrent = date.isSame(getCurrentDate(locale), 'month');
-    const isActive = date.isSame(active, 'month');
-    const isInRange = dateIsInRange('month', date, selectedDateRange);
-    const isRangeStart = dateIsRangeStart('month', date, selectedDateRange);
-    const isRangeEnd = dateIsRangeEnd('month', date, selectedDateRange);
-    const isInRangeSelecting = dateIsInRangeSelecting('month', date, active, activeRangeEnd);
-    const isRangeSelectingStart = dateIsRangeSelectingStart('month', date, active, activeRangeEnd, disabled);
-    const isRangeSelectingEnd = dateIsRangeSelectingEnd('month', date, active, activeRangeEnd, disabled);
-    const isStartOfRow = date.month() % MONTHS_COLUMNS === 0;
-    const isEndOfRow = date.month() % MONTHS_COLUMNS === 2;
-    return (
-      <DefaultMonthRangeCell
-        key={date.toString()}
-        cellContent={cellContent}
-        selected={selected}
-        disabled={disabled}
-        isCurrent={isCurrent}
-        isActive={isActive}
-        isInRange={isInRange}
-        isRangeStart={isRangeStart}
-        isRangeEnd={isRangeEnd}
-        isInRangeSelecting={isInRangeSelecting}
-        isRangeSelectingStart={isRangeSelectingStart}
-        isRangeSelectingEnd={isRangeSelectingEnd}
-        isStartOfRow={isStartOfRow}
-        isEndOfRow={isEndOfRow}
-        onMouseEnter={() => onCellMouseEnter?.(date, disabled)}
-        onClick={() => onCellClick?.(date, disabled)}
-        {...getMonthCellDataAttributes(
-          date.toString(),
-          isCurrent,
-          isActive,
-          isInRange,
-          isRangeStart,
-          isRangeEnd,
-          isInRangeSelecting,
-          isRangeSelectingStart,
-          isRangeSelectingEnd,
-          isStartOfRow,
-          isEndOfRow,
-        )}
-      />
-    );
-  };
-
   return (
     <MonthsOfYearWidget
       {...props}
@@ -244,11 +154,13 @@ export const MonthRangeCalendar = ({
       selected={[dateRangeFirstInner, dateRangeSecondInner]}
       active={activeDateInner}
       activeRangeEnd={dateRangeActiveEndInner}
+      disabledDate={disabledDate}
       locale={locale}
       onMouseLeave={handleMouseLeave}
-      onCellMouseEnter={handleMouseEnter}
-      onCellClick={handleDateClick}
-      renderCell={renderCell || renderDefaultMonthRangeCell}
+      onMouseOver={handleMouseOver}
+      onClick={handleDateClick}
+      cell={cell || MemoDefaultMonthRangeCell}
+      range={true}
     />
   );
 };
