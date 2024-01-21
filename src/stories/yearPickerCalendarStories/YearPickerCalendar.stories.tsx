@@ -2,6 +2,8 @@ import type { Meta, StoryFn } from '@storybook/react';
 
 import { YearPickerCalendar } from '@admiral-ds/date-picker';
 import { YearPickerCalendarSimpleTemplate } from '#src/stories/yearPickerCalendarStories/YearPickerCalendarSimple.template.tsx';
+import { YearPickerCalendarCustomCellTemplate } from './YearPickerCalendarCustomCell.template';
+//import { YearPickerCalendarCustomCellTemplate } from '#src/stories/yearPickerCalendarStories/YearPickerCalendarCustomCell.template.tsx';
 
 export default {
   title: 'Admiral-2.1/YearPickerCalendar',
@@ -38,3 +40,9 @@ const YearPickerCalendarSimpleStory: StoryFn<typeof YearPickerCalendar> = (props
 };
 export const YearPickerCalendarSimple = YearPickerCalendarSimpleStory.bind({});
 YearPickerCalendarSimple.storyName = 'YearPickerCalendarSimple';
+
+const YearPickerCalendarCustomCellStory: StoryFn<typeof YearPickerCalendar> = (props) => {
+  return <YearPickerCalendarCustomCellTemplate {...props} />;
+};
+export const YearPickerCalendarCustomCell = YearPickerCalendarCustomCellStory.bind({});
+YearPickerCalendarCustomCell.storyName = 'YearPickerCalendarCustomCell';
