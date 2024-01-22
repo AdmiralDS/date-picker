@@ -6,12 +6,11 @@ import type { Dayjs } from 'dayjs';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { capitalizeFirstLetter, getCurrentDate, getSelectedDate, yearIsDisabled } from '#src/components/utils';
+import { capitalizeFirstLetter, getCurrentDate } from '#src/components/utils';
 import { YEARS_OF_YEAR_WIDGET_WIDTH } from '#src/components/YearsOfTwentyYearsWidget/constants';
 import type { YearsOfTwentyYearsWidgetProps } from '#src/components/YearsOfTwentyYearsWidget';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
-import { DefaultYearCell } from '#src/components/DefaultCell';
-import type { RenderFunctionProps } from '#src/components/calendarInterfaces.ts';
+import { MemoDefaultYearCell } from '#src/components/DefaultCell';
 
 const Wrapper = styled.div`
   display: flex;
@@ -42,8 +41,14 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
     setActiveDateInner(date);
   };
 
-  const handleMouseEnter = (date: Dayjs, disabled?: boolean) => {
-    if (!disabled) {
+  const handleMouseOver: MouseEventHandler<HTMLDivElement> = (e) => {
+    const targetDataAttributes = (e.target as HTMLDivElement).dataset;
+    if (targetDataAttributes['cellType'] !== 'yearCell') {
+      return;
+    }
+    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const disabled = targetDataAttributes['disabled'] === 'true';
+    if (!disabled && !date.isSame(activeDateInner)) {
       handleActiveDateChange(date);
     }
   };
@@ -53,38 +58,16 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
     handleActiveDateChange(undefined);
   };
 
-  const handleDateClick = (date: Dayjs, disabled?: boolean) => {
+  const handleDateClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    const targetDataAttributes = (e.target as HTMLDivElement).dataset;
+    if (targetDataAttributes['cellType'] !== 'yearCell') {
+      return;
+    }
+    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const disabled = targetDataAttributes['disabled'] === 'true';
     if (!disabled) {
       setSelectedDate(date);
     }
-  };
-
-  const getYearCellDataAttributes = (value?: string, isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
-    return {
-      'data-value': value ? value : undefined,
-      'data-is-current-year': isCurrent ? isCurrent : undefined,
-      'data-is-active-year': isActive ? isActive : undefined,
-    };
-  };
-
-  const renderDefaultYearCell = ({ date, selected, active, onCellMouseEnter, onCellClick }: RenderFunctionProps) => {
-    const selectedDate = getSelectedDate(selected);
-    const disabled = yearIsDisabled(date);
-    const isCurrent = date.isSame(getCurrentDate(locale), 'year');
-    const isActive = date.isSame(active, 'year');
-    return (
-      <DefaultYearCell
-        key={date.toString()}
-        cellContent={date.year()}
-        disabled={disabled}
-        selected={date.isSame(selectedDate, 'year')}
-        isCurrent={isCurrent}
-        isActive={isActive}
-        onMouseEnter={() => onCellMouseEnter?.(date, disabled)}
-        onClick={() => onCellClick?.(date, disabled)}
-        {...getYearCellDataAttributes(date.toString(), isCurrent, isActive)}
-      />
-    );
   };
 
   return (
@@ -96,10 +79,10 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
         selected={selectedDate}
         active={activeDateInner}
         locale={localeInner}
+        cell={MemoDefaultYearCell}
         onMouseLeave={handleMouseLeave}
-        onCellMouseEnter={handleMouseEnter}
-        onCellClick={handleDateClick}
-        renderCell={renderDefaultYearCell}
+        onMouseOver={handleMouseOver}
+        onClick={handleDateClick}
       />
     </Wrapper>
   );
