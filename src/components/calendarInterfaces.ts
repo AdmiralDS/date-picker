@@ -20,7 +20,6 @@ export type RenderFunctionType = (props: RenderFunctionProps) => ReactNode;
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   cell?: FunctionComponent<DateCellProps>;
-  renderCell?: RenderFunctionType;
   /** Дата, которая не может быть выбрана */
   disabledDate?: (currentDate: Dayjs) => boolean;
 
@@ -76,12 +75,6 @@ export interface RangeDoubleCalendarProps
   onDateRangeValueChange?: (dateRange: [Dayjs | undefined, Dayjs | undefined]) => void;
 }
 
-export type renderCellProps = {
-  renderDateCell?: RenderFunctionType;
-  renderMonthCell?: RenderFunctionType;
-  renderYearCell?: RenderFunctionType;
-};
-
 export type cellProps = {
   dateCell?: FunctionComponent<DateCellProps>;
   monthCell?: FunctionComponent<DateCellProps>;
@@ -96,6 +89,5 @@ export interface PickerCalendarProps {
   /** Коллбэк на переключение экрана */
   onViewModeChange?: (mode: CalendarViewMode) => void;
   /** Кастомное отображение ячеек */
-  renderCell?: renderCellProps;
   cell?: cellProps;
 }

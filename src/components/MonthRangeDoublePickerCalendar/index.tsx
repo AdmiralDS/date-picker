@@ -21,7 +21,7 @@ import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/consta
 export interface MonthRangeDoublePickerCalendarProps
   extends Omit<
       RangeDoubleCalendarProps,
-      'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'renderCell'
+      'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'cell'
     >,
     PickerCalendarProps {}
 
@@ -38,7 +38,7 @@ export const MonthRangeDoublePickerCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  renderCell,
+  cell,
   locale = 'ru',
   ...props
 }: MonthRangeDoublePickerCalendarProps) => {
@@ -196,7 +196,7 @@ export const MonthRangeDoublePickerCalendar = ({
         <CalendarContainer>
           <MonthRangeCalendarView
             {...props}
-            renderCell={renderCell?.renderMonthCell}
+            cell={cell?.monthCell}
             dateValue={dateLeftInner}
             selectedDateRangeValue={selectedDateRangeInner}
             defaultSelectedDateRangeValue={defaultSelectedDateRangeValue}
@@ -210,7 +210,7 @@ export const MonthRangeDoublePickerCalendar = ({
           />
           <YearCalendarView
             {...props}
-            renderCell={renderCell?.renderYearCell}
+            cell={cell?.yearCell}
             dateValue={dateLeftInner}
             selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleLeftYearClick}
@@ -229,7 +229,7 @@ export const MonthRangeDoublePickerCalendar = ({
         <CalendarContainer>
           <MonthRangeCalendarView
             {...props}
-            renderCell={renderCell?.renderMonthCell}
+            cell={cell?.monthCell}
             dateValue={dateRightInner}
             selectedDateRangeValue={selectedDateRangeInner}
             defaultSelectedDateRangeValue={defaultSelectedDateRangeValue}
@@ -243,7 +243,7 @@ export const MonthRangeDoublePickerCalendar = ({
           />
           <YearCalendarView
             {...props}
-            renderCell={renderCell?.renderYearCell}
+            cell={cell?.yearCell}
             dateValue={dateRightInner}
             selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleRightYearClick}

@@ -16,7 +16,7 @@ import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/consta
 export interface MonthRangePickerCalendarProps
   extends Omit<
       RangeCalendarProps,
-      'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'renderCell'
+      'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'cell'
     >,
     PickerCalendarProps {}
 
@@ -30,7 +30,7 @@ export const MonthRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
-  renderCell,
+  cell,
   locale = 'ru',
   ...props
 }: MonthRangePickerCalendarProps) => {
@@ -124,7 +124,7 @@ export const MonthRangePickerCalendar = ({
       <CalendarContainer>
         <MonthRangeCalendarView
           {...props}
-          renderCell={renderCell?.renderMonthCell}
+          cell={cell?.monthCell}
           dateValue={dateInner}
           selectedDateRangeValue={selectedDateRangeInner}
           defaultSelectedDateRangeValue={defaultSelectedDateRangeValue}
@@ -135,7 +135,7 @@ export const MonthRangePickerCalendar = ({
         />
         <YearCalendarView
           {...props}
-          renderCell={renderCell?.renderYearCell}
+          cell={cell?.yearCell}
           dateValue={dateInner}
           selectedDateValue={selectedRangeEnd}
           onSelectedDateValueChange={handleYearClick}

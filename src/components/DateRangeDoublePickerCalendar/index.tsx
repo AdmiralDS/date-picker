@@ -22,7 +22,7 @@ import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/consta
 export interface DateRangeDoublePickerCalendarProps
   extends Omit<
       RangeDoubleCalendarProps,
-      'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'renderCell'
+      'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'cell'
     >,
     PickerCalendarProps {}
 
@@ -39,7 +39,7 @@ export const DateRangeDoublePickerCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  renderCell,
+  cell,
   locale = 'ru',
   ...props
 }: DateRangeDoublePickerCalendarProps) => {
@@ -223,7 +223,7 @@ export const DateRangeDoublePickerCalendar = ({
         <CalendarContainer>
           <DateRangeCalendarView
             {...props}
-            renderCell={renderCell?.renderDateCell}
+            cell={cell?.dateCell}
             dateValue={dateLeftInner}
             selectedDateRangeValue={selectedDateRangeInner}
             defaultSelectedDateRangeValue={defaultSelectedDateRangeValue}
@@ -237,7 +237,7 @@ export const DateRangeDoublePickerCalendar = ({
           />
           <MonthCalendarView
             {...props}
-            renderCell={renderCell?.renderMonthCell}
+            cell={cell?.monthCell}
             dateValue={dateLeftInner}
             selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleLeftMonthClick}
@@ -246,7 +246,7 @@ export const DateRangeDoublePickerCalendar = ({
           />
           <YearCalendarView
             {...props}
-            renderCell={renderCell?.renderYearCell}
+            cell={cell?.yearCell}
             dateValue={dateLeftInner}
             selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleLeftYearClick}
@@ -265,7 +265,7 @@ export const DateRangeDoublePickerCalendar = ({
         <CalendarContainer>
           <DateRangeCalendarView
             {...props}
-            renderCell={renderCell?.renderDateCell}
+            cell={cell?.dateCell}
             dateValue={dateRightInner}
             selectedDateRangeValue={selectedDateRangeInner}
             defaultSelectedDateRangeValue={defaultSelectedDateRangeValue}
@@ -279,7 +279,7 @@ export const DateRangeDoublePickerCalendar = ({
           />
           <MonthCalendarView
             {...props}
-            renderCell={renderCell?.renderMonthCell}
+            cell={cell?.monthCell}
             dateValue={dateLeftInner}
             selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleRightMonthClick}
@@ -288,7 +288,7 @@ export const DateRangeDoublePickerCalendar = ({
           />
           <YearCalendarView
             {...props}
-            renderCell={renderCell?.renderYearCell}
+            cell={cell?.yearCell}
             dateValue={dateRightInner}
             selectedDateValue={selectedRangeEnd}
             onSelectedDateValueChange={handleRightYearClick}
