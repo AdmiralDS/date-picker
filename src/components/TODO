@@ -1,5 +1,3 @@
 API:
-* disabledDate - Specify the date that cannot be selected - (currentDate: dayjs) => boolean
-* constant rerender
-* cellRender - Custom rendering function for picker cells
 * tooltips on panel buttons -> localization
+* special dates - ?
