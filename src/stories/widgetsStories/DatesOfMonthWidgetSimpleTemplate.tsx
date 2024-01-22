@@ -38,7 +38,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
       return;
     }
     const date = dayjs(targetDataAttributes['value']).locale(locale);
-    const disabled = targetDataAttributes['disabled'] === 'true';
+    const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       setSelectedDate(date);
     }
