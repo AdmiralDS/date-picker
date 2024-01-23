@@ -133,6 +133,27 @@ exports[`DatePickerCalendar should render component 1`] = `
   cursor: default;
 }
 
+.c13 {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+  height: 236px;
+}
+
+.c9 {
+  background-color: #FFFFFF;
+  width: 252px;
+  margin: 12px 16px 16px 16px;
+  font-family: 'VTB Group UI',sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  font-feature-settings: 'tnum' on,'lnum' on;
+  text-rendering: geometricPrecision;
+}
+
 .c14 {
   position: relative;
   width: 36px;
@@ -152,56 +173,45 @@ exports[`DatePickerCalendar should render component 1`] = `
   cursor: default;
 }
 
-.c28 {
+.c26 {
   position: relative;
   width: 84px;
   height: 36px;
   cursor: pointer;
 }
 
-.c28>* {
+.c26>* {
   pointer-events: none;
 }
 
-.c28[data-disabled-cell='true'] {
+.c26[data-disabled-cell='true'] {
   cursor: default;
 }
 
-.c28[data-hidden-cell='true'] {
+.c26[data-hidden-cell='true'] {
   cursor: default;
 }
 
-.c34 {
+.c32 {
   position: relative;
   width: 60px;
   height: 36px;
   cursor: pointer;
 }
 
-.c34>* {
+.c32>* {
   pointer-events: none;
 }
 
-.c34[data-disabled-cell='true'] {
+.c32[data-disabled-cell='true'] {
   cursor: default;
 }
 
-.c34[data-hidden-cell='true'] {
+.c32[data-hidden-cell='true'] {
   cursor: default;
 }
 
 .c15 {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  background-color: transparent;
-  left: 0;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
-
-.c18 {
   position: absolute;
   top: 0;
   width: 50%;
@@ -217,17 +227,6 @@ exports[`DatePickerCalendar should render component 1`] = `
   height: 100%;
   background-color: transparent;
   right: 0;
-}
-
-.c21 {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  background-color: transparent;
-  right: 0;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
 }
 
 .c17 {
@@ -250,7 +249,29 @@ exports[`DatePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 50%;
-  color: #FFFFFF;
+  color: #B0B5BD;
+}
+
+.c18 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 7px 0;
+  font-family: 'VTB Group UI',sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  font-feature-settings: 'tnum' on,'lnum' on;
+  text-rendering: geometricPrecision;
+  color: #23262D;
+  background-color: #FFFFFF;
+  border: 1px #FFFFFF solid;
+  border-radius: 50%;
 }
 
 .c19 {
@@ -273,7 +294,7 @@ exports[`DatePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 50%;
-  color: #B0B5BD;
+  color: #FFA7A7;
 }
 
 .c20 {
@@ -296,7 +317,34 @@ exports[`DatePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 50%;
-  color: #FFA7A7;
+  color: #D92020;
+}
+
+.c21 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 7px 0;
+  font-family: 'VTB Group UI',sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  font-feature-settings: 'tnum' on,'lnum' on;
+  text-rendering: geometricPrecision;
+  color: #23262D;
+  background-color: #FFFFFF;
+  border: 1px #FFFFFF solid;
+  border-radius: 50%;
+  background-color: #0062FF;
+  border-color: #0062FF;
+  color: #FFFFFF;
+  background-color: #0046E2;
+  border-color: #0046E2;
 }
 
 .c22 {
@@ -319,135 +367,59 @@ exports[`DatePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 50%;
-}
-
-.c23 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  padding: 7px 0;
-  font-family: 'VTB Group UI',sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  font-feature-settings: 'tnum' on,'lnum' on;
-  text-rendering: geometricPrecision;
-  color: #23262D;
-  background-color: #FFFFFF;
-  border: 1px #FFFFFF solid;
-  border-radius: 50%;
-  color: #D92020;
-}
-
-.c24 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  padding: 7px 0;
-  font-family: 'VTB Group UI',sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  font-feature-settings: 'tnum' on,'lnum' on;
-  text-rendering: geometricPrecision;
-  color: #23262D;
-  background-color: #FFFFFF;
-  border: 1px #FFFFFF solid;
-  border-radius: 50%;
-  border-color: #23262D;
-  padding: 7px 0;
-  font-family: 'VTB Group UI',sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  font-feature-settings: 'tnum' on,'lnum' on;
-  text-rendering: geometricPrecision;
-  color: #23262D;
-  background-color: #FFFFFF;
-  border: 1px #FFFFFF solid;
-  border-radius: 50%;
-  color: #D92020;
-  border-color: #23262D;
-}
-
-.c29 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  padding: 7px 0;
-  font-family: 'VTB Group UI',sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  font-feature-settings: 'tnum' on,'lnum' on;
-  text-rendering: geometricPrecision;
-  color: #23262D;
-  background-color: #FFFFFF;
-  border: 1px #FFFFFF solid;
-  border-radius: 18px;
-}
-
-.c30 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  padding: 7px 0;
-  font-family: 'VTB Group UI',sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  font-feature-settings: 'tnum' on,'lnum' on;
-  text-rendering: geometricPrecision;
-  color: #23262D;
-  background-color: #FFFFFF;
-  border: 1px #FFFFFF solid;
-  border-radius: 18px;
-  border-color: #23262D;
-}
-
-.c13 {
-  box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: space-between;
-  height: 236px;
-}
-
-.c9 {
-  background-color: #FFFFFF;
-  width: 252px;
-  margin: 12px 16px 16px 16px;
-  font-family: 'VTB Group UI',sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  font-feature-settings: 'tnum' on,'lnum' on;
-  text-rendering: geometricPrecision;
+  color: #FFFFFF;
 }
 
 .c27 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 7px 0;
+  font-family: 'VTB Group UI',sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  font-feature-settings: 'tnum' on,'lnum' on;
+  text-rendering: geometricPrecision;
+  color: #23262D;
+  background-color: #FFFFFF;
+  border: 1px #FFFFFF solid;
+  border-radius: 18px;
+  background-color: #0062FF;
+  border-color: #0062FF;
+  color: #FFFFFF;
+  background-color: #0046E2;
+  border-color: #0046E2;
+}
+
+.c28 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 7px 0;
+  font-family: 'VTB Group UI',sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  font-feature-settings: 'tnum' on,'lnum' on;
+  text-rendering: geometricPrecision;
+  color: #23262D;
+  background-color: #FFFFFF;
+  border: 1px #FFFFFF solid;
+  border-radius: 18px;
+}
+
+.c25 {
   height: 240px;
   box-sizing: border-box;
   display: flex;
@@ -455,7 +427,7 @@ exports[`DatePickerCalendar should render component 1`] = `
   align-content: space-between;
 }
 
-.c25 {
+.c23 {
   background-color: #FFFFFF;
   width: 252px;
   margin: 28px 16px 36px 16px;
@@ -468,7 +440,7 @@ exports[`DatePickerCalendar should render component 1`] = `
   text-rendering: geometricPrecision;
 }
 
-.c33 {
+.c31 {
   height: 244px;
   box-sizing: border-box;
   display: flex;
@@ -476,7 +448,7 @@ exports[`DatePickerCalendar should render component 1`] = `
   align-content: space-between;
 }
 
-.c31 {
+.c29 {
   background-color: #FFFFFF;
   width: 240px;
   margin: 28px 22px 32px 22px;
@@ -521,11 +493,11 @@ exports[`DatePickerCalendar should render component 1`] = `
   visibility: visible;
 }
 
-.c26 {
+.c24 {
   visibility: hidden;
 }
 
-.c32 {
+.c30 {
   visibility: hidden;
 }
 
@@ -569,13 +541,13 @@ exports[`DatePickerCalendar should render component 1`] = `
           class="c7"
           data-panel-target-type="month"
         >
-          Декабрь
+          Январь
         </div>
         <div
           class="c7"
           data-panel-target-type="year"
         >
-          2023
+          2024
         </div>
       </div>
       <button
@@ -672,8 +644,8 @@ exports[`DatePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-hidden-cell="true"
-            data-value="2023-11-27T09:00:00.000Z"
+            data-disabled-cell="true"
+            data-value="Mon, 01 Jan 2024 09:00:00 GMT"
           >
             <div
               class="c15"
@@ -683,78 +655,6 @@ exports[`DatePickerCalendar should render component 1`] = `
             />
             <div
               class="c17"
-            >
-              27
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-hidden-cell="true"
-            data-value="2023-11-28T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              28
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-hidden-cell="true"
-            data-value="2023-11-29T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              29
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-hidden-cell="true"
-            data-value="2023-11-30T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              30
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-disabled-cell="true"
-            data-value="2023-12-01T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c19"
             >
               1
             </div>
@@ -763,17 +663,16 @@ exports[`DatePickerCalendar should render component 1`] = `
             class="c14"
             data-cell-type="dateCell"
             data-disabled-cell="true"
-            data-is-holiday-cell="true"
-            data-value="2023-12-02T09:00:00.000Z"
+            data-value="Tue, 02 Jan 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c20"
+              class="c17"
             >
               2
             </div>
@@ -782,17 +681,16 @@ exports[`DatePickerCalendar should render component 1`] = `
             class="c14"
             data-cell-type="dateCell"
             data-disabled-cell="true"
-            data-is-holiday-cell="true"
-            data-value="2023-12-03T09:00:00.000Z"
+            data-value="Wed, 03 Jan 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
-              class="c21"
+              class="c16"
             />
             <div
-              class="c20"
+              class="c17"
             >
               3
             </div>
@@ -801,7 +699,43 @@ exports[`DatePickerCalendar should render component 1`] = `
             class="c14"
             data-cell-type="dateCell"
             data-disabled-cell="true"
-            data-value="2023-12-04T09:00:00.000Z"
+            data-value="Thu, 04 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c17"
+            >
+              4
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Fri, 05 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              5
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-disabled-cell="true"
+            data-is-holiday-cell="true"
+            data-value="Sat, 06 Jan 2024 09:00:00 GMT"
           >
             <div
               class="c15"
@@ -812,16 +746,531 @@ exports[`DatePickerCalendar should render component 1`] = `
             <div
               class="c19"
             >
+              6
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-is-holiday-cell="true"
+            data-value="Sun, 07 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              7
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Mon, 08 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              8
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Tue, 09 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              9
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Wed, 10 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              10
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Thu, 11 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              11
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Fri, 12 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              12
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-disabled-cell="true"
+            data-is-holiday-cell="true"
+            data-value="Sat, 13 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c19"
+            >
+              13
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Sun, 14 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              14
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Mon, 15 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              15
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Tue, 16 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              16
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Wed, 17 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              17
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Thu, 18 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              18
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Fri, 19 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              19
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-disabled-cell="true"
+            data-is-holiday-cell="true"
+            data-value="Sat, 20 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c19"
+            >
+              20
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-is-holiday-cell="true"
+            data-value="Sun, 21 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              21
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Mon, 22 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              22
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-is-active-cell="true"
+            data-is-current-day-cell="true"
+            data-is-holiday-cell="true"
+            data-selected-cell="true"
+            data-value="Tue, 23 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c21"
+            >
+              23
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Wed, 24 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              24
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Thu, 25 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              25
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Fri, 26 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              26
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-disabled-cell="true"
+            data-is-holiday-cell="true"
+            data-value="Sat, 27 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c19"
+            >
+              27
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-is-holiday-cell="true"
+            data-value="Sun, 28 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              28
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Mon, 29 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              29
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Tue, 30 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              30
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Wed, 31 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c18"
+            >
+              31
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-disabled-cell="true"
+            data-hidden-cell="true"
+            data-value="Thu, 01 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c22"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-disabled-cell="true"
+            data-hidden-cell="true"
+            data-value="Fri, 02 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c22"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-disabled-cell="true"
+            data-hidden-cell="true"
+            data-value="Sat, 03 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c22"
+            >
+              3
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-disabled-cell="true"
+            data-hidden-cell="true"
+            data-value="Sun, 04 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c22"
+            >
               4
             </div>
           </div>
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-value="2023-12-05T09:00:00.000Z"
+            data-hidden-cell="true"
+            data-value="Mon, 05 Feb 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
@@ -835,10 +1284,11 @@ exports[`DatePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-value="2023-12-06T09:00:00.000Z"
+            data-hidden-cell="true"
+            data-value="Tue, 06 Feb 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
@@ -852,10 +1302,11 @@ exports[`DatePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-value="2023-12-07T09:00:00.000Z"
+            data-hidden-cell="true"
+            data-value="Wed, 07 Feb 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
@@ -869,10 +1320,11 @@ exports[`DatePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-value="2023-12-08T09:00:00.000Z"
+            data-hidden-cell="true"
+            data-value="Thu, 08 Feb 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
@@ -886,18 +1338,17 @@ exports[`DatePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-disabled-cell="true"
-            data-is-holiday-cell="true"
-            data-value="2023-12-09T09:00:00.000Z"
+            data-hidden-cell="true"
+            data-value="Fri, 09 Feb 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c20"
+              class="c22"
             >
               9
             </div>
@@ -905,17 +1356,18 @@ exports[`DatePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-is-holiday-cell="true"
-            data-value="2023-12-10T09:00:00.000Z"
+            data-disabled-cell="true"
+            data-hidden-cell="true"
+            data-value="Sat, 10 Feb 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
-              class="c21"
+              class="c16"
             />
             <div
-              class="c23"
+              class="c22"
             >
               10
             </div>
@@ -923,7 +1375,8 @@ exports[`DatePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-value="2023-12-11T09:00:00.000Z"
+            data-hidden-cell="true"
+            data-value="Sun, 11 Feb 2024 09:00:00 GMT"
           >
             <div
               class="c15"
@@ -937,694 +1390,219 @@ exports[`DatePickerCalendar should render component 1`] = `
               11
             </div>
           </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="2023-12-12T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c22"
-            >
-              12
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="2023-12-13T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c22"
-            >
-              13
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="2023-12-14T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c22"
-            >
-              14
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="2023-12-15T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c22"
-            >
-              15
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-disabled-cell="true"
-            data-is-holiday-cell="true"
-            data-value="2023-12-16T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c20"
-            >
-              16
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-is-holiday-cell="true"
-            data-value="2023-12-17T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c21"
-            />
-            <div
-              class="c23"
-            >
-              17
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="2023-12-18T09:00:00.000Z"
-          >
-            <div
-              class="c15"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c22"
-            >
-              18
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="2023-12-19T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c22"
-            >
-              19
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="2023-12-20T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c22"
-            >
-              20
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="2023-12-21T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c22"
-            >
-              21
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-is-current-day-cell="true"
-            data-is-holiday-cell="true"
-            data-value="2023-12-22T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c24"
-            >
-              22
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-disabled-cell="true"
-            data-is-holiday-cell="true"
-            data-value="2023-12-23T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c20"
-            >
-              23
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-is-holiday-cell="true"
-            data-value="2023-12-24T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c21"
-            />
-            <div
-              class="c23"
-            >
-              24
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="2023-12-25T09:00:00.000Z"
-          >
-            <div
-              class="c15"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c22"
-            >
-              25
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="2023-12-26T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c22"
-            >
-              26
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="2023-12-27T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c22"
-            >
-              27
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="2023-12-28T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c22"
-            >
-              28
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="2023-12-29T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c22"
-            >
-              29
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-disabled-cell="true"
-            data-is-holiday-cell="true"
-            data-value="2023-12-30T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c20"
-            >
-              30
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-is-holiday-cell="true"
-            data-value="2023-12-31T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c21"
-            />
-            <div
-              class="c23"
-            >
-              31
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-hidden-cell="true"
-            data-value="2024-01-01T09:00:00.000Z"
-          >
-            <div
-              class="c15"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              1
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-hidden-cell="true"
-            data-value="2024-01-02T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              2
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-hidden-cell="true"
-            data-value="2024-01-03T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              3
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-hidden-cell="true"
-            data-value="2024-01-04T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              4
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-hidden-cell="true"
-            data-value="2024-01-05T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              5
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-hidden-cell="true"
-            data-value="2024-01-06T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              6
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-hidden-cell="true"
-            data-value="2024-01-07T09:00:00.000Z"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c21"
-            />
-            <div
-              class="c17"
-            >
-              7
-            </div>
-          </div>
         </div>
       </div>
       <div
-        class="c25 c26"
+        class="c23 c24"
         data-container-type="monthsOfYearWrapper"
       >
         <div
-          class="c27"
+          class="c25"
           data-container-type="monthsWrapper"
         >
           <div
-            class="c28"
+            class="c26"
             data-cell-type="monthCell"
-            data-value="2023-01-01T09:00:00.000Z"
+            data-is-active-month="true"
+            data-is-current-month="true"
+            data-selected-cell="true"
+            data-value="Mon, 01 Jan 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c27"
             >
               Январь
             </div>
           </div>
           <div
-            class="c28"
+            class="c26"
             data-cell-type="monthCell"
-            data-value="2023-02-01T09:00:00.000Z"
+            data-value="Thu, 01 Feb 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               Февраль
             </div>
           </div>
           <div
-            class="c28"
+            class="c26"
             data-cell-type="monthCell"
-            data-value="2023-03-01T09:00:00.000Z"
+            data-value="Fri, 01 Mar 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               Март
             </div>
           </div>
           <div
-            class="c28"
+            class="c26"
             data-cell-type="monthCell"
-            data-value="2023-04-01T09:00:00.000Z"
+            data-value="Mon, 01 Apr 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               Апрель
             </div>
           </div>
           <div
-            class="c28"
+            class="c26"
             data-cell-type="monthCell"
-            data-value="2023-05-01T09:00:00.000Z"
+            data-value="Wed, 01 May 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               Май
             </div>
           </div>
           <div
-            class="c28"
+            class="c26"
             data-cell-type="monthCell"
-            data-value="2023-06-01T09:00:00.000Z"
+            data-value="Sat, 01 Jun 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               Июнь
             </div>
           </div>
           <div
-            class="c28"
+            class="c26"
             data-cell-type="monthCell"
-            data-value="2023-07-01T09:00:00.000Z"
+            data-value="Mon, 01 Jul 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               Июль
             </div>
           </div>
           <div
-            class="c28"
+            class="c26"
             data-cell-type="monthCell"
-            data-value="2023-08-01T09:00:00.000Z"
+            data-value="Thu, 01 Aug 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               Август
             </div>
           </div>
           <div
-            class="c28"
+            class="c26"
             data-cell-type="monthCell"
-            data-value="2023-09-01T09:00:00.000Z"
+            data-value="Sun, 01 Sep 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               Сентябрь
             </div>
           </div>
           <div
-            class="c28"
+            class="c26"
             data-cell-type="monthCell"
-            data-value="2023-10-01T09:00:00.000Z"
+            data-value="Tue, 01 Oct 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               Октябрь
             </div>
           </div>
           <div
-            class="c28"
+            class="c26"
             data-cell-type="monthCell"
-            data-value="2023-11-01T09:00:00.000Z"
+            data-value="Fri, 01 Nov 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               Ноябрь
             </div>
           </div>
           <div
-            class="c28"
+            class="c26"
             data-cell-type="monthCell"
-            data-is-current-month="true"
-            data-value="2023-12-01T09:00:00.000Z"
+            data-value="Sun, 01 Dec 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c30"
+              class="c28"
             >
               Декабрь
             </div>
@@ -1632,350 +1610,352 @@ exports[`DatePickerCalendar should render component 1`] = `
         </div>
       </div>
       <div
-        class="c31 c32"
+        class="c29 c30"
         data-container-type="yearsOfYearWrapper"
       >
         <div
-          class="c33"
+          class="c31"
           data-container-type="yearsWrapper"
         >
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2021-01-01T09:00:00.000Z"
+            data-value="Fri, 01 Jan 2021 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2021
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2022-01-01T09:00:00.000Z"
+            data-value="Sat, 01 Jan 2022 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2022
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-is-current-year="true"
-            data-value="2023-01-01T09:00:00.000Z"
+            data-value="Sun, 01 Jan 2023 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c30"
+              class="c28"
             >
               2023
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2024-01-01T09:00:00.000Z"
+            data-is-active-year="true"
+            data-is-current-year="true"
+            data-selected-cell="true"
+            data-value="Mon, 01 Jan 2024 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c27"
             >
               2024
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2025-01-01T09:00:00.000Z"
+            data-value="Wed, 01 Jan 2025 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2025
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2026-01-01T09:00:00.000Z"
+            data-value="Thu, 01 Jan 2026 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2026
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2027-01-01T09:00:00.000Z"
+            data-value="Fri, 01 Jan 2027 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2027
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2028-01-01T09:00:00.000Z"
+            data-value="Sat, 01 Jan 2028 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2028
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2029-01-01T09:00:00.000Z"
+            data-value="Mon, 01 Jan 2029 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2029
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2030-01-01T09:00:00.000Z"
+            data-value="Tue, 01 Jan 2030 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2030
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2031-01-01T09:00:00.000Z"
+            data-value="Wed, 01 Jan 2031 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2031
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2032-01-01T09:00:00.000Z"
+            data-value="Thu, 01 Jan 2032 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2032
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2033-01-01T09:00:00.000Z"
+            data-value="Sat, 01 Jan 2033 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2033
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2034-01-01T09:00:00.000Z"
+            data-value="Sun, 01 Jan 2034 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2034
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2035-01-01T09:00:00.000Z"
+            data-value="Mon, 01 Jan 2035 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2035
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2036-01-01T09:00:00.000Z"
+            data-value="Tue, 01 Jan 2036 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2036
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2037-01-01T09:00:00.000Z"
+            data-value="Thu, 01 Jan 2037 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2037
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2038-01-01T09:00:00.000Z"
+            data-value="Fri, 01 Jan 2038 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2038
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2039-01-01T09:00:00.000Z"
+            data-value="Sat, 01 Jan 2039 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2039
             </div>
           </div>
           <div
-            class="c34"
+            class="c32"
             data-cell-type="yearCell"
-            data-value="2040-01-01T09:00:00.000Z"
+            data-value="Sun, 01 Jan 2040 09:00:00 GMT"
           >
             <div
-              class="c18"
+              class="c15"
             />
             <div
               class="c16"
             />
             <div
-              class="c29"
+              class="c28"
             >
               2040
             </div>

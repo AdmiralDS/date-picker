@@ -154,7 +154,11 @@ exports[`YearPickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
-  border-color: #23262D;
+  background-color: #0062FF;
+  border-color: #0062FF;
+  color: #FFFFFF;
+  background-color: #0046E2;
+  border-color: #0046E2;
 }
 
 .c10 {
@@ -311,7 +315,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2021-01-01T09:00:00.000Z"
+            data-value="Fri, 01 Jan 2021 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -328,7 +332,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2022-01-01T09:00:00.000Z"
+            data-value="Sat, 01 Jan 2022 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -345,25 +349,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-is-current-year="true"
-            data-value="2023-01-01T09:00:00.000Z"
-          >
-            <div
-              class="c12"
-            />
-            <div
-              class="c13"
-            />
-            <div
-              class="c15"
-            >
-              2023
-            </div>
-          </div>
-          <div
-            class="c11"
-            data-cell-type="yearCell"
-            data-value="2024-01-01T09:00:00.000Z"
+            data-value="Sun, 01 Jan 2023 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -374,13 +360,33 @@ exports[`YearPickerCalendar should render component 1`] = `
             <div
               class="c14"
             >
+              2023
+            </div>
+          </div>
+          <div
+            class="c11"
+            data-cell-type="yearCell"
+            data-is-active-year="true"
+            data-is-current-year="true"
+            data-selected-cell="true"
+            data-value="Mon, 01 Jan 2024 09:00:00 GMT"
+          >
+            <div
+              class="c12"
+            />
+            <div
+              class="c13"
+            />
+            <div
+              class="c15"
+            >
               2024
             </div>
           </div>
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2025-01-01T09:00:00.000Z"
+            data-value="Wed, 01 Jan 2025 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -397,7 +403,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2026-01-01T09:00:00.000Z"
+            data-value="Thu, 01 Jan 2026 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -414,7 +420,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2027-01-01T09:00:00.000Z"
+            data-value="Fri, 01 Jan 2027 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -431,7 +437,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2028-01-01T09:00:00.000Z"
+            data-value="Sat, 01 Jan 2028 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -448,7 +454,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2029-01-01T09:00:00.000Z"
+            data-value="Mon, 01 Jan 2029 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -465,7 +471,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2030-01-01T09:00:00.000Z"
+            data-value="Tue, 01 Jan 2030 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -482,7 +488,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2031-01-01T09:00:00.000Z"
+            data-value="Wed, 01 Jan 2031 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -499,7 +505,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2032-01-01T09:00:00.000Z"
+            data-value="Thu, 01 Jan 2032 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -516,7 +522,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2033-01-01T09:00:00.000Z"
+            data-value="Sat, 01 Jan 2033 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -533,7 +539,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2034-01-01T09:00:00.000Z"
+            data-value="Sun, 01 Jan 2034 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -550,7 +556,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2035-01-01T09:00:00.000Z"
+            data-value="Mon, 01 Jan 2035 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -567,7 +573,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2036-01-01T09:00:00.000Z"
+            data-value="Tue, 01 Jan 2036 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -584,7 +590,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2037-01-01T09:00:00.000Z"
+            data-value="Thu, 01 Jan 2037 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -601,7 +607,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2038-01-01T09:00:00.000Z"
+            data-value="Fri, 01 Jan 2038 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -618,7 +624,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2039-01-01T09:00:00.000Z"
+            data-value="Sat, 01 Jan 2039 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -635,7 +641,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-value="2040-01-01T09:00:00.000Z"
+            data-value="Sun, 01 Jan 2040 09:00:00 GMT"
           >
             <div
               class="c12"

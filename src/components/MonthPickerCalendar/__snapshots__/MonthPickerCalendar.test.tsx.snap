@@ -151,6 +151,11 @@ exports[`MonthPickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
+  background-color: #0062FF;
+  border-color: #0062FF;
+  color: #FFFFFF;
+  background-color: #0046E2;
+  border-color: #0046E2;
 }
 
 .c15 {
@@ -173,7 +178,6 @@ exports[`MonthPickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
-  border-color: #23262D;
 }
 
 .c10 {
@@ -319,7 +323,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
         class="c6"
         data-panel-target-type="year"
       >
-        2023
+        2024
       </div>
       <button
         class="c2"
@@ -362,7 +366,10 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
-            data-value="2023-01-01T09:00:00.000Z"
+            data-is-active-month="true"
+            data-is-current-month="true"
+            data-selected-cell="true"
+            data-value="Mon, 01 Jan 2024 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -379,7 +386,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
-            data-value="2023-02-01T09:00:00.000Z"
+            data-value="Thu, 01 Feb 2024 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -388,7 +395,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               Февраль
             </div>
@@ -396,7 +403,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
-            data-value="2023-03-01T09:00:00.000Z"
+            data-value="Fri, 01 Mar 2024 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -405,7 +412,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               Март
             </div>
@@ -413,7 +420,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
-            data-value="2023-04-01T09:00:00.000Z"
+            data-value="Mon, 01 Apr 2024 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -422,7 +429,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               Апрель
             </div>
@@ -430,7 +437,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
-            data-value="2023-05-01T09:00:00.000Z"
+            data-value="Wed, 01 May 2024 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -439,7 +446,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               Май
             </div>
@@ -447,7 +454,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
-            data-value="2023-06-01T09:00:00.000Z"
+            data-value="Sat, 01 Jun 2024 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -456,7 +463,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               Июнь
             </div>
@@ -464,7 +471,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
-            data-value="2023-07-01T09:00:00.000Z"
+            data-value="Mon, 01 Jul 2024 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -473,7 +480,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               Июль
             </div>
@@ -481,7 +488,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
-            data-value="2023-08-01T09:00:00.000Z"
+            data-value="Thu, 01 Aug 2024 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -490,7 +497,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               Август
             </div>
@@ -498,7 +505,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
-            data-value="2023-09-01T09:00:00.000Z"
+            data-value="Sun, 01 Sep 2024 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -507,7 +514,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               Сентябрь
             </div>
@@ -515,7 +522,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
-            data-value="2023-10-01T09:00:00.000Z"
+            data-value="Tue, 01 Oct 2024 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -524,7 +531,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               Октябрь
             </div>
@@ -532,7 +539,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
-            data-value="2023-11-01T09:00:00.000Z"
+            data-value="Fri, 01 Nov 2024 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -541,7 +548,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               Ноябрь
             </div>
@@ -549,8 +556,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
-            data-is-current-month="true"
-            data-value="2023-12-01T09:00:00.000Z"
+            data-value="Sun, 01 Dec 2024 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -577,7 +583,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2021-01-01T09:00:00.000Z"
+            data-value="Fri, 01 Jan 2021 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -586,7 +592,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2021
             </div>
@@ -594,7 +600,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2022-01-01T09:00:00.000Z"
+            data-value="Sat, 01 Jan 2022 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -603,7 +609,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2022
             </div>
@@ -611,8 +617,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-is-current-year="true"
-            data-value="2023-01-01T09:00:00.000Z"
+            data-value="Sun, 01 Jan 2023 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -629,7 +634,10 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2024-01-01T09:00:00.000Z"
+            data-is-active-year="true"
+            data-is-current-year="true"
+            data-selected-cell="true"
+            data-value="Mon, 01 Jan 2024 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -646,7 +654,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2025-01-01T09:00:00.000Z"
+            data-value="Wed, 01 Jan 2025 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -655,7 +663,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2025
             </div>
@@ -663,7 +671,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2026-01-01T09:00:00.000Z"
+            data-value="Thu, 01 Jan 2026 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -672,7 +680,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2026
             </div>
@@ -680,7 +688,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2027-01-01T09:00:00.000Z"
+            data-value="Fri, 01 Jan 2027 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -689,7 +697,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2027
             </div>
@@ -697,7 +705,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2028-01-01T09:00:00.000Z"
+            data-value="Sat, 01 Jan 2028 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -706,7 +714,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2028
             </div>
@@ -714,7 +722,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2029-01-01T09:00:00.000Z"
+            data-value="Mon, 01 Jan 2029 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -723,7 +731,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2029
             </div>
@@ -731,7 +739,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2030-01-01T09:00:00.000Z"
+            data-value="Tue, 01 Jan 2030 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -740,7 +748,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2030
             </div>
@@ -748,7 +756,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2031-01-01T09:00:00.000Z"
+            data-value="Wed, 01 Jan 2031 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -757,7 +765,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2031
             </div>
@@ -765,7 +773,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2032-01-01T09:00:00.000Z"
+            data-value="Thu, 01 Jan 2032 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -774,7 +782,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2032
             </div>
@@ -782,7 +790,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2033-01-01T09:00:00.000Z"
+            data-value="Sat, 01 Jan 2033 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -791,7 +799,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2033
             </div>
@@ -799,7 +807,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2034-01-01T09:00:00.000Z"
+            data-value="Sun, 01 Jan 2034 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -808,7 +816,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2034
             </div>
@@ -816,7 +824,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2035-01-01T09:00:00.000Z"
+            data-value="Mon, 01 Jan 2035 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -825,7 +833,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2035
             </div>
@@ -833,7 +841,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2036-01-01T09:00:00.000Z"
+            data-value="Tue, 01 Jan 2036 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -842,7 +850,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2036
             </div>
@@ -850,7 +858,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2037-01-01T09:00:00.000Z"
+            data-value="Thu, 01 Jan 2037 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -859,7 +867,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2037
             </div>
@@ -867,7 +875,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2038-01-01T09:00:00.000Z"
+            data-value="Fri, 01 Jan 2038 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -876,7 +884,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2038
             </div>
@@ -884,7 +892,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2039-01-01T09:00:00.000Z"
+            data-value="Sat, 01 Jan 2039 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -893,7 +901,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2039
             </div>
@@ -901,7 +909,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c19"
             data-cell-type="yearCell"
-            data-value="2040-01-01T09:00:00.000Z"
+            data-value="Sun, 01 Jan 2040 09:00:00 GMT"
           >
             <div
               class="c12"
@@ -910,7 +918,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2040
             </div>

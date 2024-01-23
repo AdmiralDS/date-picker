@@ -123,7 +123,7 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
   right: 0;
 }
 
-.c18 {
+.c17 {
   position: absolute;
   top: 0;
   width: 50%;
@@ -156,7 +156,7 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
   border-radius: 18px;
 }
 
-.c17 {
+.c18 {
   position: absolute;
   top: 0;
   left: 0;
@@ -176,7 +176,9 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
-  border-color: #23262D;
+  background-color: #0062FF;
+  border-color: #0062FF;
+  color: #FFFFFF;
 }
 
 .c11 {
@@ -378,7 +380,6 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
             <div
               class="c12"
               data-cell-type="yearCell"
-              data-is-current-day-cell="true"
               data-value="2023-01-01T09:00:00.000Z"
             >
               <div
@@ -388,7 +389,7 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2023
               </div>
@@ -396,17 +397,19 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
             <div
               class="c12"
               data-cell-type="yearCell"
+              data-is-current-day-cell="true"
               data-is-end-of-week-cell="true"
+              data-selected-cell="true"
               data-value="2024-01-01T09:00:00.000Z"
             >
               <div
                 class="c16"
               />
               <div
-                class="c18"
+                class="c17"
               />
               <div
-                class="c15"
+                class="c18"
               >
                 2024
               </div>
@@ -473,7 +476,7 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
                 class="c16"
               />
               <div
-                class="c18"
+                class="c17"
               />
               <div
                 class="c15"
@@ -543,7 +546,7 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
                 class="c16"
               />
               <div
-                class="c18"
+                class="c17"
               />
               <div
                 class="c15"
@@ -613,7 +616,7 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
                 class="c16"
               />
               <div
-                class="c18"
+                class="c17"
               />
               <div
                 class="c15"
@@ -683,7 +686,7 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
                 class="c16"
               />
               <div
-                class="c18"
+                class="c17"
               />
               <div
                 class="c15"
@@ -832,7 +835,7 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
                 class="c16"
               />
               <div
-                class="c18"
+                class="c17"
               />
               <div
                 class="c15"
@@ -902,7 +905,7 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
                 class="c16"
               />
               <div
-                class="c18"
+                class="c17"
               />
               <div
                 class="c15"
@@ -972,7 +975,7 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
                 class="c16"
               />
               <div
-                class="c18"
+                class="c17"
               />
               <div
                 class="c15"
@@ -1042,7 +1045,7 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
                 class="c16"
               />
               <div
-                class="c18"
+                class="c17"
               />
               <div
                 class="c15"
@@ -1112,7 +1115,7 @@ exports[`YearRangeDoublePickerCalendar should render component 1`] = `
                 class="c16"
               />
               <div
-                class="c18"
+                class="c17"
               />
               <div
                 class="c15"
