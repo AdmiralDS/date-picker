@@ -173,7 +173,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
-  border-color: #0062FF;
+  border-color: #23262D;
 }
 
 .c17 {
@@ -196,33 +196,6 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
-}
-
-.c23 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  padding: 7px 0;
-  font-family: 'VTB Group UI',sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  font-feature-settings: 'tnum' on,'lnum' on;
-  text-rendering: geometricPrecision;
-  color: #23262D;
-  background-color: #FFFFFF;
-  border: 1px #FFFFFF solid;
-  border-radius: 18px;
-  background-color: #0062FF;
-  border-color: #0062FF;
-  color: #FFFFFF;
-  background-color: #0046E2;
-  border-color: #0046E2;
 }
 
 .c11 {
@@ -421,10 +394,8 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
             <div
               class="c12"
               data-cell-type="monthCell"
-              data-is-active-cell="true"
               data-is-current-day-cell="true"
               data-is-start-of-week-cell="true"
-              data-selected-cell="true"
               data-value="Mon, 01 Jan 2024 09:00:00 GMT"
             >
               <div
@@ -697,9 +668,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
             <div
               class="c22"
               data-cell-type="yearCell"
-              data-is-active-year="true"
               data-is-current-year="true"
-              data-selected-cell="true"
               data-value="Mon, 01 Jan 2024 09:00:00 GMT"
             >
               <div
@@ -709,7 +678,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c23"
+                class="c15"
               >
                 2024
               </div>
@@ -1342,9 +1311,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
             <div
               class="c22"
               data-cell-type="yearCell"
-              data-is-active-year="true"
               data-is-current-year="true"
-              data-selected-cell="true"
               data-value="Mon, 01 Jan 2024 09:00:00 GMT"
             >
               <div
@@ -1354,7 +1321,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c23"
+                class="c15"
               >
                 2024
               </div>

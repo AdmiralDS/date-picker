@@ -30,6 +30,7 @@ export default defineConfig({
     }),
   ],
   build: {
+    sourcemap: true,
     // use vite library mode to build the package
     // https://vitejs.dev/guide/build.html#library-mode
     lib: {

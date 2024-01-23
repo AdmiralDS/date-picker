@@ -293,7 +293,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 50%;
-  border-color: #0062FF;
+  border-color: #23262D;
 }
 
 .c21 {
@@ -339,11 +339,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
-  background-color: #0062FF;
-  border-color: #0062FF;
-  color: #FFFFFF;
-  background-color: #0046E2;
-  border-color: #0046E2;
+  border-color: #23262D;
 }
 
 .c27 {
@@ -974,9 +970,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-is-active-cell="true"
             data-is-current-day-cell="true"
-            data-selected-cell="true"
             data-value="Tue, 23 Jan 2024 09:00:00 GMT"
           >
             <div
@@ -1345,9 +1339,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c25"
             data-cell-type="monthCell"
-            data-is-active-month="true"
             data-is-current-month="true"
-            data-selected-cell="true"
             data-value="Mon, 01 Jan 2024 09:00:00 GMT"
           >
             <div
@@ -1613,9 +1605,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c31"
             data-cell-type="yearCell"
-            data-is-active-year="true"
             data-is-current-year="true"
-            data-selected-cell="true"
             data-value="Mon, 01 Jan 2024 09:00:00 GMT"
           >
             <div

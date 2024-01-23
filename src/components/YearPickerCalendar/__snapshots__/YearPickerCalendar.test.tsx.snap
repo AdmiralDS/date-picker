@@ -154,11 +154,7 @@ exports[`YearPickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
-  background-color: #0062FF;
-  border-color: #0062FF;
-  color: #FFFFFF;
-  background-color: #0046E2;
-  border-color: #0046E2;
+  border-color: #23262D;
 }
 
 .c10 {
@@ -366,9 +362,7 @@ exports[`YearPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="yearCell"
-            data-is-active-year="true"
             data-is-current-year="true"
-            data-selected-cell="true"
             data-value="Mon, 01 Jan 2024 09:00:00 GMT"
           >
             <div
