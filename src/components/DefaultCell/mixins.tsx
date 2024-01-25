@@ -92,8 +92,8 @@ export const hiddenDateCellMixin = css<{ $isActive?: boolean }>`
 
 export const holidayDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseDateMixin};
-  color: ${(p) => p.theme.color['Error/Error 60 Main']};
   ${activeCellMixin};
+  color: ${(p) => p.theme.color['Error/Error 60 Main']};
 `;
 
 export const disabledHolidayDateCellMixin = css<{ $isActive?: boolean }>`

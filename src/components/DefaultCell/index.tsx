@@ -233,6 +233,7 @@ const getDefaultDateCellMixin = (
   if (disabled && isHoliday) return disabledHolidayDateCellMixin;
   if (disabled) return disabledDateCellMixin;
   if (selected) return selectedDateCellMixin;
+  if (isActive && isHoliday) return holidayDateCellMixin;
   if (isActive) return baseDateCellMixin;
   if (isHoliday && isCurrent) return currentDateHolidayDateCellMixin;
   if (isHoliday) return holidayDateCellMixin;
