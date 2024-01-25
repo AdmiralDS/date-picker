@@ -23,7 +23,6 @@ export const YearsOfTwentyYearsWidget = ({
   selected,
   active,
   activeRangeEnd,
-  disabledDate,
   dateAttributes,
   locale = 'ru',
   cell,
@@ -39,7 +38,6 @@ export const YearsOfTwentyYearsWidget = ({
         selected={selected}
         active={active}
         activeRangeEnd={activeRangeEnd}
-        disabledDate={disabledDate}
         dateAttributes={dateAttributes}
         cell={cell}
         data-container-type="yearsWrapper"

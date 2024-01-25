@@ -21,7 +21,6 @@ export const DatesOfMonthWidget = ({
   selected,
   active,
   activeRangeEnd,
-  disabledDate,
   dateAttributes,
   locale = 'ru',
   dayNamesProps,
@@ -40,7 +39,6 @@ export const DatesOfMonthWidget = ({
         selected={selected}
         active={active}
         activeRangeEnd={activeRangeEnd}
-        disabledDate={disabledDate}
         dateAttributes={dateAttributes}
         cell={cell}
         data-container-type="datesWrapper"

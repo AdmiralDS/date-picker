@@ -19,7 +19,6 @@ export const DateRangeCalendar = ({
   activeDateRangeEndValue,
   defaultActiveDateRangeEndValue,
   onActiveDateRangeEndValueChange,
-  disabledDate,
   dateAttributes,
   dateValue,
   activeDateValue,
@@ -163,7 +162,6 @@ export const DateRangeCalendar = ({
       selected={[dateRangeFirstInner, dateRangeSecondInner]}
       active={activeDateInner}
       activeRangeEnd={dateRangeActiveEndInner}
-      disabledDate={disabledDate}
       dateAttributes={dateAttributes}
       locale={locale}
       dayNamesProps={{ dayNameCellState: getDayNameCellState }}

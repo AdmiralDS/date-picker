@@ -15,7 +15,6 @@ import {
   getSelectedDateRange,
   getYearAttributes,
   setNoon,
-  yearIsDisabled,
   yearsRange,
 } from '#src/components/utils';
 import {
@@ -42,7 +41,6 @@ export const Years = ({
   selected,
   active,
   activeRangeEnd,
-  disabledDate,
   dateAttributes,
   cell,
   locale = 'ru',
@@ -60,7 +58,6 @@ export const Years = ({
     const cellContent = date.year();
     if (range) {
       const selectedDateRange = getSelectedDateRange(selected);
-      const disabled = yearIsDisabled(date, disabledDate);
       const isInRange = dateIsInRange('year', date, selectedDateRange);
       const isRangeStart = dateIsRangeStart('year', date, selectedDateRange);
       const isRangeEnd = dateIsRangeEnd('year', date, selectedDateRange);

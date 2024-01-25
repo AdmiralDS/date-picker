@@ -231,28 +231,6 @@ export function getYearAttributes(startDate: Dayjs, dateAttrs?: (currentDate: Da
   return getUnitAttributes(startDate, 'year', dateAttrs);
 }
 
-export const monthIsDisabled = (dateCurrent?: Dayjs, disabledDate?: (currentDate: Dayjs) => boolean) => {
-  if (!dateCurrent || !disabledDate) {
-    return false;
-  }
-  const datesArray = Array.from(Array(dateCurrent.endOf('month').date()).keys());
-  return datesArray.every((v) => {
-    const date = dateCurrent.date(v);
-    return disabledDate(date);
-  });
-};
-
-export const yearIsDisabled = (dateCurrent?: Dayjs, disabledDate?: (currentDate: Dayjs) => boolean) => {
-  if (!dateCurrent || !disabledDate) {
-    return false;
-  }
-  const datesArray = Array.from(Array(getDaysInYear(dateCurrent)).keys());
-  return datesArray.every((v) => {
-    const date = getDateByDayOfYear(dateCurrent, v);
-    return disabledDate(date);
-  });
-};
-
 export const getSelectedDate = (selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined]) => {
   return isDayjs(selected) ? selected : undefined;
 };

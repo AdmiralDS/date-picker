@@ -10,7 +10,6 @@ export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined];
   active?: Dayjs;
   activeRangeEnd?: Dayjs;
-  disabledDate?: (currentDate: Dayjs) => boolean;
   dateAttributes?: (currentDate: Dayjs) => DateAttributes;
   cell: FunctionComponent<DateCellProps>;
   locale?: string;

@@ -13,7 +13,6 @@ import { MemoDefaultDateCell } from '#src/components/DefaultCell';
 export interface DateCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 export const DateCalendar = ({
-  disabledDate,
   dateAttributes,
   dateValue,
   selectedDateValue,
@@ -92,7 +91,6 @@ export const DateCalendar = ({
       date={dateInner}
       selected={selectedDateInner}
       active={activeDateInner}
-      disabledDate={disabledDate}
       dateAttributes={dateAttributes}
       locale={locale}
       onMouseLeave={handleMouseLeave}

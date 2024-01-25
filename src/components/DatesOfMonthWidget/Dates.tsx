@@ -31,7 +31,6 @@ export const Dates = ({
   selected,
   active,
   activeRangeEnd,
-  disabledDate,
   dateAttributes,
   cell,
   locale = 'ru',

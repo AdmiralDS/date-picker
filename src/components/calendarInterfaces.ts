@@ -20,8 +20,7 @@ export type RenderFunctionType = (props: RenderFunctionProps) => ReactNode;
 
 export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   cell?: FunctionComponent<DateCellProps>;
-  /** Дата, которая не может быть выбрана */
-  disabledDate?: (currentDate: Dayjs) => boolean;
+  /** Коллбэк на определение аттрибутов даты (disabled, isHoliday, hidden) */
   dateAttributes?: (currentDate: Dayjs) => DateAttributes;
 
   /** Дата для отображения на экране */

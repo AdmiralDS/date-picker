@@ -14,7 +14,6 @@ export const MonthCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
-  disabledDate,
   dateAttributes,
   dateValue,
   activeDateValue,
@@ -82,7 +81,6 @@ export const MonthCalendar = ({
       date={dateInner}
       selected={selectedDateInner}
       active={activeDateInner}
-      disabledDate={disabledDate}
       dateAttributes={dateAttributes}
       locale={locale}
       onMouseLeave={handleMouseLeave}

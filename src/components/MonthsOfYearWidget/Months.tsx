@@ -37,7 +37,6 @@ export const Months = ({
   selected,
   active,
   activeRangeEnd,
-  disabledDate,
   dateAttributes,
   cell,
   locale = 'ru',

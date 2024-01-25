@@ -17,7 +17,6 @@ export const YearRangeCalendar = ({
   activeDateRangeEndValue,
   defaultActiveDateRangeEndValue,
   onActiveDateRangeEndValueChange,
-  disabledDate,
   dateAttributes,
   dateValue,
   activeDateValue,
@@ -155,7 +154,6 @@ export const YearRangeCalendar = ({
       selected={[dateRangeFirstInner, dateRangeSecondInner]}
       active={activeDateInner}
       activeRangeEnd={dateRangeActiveEndInner}
-      disabledDate={disabledDate}
       dateAttributes={dateAttributes}
       locale={locale}
       onMouseLeave={handleMouseLeave}
