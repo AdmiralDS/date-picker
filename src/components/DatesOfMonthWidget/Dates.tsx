@@ -87,11 +87,12 @@ export const Dates = ({
       dateValue,
       key: dateValue,
       cellContent,
-      disabled,
-      hidden,
       selected: selectedDate ? date.isSame(selectedDate, 'date') : false,
       isCurrent,
       isActive,
+      disabled,
+      hidden,
+      isHoliday,
     };
   });
   const cells = cellModel.map((model) => {
