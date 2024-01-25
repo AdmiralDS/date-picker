@@ -14,6 +14,7 @@ export interface DateCalendarProps extends Omit<SingleCalendarProps, 'defaultDat
 
 export const DateCalendar = ({
   disabledDate,
+  dateAttributes,
   dateValue,
   selectedDateValue,
   defaultSelectedDateValue,
@@ -92,6 +93,7 @@ export const DateCalendar = ({
       selected={selectedDateInner}
       active={activeDateInner}
       disabledDate={disabledDate}
+      dateAttributes={dateAttributes}
       locale={locale}
       onMouseLeave={handleMouseLeave}
       onMouseOver={handleMouseOver}

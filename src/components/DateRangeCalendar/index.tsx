@@ -20,6 +20,7 @@ export const DateRangeCalendar = ({
   defaultActiveDateRangeEndValue,
   onActiveDateRangeEndValueChange,
   disabledDate,
+  dateAttributes,
   dateValue,
   activeDateValue,
   defaultActiveDateValue,
@@ -163,6 +164,7 @@ export const DateRangeCalendar = ({
       active={activeDateInner}
       activeRangeEnd={dateRangeActiveEndInner}
       disabledDate={disabledDate}
+      dateAttributes={dateAttributes}
       locale={locale}
       dayNamesProps={{ dayNameCellState: getDayNameCellState }}
       onMouseLeave={handleMouseLeave}

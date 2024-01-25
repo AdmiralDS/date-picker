@@ -11,9 +11,9 @@ import {
   dateIsRangeStart,
   dateIsSelected,
   getCurrentDate,
+  getMonthAttributes,
   getSelectedDate,
   getSelectedDateRange,
-  monthIsDisabled,
   setNoon,
 } from '#src/components/utils';
 import { MONTHS_COLUMNS, MONTHS_ROWS, MONTHS_WRAPPER_HEIGHT } from '#src/components/MonthsOfYearWidget/constants';
@@ -38,6 +38,7 @@ export const Months = ({
   active,
   activeRangeEnd,
   disabledDate,
+  dateAttributes,
   cell,
   locale = 'ru',
   range = false,
@@ -47,7 +48,7 @@ export const Months = ({
   const cellModel = monthsArray.map((v) => {
     const date = firstMonth.add(v, 'month');
     const dateValue = date.toString();
-    const disabled = monthIsDisabled(date, disabledDate);
+    const { disabled, isHoliday, hidden } = getMonthAttributes(date, dateAttributes);
     const isCurrent = date.isSame(getCurrentDate(locale), 'month');
     const isActive = active ? date.isSame(active, 'month') : false;
     const cellContent = capitalizeFirstLetter(date.format('MMMM'));
@@ -65,10 +66,12 @@ export const Months = ({
         dateValue,
         key: dateValue,
         cellContent,
-        disabled,
         selected: dateIsSelected('month', date, selectedDateRange),
         isCurrent,
         isActive,
+        disabled,
+        isHoliday,
+        hidden,
 
         isInRange,
         isRangeStart,
@@ -85,10 +88,12 @@ export const Months = ({
       dateValue,
       key: dateValue,
       cellContent,
-      disabled,
       selected: selectedDate ? date.isSame(selectedDate, 'month') : false,
       isCurrent,
       isActive,
+      disabled,
+      isHoliday,
+      hidden,
     };
   });
   const cells = cellModel.map((model) => {

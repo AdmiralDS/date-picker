@@ -18,6 +18,7 @@ export const MonthRangeCalendar = ({
   defaultActiveDateRangeEndValue,
   onActiveDateRangeEndValueChange,
   disabledDate,
+  dateAttributes,
   dateValue,
   activeDateValue,
   defaultActiveDateValue,
@@ -155,6 +156,7 @@ export const MonthRangeCalendar = ({
       active={activeDateInner}
       activeRangeEnd={dateRangeActiveEndInner}
       disabledDate={disabledDate}
+      dateAttributes={dateAttributes}
       locale={locale}
       onMouseLeave={handleMouseLeave}
       onMouseOver={handleMouseOver}

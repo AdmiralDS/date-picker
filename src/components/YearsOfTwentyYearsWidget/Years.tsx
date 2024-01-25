@@ -13,6 +13,7 @@ import {
   getCurrentDate,
   getSelectedDate,
   getSelectedDateRange,
+  getYearAttributes,
   setNoon,
   yearIsDisabled,
   yearsRange,
@@ -42,6 +43,7 @@ export const Years = ({
   active,
   activeRangeEnd,
   disabledDate,
+  dateAttributes,
   cell,
   locale = 'ru',
   range = false,
@@ -52,7 +54,7 @@ export const Years = ({
   const cellModel = yearsArray.map((v) => {
     const date = firstYear.add(v, 'year');
     const dateValue = date.toString();
-    const disabled = yearIsDisabled(date, disabledDate);
+    const { disabled, isHoliday, hidden } = getYearAttributes(date, dateAttributes);
     const isCurrent = date.isSame(getCurrentDate(), 'year');
     const isActive = active ? date.isSame(active, 'year') : false;
     const cellContent = date.year();
@@ -71,10 +73,12 @@ export const Years = ({
         dateValue,
         key: dateValue,
         cellContent,
-        disabled,
         selected: dateIsSelected('year', date, selectedDateRange),
         isCurrent,
         isActive,
+        disabled,
+        isHoliday,
+        hidden,
 
         isInRange,
         isRangeStart,
@@ -91,10 +95,12 @@ export const Years = ({
       dateValue,
       key: dateValue,
       cellContent,
-      disabled,
       selected: selectedDate ? date.isSame(selectedDate, 'year') : false,
       isCurrent,
       isActive,
+      disabled,
+      isHoliday,
+      hidden,
     };
   });
   const cells = cellModel.map((model) => {

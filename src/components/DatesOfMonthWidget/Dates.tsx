@@ -32,6 +32,7 @@ export const Dates = ({
   active,
   activeRangeEnd,
   disabledDate,
+  dateAttributes,
   cell,
   locale = 'ru',
   range = false,
@@ -41,13 +42,14 @@ export const Dates = ({
   const cellModel = datesArray.map((v) => {
     const date = firstDate.add(v, 'day');
     const dateValue = date.toString();
-    const disabled = disabledDate?.(date);
+    const dateAttrs = dateAttributes?.(date);
+    const disabled = !!dateAttrs?.disabled;
+    const isHoliday = !!dateAttrs?.isHoliday;
     const isCurrent = date.isSame(dayjs().locale(locale), 'date');
     const isActive = active ? date.isSame(active, 'date') : false;
     const cellContent = date.date();
-    const hidden = date.month() !== dateInner.month();
-    // TODO:
-    //const isHoliday = dateIsHoliday(date);
+    const isOutsideMonth = date.month() !== dateInner.month();
+    const hidden = dateAttrs?.hidden ? dateAttrs?.hidden : isOutsideMonth;
     if (range) {
       const selectedDateRange = getSelectedDateRange(selected);
       const isInRange = dateIsInRange('date', date, selectedDateRange);
@@ -62,11 +64,14 @@ export const Dates = ({
         dateValue,
         key: dateValue,
         cellContent,
+        selected: dateIsSelected('date', date, selectedDateRange),
+        isActive,
+        isCurrent,
+        isOutsideMonth,
+
         disabled,
         hidden,
-        selected: dateIsSelected('date', date, selectedDateRange),
-        isCurrent,
-        isActive,
+        isHoliday,
 
         isInRange,
         isRangeStart,

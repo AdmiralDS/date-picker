@@ -1,11 +1,12 @@
 import dayjs, { isDayjs } from 'dayjs';
-import type { Dayjs, ManipulateType } from 'dayjs';
+import type { Dayjs, ManipulateType, UnitType } from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
 import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import utc from 'dayjs/plugin/utc';
 import isLeapYear from 'dayjs/plugin/isLeapYear';
 import DayOfYear from 'dayjs/plugin/dayOfYear';
+import type { DateAttributes } from '#src/components/DefaultCell';
 
 dayjs.extend(localeData);
 dayjs.extend(CustomParseFormat);
@@ -186,6 +187,49 @@ export const dateIsRangeSelectingEnd = (
   }
   return false;
 };
+
+function getMaxUnitDay(startDate: Dayjs, unit: UnitType) {
+  switch (unit) {
+    case 'month':
+      return startDate.endOf('month').date();
+    case 'year':
+      return getDaysInYear(startDate);
+    default:
+      return 0;
+  }
+}
+
+export function getUnitAttributes(
+  startDate: Dayjs,
+  unit: UnitType,
+  dateAttrs?: (currentDate: Dayjs) => DateAttributes,
+): DateAttributes {
+  if (!dateAttrs) return {};
+  const attrs: DateAttributes = {};
+  const maxDate = getMaxUnitDay(startDate, unit);
+  const firstDate = startDate.startOf(unit);
+  let i = 0;
+  while (!(attrs.disabled === false && attrs.isHoliday === false && attrs.hidden === false) && i < maxDate) {
+    const res = dateAttrs(firstDate.add(i, 'day'));
+    if (attrs.disabled !== false) attrs.disabled = res.disabled;
+    if (attrs.isHoliday !== false) attrs.isHoliday = res.isHoliday;
+    if (attrs.hidden !== false) attrs.hidden = res.hidden;
+    i++;
+  }
+
+  return attrs;
+}
+
+export function getMonthAttributes(
+  startDate: Dayjs,
+  dateAttrs?: (currentDate: Dayjs) => DateAttributes,
+): DateAttributes {
+  return getUnitAttributes(startDate, 'month', dateAttrs);
+}
+
+export function getYearAttributes(startDate: Dayjs, dateAttrs?: (currentDate: Dayjs) => DateAttributes) {
+  return getUnitAttributes(startDate, 'year', dateAttrs);
+}
 
 export const monthIsDisabled = (dateCurrent?: Dayjs, disabledDate?: (currentDate: Dayjs) => boolean) => {
   if (!dateCurrent || !disabledDate) {

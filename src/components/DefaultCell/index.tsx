@@ -108,19 +108,34 @@ const Cell = styled.div<{
   ${(p) => p.$cellMixin}
 `;
 
-export interface CellProps extends HTMLAttributes<HTMLDivElement> {
+export interface DateAttributes {
+  /** Дата недоступна для выбора */
+  disabled?: boolean;
+  /** Дата скрыта */
+  hidden?: boolean;
+  /** Дата является выходным или праздничным днем */
+  isHoliday?: boolean;
+}
+
+export interface CellProps extends HTMLAttributes<HTMLDivElement>, DateAttributes {
+  /** Ширина ячейки */
   width: number;
+  /** Высота ячейки */
   height: number;
 
+  /** Дата в формате string для аттрибута data-value */
   dateValue: string;
+  /** Данные для отображения в ячейке (дата, месяц или год в необходимом формате) */
   cellContent?: ReactNode;
   cellMixin: RuleSet<object>;
+  /** Дата является выбранной */
   selected?: boolean;
-  disabled?: boolean;
-  hidden?: boolean;
+  /** Дата, на которой в данный момент ховер */
   isActive?: boolean;
+  /** Сегодняшняя дата */
   isCurrent?: boolean;
-  isHoliday?: boolean;
+  /** Дата вне месяца для отображения */
+  isOutsideMonth?: boolean;
 
   isInRange?: boolean;
   isRangeStart?: boolean;

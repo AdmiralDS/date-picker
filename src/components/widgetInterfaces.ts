@@ -2,6 +2,7 @@ import type { FunctionComponent, HTMLAttributes } from 'react';
 import type { Dayjs } from 'dayjs';
 
 import type { CalendarViewMode, DateCellProps } from '#src/components/calendarInterfaces.ts';
+import type { DateAttributes } from '#src/components/DefaultCell';
 
 export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   /** Дата */
@@ -10,6 +11,7 @@ export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   active?: Dayjs;
   activeRangeEnd?: Dayjs;
   disabledDate?: (currentDate: Dayjs) => boolean;
+  dateAttributes?: (currentDate: Dayjs) => DateAttributes;
   cell: FunctionComponent<DateCellProps>;
   locale?: string;
   range?: boolean;
