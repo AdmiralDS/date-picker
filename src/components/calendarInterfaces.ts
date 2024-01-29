@@ -5,6 +5,28 @@ import type { DateAttributes, DefaultCellProps } from '#src/components/DefaultCe
 
 export type CalendarViewMode = 'dates' | 'months' | 'years';
 
+export interface CalendarLocaleProps {
+  /** Название локали */
+  localeName: string;
+  /** Текстовые константы, используемые в компоненте */
+  localeText?: {
+    /** Надпись (тултип) для кнопки со стрелкой, ведущей вперед */
+    backwardText?: string;
+    /** Надпись (тултип) для кнопки со стрелкой, ведущей назад */
+    forwardText?: string;
+    /** Надпись (тултип) для кнопки со стрелкой, ведущей к следующему месяцу */
+    nextMonthText?: string;
+    /** Надпись (тултип) для кнопки со стрелкой ведущей, к предыдущему месяцу */
+    previousMonthText?: string;
+    /** Надпись (тултип) для кнопки возврата  */
+    returnText?: string;
+    /** Надпись (тултип) для кнопки, открывающей панель выбора года */
+    selectYearText?: string;
+    /** Надпись (тултип) для кнопки, открывающей панель выбора месяца */
+    selectMonthText?: string;
+  };
+}
+
 export interface RenderFunctionProps {
   date: Dayjs;
   selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined];
@@ -37,7 +59,7 @@ export interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   /** Коллбэк на изменение активной даты */
   onActiveDateValueChange?: (date?: Dayjs) => void;
 
-  locale?: string;
+  locale?: CalendarLocaleProps;
 }
 
 export interface SingleCalendarProps extends CalendarProps {
