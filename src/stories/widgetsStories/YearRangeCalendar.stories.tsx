@@ -20,7 +20,7 @@ export default {
   },
   argTypes: {
     locale: {
-      control: { type: 'text' },
+      control: false,
     },
   },
 } as Meta<typeof YearRangeCalendar>;

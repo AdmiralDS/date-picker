@@ -29,7 +29,7 @@ export default {
       control: false,
     },
     locale: {
-      control: { type: 'text' },
+      control: false,
     },
   },
 } as Meta<typeof DatePickerCalendar>;

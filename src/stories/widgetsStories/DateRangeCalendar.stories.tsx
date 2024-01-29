@@ -23,7 +23,7 @@ export default {
       control: { type: 'text' },
     },
     locale: {
-      control: { type: 'text' },
+      control: false,
     },
   },
 } as Meta<typeof DateRangeCalendar>;
