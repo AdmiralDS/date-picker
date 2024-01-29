@@ -3,6 +3,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
 import { DatePickerCalendarSimpleTemplate } from '#src/stories/datePickerCalendarStories/DatePickerCalendarSimple.template.tsx';
 import { DatePickerCalendarWithHolidaysTemplate } from './DatePickerCalendarWithHolidays.template';
+import { DatePickerCalendarChangeLocaleTemplate } from './DatePickerCalendarChangeLocale.template';
 
 export default {
   title: 'Admiral-2.1/DatePickerCalendar',
@@ -45,3 +46,9 @@ const DatePickerCalendarWithHolidaysStory: StoryFn<typeof DatePickerCalendar> = 
 };
 export const DatePickerCalendarWithHolidays = DatePickerCalendarWithHolidaysStory.bind({});
 DatePickerCalendarWithHolidays.storyName = 'DatePickerCalendarWithHolidays';
+
+const DatePickerCalendarChangeLocaleStory: StoryFn<typeof DatePickerCalendar> = (props) => {
+  return <DatePickerCalendarChangeLocaleTemplate {...props} />;
+};
+export const DatePickerCalendarChangeLocale = DatePickerCalendarChangeLocaleStory.bind({});
+DatePickerCalendarChangeLocale.storyName = 'DatePickerCalendarChangeLocale';
