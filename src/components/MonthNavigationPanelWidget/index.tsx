@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { IconPlacement, typography } from '@admiral-ds/react-ui';
+import { IconPlacement, TooltipHoc, typography } from '@admiral-ds/react-ui';
 import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
@@ -35,6 +35,9 @@ const TextWrapper = styled.div<{ $isActive?: boolean }>`
   }
 `;
 
+const IconWithTooltip = TooltipHoc(IconPlacement);
+const TextWithTooltip = TooltipHoc(TextWrapper);
+
 export const MonthNavigationPanelWidget = ({
   viewMode,
   date,
@@ -45,20 +48,44 @@ export const MonthNavigationPanelWidget = ({
 
   return (
     <MonthNavigationPanelWrapper {...props}>
-      <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="left">
+      <IconWithTooltip
+        dimension="lSmall"
+        highlightFocus={false}
+        data-panel-target-type="left"
+        renderContent={() =>
+          viewMode === 'dates' ? locale?.localeText.previousMonthText : locale?.localeText.backwardText
+        }
+      >
         <ChevronLeftOutline />
-      </IconPlacement>
+      </IconWithTooltip>
       <MonthYearWrapper {...props}>
-        <TextWrapper data-panel-target-type="month" $isActive={viewMode === 'months'}>
+        <TextWithTooltip
+          data-panel-target-type="month"
+          $isActive={viewMode === 'months'}
+          renderContent={() =>
+            viewMode === 'months' ? locale?.localeText.returnText : locale.localeText.selectMonthText
+          }
+        >
           {capitalizeFirstLetter(dateInner.format('MMMM'))}
-        </TextWrapper>
-        <TextWrapper data-panel-target-type="year" $isActive={viewMode === 'years'}>
+        </TextWithTooltip>
+        <TextWithTooltip
+          data-panel-target-type="year"
+          $isActive={viewMode === 'years'}
+          renderContent={() =>
+            viewMode === 'years' ? locale?.localeText.returnText : locale.localeText.selectYearText
+          }
+        >
           {dateInner.year()}
-        </TextWrapper>
+        </TextWithTooltip>
       </MonthYearWrapper>
-      <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="right">
+      <IconWithTooltip
+        dimension="lSmall"
+        highlightFocus={false}
+        data-panel-target-type="right"
+        renderContent={() => (viewMode === 'dates' ? locale?.localeText.nextMonthText : locale?.localeText.forwardText)}
+      >
         <ChevronRightOutline />
-      </IconPlacement>
+      </IconWithTooltip>
     </MonthNavigationPanelWrapper>
   );
 };

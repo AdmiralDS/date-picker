@@ -20,5 +20,5 @@ export interface BasePanelWidgetProps extends HTMLAttributes<HTMLDivElement> {
   viewMode?: CalendarViewMode;
   /** Дата */
   date?: Dayjs;
-  locale?: CalendarLocaleProps;
+  locale: CalendarLocaleProps;
 }

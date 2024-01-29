@@ -9,21 +9,21 @@ export interface CalendarLocaleProps {
   /** Название локали */
   localeName: string;
   /** Текстовые константы, используемые в компоненте */
-  localeText?: {
+  localeText: {
     /** Надпись (тултип) для кнопки со стрелкой, ведущей вперед */
-    backwardText?: string;
+    backwardText: string;
     /** Надпись (тултип) для кнопки со стрелкой, ведущей назад */
-    forwardText?: string;
+    forwardText: string;
     /** Надпись (тултип) для кнопки со стрелкой, ведущей к следующему месяцу */
-    nextMonthText?: string;
+    nextMonthText: string;
     /** Надпись (тултип) для кнопки со стрелкой ведущей, к предыдущему месяцу */
-    previousMonthText?: string;
+    previousMonthText: string;
     /** Надпись (тултип) для кнопки возврата  */
-    returnText?: string;
+    returnText: string;
     /** Надпись (тултип) для кнопки, открывающей панель выбора года */
-    selectYearText?: string;
+    selectYearText: string;
     /** Надпись (тултип) для кнопки, открывающей панель выбора месяца */
-    selectMonthText?: string;
+    selectMonthText: string;
   };
 }
 

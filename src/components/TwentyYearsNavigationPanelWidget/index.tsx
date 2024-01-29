@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { IconPlacement, typography } from '@admiral-ds/react-ui';
+import { IconPlacement, TooltipHoc, typography } from '@admiral-ds/react-ui';
 import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
@@ -27,6 +27,8 @@ const TwentyYearsWrapper = styled.div`
   ${typography['Subtitle/Subtitle 2']}
 `;
 
+const IconWithTooltip = TooltipHoc(IconPlacement);
+
 export const TwentyYearsNavigationPanelWidget = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   viewMode,
@@ -39,13 +41,23 @@ export const TwentyYearsNavigationPanelWidget = ({
 
   return (
     <TwentyYearsNavigationPanelWrapper {...props}>
-      <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="left">
+      <IconWithTooltip
+        dimension="lSmall"
+        highlightFocus={false}
+        data-panel-target-type="left"
+        renderContent={() => locale?.localeText.backwardText}
+      >
         <ChevronLeftOutline />
-      </IconPlacement>
+      </IconWithTooltip>
       <TwentyYearsWrapper>{`${start}–${end}`}</TwentyYearsWrapper>
-      <IconPlacement dimension="lSmall" highlightFocus={false} data-panel-target-type="right">
+      <IconWithTooltip
+        dimension="lSmall"
+        highlightFocus={false}
+        data-panel-target-type="right"
+        renderContent={() => locale?.localeText.forwardText}
+      >
         <ChevronRightOutline />
-      </IconPlacement>
+      </IconWithTooltip>
     </TwentyYearsNavigationPanelWrapper>
   );
 };
