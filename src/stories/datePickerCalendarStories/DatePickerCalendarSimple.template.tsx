@@ -6,9 +6,7 @@ import type { DatePickerCalendarProps } from '@admiral-ds/date-picker';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
 import type { DateAttributes } from '#src/components/DefaultCell';
 
-export const DatePickerCalendarSimpleTemplate = ({ locale, ...props }: DatePickerCalendarProps) => {
-  const localeInner = locale || 'ru';
-
+export const DatePickerCalendarSimpleTemplate = (props: DatePickerCalendarProps) => {
   const dateAttrs: (date: Dayjs) => DateAttributes = (date: Dayjs) => {
     return { disabled: date.isBefore(dayjs()) };
   };
@@ -18,5 +16,5 @@ export const DatePickerCalendarSimpleTemplate = ({ locale, ...props }: DatePicke
     console.log(`click on ${clickedCell}`);
   };
 
-  return <DatePickerCalendar {...props} onClick={handleClick} locale={localeInner} dateAttributes={dateAttrs} />;
+  return <DatePickerCalendar {...props} onClick={handleClick} dateAttributes={dateAttrs} />;
 };

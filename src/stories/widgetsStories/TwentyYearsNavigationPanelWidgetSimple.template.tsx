@@ -5,7 +5,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
 import { getCurrentDate } from '#src/components/utils';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
+import { CALENDAR_HEIGHT, CALENDAR_WIDTH, ruLocale } from '#src/components/calendarConstants';
 import type { TwentyYearsNavigationPanelWidgetProps } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
@@ -25,12 +25,12 @@ const CalendarWrapper = styled.div`
 `;
 
 export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
-  locale = 'ru',
+  locale = ruLocale,
   date,
   ...props
 }: TwentyYearsNavigationPanelWidgetProps) => {
-  const localeInner = locale || 'ru';
-  const [dateState, setDateState] = useState(date || getCurrentDate(locale));
+  const localeInner = locale?.localeName || 'ru';
+  const [dateState, setDateState] = useState(date || getCurrentDate(locale?.localeName));
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(localeInner).add(1, 'day'));
 
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
@@ -46,7 +46,7 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
     if (targetDataAttributes['cellType'] !== 'yearCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName || 'ru');
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled && !date.isSame(activeDateInner)) {
       handleActiveDateChange(date);
@@ -63,7 +63,7 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
     if (targetDataAttributes['cellType'] !== 'yearCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName || 'ru');
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       setSelectedDate(date);
@@ -86,7 +86,7 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
     <CalendarWrapper>
       <TwentyYearsNavigationPanelWidget
         date={dateState}
-        locale={localeInner}
+        locale={locale}
         onClick={handleTwentyYearsNavigationPanelClick}
       />
       <YearsOfTwentyYearsWidget
@@ -94,7 +94,7 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
         date={dateState}
         selected={selectedDate}
         active={activeDateInner}
-        locale={localeInner}
+        locale={locale}
         cell={MemoDefaultYearCell}
         onMouseLeave={handleMouseLeave}
         onMouseOver={handleMouseOver}

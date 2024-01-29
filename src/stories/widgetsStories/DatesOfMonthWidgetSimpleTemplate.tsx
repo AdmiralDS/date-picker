@@ -12,6 +12,7 @@ import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/
 import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
 import { MemoDefaultDateCell } from '#src/components/DefaultCell';
+import { ruLocale } from '#src/components/calendarConstants.ts';
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,9 +28,9 @@ const MonthYear = styled.div`
   ${typography['Subtitle/Subtitle 2']}
 `;
 
-export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props }: DatesOfMonthWidgetProps) => {
-  const localeInner = locale || 'ru';
-  const dateInner = date || getCurrentDate(locale);
+export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = ruLocale, ...props }: DatesOfMonthWidgetProps) => {
+  const localeInner = locale?.localeName || 'ru';
+  const dateInner = date || getCurrentDate(localeInner);
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(localeInner).add(1, 'day'));
 
   const handleDateClick: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -37,7 +38,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
     if (targetDataAttributes['cellType'] !== 'dateCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(localeInner);
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       setSelectedDate(date);
@@ -55,7 +56,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
     if (targetDataAttributes['cellType'] !== 'dateCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(localeInner);
     console.log(`hiddenCell-${targetDataAttributes['hiddenCell']}`);
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled && !date.isSame(activeDateInner)) {
@@ -82,7 +83,7 @@ export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = 'ru', ...props
         date={dateInner}
         selected={selectedDate}
         active={activeDateInner}
-        locale={localeInner}
+        locale={locale}
         cell={MemoDefaultDateCell}
         onMouseLeave={handleMouseLeave}
         onMouseOver={handleMouseOver}

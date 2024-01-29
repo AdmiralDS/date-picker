@@ -5,7 +5,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
 import { getCurrentDate } from '#src/components/utils';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#src/components/calendarConstants';
+import { CALENDAR_HEIGHT, CALENDAR_WIDTH, ruLocale } from '#src/components/calendarConstants';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import type { YearNavigationPanelWidgetProps } from '#src/components/YearNavigationPanelWidget';
 import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
@@ -24,12 +24,12 @@ const CalendarWrapper = styled.div`
 `;
 
 export const YearNavigationPanelWidgetSimpleTemplate = ({
-  locale = 'ru',
+  locale = ruLocale,
   date,
   ...props
 }: YearNavigationPanelWidgetProps) => {
-  const localeInner = locale || 'ru';
-  const [dateState, setDateState] = useState(date || getCurrentDate(locale));
+  const localeInner = locale?.localeName || 'ru';
+  const [dateState, setDateState] = useState(date || getCurrentDate(locale?.localeName));
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(localeInner).add(1, 'day'));
 
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
@@ -43,7 +43,7 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
     if (targetDataAttributes['cellType'] !== 'monthCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName || 'ru');
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled && !date.isSame(activeDateInner)) {
       handleActiveDateChange(date);
@@ -60,7 +60,7 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
     if (targetDataAttributes['cellType'] !== 'monthCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName || 'ru');
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       setSelectedDate(date);
@@ -81,13 +81,13 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
 
   return (
     <CalendarWrapper>
-      <YearNavigationPanelWidget date={dateState} locale={localeInner} onClick={handleYearNavigationPanelClick} />
+      <YearNavigationPanelWidget date={dateState} locale={locale} onClick={handleYearNavigationPanelClick} />
       <MonthsOfYearWidget
         {...props}
         date={dateState}
         selected={selectedDate}
         active={activeDateInner}
-        locale={localeInner}
+        locale={locale}
         cell={MemoDefaultMonthCell}
         onMouseOver={handleMouseOver}
         onClick={handleDateClick}

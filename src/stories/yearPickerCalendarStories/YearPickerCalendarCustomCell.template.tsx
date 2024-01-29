@@ -63,13 +63,11 @@ const DefaultYearCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) =
 };
 const MemoCell = memo(DefaultYearCell);
 
-export const YearPickerCalendarCustomCellTemplate = ({ locale, ...props }: YearPickerCalendarProps) => {
-  const localeInner = locale || 'ru';
-
+export const YearPickerCalendarCustomCellTemplate = (props: YearPickerCalendarProps) => {
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
   };
 
-  return <YearPickerCalendar {...props} cell={MemoCell} onClick={handleClick} locale={localeInner} />;
+  return <YearPickerCalendar {...props} cell={MemoCell} onClick={handleClick} />;
 };

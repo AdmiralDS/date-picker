@@ -6,9 +6,7 @@ import type { DatePickerCalendarProps } from '@admiral-ds/date-picker';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
 import type { DateAttributes } from '#src/components/DefaultCell';
 
-export const DatePickerCalendarWithHolidaysTemplate = ({ locale, ...props }: DatePickerCalendarProps) => {
-  const localeInner = locale || 'ru';
-
+export const DatePickerCalendarWithHolidaysTemplate = ({ ...props }: DatePickerCalendarProps) => {
   const dateAttrs: (date: Dayjs) => DateAttributes = (date: Dayjs) => {
     return { disabled: date.isBefore(dayjs()), isHoliday: date.day() === 0 || date.day() === 6 };
   };
@@ -18,5 +16,5 @@ export const DatePickerCalendarWithHolidaysTemplate = ({ locale, ...props }: Dat
     console.log(`click on ${clickedCell}`);
   };
 
-  return <DatePickerCalendar {...props} onClick={handleClick} locale={localeInner} dateAttributes={dateAttrs} />;
+  return <DatePickerCalendar {...props} onClick={handleClick} dateAttributes={dateAttrs} />;
 };

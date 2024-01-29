@@ -11,6 +11,7 @@ import { YEARS_OF_YEAR_WIDGET_WIDTH } from '#src/components/YearsOfTwentyYearsWi
 import type { YearsOfTwentyYearsWidgetProps } from '#src/components/YearsOfTwentyYearsWidget';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { MemoDefaultYearCell } from '#src/components/DefaultCell';
+import { ruLocale } from '#src/components/calendarConstants.ts';
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,11 +29,11 @@ const MonthYear = styled.div`
 
 export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
   date,
-  locale = 'ru',
+  locale = ruLocale,
   ...props
 }: YearsOfTwentyYearsWidgetProps) => {
-  const localeInner = locale || 'ru';
-  const dateInner = date || getCurrentDate(locale);
+  const localeInner = locale?.localeName || 'ru';
+  const dateInner = date || getCurrentDate(locale?.localeName);
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(localeInner).add(1, 'year'));
 
   const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
@@ -46,7 +47,7 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
     if (targetDataAttributes['cellType'] !== 'yearCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName || 'ru');
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled && !date.isSame(activeDateInner)) {
       handleActiveDateChange(date);
@@ -63,7 +64,7 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
     if (targetDataAttributes['cellType'] !== 'yearCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName || 'ru');
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       setSelectedDate(date);
@@ -78,7 +79,7 @@ export const YearsOfTwentyYearsWidgetSimpleTemplate = ({
         date={dateInner}
         selected={selectedDate}
         active={activeDateInner}
-        locale={localeInner}
+        locale={locale}
         cell={MemoDefaultYearCell}
         onMouseLeave={handleMouseLeave}
         onMouseOver={handleMouseOver}
