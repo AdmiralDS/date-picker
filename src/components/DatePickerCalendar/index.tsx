@@ -13,6 +13,7 @@ import {
   YearCalendarView,
 } from '#src/components/calendarStyle.ts';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
+import { ruLocale } from '#src/components/calendarConstants.ts';
 
 export interface DatePickerCalendarProps extends Omit<SingleCalendarProps, 'cell'>, PickerCalendarProps {}
 
@@ -27,7 +28,7 @@ export const DatePickerCalendar = ({
   defaultSelectedDateValue,
   onSelectedDateValueChange,
   cell,
-  locale = 'ru',
+  locale = ruLocale,
   ...props
 }: DatePickerCalendarProps) => {
   //<editor-fold desc="Calendar view mode">
@@ -41,7 +42,7 @@ export const DatePickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale));
+  const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale?.localeName));
   const dateInner = dateValue || dateState;
 
   const handleDateChange = (date: Dayjs) => {

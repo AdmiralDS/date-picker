@@ -5,7 +5,7 @@ import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutlin
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
 import { capitalizeFirstLetter, getCurrentDate } from '#src/components/utils';
-import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
+import { CALENDAR_WIDTH, ruLocale } from '#src/components/calendarConstants';
 import type { BasePanelWidgetProps } from '#src/components/widgetInterfaces.ts';
 
 export interface MonthNavigationPanelWidgetProps extends BasePanelWidgetProps {}
@@ -38,10 +38,10 @@ const TextWrapper = styled.div<{ $isActive?: boolean }>`
 export const MonthNavigationPanelWidget = ({
   viewMode,
   date,
-  locale = 'ru',
+  locale = ruLocale,
   ...props
 }: MonthNavigationPanelWidgetProps) => {
-  const dateInner = date || getCurrentDate(locale);
+  const dateInner = date || getCurrentDate(locale?.localeName || 'ru');
 
   return (
     <MonthNavigationPanelWrapper {...props}>

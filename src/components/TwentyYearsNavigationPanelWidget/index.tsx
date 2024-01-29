@@ -4,7 +4,7 @@ import { IconPlacement, typography } from '@admiral-ds/react-ui';
 import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
-import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
+import { CALENDAR_WIDTH, ruLocale } from '#src/components/calendarConstants';
 import { getCurrentDate, yearsRange } from '#src/components/utils';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { BasePanelWidgetProps } from '#src/components/widgetInterfaces.ts';
@@ -31,10 +31,10 @@ export const TwentyYearsNavigationPanelWidget = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   viewMode,
   date,
-  locale = 'ru',
+  locale = ruLocale,
   ...props
 }: TwentyYearsNavigationPanelWidgetProps) => {
-  const dateInner = date || getCurrentDate(locale);
+  const dateInner = date || getCurrentDate(locale?.localeName);
   const { start, end } = yearsRange(dateInner, YEARS_ON_SCREEN);
 
   return (

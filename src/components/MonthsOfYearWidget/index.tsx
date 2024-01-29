@@ -7,6 +7,7 @@ import { getCurrentDate } from '#src/components/utils';
 import { MONTHS_OF_YEAR_WIDGET_WIDTH } from '#src/components/MonthsOfYearWidget/constants';
 import { Months } from '#src/components/MonthsOfYearWidget/Months';
 import type { BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
+import { ruLocale } from '#src/components/calendarConstants.ts';
 
 export interface MonthsOfYearWidgetProps extends BaseWidgetProps {}
 
@@ -23,12 +24,12 @@ export const MonthsOfYearWidget = ({
   active,
   activeRangeEnd,
   dateAttributes,
-  locale = 'ru',
+  locale = ruLocale,
   cell,
   range,
   ...props
 }: MonthsOfYearWidgetProps) => {
-  const localDate = date || getCurrentDate(locale);
+  const localDate = date || getCurrentDate(locale?.localeName);
 
   return (
     <MonthsOfYearWrapper {...props} data-container-type="monthsOfYearWrapper">

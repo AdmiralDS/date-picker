@@ -1,3 +1,4 @@
+import { createElement } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
@@ -18,7 +19,7 @@ import {
 } from '#src/components/utils';
 import { MONTHS_COLUMNS, MONTHS_ROWS, MONTHS_WRAPPER_HEIGHT } from '#src/components/MonthsOfYearWidget/constants';
 import type { BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
-import { createElement } from 'react';
+import { ruLocale } from '#src/components/calendarConstants.ts';
 
 interface MonthsProps extends BaseWidgetProps {}
 
@@ -39,16 +40,16 @@ export const Months = ({
   activeRangeEnd,
   dateAttributes,
   cell,
-  locale = 'ru',
+  locale = ruLocale,
   range = false,
   ...props
 }: MonthsProps) => {
-  const firstMonth = setNoon(dayjs(`${date.year()}-01-01T12:00:00`).locale(locale));
+  const firstMonth = setNoon(dayjs(`${date.year()}-01-01T12:00:00`).locale(locale?.localeName || 'ru'));
   const cellModel = monthsArray.map((v) => {
     const date = firstMonth.add(v, 'month');
     const dateValue = date.toString();
     const { disabled, isHoliday, hidden } = getMonthAttributes(date, dateAttributes);
-    const isCurrent = date.isSame(getCurrentDate(locale), 'month');
+    const isCurrent = date.isSame(getCurrentDate(locale?.localeName), 'month');
     const isActive = active ? date.isSame(active, 'month') : false;
     const cellContent = capitalizeFirstLetter(date.format('MMMM'));
     if (range) {

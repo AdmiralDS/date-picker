@@ -8,6 +8,7 @@ import { getCurrentDate } from '#src/components/utils';
 import { Years } from '#src/components/YearsOfTwentyYearsWidget/Years.tsx';
 import { YEARS_OF_YEAR_WIDGET_WIDTH } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
+import { ruLocale } from '#src/components/calendarConstants.ts';
 
 export interface YearsOfTwentyYearsWidgetProps extends BaseWidgetProps {}
 
@@ -24,7 +25,7 @@ export const YearsOfTwentyYearsWidget = ({
   active,
   activeRangeEnd,
   dateAttributes,
-  locale = 'ru',
+  locale = ruLocale,
   cell,
   range = false,
   ...props

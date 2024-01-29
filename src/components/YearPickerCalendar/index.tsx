@@ -7,6 +7,7 @@ import { getCurrentDate } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import { CalendarContainer, SinglePickerCalendarWrapper, YearCalendarView } from '#src/components/calendarStyle.ts';
+import { ruLocale } from '#src/components/calendarConstants.ts';
 
 export interface YearPickerCalendarProps extends SingleCalendarProps {}
 
@@ -17,11 +18,11 @@ export const YearPickerCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
-  locale = 'ru',
+  locale = ruLocale,
   ...props
 }: YearPickerCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale));
+  const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale?.localeName));
   const dateInner = dateValue || dateState;
 
   const handleDateChange = (date: Dayjs) => {

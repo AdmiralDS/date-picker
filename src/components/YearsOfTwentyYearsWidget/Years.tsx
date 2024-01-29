@@ -23,6 +23,7 @@ import {
   YEARS_WRAPPER_HEIGHT,
 } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { BaseWidgetProps } from '#src/components/widgetInterfaces.ts';
+import { ruLocale } from '#src/components/calendarConstants.ts';
 
 interface YearsProps extends BaseWidgetProps {}
 
@@ -43,12 +44,12 @@ export const Years = ({
   activeRangeEnd,
   dateAttributes,
   cell,
-  locale = 'ru',
+  locale = ruLocale,
   range = false,
   ...props
 }: YearsProps) => {
   const { start } = yearsRange(date, YEARS_ON_SCREEN);
-  const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`).locale(locale));
+  const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`).locale(locale?.localeName || 'ru'));
   const cellModel = yearsArray.map((v) => {
     const date = firstYear.add(v, 'year');
     const dateValue = date.toString();

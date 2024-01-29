@@ -4,7 +4,7 @@ import { IconPlacement, typography } from '@admiral-ds/react-ui';
 import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
-import { CALENDAR_WIDTH } from '#src/components/calendarConstants';
+import { CALENDAR_WIDTH, ruLocale } from '#src/components/calendarConstants';
 import { getCurrentDate } from '#src/components/utils';
 import type { BasePanelWidgetProps } from '#src/components/widgetInterfaces.ts';
 
@@ -34,10 +34,10 @@ const TextWrapper = styled.div<{ $isActive?: boolean }>`
 export const YearNavigationPanelWidget = ({
   viewMode,
   date,
-  locale = 'ru',
+  locale = ruLocale,
   ...props
 }: YearNavigationPanelWidgetProps) => {
-  const dateInner = date || getCurrentDate(locale);
+  const dateInner = date || getCurrentDate(locale?.localeName);
 
   return (
     <YearNavigationPanelWrapper {...props}>

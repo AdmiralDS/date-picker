@@ -7,6 +7,7 @@ import { getCurrentDate } from '#src/components/utils';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
 import { MemoDefaultYearCell } from '#src/components/DefaultCell';
+import { ruLocale } from '#src/components/calendarConstants.ts';
 
 export interface YearCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
@@ -20,7 +21,7 @@ export const YearCalendar = ({
   defaultActiveDateValue,
   onActiveDateValueChange,
   cell,
-  locale = 'ru',
+  locale = ruLocale,
   ...props
 }: YearCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -41,7 +42,7 @@ export const YearCalendar = ({
     if (targetDataAttributes['cellType'] !== 'yearCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName);
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled && !date.isSame(activeDateInner)) {
       handleActiveDateChange(date);
@@ -67,7 +68,7 @@ export const YearCalendar = ({
     if (targetDataAttributes['cellType'] !== 'yearCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName);
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       handleSelectedDateChange(date);

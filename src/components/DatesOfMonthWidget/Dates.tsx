@@ -16,6 +16,7 @@ import {
 } from '#src/components/utils';
 import { DATES_ON_SCREEN, DATES_WRAPPER_HEIGHT } from '#src/components/DatesOfMonthWidget/constants';
 import type { DatesProps } from '#src/components/DatesOfMonthWidget/interfaces';
+import { ruLocale } from '#src/components/calendarConstants.ts';
 
 const DatesWrapper = styled.div`
   box-sizing: border-box;
@@ -33,7 +34,7 @@ export const Dates = ({
   activeRangeEnd,
   dateAttributes,
   cell,
-  locale = 'ru',
+  locale = ruLocale,
   range = false,
   ...props
 }: DatesProps) => {
@@ -44,7 +45,7 @@ export const Dates = ({
     const dateAttrs = dateAttributes?.(date);
     const disabled = !!dateAttrs?.disabled;
     const isHoliday = !!dateAttrs?.isHoliday;
-    const isCurrent = date.isSame(dayjs().locale(locale), 'date');
+    const isCurrent = date.isSame(dayjs().locale(locale.localeName), 'date');
     const isActive = active ? date.isSame(active, 'date') : false;
     const cellContent = date.date();
     const isOutsideMonth = date.month() !== dateInner.month();

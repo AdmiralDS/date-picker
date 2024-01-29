@@ -12,6 +12,7 @@ import {
   SingleContainer,
   YearRangeCalendarView,
 } from '#src/components/calendarStyle.ts';
+import { ruLocale } from '#src/components/calendarConstants.ts';
 
 export interface YearRangeDoublePickerCalendarProps
   extends Omit<
@@ -29,11 +30,11 @@ export const YearRangeDoublePickerCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  locale = 'ru',
+  locale = ruLocale,
   ...props
 }: YearRangeDoublePickerCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const [dateLeftState, setDateLeftState] = useState(defaultDateRangeValue?.[0] || getCurrentDate(locale));
+  const [dateLeftState, setDateLeftState] = useState(defaultDateRangeValue?.[0] || getCurrentDate(locale?.localeName));
   const dateLeftInner = dateRangeValue?.[0] || dateLeftState;
 
   const handleDateLeftChange = (date: Dayjs) => {

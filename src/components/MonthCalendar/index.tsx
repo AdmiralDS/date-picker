@@ -7,6 +7,7 @@ import { getCurrentDate } from '#src/components/utils';
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
 import { MemoDefaultMonthCell } from '#src/components/DefaultCell';
+import { ruLocale } from '#src/components/calendarConstants.ts';
 
 export interface MonthCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
@@ -20,11 +21,11 @@ export const MonthCalendar = ({
   defaultActiveDateValue,
   onActiveDateValueChange,
   cell,
-  locale = 'ru',
+  locale = ruLocale,
   ...props
 }: MonthCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
-  const dateInner = dateValue || getCurrentDate(locale);
+  const dateInner = dateValue || getCurrentDate(locale?.localeName);
   //</editor-fold>
 
   //<editor-fold desc="Hovered date">
@@ -41,7 +42,7 @@ export const MonthCalendar = ({
     if (targetDataAttributes['cellType'] !== 'monthCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName);
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled && !date.isSame(activeDateInner)) {
       handleActiveDateChange(date);
@@ -67,7 +68,7 @@ export const MonthCalendar = ({
     if (targetDataAttributes['cellType'] !== 'monthCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName);
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       handleSelectedDateChange(date);

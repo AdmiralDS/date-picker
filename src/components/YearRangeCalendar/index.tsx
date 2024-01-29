@@ -7,6 +7,7 @@ import { getCurrentDate } from '#src/components/utils';
 import type { RangeCalendarProps } from '#src/components/calendarInterfaces';
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 import { MemoDefaultYearRangeCell } from '#src/components/DefaultCell';
+import { ruLocale } from '#src/components/calendarConstants.ts';
 
 export interface YearRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
@@ -22,7 +23,7 @@ export const YearRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  locale = 'ru',
+  locale = ruLocale,
   cell,
   ...props
 }: YearRangeCalendarProps) => {
@@ -44,7 +45,7 @@ export const YearRangeCalendar = ({
     if (targetDataAttributes['cellType'] !== 'yearCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName || 'ru');
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       handleActiveDateChange(date);
@@ -106,7 +107,7 @@ export const YearRangeCalendar = ({
     if (targetDataAttributes['cellType'] !== 'yearCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale);
+    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName || 'ru');
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       const newSelectedDateRangeValue: [Dayjs | undefined, Dayjs | undefined] = [undefined, undefined];
