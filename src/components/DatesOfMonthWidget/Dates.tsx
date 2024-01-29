@@ -38,7 +38,7 @@ export const Dates = ({
   range = false,
   ...props
 }: DatesProps) => {
-  const firstDate = setNoon(dateInner.startOf('month').startOf('week'));
+  const firstDate = setNoon(dateInner.locale(locale?.localeName).startOf('month').startOf('week'));
   const cellModel = datesArray.map((v) => {
     const date = firstDate.add(v, 'day');
     const dateValue = date.toString();

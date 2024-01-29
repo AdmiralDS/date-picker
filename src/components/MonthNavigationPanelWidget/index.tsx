@@ -44,7 +44,7 @@ export const MonthNavigationPanelWidget = ({
   locale = ruLocale,
   ...props
 }: MonthNavigationPanelWidgetProps) => {
-  const dateInner = date || getCurrentDate(locale?.localeName || 'ru');
+  const dateInner = date?.locale(locale.localeName) || getCurrentDate(locale?.localeName || 'ru');
 
   return (
     <MonthNavigationPanelWrapper {...props}>

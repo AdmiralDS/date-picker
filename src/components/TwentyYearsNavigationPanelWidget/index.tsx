@@ -36,7 +36,7 @@ export const TwentyYearsNavigationPanelWidget = ({
   locale = ruLocale,
   ...props
 }: TwentyYearsNavigationPanelWidgetProps) => {
-  const dateInner = date || getCurrentDate(locale?.localeName);
+  const dateInner = date?.locale(locale?.localeName) || getCurrentDate(locale?.localeName);
   const { start, end } = yearsRange(dateInner, YEARS_ON_SCREEN);
 
   return (

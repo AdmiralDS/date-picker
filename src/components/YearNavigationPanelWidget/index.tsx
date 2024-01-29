@@ -40,7 +40,7 @@ export const YearNavigationPanelWidget = ({
   locale = ruLocale,
   ...props
 }: YearNavigationPanelWidgetProps) => {
-  const dateInner = date || getCurrentDate(locale?.localeName);
+  const dateInner = date?.locale(locale?.localeName) || getCurrentDate(locale?.localeName);
 
   return (
     <YearNavigationPanelWrapper {...props}>
