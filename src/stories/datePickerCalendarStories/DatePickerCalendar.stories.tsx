@@ -4,6 +4,7 @@ import { DatePickerCalendar } from '@admiral-ds/date-picker';
 import { DatePickerCalendarSimpleTemplate } from '#src/stories/datePickerCalendarStories/DatePickerCalendarSimple.template.tsx';
 import { DatePickerCalendarWithHolidaysTemplate } from './DatePickerCalendarWithHolidays.template';
 import { DatePickerCalendarChangeLocaleTemplate } from './DatePickerCalendarChangeLocale.template';
+import { DatePickerCalendarCustomCellTemplate } from './DatePickerCalendarCustomCell.template';
 
 export default {
   title: 'Admiral-2.1/DatePickerCalendar',
@@ -52,3 +53,9 @@ const DatePickerCalendarChangeLocaleStory: StoryFn<typeof DatePickerCalendar> = 
 };
 export const DatePickerCalendarChangeLocale = DatePickerCalendarChangeLocaleStory.bind({});
 DatePickerCalendarChangeLocale.storyName = 'DatePickerCalendarChangeLocale';
+
+const DatePickerCalendarCustomCellStory: StoryFn<typeof DatePickerCalendar> = (props) => {
+  return <DatePickerCalendarCustomCellTemplate {...props} />;
+};
+export const DatePickerCalendarCustomCell = DatePickerCalendarCustomCellStory.bind({});
+DatePickerCalendarCustomCell.storyName = 'DatePickerCalendarCustomCell';
