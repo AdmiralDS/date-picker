@@ -101,6 +101,20 @@ export const disabledHolidayDateCellMixin = css<{ $isActive?: boolean }>`
   color: ${(p) => p.theme.color['Error/Error 30']};
 `;
 
+export const disabledCurrentDateCellMixin = css<{ $isActive?: boolean }>`
+  ${baseDateMixin};
+  ${currentCellMixin};
+  border-color: ${(p) => p.theme.color['Neutral/Neutral 30']};
+  ${disabledCellMixin}
+`;
+
+export const disabledCurrentHolidayDateCellMixin = css<{ $isActive?: boolean }>`
+  ${baseDateMixin};
+  ${currentCellMixin};
+  border-color: ${(p) => p.theme.color['Neutral/Neutral 30']};
+  color: ${(p) => p.theme.color['Error/Error 30']};
+`;
+
 export const rangeDisabledHolidayDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseDateMixin};
   ${rangeCellMixin};

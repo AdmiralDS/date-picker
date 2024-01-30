@@ -8,7 +8,10 @@ import type { DateAttributes } from '#src/components/DefaultCell';
 
 export const DatePickerCalendarWithHolidaysTemplate = (props: DatePickerCalendarProps) => {
   const dateAttrs: (date: Dayjs) => DateAttributes = (date: Dayjs) => {
-    return { disabled: date.isBefore(dayjs()), isHoliday: date.day() === 0 || date.day() === 6 };
+    return {
+      disabled: date.isBefore(dayjs()),
+      isHoliday: date.day() === 0 || date.day() === 6 || date.isSame(dayjs(), 'date'),
+    };
   };
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {

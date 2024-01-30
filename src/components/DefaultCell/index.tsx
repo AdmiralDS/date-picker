@@ -42,6 +42,8 @@ import {
   rangeMonthCellMixin,
   rangeCurrentMonthCellMixin,
   rangeCurrentYearCellMixin,
+  disabledCurrentDateCellMixin,
+  disabledCurrentHolidayDateCellMixin,
 } from '#src/components/DefaultCell/mixins.tsx';
 
 const CellContainer = styled.div<{ $width: number; $height: number }>`
@@ -230,7 +232,9 @@ const getDefaultDateCellMixin = (
   isActive?: boolean,
 ) => {
   if (hidden) return hiddenDateCellMixin;
+  if (disabled && isHoliday && isCurrent) return disabledCurrentHolidayDateCellMixin;
   if (disabled && isHoliday) return disabledHolidayDateCellMixin;
+  if (disabled && isCurrent) return disabledCurrentDateCellMixin;
   if (disabled) return disabledDateCellMixin;
   if (selected) return selectedDateCellMixin;
   if (isActive && isHoliday) return holidayDateCellMixin;
@@ -258,6 +262,7 @@ const getDefaultDateRangeCellMixin = (
   if (isInRange && disabled) return rangeDisabledDateCellMixin;
   if (isInRange && isCurrent) return rangeCurrentDateCellMixin;
   if (disabled && isHoliday) return disabledHolidayDateCellMixin;
+  if (disabled && isCurrent) return disabledCurrentDateCellMixin;
   if (disabled) return disabledDateCellMixin;
   if (isActive) return baseDateCellMixin;
   if (selected || isRangeStart || isRangeEnd) return selectedDateCellMixin;
