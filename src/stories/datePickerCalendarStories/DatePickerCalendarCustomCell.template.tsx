@@ -2,7 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { memo } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import styled, { css } from 'styled-components';
+import { css } from 'styled-components';
 
 import type { DatePickerCalendarProps } from '@admiral-ds/date-picker';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
@@ -21,15 +21,7 @@ import {
 } from '#src/components/DefaultCell/mixins.tsx';
 import { DATE_CELL_HEIGHT, DATE_CELL_WIDTH } from '#src/components/DefaultCell/constants.ts';
 import { T } from '@admiral-ds/react-ui';
-
-const WrapperVertical = styled.div`
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 20px;
-`;
+import { WrapperHorizontal } from '#src/stories/common.tsx';
 
 const outsideMonthDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseDateCellMixin};
@@ -104,7 +96,13 @@ export const DatePickerCalendarCustomCellTemplate = (props: DatePickerCalendarPr
   };
 
   return (
-    <WrapperVertical>
+    <WrapperHorizontal>
+      <DatePickerCalendar
+        {...props}
+        onClick={handleClick}
+        dateAttributes={dateAttrs}
+        cell={{ dateCell: MemoCustomDateCell }}
+      />
       <T font="Body/Body 2 Long" as="div">
         Календарь позволяет кастомизировать отображение ячеек дат (а также месяцев и лет) при необходимости, например,
         отображать дни, которые не входят в месяц.
@@ -112,12 +110,6 @@ export const DatePickerCalendarCustomCellTemplate = (props: DatePickerCalendarPr
         Очень важно передавать подобные кастомизированные элементы, обернув их в React.memo, чтобы избежать лишних
         перерендеров при обновлении компонента.
       </T>
-      <DatePickerCalendar
-        {...props}
-        onClick={handleClick}
-        dateAttributes={dateAttrs}
-        cell={{ dateCell: MemoCustomDateCell }}
-      />
-    </WrapperVertical>
+    </WrapperHorizontal>
   );
 };

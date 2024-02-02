@@ -3,7 +3,6 @@ import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
-import styled from 'styled-components';
 
 import type { DatePickerCalendarProps } from '@admiral-ds/date-picker';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
@@ -11,15 +10,7 @@ import type { DateAttributes } from '#src/components/DefaultCell';
 import type { CalendarLocaleProps } from '#src/components/calendarInterfaces.ts';
 import { Button, T } from '@admiral-ds/react-ui';
 import { enLocale, ruLocale } from '#src/components/calendarConstants.ts';
-
-const WrapperVertical = styled.div`
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 20px;
-`;
+import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
 const esLocale: CalendarLocaleProps = {
   localeName: 'es',
@@ -60,18 +51,20 @@ export const DatePickerCalendarChangeLocaleTemplate = (props: DatePickerCalendar
   };
 
   return (
-    <WrapperVertical>
-      <T font="Body/Body 2 Long" as="div">
-        По умолчанию в календаре используется русская локализация, также есть английский вариант. Если требуется
-        использовать другой язык, необходимо импортировать его из dayjs, а также добавить объект для локализации
-        подписей к кнопкам панели. Остальные параметры (такие как первый день недели, названия месяцев и дней недели и
-        т.п.) контроллируются с помощью локализации, предоставляемой библиотекой dayjs.
-      </T>
-      <Button onClick={handleButtonClick}>Переключить локаль</Button>
-      <T font="Body/Body 1 Long" as="div">
-        {locale.localeName}
-      </T>
+    <WrapperHorizontal>
       <DatePickerCalendar {...props} onClick={handleClick} dateAttributes={dateAttrs} locale={locale} />
-    </WrapperVertical>
+      <WrapperVertical>
+        <T font="Body/Body 2 Long" as="div">
+          По умолчанию в календаре используется русская локализация, также есть английский вариант. Если требуется
+          использовать другой язык, необходимо импортировать его из dayjs, а также добавить объект для локализации
+          подписей к кнопкам панели. Остальные параметры (такие как первый день недели, названия месяцев и дней недели и
+          т.п.) контроллируются с помощью локализации, предоставляемой библиотекой dayjs.
+        </T>
+        <Button onClick={handleButtonClick}>Переключить локаль</Button>
+        <T font="Body/Body 1 Long" as="div">
+          {locale.localeName}
+        </T>
+      </WrapperVertical>
+    </WrapperHorizontal>
   );
 };

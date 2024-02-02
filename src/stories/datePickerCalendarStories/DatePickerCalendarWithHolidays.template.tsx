@@ -1,21 +1,12 @@
 import type { MouseEventHandler } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import styled from 'styled-components';
 
 import type { DatePickerCalendarProps } from '@admiral-ds/date-picker';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
 import type { DateAttributes } from '#src/components/DefaultCell';
 import { T } from '@admiral-ds/react-ui';
-
-const WrapperVertical = styled.div`
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 20px;
-`;
+import { WrapperHorizontal } from '#src/stories/common.tsx';
 
 export const DatePickerCalendarWithHolidaysTemplate = (props: DatePickerCalendarProps) => {
   const dateAttrs: (date: Dayjs) => DateAttributes = (date: Dayjs) => {
@@ -31,12 +22,12 @@ export const DatePickerCalendarWithHolidaysTemplate = (props: DatePickerCalendar
   };
 
   return (
-    <WrapperVertical>
+    <WrapperHorizontal>
+      <DatePickerCalendar {...props} onClick={handleClick} dateAttributes={dateAttrs} />
       <T font="Body/Body 2 Long" as="div">
         Праздничные, скрытые и недоступные для выбора даты можно задавать с помощью dateAttributes, вернув
         соответствующие значения isHoliday, hidden и disabled.
       </T>
-      <DatePickerCalendar {...props} onClick={handleClick} dateAttributes={dateAttrs} />
-    </WrapperVertical>
+    </WrapperHorizontal>
   );
 };
