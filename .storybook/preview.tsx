@@ -14,6 +14,13 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 export const parameters = {
+  options: {
+    storySort: {
+      includeName: true,
+      locales: 'en-US',
+      order: ['Admiral-2.1', ['DatePicker', 'RangePicker', 'DoubleRangePicker', 'Widgets']],
+    },
+  },
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {

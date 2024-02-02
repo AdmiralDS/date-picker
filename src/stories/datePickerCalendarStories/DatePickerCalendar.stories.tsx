@@ -7,7 +7,7 @@ import { DatePickerCalendarChangeLocaleTemplate } from './DatePickerCalendarChan
 import { DatePickerCalendarCustomCellTemplate } from './DatePickerCalendarCustomCell.template';
 
 export default {
-  title: 'Admiral-2.1/DatePickerCalendar',
+  title: 'Admiral-2.1/DatePicker/DatePickerCalendar',
   component: DatePickerCalendar,
   parameters: {
     docs: {

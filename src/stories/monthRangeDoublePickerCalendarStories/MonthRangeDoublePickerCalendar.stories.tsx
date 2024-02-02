@@ -5,7 +5,7 @@ import { MonthRangeDoublePickerCalendar } from '@admiral-ds/date-picker';
 import { MonthRangeDoublePickerCalendarSimpleTemplate } from '#src/stories/monthRangeDoublePickerCalendarStories/MonthRangeDoublePickerCalendarSimple.template.tsx';
 
 export default {
-  title: 'Admiral-2.1/MonthRangeDoublePickerCalendar',
+  title: 'Admiral-2.1/DoubleRangePicker/MonthRangeDoublePickerCalendar',
   component: MonthRangeDoublePickerCalendar,
   parameters: {
     docs: {
