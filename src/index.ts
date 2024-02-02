@@ -15,3 +15,4 @@ export * from './components/MonthCalendar';
 export * from './components/MonthRangeCalendar';
 export * from './components/YearCalendar';
 export * from './components/YearRangeCalendar';
+export * from './components/DefaultCell';

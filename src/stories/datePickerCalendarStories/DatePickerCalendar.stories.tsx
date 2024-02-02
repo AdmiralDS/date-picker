@@ -1,7 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
-import { DatePickerCalendarSimpleTemplate } from '#src/stories/datePickerCalendarStories/DatePickerCalendarSimple.template.tsx';
+import { DatePickerCalendarSimpleTemplate } from './DatePickerCalendarSimple.template.tsx';
+import DatePickerCalendarSimpleTemplateRaw from './DatePickerCalendarSimple.template.tsx?raw';
 import { DatePickerCalendarWithHolidaysTemplate } from './DatePickerCalendarWithHolidays.template';
 import { DatePickerCalendarChangeLocaleTemplate } from './DatePickerCalendarChangeLocale.template';
 import { DatePickerCalendarCustomCellTemplate } from './DatePickerCalendarCustomCell.template';
@@ -12,7 +13,7 @@ export default {
   parameters: {
     docs: {
       source: {
-        code: null,
+        language: 'tsx',
       },
     },
     design: {
@@ -39,8 +40,19 @@ export default {
 const DatePickerCalendarSimpleStory: StoryFn<typeof DatePickerCalendar> = (props) => {
   return <DatePickerCalendarSimpleTemplate {...props} />;
 };
-export const DatePickerCalendarSimple = DatePickerCalendarSimpleStory.bind({});
-DatePickerCalendarSimple.storyName = 'DatePickerCalendarSimple';
+
+export const DatePickerCalendarSimple = {
+  render: DatePickerCalendarSimpleStory,
+
+  parameters: {
+    docs: {
+      source: {
+        code: DatePickerCalendarSimpleTemplateRaw,
+      },
+    },
+  },
+  name: 'DatePickerCalendarSimple',
+};
 
 const DatePickerCalendarWithHolidaysStory: StoryFn<typeof DatePickerCalendar> = (props) => {
   return <DatePickerCalendarWithHolidaysTemplate {...props} />;

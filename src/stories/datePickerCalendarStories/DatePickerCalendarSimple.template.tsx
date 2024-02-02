@@ -2,9 +2,8 @@ import type { MouseEventHandler } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
-import type { DatePickerCalendarProps } from '@admiral-ds/date-picker';
+import type { DatePickerCalendarProps, DateAttributes } from '@admiral-ds/date-picker';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
-import type { DateAttributes } from '#src/components/DefaultCell';
 
 export const DatePickerCalendarSimpleTemplate = (props: DatePickerCalendarProps) => {
   const dateAttrs: (date: Dayjs) => DateAttributes = (date: Dayjs) => {
