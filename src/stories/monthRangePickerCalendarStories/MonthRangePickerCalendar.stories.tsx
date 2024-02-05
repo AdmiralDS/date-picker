@@ -1,7 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
 import { MonthRangePickerCalendar } from '@admiral-ds/date-picker';
-import { MonthRangePickerCalendarSimpleTemplate } from '#src/stories/monthRangePickerCalendarStories/MonthRangePickerCalendarSimple.template.tsx';
+import { MonthRangePickerCalendarSimpleTemplate } from './MonthRangePickerCalendarSimple.template.tsx';
+import MonthRangePickerCalendarSimpleTemplateRaw from './MonthRangePickerCalendarSimple.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/RangePicker/MonthRangePickerCalendar',
@@ -36,5 +37,15 @@ export default {
 const MonthRangePickerCalendarSimpleStory: StoryFn<typeof MonthRangePickerCalendar> = (props) => {
   return <MonthRangePickerCalendarSimpleTemplate {...props} />;
 };
-export const MonthRangePickerCalendarSimple = MonthRangePickerCalendarSimpleStory.bind({});
-MonthRangePickerCalendarSimple.storyName = 'MonthRangePickerCalendarSimple';
+export const MonthRangePickerCalendarSimple = {
+  render: MonthRangePickerCalendarSimpleStory,
+
+  parameters: {
+    docs: {
+      source: {
+        code: MonthRangePickerCalendarSimpleTemplateRaw,
+      },
+    },
+  },
+  name: 'MonthRangePickerCalendarSimple',
+};

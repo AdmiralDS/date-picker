@@ -2,7 +2,8 @@ import type { Meta, StoryFn } from '@storybook/react';
 
 import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
 
-import { YearsOfTwentyYearsWidgetSimpleTemplate } from '#src/stories/widgetsStories/YearsOfTwentyYearsWidgetSimple.template.tsx';
+import { YearsOfTwentyYearsWidgetSimpleTemplate } from './YearsOfTwentyYearsWidgetSimple.template.tsx';
+import YearsOfTwentyYearsWidgetSimpleTemplateRaw from './YearsOfTwentyYearsWidgetSimple.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/Widgets/YearsOfTwentyYears',
@@ -17,9 +18,18 @@ export default {
   argTypes: {},
 } as Meta<typeof YearsOfTwentyYearsWidget>;
 
-const YearsOfTwentyYearsWidgetStory: StoryFn<typeof YearsOfTwentyYearsWidget> = (props) => {
+const YearsOfTwentyYearsWidgetSimpleStory: StoryFn<typeof YearsOfTwentyYearsWidget> = (props) => {
   return <YearsOfTwentyYearsWidgetSimpleTemplate {...props} />;
 };
+export const YearsOfTwentyYearsWidgetSimple = {
+  render: YearsOfTwentyYearsWidgetSimpleStory,
 
-export const YearsOfTwentyYearsWidgetSimple = YearsOfTwentyYearsWidgetStory.bind({});
-YearsOfTwentyYearsWidgetSimple.storyName = 'YearsOfTwentyYearsWidget.';
+  parameters: {
+    docs: {
+      source: {
+        code: YearsOfTwentyYearsWidgetSimpleTemplateRaw,
+      },
+    },
+  },
+  name: 'YearsOfTwentyYearsWidgetSimple',
+};

@@ -2,7 +2,8 @@ import type { Meta, StoryFn } from '@storybook/react';
 
 import { MonthRangeDoublePickerCalendar } from '@admiral-ds/date-picker';
 
-import { MonthRangeDoublePickerCalendarSimpleTemplate } from '#src/stories/monthRangeDoublePickerCalendarStories/MonthRangeDoublePickerCalendarSimple.template.tsx';
+import { MonthRangeDoublePickerCalendarSimpleTemplate } from './MonthRangeDoublePickerCalendarSimple.template.tsx';
+import MonthRangeDoublePickerCalendarSimpleTemplateRaw from './MonthRangeDoublePickerCalendarSimple.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/DoubleRangePicker/MonthRangeDoublePickerCalendar',
@@ -28,5 +29,15 @@ export default {
 const MonthRangeDoublePickerCalendarSimpleStory: StoryFn<typeof MonthRangeDoublePickerCalendar> = (props) => {
   return <MonthRangeDoublePickerCalendarSimpleTemplate {...props} />;
 };
-export const MonthRangeDoublePickerCalendarSimple = MonthRangeDoublePickerCalendarSimpleStory.bind({});
-MonthRangeDoublePickerCalendarSimple.storyName = 'MonthRangeDoublePickerCalendarSimple';
+export const MonthRangeDoublePickerCalendarSimple = {
+  render: MonthRangeDoublePickerCalendarSimpleStory,
+
+  parameters: {
+    docs: {
+      source: {
+        code: MonthRangeDoublePickerCalendarSimpleTemplateRaw,
+      },
+    },
+  },
+  name: 'MonthRangeDoublePickerCalendarSimple',
+};

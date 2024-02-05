@@ -1,7 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
 import { MonthPickerCalendar } from '@admiral-ds/date-picker';
-import { MonthPickerCalendarSimpleTemplate } from '#src/stories/monthPickerCalendarStories/MonthPickerCalendarSimple.template.tsx';
+import { MonthPickerCalendarSimpleTemplate } from './MonthPickerCalendarSimple.template.tsx';
+import MonthPickerCalendarSimpleTemplateRaw from './MonthPickerCalendarSimple.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/DatePicker/MonthPickerCalendar',
@@ -36,5 +37,15 @@ export default {
 const MonthPickerCalendarSimpleStory: StoryFn<typeof MonthPickerCalendar> = (props) => {
   return <MonthPickerCalendarSimpleTemplate {...props} />;
 };
-export const MonthPickerCalendarSimple = MonthPickerCalendarSimpleStory.bind({});
-MonthPickerCalendarSimple.storyName = 'MonthPickerCalendarSimple';
+export const MonthPickerCalendarSimple = {
+  render: MonthPickerCalendarSimpleStory,
+
+  parameters: {
+    docs: {
+      source: {
+        code: MonthPickerCalendarSimpleTemplateRaw,
+      },
+    },
+  },
+  name: 'MonthPickerCalendarSimple',
+};

@@ -1,7 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
-import { TwentyYearsNavigationPanelWidgetSimpleTemplate } from '#src/stories/widgetsStories/TwentyYearsNavigationPanelWidgetSimple.template';
+import { TwentyYearsNavigationPanelWidgetSimpleTemplate } from './TwentyYearsNavigationPanelWidgetSimple.template';
+import TwentyYearsNavigationPanelWidgetSimpleTemplateRaw from './TwentyYearsNavigationPanelWidgetSimple.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/Widgets/TwentyYearsNavigationPanel',
@@ -16,9 +17,18 @@ export default {
   argTypes: {},
 } as Meta<typeof TwentyYearsNavigationPanelWidget>;
 
-const TwentyYearsNavigationPanelWidgetStory: StoryFn<typeof TwentyYearsNavigationPanelWidget> = (props) => {
+const TwentyYearsNavigationPanelWidgetSimpleStory: StoryFn<typeof TwentyYearsNavigationPanelWidget> = (props) => {
   return <TwentyYearsNavigationPanelWidgetSimpleTemplate {...props} />;
 };
+export const TwentyYearsNavigationPanelWidgetSimple = {
+  render: TwentyYearsNavigationPanelWidgetSimpleStory,
 
-export const TwentyYearsNavigationPanelWidgetSimple = TwentyYearsNavigationPanelWidgetStory.bind({});
-TwentyYearsNavigationPanelWidgetSimple.storyName = 'TwentyYearsNavigationPanelWidget.';
+  parameters: {
+    docs: {
+      source: {
+        code: TwentyYearsNavigationPanelWidgetSimpleTemplateRaw,
+      },
+    },
+  },
+  name: 'TwentyYearsNavigationPanelWidgetSimple',
+};

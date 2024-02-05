@@ -2,7 +2,8 @@ import type { Meta, StoryFn } from '@storybook/react';
 
 import { YearRangePickerCalendar } from '@admiral-ds/date-picker';
 
-import { YearRangePickerCalendarSimpleTemplate } from '#src/stories/yearRangePickerCalendarStories/YearRangePickerCalendarSimple.template.tsx';
+import { YearRangePickerCalendarSimpleTemplate } from './YearRangePickerCalendarSimple.template.tsx';
+import YearRangePickerCalendarSimpleTemplateRaw from './YearRangePickerCalendarSimple.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/RangePicker/YearRangePickerCalendar',
@@ -28,5 +29,15 @@ export default {
 const YearRangePickerCalendarSimpleStory: StoryFn<typeof YearRangePickerCalendar> = (props) => {
   return <YearRangePickerCalendarSimpleTemplate {...props} />;
 };
-export const YearRangePickerCalendarSimple = YearRangePickerCalendarSimpleStory.bind({});
-YearRangePickerCalendarSimple.storyName = 'YearRangePickerCalendarSimple';
+export const YearRangePickerCalendarSimple = {
+  render: YearRangePickerCalendarSimpleStory,
+
+  parameters: {
+    docs: {
+      source: {
+        code: YearRangePickerCalendarSimpleTemplateRaw,
+      },
+    },
+  },
+  name: 'YearRangePickerCalendarSimple',
+};

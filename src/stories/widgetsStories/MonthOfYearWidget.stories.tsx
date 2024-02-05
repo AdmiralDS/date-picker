@@ -2,7 +2,8 @@ import type { Meta, StoryFn } from '@storybook/react';
 
 import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
 
-import { MonthsOfYearWidgetSimpleTemplate } from '#src/stories/widgetsStories/MonthsOfYearWidgetSimple.template';
+import { MonthsOfYearWidgetSimpleTemplate } from './MonthsOfYearWidgetSimple.template';
+import MonthsOfYearWidgetSimpleTemplateRaw from './MonthsOfYearWidgetSimple.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/Widgets/MonthsOfYear',
@@ -17,9 +18,18 @@ export default {
   argTypes: {},
 } as Meta<typeof MonthsOfYearWidget>;
 
-const MonthsOfYearWidgetStory: StoryFn<typeof MonthsOfYearWidget> = (props) => {
+const MonthsOfYearWidgetSimpleStory: StoryFn<typeof MonthsOfYearWidget> = (props) => {
   return <MonthsOfYearWidgetSimpleTemplate {...props} />;
 };
+export const MonthsOfYearWidgetSimple = {
+  render: MonthsOfYearWidgetSimpleStory,
 
-export const MonthsOfYearWidgetSimple = MonthsOfYearWidgetStory.bind({});
-MonthsOfYearWidgetSimple.storyName = 'MonthsOfYearWidget.';
+  parameters: {
+    docs: {
+      source: {
+        code: MonthsOfYearWidgetSimpleTemplateRaw,
+      },
+    },
+  },
+  name: 'MonthsOfYearWidgetSimple',
+};

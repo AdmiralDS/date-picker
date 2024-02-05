@@ -1,7 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
 import { DateCalendar } from '@admiral-ds/date-picker';
-import { DateCalendarSimpleTemplate } from '#src/stories/widgetsStories/DateCalendarSimple.template.tsx';
+import { DateCalendarSimpleTemplate } from './DateCalendarSimple.template.tsx';
+import DateCalendarSimpleTemplateRaw from './DateCalendarSimple.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/Widgets/DateCalendar',
@@ -30,5 +31,15 @@ export default {
 const DateCalendarSimpleStory: StoryFn<typeof DateCalendar> = (props) => {
   return <DateCalendarSimpleTemplate {...props} />;
 };
-export const DateCalendarSimple = DateCalendarSimpleStory.bind({});
-DateCalendarSimple.storyName = 'DateCalendarSimple';
+export const DateCalendarSimple = {
+  render: DateCalendarSimpleStory,
+
+  parameters: {
+    docs: {
+      source: {
+        code: DateCalendarSimpleTemplateRaw,
+      },
+    },
+  },
+  name: 'DateCalendarSimple',
+};

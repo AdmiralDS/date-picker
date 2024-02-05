@@ -4,8 +4,11 @@ import { DatePickerCalendar } from '@admiral-ds/date-picker';
 import { DatePickerCalendarSimpleTemplate } from './DatePickerCalendarSimple.template.tsx';
 import DatePickerCalendarSimpleTemplateRaw from './DatePickerCalendarSimple.template.tsx?raw';
 import { DatePickerCalendarWithHolidaysTemplate } from './DatePickerCalendarWithHolidays.template';
+import DatePickerCalendarWithHolidaysTemplateRaw from './DatePickerCalendarWithHolidays.template.tsx?raw';
 import { DatePickerCalendarChangeLocaleTemplate } from './DatePickerCalendarChangeLocale.template';
+import DatePickerCalendarChangeLocaleTemplateRaw from './DatePickerCalendarChangeLocale.template.tsx?raw';
 import { DatePickerCalendarCustomCellTemplate } from './DatePickerCalendarCustomCell.template';
+import DatePickerCalendarCustomCellTemplateRaw from './DatePickerCalendarCustomCell.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/DatePicker/DatePickerCalendar',
@@ -40,7 +43,6 @@ export default {
 const DatePickerCalendarSimpleStory: StoryFn<typeof DatePickerCalendar> = (props) => {
   return <DatePickerCalendarSimpleTemplate {...props} />;
 };
-
 export const DatePickerCalendarSimple = {
   render: DatePickerCalendarSimpleStory,
 
@@ -57,17 +59,47 @@ export const DatePickerCalendarSimple = {
 const DatePickerCalendarWithHolidaysStory: StoryFn<typeof DatePickerCalendar> = (props) => {
   return <DatePickerCalendarWithHolidaysTemplate {...props} />;
 };
-export const DatePickerCalendarWithHolidays = DatePickerCalendarWithHolidaysStory.bind({});
-DatePickerCalendarWithHolidays.storyName = 'DatePickerCalendarWithHolidays';
+export const DatePickerCalendarWithHolidays = {
+  render: DatePickerCalendarWithHolidaysStory,
+
+  parameters: {
+    docs: {
+      source: {
+        code: DatePickerCalendarWithHolidaysTemplateRaw,
+      },
+    },
+  },
+  name: 'DatePickerCalendarWithHolidays',
+};
 
 const DatePickerCalendarChangeLocaleStory: StoryFn<typeof DatePickerCalendar> = (props) => {
   return <DatePickerCalendarChangeLocaleTemplate {...props} />;
 };
-export const DatePickerCalendarChangeLocale = DatePickerCalendarChangeLocaleStory.bind({});
-DatePickerCalendarChangeLocale.storyName = 'DatePickerCalendarChangeLocale';
+export const DatePickerCalendarChangeLocale = {
+  render: DatePickerCalendarChangeLocaleStory,
+
+  parameters: {
+    docs: {
+      source: {
+        code: DatePickerCalendarChangeLocaleTemplateRaw,
+      },
+    },
+  },
+  name: 'DatePickerCalendarChangeLocale',
+};
 
 const DatePickerCalendarCustomCellStory: StoryFn<typeof DatePickerCalendar> = (props) => {
   return <DatePickerCalendarCustomCellTemplate {...props} />;
 };
-export const DatePickerCalendarCustomCell = DatePickerCalendarCustomCellStory.bind({});
-DatePickerCalendarCustomCell.storyName = 'DatePickerCalendarCustomCell';
+export const DatePickerCalendarCustomCell = {
+  render: DatePickerCalendarCustomCellStory,
+
+  parameters: {
+    docs: {
+      source: {
+        code: DatePickerCalendarCustomCellTemplateRaw,
+      },
+    },
+  },
+  name: 'DatePickerCalendarCustomCell',
+};

@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
 import { YearPickerCalendar } from '@admiral-ds/date-picker';
-import { YearPickerCalendarSimpleTemplate } from '#src/stories/yearPickerCalendarStories/YearPickerCalendarSimple.template.tsx';
+import { YearPickerCalendarSimpleTemplate } from './YearPickerCalendarSimple.template.tsx';
+import YearPickerCalendarSimpleTemplateRaw from './YearPickerCalendarSimple.template.tsx?raw';
 import { YearPickerCalendarCustomCellTemplate } from './YearPickerCalendarCustomCell.template';
-//import { YearPickerCalendarCustomCellTemplate } from '#src/stories/yearPickerCalendarStories/YearPickerCalendarCustomCell.template.tsx';
+import YearPickerCalendarCustomCellTemplateRaw from './YearPickerCalendarCustomCell.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/DatePicker/YearPickerCalendar',
@@ -38,11 +39,31 @@ export default {
 const YearPickerCalendarSimpleStory: StoryFn<typeof YearPickerCalendar> = (props) => {
   return <YearPickerCalendarSimpleTemplate {...props} />;
 };
-export const YearPickerCalendarSimple = YearPickerCalendarSimpleStory.bind({});
-YearPickerCalendarSimple.storyName = 'YearPickerCalendarSimple';
+export const YearPickerCalendarSimple = {
+  render: YearPickerCalendarSimpleStory,
+
+  parameters: {
+    docs: {
+      source: {
+        code: YearPickerCalendarSimpleTemplateRaw,
+      },
+    },
+  },
+  name: 'YearPickerCalendarSimple',
+};
 
 const YearPickerCalendarCustomCellStory: StoryFn<typeof YearPickerCalendar> = (props) => {
   return <YearPickerCalendarCustomCellTemplate {...props} />;
 };
-export const YearPickerCalendarCustomCell = YearPickerCalendarCustomCellStory.bind({});
-YearPickerCalendarCustomCell.storyName = 'YearPickerCalendarCustomCell';
+export const YearPickerCalendarCustomCell = {
+  render: YearPickerCalendarCustomCellStory,
+
+  parameters: {
+    docs: {
+      source: {
+        code: YearPickerCalendarCustomCellTemplateRaw,
+      },
+    },
+  },
+  name: 'YearPickerCalendarCustomCell',
+};
