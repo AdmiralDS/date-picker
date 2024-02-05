@@ -47,5 +47,5 @@ export const DateRangePickerCalendarSimple = {
       },
     },
   },
-  name: 'DateRangePickerCalendarSimple',
+  name: 'Выбор диапазона дат',
 };

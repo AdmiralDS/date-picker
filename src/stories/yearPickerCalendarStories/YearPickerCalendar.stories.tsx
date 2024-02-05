@@ -49,7 +49,7 @@ export const YearPickerCalendarSimple = {
       },
     },
   },
-  name: 'YearPickerCalendarSimple',
+  name: 'Выбор года',
 };
 
 const YearPickerCalendarCustomCellStory: StoryFn<typeof YearPickerCalendar> = (props) => {

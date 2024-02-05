@@ -53,7 +53,7 @@ export const DatePickerCalendarSimple = {
       },
     },
   },
-  name: 'DatePickerCalendarSimple',
+  name: 'Выбор даты',
 };
 
 const DatePickerCalendarWithHolidaysStory: StoryFn<typeof DatePickerCalendar> = (props) => {
@@ -69,7 +69,7 @@ export const DatePickerCalendarWithHolidays = {
       },
     },
   },
-  name: 'DatePickerCalendarWithHolidays',
+  name: 'Отображение выходных и заблокированных дат',
 };
 
 const DatePickerCalendarChangeLocaleStory: StoryFn<typeof DatePickerCalendar> = (props) => {
@@ -85,7 +85,7 @@ export const DatePickerCalendarChangeLocale = {
       },
     },
   },
-  name: 'DatePickerCalendarChangeLocale',
+  name: 'Смена локализации',
 };
 
 const DatePickerCalendarCustomCellStory: StoryFn<typeof DatePickerCalendar> = (props) => {
@@ -101,5 +101,5 @@ export const DatePickerCalendarCustomCell = {
       },
     },
   },
-  name: 'DatePickerCalendarCustomCell',
+  name: 'Кастомизация отображения дат',
 };
