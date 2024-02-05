@@ -25,7 +25,12 @@ export const DatePickerCalendarWithHolidaysTemplate = (props: DatePickerCalendar
     <WrapperHorizontal>
       <DatePickerCalendar {...props} onClick={handleClick} dateAttributes={dateAttrs} />
       <T font="Body/Body 2 Long" as="div">
-        Праздничные, скрытые и недоступные для выбора даты можно задавать с помощью dateAttributes, вернув
+        Можно блокировать для выбора как отдельные даты, так и диапазон. Так же можно блокировать для выбора месяцы и
+        годы.
+        <br />
+        Праздничные или выходные дни могут обозначаться (опционально) отдельным цветом Error 60 Main.
+        <br />
+        Признаки праздничных, скрытых и недоступных для выбора даты можно задавать с помощью dateAttributes, вернув
         соответствующие значения isHoliday, hidden и disabled.
       </T>
     </WrapperHorizontal>
