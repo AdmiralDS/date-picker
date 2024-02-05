@@ -5,7 +5,7 @@ import { MonthPickerCalendarSimpleTemplate } from './MonthPickerCalendarSimple.t
 import MonthPickerCalendarSimpleTemplateRaw from './MonthPickerCalendarSimple.template.tsx?raw';
 
 export default {
-  title: 'Admiral-2.1/DatePicker/MonthPickerCalendar',
+  title: 'Admiral-2.1/Date Picker/MonthPickerCalendar',
   component: MonthPickerCalendar,
   parameters: {
     docs: {

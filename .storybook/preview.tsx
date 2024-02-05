@@ -18,7 +18,7 @@ export const parameters = {
     storySort: {
       includeName: true,
       locales: 'en-US',
-      order: ['Admiral-2.1', ['DatePicker', 'RangePicker', 'DoubleRangePicker', 'Widgets']],
+      order: ['Admiral-2.1', ['Date Picker', 'Range Picker', 'Double Range Picker', 'Widgets']],
     },
   },
   actions: { argTypesRegex: '^on[A-Z].*' },

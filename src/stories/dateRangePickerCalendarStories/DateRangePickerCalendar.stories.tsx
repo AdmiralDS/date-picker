@@ -5,7 +5,7 @@ import { DateRangePickerCalendarSimpleTemplate } from './DateRangePickerCalendar
 import DateRangePickerCalendarSimpleTemplateRaw from './DateRangePickerCalendarSimple.template.tsx?raw';
 
 export default {
-  title: 'Admiral-2.1/RangePicker/DateRangePickerCalendar',
+  title: 'Admiral-2.1/Range Picker/DateRangePickerCalendar',
   component: DateRangePickerCalendar,
   parameters: {
     docs: {

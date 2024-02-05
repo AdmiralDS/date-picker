@@ -7,7 +7,7 @@ import { YearPickerCalendarCustomCellTemplate } from './YearPickerCalendarCustom
 import YearPickerCalendarCustomCellTemplateRaw from './YearPickerCalendarCustomCell.template.tsx?raw';
 
 export default {
-  title: 'Admiral-2.1/DatePicker/YearPickerCalendar',
+  title: 'Admiral-2.1/Date Picker/YearPickerCalendar',
   component: YearPickerCalendar,
   parameters: {
     docs: {

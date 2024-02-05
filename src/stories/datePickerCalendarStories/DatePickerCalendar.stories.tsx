@@ -11,7 +11,7 @@ import { DatePickerCalendarCustomCellTemplate } from './DatePickerCalendarCustom
 import DatePickerCalendarCustomCellTemplateRaw from './DatePickerCalendarCustomCell.template.tsx?raw';
 
 export default {
-  title: 'Admiral-2.1/DatePicker/DatePickerCalendar',
+  title: 'Admiral-2.1/Date Picker/DatePickerCalendar',
   component: DatePickerCalendar,
   parameters: {
     docs: {
