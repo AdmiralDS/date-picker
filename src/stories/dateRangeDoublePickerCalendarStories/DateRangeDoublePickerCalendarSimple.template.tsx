@@ -1,7 +1,10 @@
 import type { MouseEventHandler } from 'react';
 
+import { T } from '@admiral-ds/react-ui';
 import type { DateRangeDoublePickerCalendarProps } from '@admiral-ds/date-picker';
 import { DateRangeDoublePickerCalendar } from '@admiral-ds/date-picker';
+
+import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
 export const DateRangeDoublePickerCalendarSimpleTemplate = (props: DateRangeDoublePickerCalendarProps) => {
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -10,10 +13,24 @@ export const DateRangeDoublePickerCalendarSimpleTemplate = (props: DateRangeDoub
   };
 
   return (
-    <DateRangeDoublePickerCalendar
-      {...props}
-      onClick={handleClick}
-      //defaultSelectedDateRangeValue={['2023-10-01T12:00:00Z', '2024-07-01T12:00:00Z']}
-    />
+    <WrapperHorizontal>
+      <DateRangeDoublePickerCalendar
+        {...props}
+        onClick={handleClick}
+        //defaultSelectedDateRangeValue={['2023-10-01T12:00:00Z', '2024-07-01T12:00:00Z']}
+      />
+      <WrapperVertical>
+        <T font="Subtitle/Subtitle 2" as="div">
+          Выбор диапазона дат
+        </T>
+        <T font="Body/Body 2 Long" as="div">
+          Части сдвоенного календаря ведут себя независимо, то есть при взаимодействии с одной его частью, вторая не
+          меняется. Первый пункт работает до тех пор, пока левая часть «младше» правой.
+          <br />
+          <br />В случае, когда мы меняем правую часть так, что выбранный в ней месяц года «младше», чем в левой части,
+          то левая часть подстраивается, отображая месяц стоящий перед тем, который в правой. И наоборот.
+        </T>
+      </WrapperVertical>
+    </WrapperHorizontal>
   );
 };

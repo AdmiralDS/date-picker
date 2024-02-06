@@ -39,5 +39,5 @@ export const YearRangeDoublePickerCalendarSimple = {
       },
     },
   },
-  name: 'YearRangeDoublePickerCalendarSimple',
+  name: 'Сдвоенный календарь выбора лет',
 };

@@ -39,5 +39,5 @@ export const MonthRangeDoublePickerCalendarSimple = {
       },
     },
   },
-  name: 'MonthRangeDoublePickerCalendarSimple',
+  name: 'Сдвоенный календарь выбора месяцев',
 };
