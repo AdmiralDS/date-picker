@@ -39,5 +39,5 @@ export const YearRangePickerCalendarSimple = {
       },
     },
   },
-  name: 'YearRangePickerCalendarSimple',
+  name: 'Выбор диапазона лет',
 };

@@ -1,10 +1,10 @@
 import type { MouseEventHandler } from 'react';
 import { memo } from 'react';
+import { css } from 'styled-components';
 
-import type { YearPickerCalendarProps } from '@admiral-ds/date-picker';
-import { YearPickerCalendar } from '#src/components/YearPickerCalendar';
-import type { DefaultCellProps } from '#src/components/DefaultCell';
-import { DefaultCell } from '#src/components/DefaultCell';
+import { T } from '@admiral-ds/react-ui';
+import { DefaultCell, YearPickerCalendar } from '@admiral-ds/date-picker';
+import type { YearPickerCalendarProps, DefaultCellProps } from '@admiral-ds/date-picker';
 import { YEAR_CELL_HEIGHT, YEAR_CELL_WIDTH } from '#src/components/DefaultCell/constants.ts';
 import {
   baseYearCellMixin,
@@ -13,7 +13,8 @@ import {
   hiddenYearCellMixin,
   selectedYearCellMixin,
 } from '#src/components/DefaultCell/mixins.tsx';
-import { css } from 'styled-components';
+
+import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
 const getDefaultYearCellMixin = (
   selected?: boolean,
@@ -48,8 +49,9 @@ const DefaultYearCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) =
   );
   const cellMixin = css`
     ${yearCellMixin};
-    color: red;
+    color: ${(p) => p.theme.color['Success/Success 50 Main']};
   `;
+
   return (
     <DefaultCell
       width={YEAR_CELL_WIDTH}
@@ -69,5 +71,19 @@ export const YearPickerCalendarCustomCellTemplate = (props: YearPickerCalendarPr
     console.log(`click on ${clickedCell}`);
   };
 
-  return <YearPickerCalendar {...props} cell={MemoCell} onClick={handleClick} />;
+  return (
+    <WrapperHorizontal>
+      <YearPickerCalendar {...props} cell={MemoCell} onClick={handleClick} />
+      <WrapperVertical>
+        <T font="Body/Body 2 Long" as="div">
+          Календарь позволяет кастомизировать отображение ячеек при необходимости, например, изменять базовый цвет
+          текста.
+          <br />
+          <br />
+          Очень важно передавать подобные кастомизированные элементы, обернув их в React.memo, чтобы избежать лишних
+          перерендеров при обновлении компонента.
+        </T>
+      </WrapperVertical>
+    </WrapperHorizontal>
+  );
 };

@@ -47,5 +47,5 @@ export const MonthRangePickerCalendarSimple = {
       },
     },
   },
-  name: 'MonthRangePickerCalendarSimple',
+  name: 'Выбор диапазона месяцев',
 };

@@ -1,13 +1,11 @@
 import type { MouseEventHandler } from 'react';
 import { memo } from 'react';
 import type { Dayjs } from 'dayjs';
-import dayjs from 'dayjs';
 import { css } from 'styled-components';
 
-import type { DatePickerCalendarProps } from '@admiral-ds/date-picker';
-import { DatePickerCalendar } from '@admiral-ds/date-picker';
-import type { DateAttributes, DefaultCellProps } from '#src/components/DefaultCell';
-import { DefaultCell } from '#src/components/DefaultCell';
+import { T } from '@admiral-ds/react-ui';
+import type { DatePickerCalendarProps, DateAttributes, DefaultCellProps } from '@admiral-ds/date-picker';
+import { DatePickerCalendar, DefaultCell } from '@admiral-ds/date-picker';
 import {
   baseDateCellMixin,
   currentDateCellMixin,
@@ -20,7 +18,7 @@ import {
   selectedDateCellMixin,
 } from '#src/components/DefaultCell/mixins.tsx';
 import { DATE_CELL_HEIGHT, DATE_CELL_WIDTH } from '#src/components/DefaultCell/constants.ts';
-import { T } from '@admiral-ds/react-ui';
+
 import { WrapperHorizontal } from '#src/stories/common.tsx';
 
 const outsideMonthDateCellMixin = css<{ $isActive?: boolean }>`
@@ -85,8 +83,8 @@ const MemoCustomDateCell = memo(CustomDateCell);
 export const DatePickerCalendarCustomCellTemplate = (props: DatePickerCalendarProps) => {
   const dateAttrs: (date: Dayjs) => DateAttributes = (date: Dayjs) => {
     return {
-      disabled: date.isBefore(dayjs()),
-      isHoliday: date.day() === 0 || date.day() === 6 || date.isSame(dayjs(), 'date'),
+      disabled: date.day() === 6,
+      isHoliday: date.day() === 0,
     };
   };
 
@@ -106,6 +104,7 @@ export const DatePickerCalendarCustomCellTemplate = (props: DatePickerCalendarPr
       <T font="Body/Body 2 Long" as="div">
         Календарь позволяет кастомизировать отображение ячеек дат (а также месяцев и лет) при необходимости, например,
         отображать дни, которые не входят в месяц.
+        <br />
         <br />
         Очень важно передавать подобные кастомизированные элементы, обернув их в React.memo, чтобы избежать лишних
         перерендеров при обновлении компонента.

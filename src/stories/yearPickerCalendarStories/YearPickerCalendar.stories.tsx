@@ -65,5 +65,5 @@ export const YearPickerCalendarCustomCell = {
       },
     },
   },
-  name: 'YearPickerCalendarCustomCell',
+  name: 'Кастомизация отображения',
 };
