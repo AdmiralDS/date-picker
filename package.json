@@ -25,7 +25,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build --disable-telemetry --output-dir docs",
-    "preview-storybook": "npx http-server ./docs"
+    "preview-storybook": "vite preview --outDir docs"
   },
   "keywords": [
     "AdmiralDS",
