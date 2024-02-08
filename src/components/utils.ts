@@ -5,6 +5,7 @@ import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import utc from 'dayjs/plugin/utc';
 import isLeapYear from 'dayjs/plugin/isLeapYear';
+import isBetween from 'dayjs/plugin/isBetween';
 import DayOfYear from 'dayjs/plugin/dayOfYear';
 import type { DateAttributes } from '#src/components/DefaultCell';
 
@@ -13,6 +14,7 @@ dayjs.extend(CustomParseFormat);
 dayjs.extend(LocalizedFormat);
 dayjs.extend(utc);
 dayjs.extend(isLeapYear);
+dayjs.extend(isBetween);
 dayjs.extend(DayOfYear);
 
 export const getDaysInYear = (date: Dayjs) => {
@@ -23,7 +25,6 @@ export const getDateByDayOfYear = (date: Dayjs, dayOfYear: number) => {
   return date.dayOfYear(dayOfYear);
 };
 
-//export const getCurrentDate = (locale?: string) => {
 export const getCurrentDate = (locale?: string) => {
   if (locale) return setNoon(dayjs().locale(locale));
   return setNoon(dayjs()).locale('ru');
