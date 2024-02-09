@@ -91,7 +91,8 @@
     "@admiral-ds/react-ui": "^7.1.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
-    "styled-components": "^6.1.0"
+    "styled-components": "^6.1.0",
+    "dayjs": "^1.11.8"
   },
   "repository": "https://github.com/AdmiralDS/date-picker",
   "bugs": {
