@@ -7,6 +7,7 @@ import type { DateRangePickerCalendarProps } from '@admiral-ds/date-picker';
 import { DateRangePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
+import { dateIsInRange, dateIsSelected } from '#src/components/utils.ts';
 
 export const DateRangePickerCalendarBlockEarlierDatesTemplate = (props: DateRangePickerCalendarProps) => {
   const [activeDateRangeEnd, setActiveDateRangeEnd] = useState<Dayjs | undefined>();
@@ -14,9 +15,16 @@ export const DateRangePickerCalendarBlockEarlierDatesTemplate = (props: DateRang
     setActiveDateRangeEnd(date);
   };
 
+  const [selectedDateRange, setSelectedDateRange] = useState<[Dayjs | undefined, Dayjs | undefined] | undefined>();
+  const handleSelectedDateRangeChange = (dateRange: [Dayjs | undefined, Dayjs | undefined]) => {
+    setSelectedDateRange(dateRange);
+  };
+
   const dateAttrs = (date: Dayjs) => {
     if (activeDateRangeEnd && date.isBefore(activeDateRangeEnd, 'date')) {
-      return { disabled: true };
+      if (!dateIsInRange('date', date, selectedDateRange) && !dateIsSelected('date', date, selectedDateRange)) {
+        return { disabled: true };
+      }
     }
     return {};
   };
@@ -33,6 +41,7 @@ export const DateRangePickerCalendarBlockEarlierDatesTemplate = (props: DateRang
         onClick={handleClick}
         onActiveDateRangeEndValueChange={handleActiveDateRangeEndChange}
         dateAttributes={dateAttrs}
+        onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
       />
       <WrapperVertical>
         <T font="Subtitle/Subtitle 2" as="div">
