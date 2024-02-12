@@ -22,7 +22,7 @@
     "postinstall": "npm run build",
     "test": "jest",
     "build": "vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build --disable-telemetry --output-dir docs",
     "preview-storybook": "vite preview --outDir docs"
