@@ -169,6 +169,7 @@ export const DefaultCell = ({
   isActive,
   isCurrent,
   isHoliday,
+  isOutsideMonth,
   ...props
 }: CellProps) => {
   return (
@@ -181,7 +182,8 @@ export const DefaultCell = ({
       data-hidden-cell={hidden ? true : undefined}
       data-is-current-date={isCurrent ? isCurrent : undefined}
       data-is-active-date={isActive ? isActive : undefined}
-      data-is-holyday-date={isHoliday ? isHoliday : undefined}
+      data-is-holiday-date={isHoliday ? isHoliday : undefined}
+      data-is-outside-month-date={isOutsideMonth ? isOutsideMonth : undefined}
       {...props}
     >
       <LeftHalf
