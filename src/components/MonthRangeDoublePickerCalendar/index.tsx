@@ -2,7 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import { getCurrentDate } from '#src/components/utils.ts';
+import { dateIsSameOrAfter, getCurrentDate } from '#src/components/utils.ts';
 import type {
   RangeDoubleCalendarProps,
   CalendarViewMode,
@@ -81,12 +81,12 @@ export const MonthRangeDoublePickerCalendar = ({
   };
 
   useEffect(() => {
-    if (dateLeftInner.isSameOrAfter(dateRightInner)) {
+    if (dateIsSameOrAfter(dateLeftInner, dateRightInner, 'year')) {
       handleDateRightChange(dateLeftInner.add(1, 'year'));
     }
   }, [dateLeftInner]);
   useEffect(() => {
-    if (dateRightInner.isSameOrBefore(dateLeftInner)) {
+    if (dateIsSameOrAfter(dateRightInner, dateLeftInner, 'year')) {
       handleDateLeftChange(dateRightInner.subtract(1, 'year'));
     }
   }, [dateRightInner]);

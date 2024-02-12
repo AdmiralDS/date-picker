@@ -1,21 +1,27 @@
 import dayjs, { isDayjs } from 'dayjs';
 import type { Dayjs, ManipulateType, UnitType } from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
-import CustomParseFormat from 'dayjs/plugin/customParseFormat';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 import utc from 'dayjs/plugin/utc';
 import isLeapYear from 'dayjs/plugin/isLeapYear';
 import isBetween from 'dayjs/plugin/isBetween';
-import DayOfYear from 'dayjs/plugin/dayOfYear';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import dayOfYear from 'dayjs/plugin/dayOfYear';
 import type { DateAttributes } from '#src/components/DefaultCell';
 
 dayjs.extend(localeData);
-dayjs.extend(CustomParseFormat);
-dayjs.extend(LocalizedFormat);
+dayjs.extend(customParseFormat);
+dayjs.extend(localizedFormat);
 dayjs.extend(utc);
 dayjs.extend(isLeapYear);
 dayjs.extend(isBetween);
-dayjs.extend(DayOfYear);
+dayjs.extend(isSameOrAfter);
+dayjs.extend(dayOfYear);
+
+export const dateIsSameOrAfter = (dateToCheck: Dayjs, dateBase: Dayjs, unit?: dayjs.OpUnitType) => {
+  return dateToCheck.isSameOrAfter(dateBase, unit);
+};
 
 export const getDaysInYear = (date: Dayjs) => {
   return date.isLeapYear() ? 366 : 365;

@@ -2,7 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import { getCurrentDate } from '#src/components/utils.ts';
+import { dateIsSameOrAfter, getCurrentDate } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import type { PickerCalendarProps, RangeDoubleCalendarProps } from '#src/components/calendarInterfaces.ts';
@@ -57,12 +57,12 @@ export const YearRangeDoublePickerCalendar = ({
   };
 
   useEffect(() => {
-    if (dateLeftInner.isSameOrAfter(dateRightInner)) {
+    if (dateIsSameOrAfter(dateLeftInner, dateRightInner, 'year')) {
       handleDateRightChange(dateLeftInner.add(YEARS_ON_SCREEN, 'year'));
     }
   }, [dateLeftInner]);
   useEffect(() => {
-    if (dateRightInner.isSameOrBefore(dateLeftInner)) {
+    if (dateIsSameOrAfter(dateRightInner, dateLeftInner, 'year')) {
       handleDateLeftChange(dateRightInner.subtract(YEARS_ON_SCREEN, 'year'));
     }
   }, [dateRightInner]);
