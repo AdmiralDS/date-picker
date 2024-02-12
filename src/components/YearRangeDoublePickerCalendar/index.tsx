@@ -5,7 +5,7 @@ import type { Dayjs } from 'dayjs';
 import { getCurrentDate } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
-import type { RangeDoubleCalendarProps } from '#src/components/calendarInterfaces.ts';
+import type { PickerCalendarProps, RangeDoubleCalendarProps } from '#src/components/calendarInterfaces.ts';
 import {
   CalendarContainer,
   DoublePickerCalendarWrapper,
@@ -16,9 +16,10 @@ import { ruLocale } from '#src/components/calendarConstants.ts';
 
 export interface YearRangeDoublePickerCalendarProps
   extends Omit<
-    RangeDoubleCalendarProps,
-    'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
-  > {}
+      RangeDoubleCalendarProps,
+      'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'cell'
+    >,
+    Omit<PickerCalendarProps, 'viewModeValue' | 'defaultViewModeValue' | 'onViewModeChange'> {}
 
 export const YearRangeDoublePickerCalendar = ({
   dateRangeValue,
@@ -30,7 +31,10 @@ export const YearRangeDoublePickerCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
+  cell,
   locale = ruLocale,
+  prevButtonProps,
+  nextButtonProps,
   ...props
 }: YearRangeDoublePickerCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -123,10 +127,13 @@ export const YearRangeDoublePickerCalendar = ({
           viewMode={'years'}
           locale={locale}
           onClick={handleLeftTwentyYearsNavigationPanelClick}
+          prevButtonProps={prevButtonProps}
+          nextButtonProps={nextButtonProps}
         />
         <CalendarContainer>
           <YearRangeCalendarView
             {...props}
+            cell={cell?.yearCell}
             dateValue={dateLeftInner}
             selectedDateRangeValue={selectedDateRangeInner}
             onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
@@ -145,10 +152,13 @@ export const YearRangeDoublePickerCalendar = ({
           viewMode={'years'}
           locale={locale}
           onClick={handleRightTwentyYearsNavigationPanelClick}
+          prevButtonProps={prevButtonProps}
+          nextButtonProps={nextButtonProps}
         />
         <CalendarContainer>
           <YearRangeCalendarView
             {...props}
+            cell={cell?.yearCell}
             dateValue={dateRightInner}
             selectedDateRangeValue={selectedDateRangeInner}
             onSelectedDateRangeValueChange={handleSelectedDateRangeChange}

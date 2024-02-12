@@ -28,6 +28,8 @@ export const MonthPickerCalendar = ({
   onSelectedDateValueChange,
   cell,
   locale = ruLocale,
+  prevButtonProps,
+  nextButtonProps,
   ...props
 }: MonthPickerCalendarProps) => {
   //<editor-fold desc="Calendar view mode">
@@ -99,6 +101,8 @@ export const MonthPickerCalendar = ({
         viewMode={viewModeInner}
         locale={locale}
         onClick={handleYearNavigationPanelClick}
+        prevButtonProps={prevButtonProps}
+        nextButtonProps={nextButtonProps}
       />
       <CalendarContainer>
         <MonthCalendarView

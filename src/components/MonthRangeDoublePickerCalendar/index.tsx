@@ -41,6 +41,8 @@ export const MonthRangeDoublePickerCalendar = ({
   onActiveDateValueChange,
   cell,
   locale = ruLocale,
+  prevButtonProps,
+  nextButtonProps,
   ...props
 }: MonthRangeDoublePickerCalendarProps) => {
   //<editor-fold desc="Calendar view mode">
@@ -193,6 +195,8 @@ export const MonthRangeDoublePickerCalendar = ({
           viewMode={viewModeLeftInner}
           locale={locale}
           onClick={handleLeftYearNavigationPanelClick}
+          prevButtonProps={prevButtonProps}
+          nextButtonProps={nextButtonProps}
         />
         <CalendarContainer>
           <MonthRangeCalendarView
@@ -226,6 +230,8 @@ export const MonthRangeDoublePickerCalendar = ({
           viewMode={viewModeRightInner}
           locale={locale}
           onClick={handleRightYearNavigationPanelClick}
+          prevButtonProps={prevButtonProps}
+          nextButtonProps={nextButtonProps}
         />
         <CalendarContainer>
           <MonthRangeCalendarView

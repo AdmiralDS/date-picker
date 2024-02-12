@@ -33,6 +33,8 @@ export const MonthRangePickerCalendar = ({
   onSelectedDateRangeValueChange,
   cell,
   locale = ruLocale,
+  prevButtonProps,
+  nextButtonProps,
   ...props
 }: MonthRangePickerCalendarProps) => {
   //<editor-fold desc="Calendar view mode">
@@ -121,6 +123,8 @@ export const MonthRangePickerCalendar = ({
         viewMode={viewModeInner}
         locale={locale}
         onClick={handleYearNavigationPanelClick}
+        prevButtonProps={prevButtonProps}
+        nextButtonProps={nextButtonProps}
       />
       <CalendarContainer>
         <MonthRangeCalendarView

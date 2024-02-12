@@ -34,6 +34,8 @@ export const TwentyYearsNavigationPanelWidget = ({
   viewMode,
   date,
   locale = ruLocale,
+  prevButtonProps,
+  nextButtonProps,
   ...props
 }: TwentyYearsNavigationPanelWidgetProps) => {
   const dateInner = date?.locale(locale?.localeName) || getCurrentDate(locale?.localeName);
@@ -46,6 +48,7 @@ export const TwentyYearsNavigationPanelWidget = ({
         highlightFocus={false}
         data-panel-target-type="left"
         renderContent={() => locale?.localeText.backwardText}
+        {...prevButtonProps}
       >
         <ChevronLeftOutline />
       </IconWithTooltip>
@@ -55,6 +58,7 @@ export const TwentyYearsNavigationPanelWidget = ({
         highlightFocus={false}
         data-panel-target-type="right"
         renderContent={() => locale?.localeText.forwardText}
+        {...nextButtonProps}
       >
         <ChevronRightOutline />
       </IconWithTooltip>

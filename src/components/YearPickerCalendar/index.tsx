@@ -2,14 +2,16 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import type { SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
+import type { PickerCalendarProps, SingleCalendarProps } from '#src/components/calendarInterfaces.ts';
 import { getCurrentDate } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
 import { CalendarContainer, SinglePickerCalendarWrapper, YearCalendarView } from '#src/components/calendarStyle.ts';
 import { ruLocale } from '#src/components/calendarConstants.ts';
 
-export interface YearPickerCalendarProps extends SingleCalendarProps {}
+export interface YearPickerCalendarProps
+  extends Omit<SingleCalendarProps, 'cell'>,
+    Omit<PickerCalendarProps, 'viewModeValue' | 'defaultViewModeValue' | 'onViewModeChange'> {}
 
 export const YearPickerCalendar = ({
   dateValue,
@@ -18,7 +20,10 @@ export const YearPickerCalendar = ({
   selectedDateValue,
   defaultSelectedDateValue,
   onSelectedDateValueChange,
+  cell,
   locale = ruLocale,
+  prevButtonProps,
+  nextButtonProps,
   ...props
 }: YearPickerCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -64,10 +69,13 @@ export const YearPickerCalendar = ({
         viewMode={'years'}
         locale={locale}
         onClick={handleTwentyYearsNavigationPanelClick}
+        prevButtonProps={prevButtonProps}
+        nextButtonProps={nextButtonProps}
       />
       <CalendarContainer>
         <YearCalendarView
           {...props}
+          cell={cell?.yearCell}
           dateValue={dateInner}
           selectedDateValue={selectedDateInner}
           onSelectedDateValueChange={handleYearClick}
