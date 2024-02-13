@@ -118,7 +118,6 @@ export const DateRangePickerCalendar = ({
   };
 
   const getSelectedRangeEnd = () => {
-    //console.log(`dateRangeActiveEndState-${dateRangeActiveEndState}, selectedDateRangeInner-${selectedDateRangeInner}`);
     if (!dateRangeActiveEndState || !selectedDateRangeInner) return undefined;
     if (selectedDateRangeInner[0] && dateRangeActiveEndState.isSame(selectedDateRangeInner[0], 'date')) {
       return selectedDateRangeInner[1];

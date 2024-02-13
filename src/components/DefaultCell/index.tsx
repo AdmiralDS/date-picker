@@ -294,7 +294,6 @@ export const DefaultDateCell = ({ isCurrent, isHoliday, ...props }: DefaultCellP
     isHoliday,
     props.isActive,
   );
-  console.log('render DateCell');
 
   return (
     <DefaultCell
@@ -349,7 +348,6 @@ export const DefaultDateRangeCell = ({ isCurrent, isHoliday, ...props }: Default
     props.isRangeEnd || props.isRangeSelectingEnd,
     props.isActive,
   );
-  console.log('render Cell');
   return (
     <DefaultCell
       width={DATE_CELL_WIDTH}

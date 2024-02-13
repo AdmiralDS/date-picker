@@ -105,7 +105,6 @@ export const MonthRangePickerCalendar = ({
   };
 
   const getSelectedRangeEnd = () => {
-    //console.log(`dateRangeActiveEndState-${dateRangeActiveEndState}, selectedDateRangeInner-${selectedDateRangeInner}`);
     if (!dateRangeActiveEndState || !selectedDateRangeInner) return undefined;
     if (selectedDateRangeInner[0] && dateRangeActiveEndState.isSame(selectedDateRangeInner[0], 'month')) {
       return selectedDateRangeInner[1];

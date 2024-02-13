@@ -106,7 +106,6 @@ export const DatePickerCalendar = ({
         break;
     }
   };
-  console.log('render DatePickerCalendar');
 
   return (
     <SinglePickerCalendarWrapper>
