@@ -173,7 +173,6 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
-  border-color: #23262D;
 }
 
 .c17 {
@@ -196,6 +195,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
+  border-color: #23262D;
 }
 
 .c11 {
@@ -394,7 +394,6 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
             <div
               class="c12"
               data-cell-type="monthCell"
-              data-is-current-day-cell="true"
               data-is-start-of-week-cell="true"
               data-value="Mon, 01 Jan 2024 09:00:00 GMT"
             >
@@ -413,6 +412,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
             <div
               class="c12"
               data-cell-type="monthCell"
+              data-is-current-day-cell="true"
               data-value="Thu, 01 Feb 2024 09:00:00 GMT"
             >
               <div
@@ -440,7 +440,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c18"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Март
               </div>
@@ -458,7 +458,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Апрель
               </div>
@@ -475,7 +475,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Май
               </div>
@@ -493,7 +493,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c18"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Июнь
               </div>
@@ -511,7 +511,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Июль
               </div>
@@ -528,7 +528,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Август
               </div>
@@ -546,7 +546,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c18"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Сентябрь
               </div>
@@ -564,7 +564,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Октябрь
               </div>
@@ -581,7 +581,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Ноябрь
               </div>
@@ -599,7 +599,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c18"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Декабрь
               </div>
@@ -626,7 +626,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2021
               </div>
@@ -643,7 +643,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2022
               </div>
@@ -660,7 +660,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2023
               </div>
@@ -678,7 +678,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c15"
+                class="c17"
               >
                 2024
               </div>
@@ -695,7 +695,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2025
               </div>
@@ -712,7 +712,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2026
               </div>
@@ -729,7 +729,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2027
               </div>
@@ -746,7 +746,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2028
               </div>
@@ -763,7 +763,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2029
               </div>
@@ -780,7 +780,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2030
               </div>
@@ -797,7 +797,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2031
               </div>
@@ -814,7 +814,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2032
               </div>
@@ -831,7 +831,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2033
               </div>
@@ -848,7 +848,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2034
               </div>
@@ -865,7 +865,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2035
               </div>
@@ -882,7 +882,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2036
               </div>
@@ -899,7 +899,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2037
               </div>
@@ -916,7 +916,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2038
               </div>
@@ -933,7 +933,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2039
               </div>
@@ -950,7 +950,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2040
               </div>
@@ -1048,7 +1048,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Январь
               </div>
@@ -1065,7 +1065,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Февраль
               </div>
@@ -1083,7 +1083,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c18"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Март
               </div>
@@ -1101,7 +1101,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Апрель
               </div>
@@ -1118,7 +1118,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Май
               </div>
@@ -1136,7 +1136,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c18"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Июнь
               </div>
@@ -1154,7 +1154,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Июль
               </div>
@@ -1171,7 +1171,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Август
               </div>
@@ -1189,7 +1189,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c18"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Сентябрь
               </div>
@@ -1207,7 +1207,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Октябрь
               </div>
@@ -1224,7 +1224,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Ноябрь
               </div>
@@ -1242,7 +1242,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c18"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 Декабрь
               </div>
@@ -1269,7 +1269,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2021
               </div>
@@ -1286,7 +1286,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2022
               </div>
@@ -1303,7 +1303,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2023
               </div>
@@ -1321,7 +1321,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c15"
+                class="c17"
               >
                 2024
               </div>
@@ -1338,7 +1338,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2025
               </div>
@@ -1355,7 +1355,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2026
               </div>
@@ -1372,7 +1372,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2027
               </div>
@@ -1389,7 +1389,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2028
               </div>
@@ -1406,7 +1406,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2029
               </div>
@@ -1423,7 +1423,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2030
               </div>
@@ -1440,7 +1440,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2031
               </div>
@@ -1457,7 +1457,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2032
               </div>
@@ -1474,7 +1474,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2033
               </div>
@@ -1491,7 +1491,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2034
               </div>
@@ -1508,7 +1508,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2035
               </div>
@@ -1525,7 +1525,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2036
               </div>
@@ -1542,7 +1542,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2037
               </div>
@@ -1559,7 +1559,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2038
               </div>
@@ -1576,7 +1576,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2039
               </div>
@@ -1593,7 +1593,7 @@ exports[`MonthRangeDoublePickerCalendar should render component 1`] = `
                 class="c14"
               />
               <div
-                class="c17"
+                class="c15"
               >
                 2040
               </div>

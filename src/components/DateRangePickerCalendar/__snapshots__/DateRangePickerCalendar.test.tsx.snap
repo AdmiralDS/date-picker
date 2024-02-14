@@ -271,6 +271,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 50%;
+  color: #FFFFFF;
 }
 
 .c20 {
@@ -293,7 +294,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 50%;
-  border-color: #23262D;
 }
 
 .c21 {
@@ -316,7 +316,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 50%;
-  color: #FFFFFF;
+  border-color: #23262D;
 }
 
 .c26 {
@@ -339,7 +339,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
-  border-color: #23262D;
 }
 
 .c27 {
@@ -362,6 +361,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
+  border-color: #23262D;
 }
 
 .c24 {
@@ -486,7 +486,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           class="c7"
           data-panel-target-type="month"
         >
-          Январь
+          Февраль
         </div>
         <div
           class="c7"
@@ -589,490 +589,8 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-is-start-of-week-cell="true"
-            data-value="Mon, 01 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c15"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              1
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Tue, 02 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              2
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Wed, 03 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              3
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Thu, 04 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              4
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Fri, 05 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              5
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Sat, 06 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              6
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-is-end-of-week-cell="true"
-            data-value="Sun, 07 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c19"
-            />
-            <div
-              class="c17"
-            >
-              7
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-is-start-of-week-cell="true"
-            data-value="Mon, 08 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c15"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              8
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Tue, 09 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              9
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Wed, 10 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              10
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Thu, 11 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              11
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Fri, 12 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              12
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Sat, 13 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              13
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-is-end-of-week-cell="true"
-            data-value="Sun, 14 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c19"
-            />
-            <div
-              class="c17"
-            >
-              14
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-is-start-of-week-cell="true"
-            data-value="Mon, 15 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c15"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              15
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Tue, 16 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              16
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Wed, 17 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              17
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Thu, 18 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              18
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Fri, 19 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              19
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Sat, 20 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              20
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-is-end-of-week-cell="true"
-            data-value="Sun, 21 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c19"
-            />
-            <div
-              class="c17"
-            >
-              21
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-is-start-of-week-cell="true"
-            data-value="Mon, 22 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c15"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              22
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Tue, 23 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              23
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Wed, 24 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              24
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Thu, 25 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              25
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Fri, 26 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              26
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-value="Sat, 27 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c16"
-            />
-            <div
-              class="c17"
-            >
-              27
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
-            data-is-end-of-week-cell="true"
-            data-value="Sun, 28 Jan 2024 09:00:00 GMT"
-          >
-            <div
-              class="c18"
-            />
-            <div
-              class="c19"
-            />
-            <div
-              class="c17"
-            >
-              28
-            </div>
-          </div>
-          <div
-            class="c14"
-            data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-is-outside-month-date="true"
             data-is-start-of-week-cell="true"
             data-value="Mon, 29 Jan 2024 09:00:00 GMT"
           >
@@ -1091,6 +609,8 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-is-outside-month-date="true"
             data-value="Tue, 30 Jan 2024 09:00:00 GMT"
           >
             <div
@@ -1108,8 +628,9 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-is-current-day-cell="true"
+            data-hidden-cell="true"
             data-is-end-of-week-cell="true"
+            data-is-outside-month-date="true"
             data-value="Wed, 31 Jan 2024 09:00:00 GMT"
           >
             <div
@@ -1119,7 +640,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c19"
             />
             <div
-              class="c20"
+              class="c17"
             >
               31
             </div>
@@ -1127,7 +648,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-hidden-cell="true"
             data-is-start-of-week-cell="true"
             data-value="Thu, 01 Feb 2024 09:00:00 GMT"
           >
@@ -1138,7 +658,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c21"
+              class="c20"
             >
               1
             </div>
@@ -1146,7 +666,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-hidden-cell="true"
             data-value="Fri, 02 Feb 2024 09:00:00 GMT"
           >
             <div
@@ -1156,7 +675,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c21"
+              class="c20"
             >
               2
             </div>
@@ -1164,7 +683,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-hidden-cell="true"
             data-value="Sat, 03 Feb 2024 09:00:00 GMT"
           >
             <div
@@ -1174,7 +692,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c21"
+              class="c20"
             >
               3
             </div>
@@ -1182,7 +700,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-hidden-cell="true"
             data-is-end-of-week-cell="true"
             data-value="Sun, 04 Feb 2024 09:00:00 GMT"
           >
@@ -1193,7 +710,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c19"
             />
             <div
-              class="c21"
+              class="c20"
             >
               4
             </div>
@@ -1201,7 +718,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-hidden-cell="true"
             data-is-start-of-week-cell="true"
             data-value="Mon, 05 Feb 2024 09:00:00 GMT"
           >
@@ -1212,7 +728,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c21"
+              class="c20"
             >
               5
             </div>
@@ -1220,7 +736,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-hidden-cell="true"
             data-value="Tue, 06 Feb 2024 09:00:00 GMT"
           >
             <div
@@ -1230,7 +745,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c21"
+              class="c20"
             >
               6
             </div>
@@ -1238,7 +753,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-hidden-cell="true"
             data-value="Wed, 07 Feb 2024 09:00:00 GMT"
           >
             <div
@@ -1248,7 +762,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c21"
+              class="c20"
             >
               7
             </div>
@@ -1256,7 +770,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-hidden-cell="true"
             data-value="Thu, 08 Feb 2024 09:00:00 GMT"
           >
             <div
@@ -1266,7 +779,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c21"
+              class="c20"
             >
               8
             </div>
@@ -1274,7 +787,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-hidden-cell="true"
             data-value="Fri, 09 Feb 2024 09:00:00 GMT"
           >
             <div
@@ -1284,7 +796,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c21"
+              class="c20"
             >
               9
             </div>
@@ -1292,7 +804,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-hidden-cell="true"
             data-value="Sat, 10 Feb 2024 09:00:00 GMT"
           >
             <div
@@ -1302,7 +813,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c21"
+              class="c20"
             >
               10
             </div>
@@ -1310,7 +821,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-hidden-cell="true"
             data-is-end-of-week-cell="true"
             data-value="Sun, 11 Feb 2024 09:00:00 GMT"
           >
@@ -1321,9 +831,516 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c19"
             />
             <div
-              class="c21"
+              class="c20"
             >
               11
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-is-start-of-week-cell="true"
+            data-value="Mon, 12 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              12
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Tue, 13 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              13
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-is-current-day-cell="true"
+            data-value="Wed, 14 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c21"
+            >
+              14
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Thu, 15 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              15
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Fri, 16 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              16
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Sat, 17 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              17
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-is-end-of-week-cell="true"
+            data-value="Sun, 18 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c19"
+            />
+            <div
+              class="c20"
+            >
+              18
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-is-start-of-week-cell="true"
+            data-value="Mon, 19 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              19
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Tue, 20 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              20
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Wed, 21 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              21
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Thu, 22 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              22
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Fri, 23 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              23
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Sat, 24 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              24
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-is-end-of-week-cell="true"
+            data-value="Sun, 25 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c19"
+            />
+            <div
+              class="c20"
+            >
+              25
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-is-start-of-week-cell="true"
+            data-value="Mon, 26 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              26
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Tue, 27 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              27
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-value="Wed, 28 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c20"
+            >
+              28
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-is-end-of-week-cell="true"
+            data-value="Thu, 29 Feb 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c19"
+            />
+            <div
+              class="c20"
+            >
+              29
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-is-outside-month-date="true"
+            data-is-start-of-week-cell="true"
+            data-value="Fri, 01 Mar 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c17"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-is-outside-month-date="true"
+            data-value="Sat, 02 Mar 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c17"
+            >
+              2
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-is-end-of-week-cell="true"
+            data-is-outside-month-date="true"
+            data-value="Sun, 03 Mar 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c19"
+            />
+            <div
+              class="c17"
+            >
+              3
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-is-outside-month-date="true"
+            data-is-start-of-week-cell="true"
+            data-value="Mon, 04 Mar 2024 09:00:00 GMT"
+          >
+            <div
+              class="c15"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c17"
+            >
+              4
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-is-outside-month-date="true"
+            data-value="Tue, 05 Mar 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c17"
+            >
+              5
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-is-outside-month-date="true"
+            data-value="Wed, 06 Mar 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c17"
+            >
+              6
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-is-outside-month-date="true"
+            data-value="Thu, 07 Mar 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c17"
+            >
+              7
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-is-outside-month-date="true"
+            data-value="Fri, 08 Mar 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c17"
+            >
+              8
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-is-outside-month-date="true"
+            data-value="Sat, 09 Mar 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c16"
+            />
+            <div
+              class="c17"
+            >
+              9
+            </div>
+          </div>
+          <div
+            class="c14"
+            data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-is-end-of-week-cell="true"
+            data-is-outside-month-date="true"
+            data-value="Sun, 10 Mar 2024 09:00:00 GMT"
+          >
+            <div
+              class="c18"
+            />
+            <div
+              class="c19"
+            />
+            <div
+              class="c17"
+            >
+              10
             </div>
           </div>
         </div>
@@ -1339,7 +1356,6 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c25"
             data-cell-type="monthCell"
-            data-is-current-month="true"
             data-value="Mon, 01 Jan 2024 09:00:00 GMT"
           >
             <div
@@ -1357,6 +1373,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
           <div
             class="c25"
             data-cell-type="monthCell"
+            data-is-current-month="true"
             data-value="Thu, 01 Feb 2024 09:00:00 GMT"
           >
             <div
@@ -1383,7 +1400,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               Март
             </div>
@@ -1400,7 +1417,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               Апрель
             </div>
@@ -1417,7 +1434,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               Май
             </div>
@@ -1434,7 +1451,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               Июнь
             </div>
@@ -1451,7 +1468,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               Июль
             </div>
@@ -1468,7 +1485,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               Август
             </div>
@@ -1485,7 +1502,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               Сентябрь
             </div>
@@ -1502,7 +1519,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               Октябрь
             </div>
@@ -1519,7 +1536,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               Ноябрь
             </div>
@@ -1536,7 +1553,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               Декабрь
             </div>
@@ -1563,7 +1580,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2021
             </div>
@@ -1580,7 +1597,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2022
             </div>
@@ -1597,7 +1614,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2023
             </div>
@@ -1615,7 +1632,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c26"
+              class="c27"
             >
               2024
             </div>
@@ -1632,7 +1649,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2025
             </div>
@@ -1649,7 +1666,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2026
             </div>
@@ -1666,7 +1683,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2027
             </div>
@@ -1683,7 +1700,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2028
             </div>
@@ -1700,7 +1717,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2029
             </div>
@@ -1717,7 +1734,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2030
             </div>
@@ -1734,7 +1751,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2031
             </div>
@@ -1751,7 +1768,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2032
             </div>
@@ -1768,7 +1785,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2033
             </div>
@@ -1785,7 +1802,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2034
             </div>
@@ -1802,7 +1819,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2035
             </div>
@@ -1819,7 +1836,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2036
             </div>
@@ -1836,7 +1853,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2037
             </div>
@@ -1853,7 +1870,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2038
             </div>
@@ -1870,7 +1887,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2039
             </div>
@@ -1887,7 +1904,7 @@ exports[`DateRangePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c27"
+              class="c26"
             >
               2040
             </div>

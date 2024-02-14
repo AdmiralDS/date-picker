@@ -151,7 +151,6 @@ exports[`MonthPickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
-  border-color: #23262D;
 }
 
 .c15 {
@@ -174,6 +173,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
   background-color: #FFFFFF;
   border: 1px #FFFFFF solid;
   border-radius: 18px;
+  border-color: #23262D;
 }
 
 .c10 {
@@ -362,7 +362,6 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
-            data-is-current-month="true"
             data-value="Mon, 01 Jan 2024 09:00:00 GMT"
           >
             <div
@@ -380,6 +379,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
           <div
             class="c11"
             data-cell-type="monthCell"
+            data-is-current-month="true"
             data-value="Thu, 01 Feb 2024 09:00:00 GMT"
           >
             <div
@@ -406,7 +406,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               Март
             </div>
@@ -423,7 +423,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               Апрель
             </div>
@@ -440,7 +440,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               Май
             </div>
@@ -457,7 +457,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               Июнь
             </div>
@@ -474,7 +474,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               Июль
             </div>
@@ -491,7 +491,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               Август
             </div>
@@ -508,7 +508,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               Сентябрь
             </div>
@@ -525,7 +525,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               Октябрь
             </div>
@@ -542,7 +542,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               Ноябрь
             </div>
@@ -559,7 +559,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               Декабрь
             </div>
@@ -586,7 +586,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2021
             </div>
@@ -603,7 +603,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2022
             </div>
@@ -620,7 +620,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2023
             </div>
@@ -638,7 +638,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c14"
+              class="c15"
             >
               2024
             </div>
@@ -655,7 +655,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2025
             </div>
@@ -672,7 +672,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2026
             </div>
@@ -689,7 +689,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2027
             </div>
@@ -706,7 +706,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2028
             </div>
@@ -723,7 +723,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2029
             </div>
@@ -740,7 +740,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2030
             </div>
@@ -757,7 +757,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2031
             </div>
@@ -774,7 +774,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2032
             </div>
@@ -791,7 +791,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2033
             </div>
@@ -808,7 +808,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2034
             </div>
@@ -825,7 +825,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2035
             </div>
@@ -842,7 +842,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2036
             </div>
@@ -859,7 +859,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2037
             </div>
@@ -876,7 +876,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2038
             </div>
@@ -893,7 +893,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2039
             </div>
@@ -910,7 +910,7 @@ exports[`MonthPickerCalendar should render component 1`] = `
               class="c13"
             />
             <div
-              class="c15"
+              class="c14"
             >
               2040
             </div>

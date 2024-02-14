@@ -1,4 +1,4 @@
-import dayjs, { isDayjs } from 'dayjs';
+import dayjs, { isDayjs, extend } from 'dayjs';
 import type { Dayjs, ManipulateType, UnitType } from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -10,14 +10,9 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import dayOfYear from 'dayjs/plugin/dayOfYear';
 import type { DateAttributes } from '#src/components/DefaultCell';
 
-dayjs.extend(localeData);
-dayjs.extend(customParseFormat);
-dayjs.extend(localizedFormat);
-dayjs.extend(utc);
-dayjs.extend(isLeapYear);
-dayjs.extend(isBetween);
-dayjs.extend(isSameOrAfter);
-dayjs.extend(dayOfYear);
+[localeData, customParseFormat, localizedFormat, utc, isLeapYear, isBetween, isSameOrAfter, dayOfYear].forEach(
+  (plugin) => extend(plugin),
+);
 
 export const dateIsSameOrAfter = (dateToCheck: Dayjs, dateBase: Dayjs, unit?: dayjs.OpUnitType) => {
   return dateToCheck.isSameOrAfter(dateBase, unit);
