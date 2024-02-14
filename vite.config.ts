@@ -1,3 +1,4 @@
+import type { PluginOption } from 'vite';
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react-swc';
@@ -26,8 +27,8 @@ export default defineConfig({
       noForceEmit: true,
       declarationDir: resolve(__dirname, 'dist'),
       rootDir: resolve(__dirname, 'src'),
-      exclude: ['*/**/*.stories.tsx'],
-    }),
+      exclude: ['*/**/*.stories.tsx', 'stories/**'],
+    }) as PluginOption,
   ],
   build: {
     sourcemap: true,
