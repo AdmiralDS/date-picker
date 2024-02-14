@@ -9,6 +9,8 @@ import { DatePickerCalendarChangeLocaleTemplate } from './DatePickerCalendarChan
 import DatePickerCalendarChangeLocaleTemplateRaw from './DatePickerCalendarChangeLocale.template.tsx?raw';
 import { DatePickerCalendarCustomCellTemplate } from './DatePickerCalendarCustomCell.template';
 import DatePickerCalendarCustomCellTemplateRaw from './DatePickerCalendarCustomCell.template.tsx?raw';
+import { DatePickerCalendarBlockPanelArrowsTemplate } from '#src/stories/datePickerCalendarStories/DatePickerCalendarBlockPanelArrows.template.tsx';
+import DatePickerCalendarBlockPanelArrowsTemplateRaw from './DatePickerCalendarBlockPanelArrows.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/Date Picker/DatePickerCalendar',
@@ -102,4 +104,20 @@ export const DatePickerCalendarCustomCell = {
     },
   },
   name: 'Кастомизация отображения дат',
+};
+
+const DatePickerCalendarBlockPanelArrowsStory: StoryFn<typeof DatePickerCalendar> = (props) => {
+  return <DatePickerCalendarBlockPanelArrowsTemplate {...props} />;
+};
+export const DatePickerCalendarBlockPanelArrows = {
+  render: DatePickerCalendarBlockPanelArrowsStory,
+
+  parameters: {
+    docs: {
+      source: {
+        code: DatePickerCalendarBlockPanelArrowsTemplateRaw,
+      },
+    },
+  },
+  name: 'Блокировка стрелок панели',
 };

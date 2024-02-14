@@ -42,6 +42,8 @@ export const MonthNavigationPanelWidget = ({
   viewMode,
   date,
   locale = ruLocale,
+  prevButtonProps,
+  nextButtonProps,
   ...props
 }: MonthNavigationPanelWidgetProps) => {
   const dateInner = date?.locale(locale.localeName) || getCurrentDate(locale?.localeName || 'ru');
@@ -55,6 +57,7 @@ export const MonthNavigationPanelWidget = ({
         renderContent={() =>
           viewMode === 'dates' ? locale?.localeText.previousMonthText : locale?.localeText.backwardText
         }
+        {...prevButtonProps}
       >
         <ChevronLeftOutline />
       </IconWithTooltip>
@@ -83,6 +86,7 @@ export const MonthNavigationPanelWidget = ({
         highlightFocus={false}
         data-panel-target-type="right"
         renderContent={() => (viewMode === 'dates' ? locale?.localeText.nextMonthText : locale?.localeText.forwardText)}
+        {...nextButtonProps}
       >
         <ChevronRightOutline />
       </IconWithTooltip>

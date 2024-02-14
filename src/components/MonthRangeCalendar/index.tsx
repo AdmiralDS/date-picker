@@ -46,7 +46,7 @@ export const MonthRangeCalendar = ({
       return;
     }
     const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName || 'ru');
-    const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
+    const disabled = targetDataAttributes['disabledCell'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       handleActiveDateChange(date);
     }
@@ -108,7 +108,7 @@ export const MonthRangeCalendar = ({
       return;
     }
     const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName || 'ru');
-    const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
+    const disabled = targetDataAttributes['disabledCell'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       const newSelectedDateRangeValue: [Dayjs | undefined, Dayjs | undefined] = [undefined, undefined];
       if (!dateRangeActiveEndInner) {

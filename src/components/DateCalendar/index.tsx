@@ -45,7 +45,7 @@ export const DateCalendar = ({
       return;
     }
     const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName);
-    const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
+    const disabled = targetDataAttributes['disabledCell'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled && !date.isSame(activeDateInner)) {
       handleActiveDateChange(date);
     }
@@ -72,7 +72,7 @@ export const DateCalendar = ({
       return;
     }
     const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName);
-    const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
+    const disabled = targetDataAttributes['disabledCell'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       handleSelectedDateChange(date);
     }
