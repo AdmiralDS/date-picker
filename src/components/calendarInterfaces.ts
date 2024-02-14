@@ -2,6 +2,7 @@ import type { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import type { Dayjs } from 'dayjs';
 
 import type { DateAttributes, DefaultCellProps } from '#src/components/DefaultCell';
+import type { ArrowButtonProps } from '#src/components/widgetInterfaces.ts';
 
 export type CalendarViewMode = 'dates' | 'months' | 'years';
 
@@ -112,4 +113,8 @@ export interface PickerCalendarProps {
   onViewModeChange?: (mode: CalendarViewMode) => void;
   /** Кастомное отображение ячеек */
   cell?: cellProps;
+  /** Параметры для кнопки панели "Назад" */
+  prevButtonProps?: ArrowButtonProps;
+  /** Параметры для кнопки панели "Вперед" */
+  nextButtonProps?: ArrowButtonProps;
 }

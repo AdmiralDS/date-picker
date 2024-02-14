@@ -29,6 +29,8 @@ export const DatePickerCalendar = ({
   onSelectedDateValueChange,
   cell,
   locale = ruLocale,
+  prevButtonProps,
+  nextButtonProps,
   ...props
 }: DatePickerCalendarProps) => {
   //<editor-fold desc="Calendar view mode">
@@ -104,7 +106,6 @@ export const DatePickerCalendar = ({
         break;
     }
   };
-  console.log('render DatePickerCalendar');
 
   return (
     <SinglePickerCalendarWrapper>
@@ -113,6 +114,8 @@ export const DatePickerCalendar = ({
         viewMode={viewModeInner}
         locale={locale}
         onClick={handleMonthNavigationPanelClick}
+        prevButtonProps={prevButtonProps}
+        nextButtonProps={nextButtonProps}
       />
       <CalendarContainer>
         <DateCalendarView

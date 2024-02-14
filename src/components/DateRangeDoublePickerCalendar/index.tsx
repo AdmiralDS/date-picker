@@ -2,7 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import { getCurrentDate } from '#src/components/utils.ts';
+import { dateIsSameOrAfter, getCurrentDate } from '#src/components/utils.ts';
 import type {
   RangeDoubleCalendarProps,
   CalendarViewMode,
@@ -42,6 +42,8 @@ export const DateRangeDoublePickerCalendar = ({
   onActiveDateValueChange,
   cell,
   locale = ruLocale,
+  prevButtonProps,
+  nextButtonProps,
   ...props
 }: DateRangeDoublePickerCalendarProps) => {
   //<editor-fold desc="Calendar view mode">
@@ -80,12 +82,12 @@ export const DateRangeDoublePickerCalendar = ({
   };
 
   useEffect(() => {
-    if (dateLeftInner.isSameOrAfter(dateRightInner)) {
+    if (dateIsSameOrAfter(dateLeftInner, dateRightInner, 'month')) {
       handleDateRightChange(dateLeftInner.add(1, 'month'));
     }
   }, [dateLeftInner]);
   useEffect(() => {
-    if (dateRightInner.isSameOrBefore(dateLeftInner)) {
+    if (dateIsSameOrAfter(dateRightInner, dateLeftInner, 'month')) {
       handleDateLeftChange(dateRightInner.subtract(1, 'month'));
     }
   }, [dateRightInner]);
@@ -220,6 +222,8 @@ export const DateRangeDoublePickerCalendar = ({
           viewMode={viewModeLeftInner}
           locale={locale}
           onClick={handleLeftMonthNavigationPanelClick}
+          prevButtonProps={prevButtonProps}
+          nextButtonProps={nextButtonProps}
         />
         <CalendarContainer>
           <DateRangeCalendarView
@@ -262,6 +266,8 @@ export const DateRangeDoublePickerCalendar = ({
           viewMode={viewModeRightInner}
           locale={locale}
           onClick={handleRightMonthNavigationPanelClick}
+          prevButtonProps={prevButtonProps}
+          nextButtonProps={nextButtonProps}
         />
         <CalendarContainer>
           <DateRangeCalendarView

@@ -34,6 +34,8 @@ export const DateRangePickerCalendar = ({
   onSelectedDateRangeValueChange,
   cell,
   locale = ruLocale,
+  prevButtonProps,
+  nextButtonProps,
   ...props
 }: DateRangePickerCalendarProps) => {
   //<editor-fold desc="Calendar view mode">
@@ -116,7 +118,6 @@ export const DateRangePickerCalendar = ({
   };
 
   const getSelectedRangeEnd = () => {
-    //console.log(`dateRangeActiveEndState-${dateRangeActiveEndState}, selectedDateRangeInner-${selectedDateRangeInner}`);
     if (!dateRangeActiveEndState || !selectedDateRangeInner) return undefined;
     if (selectedDateRangeInner[0] && dateRangeActiveEndState.isSame(selectedDateRangeInner[0], 'date')) {
       return selectedDateRangeInner[1];
@@ -134,6 +135,8 @@ export const DateRangePickerCalendar = ({
         viewMode={viewModeInner}
         locale={locale}
         onClick={handleMonthNavigationPanelClick}
+        prevButtonProps={prevButtonProps}
+        nextButtonProps={nextButtonProps}
       />
       <CalendarContainer>
         <DateRangeCalendarView

@@ -2,7 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import type { RangeCalendarProps } from '#src/components/calendarInterfaces.ts';
+import type { PickerCalendarProps, RangeCalendarProps } from '#src/components/calendarInterfaces.ts';
 import { getCurrentDate } from '#src/components/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
@@ -15,9 +15,10 @@ import { ruLocale } from '#src/components/calendarConstants.ts';
 
 export interface YearRangePickerCalendarProps
   extends Omit<
-    RangeCalendarProps,
-    'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange'
-  > {}
+      RangeCalendarProps,
+      'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'cell'
+    >,
+    Omit<PickerCalendarProps, 'viewModeValue' | 'defaultViewModeValue' | 'onViewModeChange'> {}
 
 export const YearRangePickerCalendar = ({
   dateValue,
@@ -26,7 +27,10 @@ export const YearRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
+  cell,
   locale = ruLocale,
+  prevButtonProps,
+  nextButtonProps,
   ...props
 }: YearRangePickerCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -68,10 +72,13 @@ export const YearRangePickerCalendar = ({
         viewMode={'years'}
         locale={locale}
         onClick={handleTwentyYearsNavigationPanelClick}
+        prevButtonProps={prevButtonProps}
+        nextButtonProps={nextButtonProps}
       />
       <CalendarContainer>
         <YearRangeCalendarView
           {...props}
+          cell={cell?.yearCell}
           dateValue={dateInner}
           selectedDateRangeValue={selectedDateRangeInner}
           onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
