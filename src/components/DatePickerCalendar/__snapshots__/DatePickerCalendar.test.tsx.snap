@@ -870,7 +870,6 @@ exports[`DatePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
-            data-is-current-day-cell="true"
             data-value="2024-02-14"
           >
             <div
@@ -880,7 +879,7 @@ exports[`DatePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c20"
+              class="c19"
             >
               14
             </div>
@@ -888,6 +887,7 @@ exports[`DatePickerCalendar should render component 1`] = `
           <div
             class="c14"
             data-cell-type="dateCell"
+            data-is-current-day-cell="true"
             data-value="2024-02-15"
           >
             <div
@@ -897,7 +897,7 @@ exports[`DatePickerCalendar should render component 1`] = `
               class="c16"
             />
             <div
-              class="c19"
+              class="c20"
             >
               15
             </div>
