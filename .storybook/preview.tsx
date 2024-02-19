@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { StrictMode, useEffect, useState } from 'react';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { addons } from '@storybook/preview-api';
 import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
@@ -54,17 +54,19 @@ const StoryContainer = styled.div`
 
 export const decorators = [
   (renderStory) => (
-    <ThemeWrapper>
-      <GlobalStyles />
-    <DropdownProvider>
-      <StoryContainer>{renderStory()}</StoryContainer>
-    </DropdownProvider>
-    </ThemeWrapper>
+    <StrictMode>
+      <ThemeWrapper>
+        <GlobalStyles />
+        <DropdownProvider>
+          <StoryContainer>{renderStory()}</StoryContainer>
+        </DropdownProvider>
+      </ThemeWrapper>
+    </StrictMode>
   ),
   (Story) => (
     <>
       <FontsVTBGroup />
-    <Story />
+      <Story />
     </>
   ),
 ];
