@@ -901,7 +901,6 @@ exports[`DateRangeDoublePickerCalendar should render component 1`] = `
             <div
               class="c15"
               data-cell-type="dateCell"
-              data-is-current-day-cell="true"
               data-value="2024-02-15"
             >
               <div
@@ -911,7 +910,7 @@ exports[`DateRangeDoublePickerCalendar should render component 1`] = `
                 class="c17"
               />
               <div
-                class="c22"
+                class="c21"
               >
                 15
               </div>
@@ -989,6 +988,7 @@ exports[`DateRangeDoublePickerCalendar should render component 1`] = `
             <div
               class="c15"
               data-cell-type="dateCell"
+              data-is-current-day-cell="true"
               data-value="2024-02-20"
             >
               <div
@@ -998,7 +998,7 @@ exports[`DateRangeDoublePickerCalendar should render component 1`] = `
                 class="c17"
               />
               <div
-                class="c21"
+                class="c22"
               >
                 20
               </div>
