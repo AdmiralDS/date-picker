@@ -17,3 +17,5 @@ export * from './components/YearRangeCalendar';
 export * from './components/DefaultCell';
 export * from './components/calendarInterfaces.ts';
 export * from './components/calendarConstants.ts';
+
+export * from './components/DatePicker';
