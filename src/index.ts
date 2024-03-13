@@ -19,3 +19,4 @@ export * from './components/calendarInterfaces.ts';
 export * from './components/calendarConstants.ts';
 
 export * from './components/DatePicker';
+export * from './components/Input';

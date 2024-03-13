@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { DatePicker } from '@admiral-ds/date-picker';
+import { InputLine } from '@admiral-ds/date-picker';
 import { DatePickerSimpleTemplate } from './DatePickerSimple.template.tsx';
 import DatePickerSimpleTemplateRaw from './DatePickerSimple.template.tsx?raw';
 
@@ -15,7 +15,7 @@ import DatePickerSimpleTemplateRaw from './DatePickerSimple.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/Date Picker/DatePicker',
-  component: DatePicker,
+  component: InputLine,
   parameters: {
     docs: {
       source: {
@@ -41,9 +41,9 @@ export default {
       control: false,
     },
   },
-} as Meta<typeof DatePicker>;
+} as Meta<typeof InputLine>;
 
-const DatePickerCalendarSimpleStory: StoryFn<typeof DatePicker> = (props) => {
+const DatePickerCalendarSimpleStory: StoryFn<typeof InputLine> = (props) => {
   return <DatePickerSimpleTemplate {...props} />;
 };
 

@@ -1,19 +1,36 @@
 import type { MouseEventHandler } from 'react';
+import { maskitoDateOptionsGenerator, maskitoDateRangeOptionsGenerator } from '@maskito/kit';
+import { useMaskito } from '@maskito/react';
 
 import { T } from '@admiral-ds/react-ui';
-import type { DatePickerProps } from '@admiral-ds/date-picker';
 import { InputBox, InputLine, Separator } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
-export const DatePickerSimpleTemplate = (props: DatePickerProps) => {
+const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
+const dateRangeOptions = maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy' });
+
+export const DatePickerSimpleTemplate = (props) => {
+  const maskedDateInputRef = useMaskito({ options: dateOptions });
+  const maskedDateRangeInputRef = useMaskito({ options: dateRangeOptions });
+  const maskedStartDateInputRef = useMaskito({ options: dateOptions });
+  const maskedEndDateInputRef = useMaskito({ options: dateOptions });
   return (
     <WrapperHorizontal>
-      <InputBox>
-        <InputLine />
-        <Separator> – </Separator>
-        <InputLine />
-      </InputBox>
+      <WrapperVertical>
+        <InputBox>
+          <InputLine ref={maskedDateInputRef} placeholder="дд.мм.гггг" />
+        </InputBox>
+        <InputBox data-size="xl">
+          <InputLine ref={maskedDateRangeInputRef} placeholder="дд.мм.гггг - дд.мм.гггг" />
+        </InputBox>
+        <InputBox data-size="s">
+          <InputLine ref={maskedStartDateInputRef} placeholder="дд.мм.гггг" />
+          <Separator> – </Separator>
+          <InputLine ref={maskedEndDateInputRef} placeholder="дд.мм.гггг" />
+        </InputBox>
+      </WrapperVertical>
+
       <WrapperVertical>
         <T font="Subtitle/Subtitle 2" as="div">
           Выбор даты
