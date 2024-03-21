@@ -132,10 +132,9 @@ export const dateIsSelected = (
   selectedDateRange?: [Dayjs | undefined, Dayjs | undefined],
 ) => {
   if (!dateCurrent || !selectedDateRange) return false;
-  if (selectedDateRange[0]) {
-    return dateCurrent.isSame(selectedDateRange[0], unit);
-  }
-  return selectedDateRange[1] && dateCurrent.isSame(selectedDateRange[1], unit);
+  const sameAsFirst = selectedDateRange[0] ? dateCurrent.isSame(selectedDateRange[0], unit) : false;
+  const sameAsSecond = selectedDateRange[1] ? dateCurrent.isSame(selectedDateRange[1], unit) : false;
+  return sameAsFirst || sameAsSecond;
 };
 export const dateIsRangeStart = (
   unit: dayjs.OpUnitType | undefined,
