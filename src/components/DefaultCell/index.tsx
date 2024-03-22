@@ -68,12 +68,7 @@ const rangeLayoutMixin = css<{ $isVisible: boolean; $isSelectingRange: boolean }
   top: 0;
   width: 50%;
   height: 100%;
-  background-color: ${(p) =>
-    !p.$isVisible
-      ? 'transparent'
-      : p.$isSelectingRange
-        ? p.theme.color['Opacity/Press']
-        : p.theme.color['Opacity/Hover']};
+  background-color: ${(p) => (p.$isVisible ? p.theme.color['Opacity/Focus'] : 'transparent')};
 `;
 
 const LeftHalf = styled.div<{ $isVisible: boolean; $isSelectingRange: boolean; $isStartOfRow: boolean }>`
