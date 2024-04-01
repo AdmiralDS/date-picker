@@ -2,7 +2,9 @@ import type { Meta, StoryFn } from '@storybook/react';
 
 import { DateRangePickerCalendar } from '@admiral-ds/date-picker';
 import { DateRangePickerCalendarSimpleTemplate } from './DateRangePickerCalendarSimple.template.tsx';
+import { DateRangePickerCalendarBlockEarlierDatesTemplate } from './DateRangePickerCalendarBlockEarlierDates.template.tsx';
 import DateRangePickerCalendarSimpleTemplateRaw from './DateRangePickerCalendarSimple.template.tsx?raw';
+import DateRangePickerCalendarBlockEarlierDatesTemplateRaw from './DateRangePickerCalendarBlockEarlierDates.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/Range Picker/DateRangePickerCalendar',
@@ -48,4 +50,20 @@ export const DateRangePickerCalendarSimple = {
     },
   },
   name: 'Выбор диапазона дат',
+};
+
+const DateRangePickerCalendarBlockEarlierDatesStory: StoryFn<typeof DateRangePickerCalendar> = (props) => {
+  return <DateRangePickerCalendarBlockEarlierDatesTemplate {...props} />;
+};
+export const DateRangePickerCalendarBlockEarierDates = {
+  render: DateRangePickerCalendarBlockEarlierDatesStory,
+
+  parameters: {
+    docs: {
+      source: {
+        code: DateRangePickerCalendarBlockEarlierDatesTemplateRaw,
+      },
+    },
+  },
+  name: 'Выбор диапазона дат только вперед',
 };

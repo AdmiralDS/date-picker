@@ -16,10 +16,7 @@ import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/consta
 import { ruLocale } from '#src/components/calendarConstants.ts';
 
 export interface DateRangePickerCalendarProps
-  extends Omit<
-      RangeCalendarProps,
-      'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'cell'
-    >,
+  extends Omit<RangeCalendarProps, 'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'cell'>,
     PickerCalendarProps {}
 
 export const DateRangePickerCalendar = ({
@@ -32,6 +29,7 @@ export const DateRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
+  onActiveDateRangeEndValueChange,
   cell,
   locale = ruLocale,
   prevButtonProps,
@@ -73,6 +71,7 @@ export const DateRangePickerCalendar = ({
 
   const handleDateRangeActiveEndChange = (date?: Dayjs) => {
     setDateRangeActiveEndState(date);
+    onActiveDateRangeEndValueChange?.(date);
   };
   //</editor-fold>
 

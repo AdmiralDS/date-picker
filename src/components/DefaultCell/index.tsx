@@ -50,14 +50,17 @@ const CellContainer = styled.div<{ $width: number; $height: number }>`
   position: relative;
   width: ${(p) => p.$width}px;
   height: ${(p) => p.$height}px;
+
   & > * {
     pointer-events: none;
   }
+
   cursor: pointer;
 
   &[data-disabled-cell='true'] {
     cursor: default;
   }
+
   &[data-hidden-cell='true'] {
     cursor: default;
   }
@@ -68,15 +71,14 @@ const rangeLayoutMixin = css<{ $isVisible: boolean; $isSelectingRange: boolean }
   top: 0;
   width: 50%;
   height: 100%;
-  background-color: ${(p) =>
-    !p.$isVisible
-      ? 'transparent'
-      : p.$isSelectingRange
-        ? p.theme.color['Opacity/Press']
-        : p.theme.color['Opacity/Hover']};
+  background-color: ${(p) => (p.$isVisible ? p.theme.color['Opacity/Focus'] : 'transparent')};
 `;
 
-const LeftHalf = styled.div<{ $isVisible: boolean; $isSelectingRange: boolean; $isStartOfRow: boolean }>`
+const LeftHalf = styled.div<{
+  $isVisible: boolean;
+  $isSelectingRange: boolean;
+  $isStartOfRow: boolean;
+}>`
   ${rangeLayoutMixin};
   left: 0;
   ${(p) =>
@@ -84,7 +86,11 @@ const LeftHalf = styled.div<{ $isVisible: boolean; $isSelectingRange: boolean; $
     `border-top-left-radius: ${mediumGroupBorderRadius(p.theme.shape)};
      border-bottom-left-radius: ${mediumGroupBorderRadius(p.theme.shape)};`}
 `;
-const RightHalf = styled.div<{ $isVisible: boolean; $isSelectingRange: boolean; $isEndOfRow: boolean }>`
+const RightHalf = styled.div<{
+  $isVisible: boolean;
+  $isSelectingRange: boolean;
+  $isEndOfRow: boolean;
+}>`
   ${rangeLayoutMixin};
   right: 0;
   ${(p) =>
@@ -139,15 +145,66 @@ export interface CellProps extends HTMLAttributes<HTMLDivElement>, DateAttribute
   /** Дата вне месяца для отображения */
   isOutsideMonth?: boolean;
 
+  /** Дата находится в выбранном диапазоне (selectedDateRange) */
   isInRange?: boolean;
+  /** Дата является началом выбранного ранее диапазона */
   isRangeStart?: boolean;
+  /** Дата является концом выбранного ранее диапазона */
   isRangeEnd?: boolean;
+  /** Дата находится в текущем выбираемом диапазоне
+   * (определен только один конец выбираемого отрезка) */
   isInRangeSelecting?: boolean;
+  /** Дата является началом выбираемого сейчас диапазона */
   isRangeSelectingStart?: boolean;
+  /** Дата является концом выбираемого сейчас диапазона */
   isRangeSelectingEnd?: boolean;
+  /** Дата является первой в отображении ряда (недели/месяца/диапазона лет) */
   isStartOfRow?: boolean;
+  /** Дата является последней в отображении ряда (недели/месяца/диапазона лет) */
   isEndOfRow?: boolean;
 }
+
+const leftHalfIsVisible = (
+  hidden: boolean,
+  isInRange: boolean,
+  isRangeStart: boolean,
+  isRangeEnd: boolean,
+  isInRangeSelecting: boolean,
+  isRangeSelectingStart: boolean,
+  isRangeSelectingEnd: boolean,
+) => {
+  //is not visible
+  if (hidden) return false;
+  if (isRangeStart && isRangeEnd && isRangeSelectingStart && isRangeSelectingEnd) return false;
+  if (isRangeSelectingStart && isRangeSelectingEnd && !isRangeEnd) return false;
+  if (isRangeStart && isRangeSelectingStart) return false;
+
+  //is visible
+  if (isInRange || isInRangeSelecting) return true;
+  if (isRangeStart && isRangeEnd && isRangeSelectingEnd && !isRangeSelectingStart) return true;
+  return isRangeSelectingEnd || isRangeEnd;
+};
+
+const rightHalfIsVisible = (
+  hidden: boolean,
+  isInRange: boolean,
+  isRangeStart: boolean,
+  isRangeEnd: boolean,
+  isInRangeSelecting: boolean,
+  isRangeSelectingStart: boolean,
+  isRangeSelectingEnd: boolean,
+) => {
+  //is not visible
+  if (hidden) return false;
+  if (isRangeStart && isRangeEnd && isRangeSelectingStart && isRangeSelectingEnd) return false;
+  if (isRangeSelectingStart && isRangeSelectingEnd && !isRangeStart) return false;
+  if (isRangeEnd && isRangeSelectingEnd) return false;
+
+  //is visible
+  if (isInRange || isInRangeSelecting) return true;
+  if (isRangeStart && isRangeEnd && isRangeSelectingStart && !isRangeSelectingEnd) return true;
+  return isRangeSelectingStart || isRangeStart;
+};
 
 export const DefaultCell = ({
   dateValue,
@@ -172,6 +229,24 @@ export const DefaultCell = ({
   isOutsideMonth,
   ...props
 }: CellProps) => {
+  const leftIsVisible = leftHalfIsVisible(
+    !!hidden,
+    !!isInRange,
+    !!isRangeStart,
+    !!isRangeEnd,
+    !!isInRangeSelecting,
+    !!isRangeSelectingStart,
+    !!isRangeSelectingEnd,
+  );
+  const rightIsVisible = rightHalfIsVisible(
+    !!hidden,
+    !!isInRange,
+    !!isRangeStart,
+    !!isRangeEnd,
+    !!isInRangeSelecting,
+    !!isRangeSelectingStart,
+    !!isRangeSelectingEnd,
+  );
   return (
     <CellContainer
       $width={width}
@@ -187,24 +262,14 @@ export const DefaultCell = ({
       {...props}
     >
       <LeftHalf
-        $isVisible={
-          !hidden &&
-          !(isRangeStart && isRangeEnd) &&
-          !(isRangeSelectingStart && isRangeSelectingEnd && !isRangeEnd) &&
-          (!!isInRange || !!isRangeEnd || !!isInRangeSelecting || !!isRangeSelectingEnd)
-        }
+        $isVisible={leftIsVisible}
         $isSelectingRange={
           !!isInRangeSelecting || (!!isRangeSelectingEnd && !!isRangeSelectingStart !== isRangeSelectingEnd)
         }
         $isStartOfRow={!!isStartOfRow}
       />
       <RightHalf
-        $isVisible={
-          !hidden &&
-          !(isRangeStart && isRangeEnd) &&
-          !(isRangeSelectingStart && isRangeSelectingEnd && !isRangeStart) &&
-          (!!isInRange || !!isRangeStart || !!isInRangeSelecting || !!isRangeSelectingStart)
-        }
+        $isVisible={rightIsVisible}
         $isSelectingRange={
           !!isInRangeSelecting || (!!isRangeSelectingStart && isRangeSelectingStart !== !!isRangeSelectingEnd)
         }
