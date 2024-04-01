@@ -48,7 +48,8 @@ export const FocusBox = styled.div`
   border-radius: 4px;
 
   background: transparent;
-
+  /* https://stackoverflow.com/questions/69658462/inset-box-shadow-visual-artifacts-in-google-chrome */
+  transform: translate3d(0, 0, 0);
   box-shadow: 0px 0px 0px 1px ${(p) => p.theme.color['Neutral/Neutral 40']} inset;
 
   &:hover:not(:focus-within) {
