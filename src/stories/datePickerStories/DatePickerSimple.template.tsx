@@ -1,16 +1,16 @@
-import type { MouseEventHandler } from 'react';
 import { maskitoDateOptionsGenerator, maskitoDateRangeOptionsGenerator } from '@maskito/kit';
 import { useMaskito } from '@maskito/react';
 
 import { T } from '@admiral-ds/react-ui';
-import { InputBox, InputLine, Separator } from '@admiral-ds/date-picker';
+import { InputBox, InputLine, InputIconButton, Separator } from '@admiral-ds/date-picker';
+import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
 const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
 const dateRangeOptions = maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy' });
 
-export const DatePickerSimpleTemplate = (props) => {
+export const DatePickerSimpleTemplate = () => {
   const maskedDateInputRef = useMaskito({ options: dateOptions });
   const maskedDateRangeInputRef = useMaskito({ options: dateRangeOptions });
   const maskedStartDateInputRef = useMaskito({ options: dateOptions });
@@ -20,14 +20,17 @@ export const DatePickerSimpleTemplate = (props) => {
       <WrapperVertical>
         <InputBox>
           <InputLine ref={maskedDateInputRef} placeholder="дд.мм.гггг" />
+          <InputIconButton icon={CalendarOutline} />
         </InputBox>
         <InputBox data-size="xl">
           <InputLine ref={maskedDateRangeInputRef} placeholder="дд.мм.гггг - дд.мм.гггг" />
+          <InputIconButton icon={CalendarOutline} />
         </InputBox>
         <InputBox data-size="s">
-          <InputLine ref={maskedStartDateInputRef} placeholder="дд.мм.гггг" />
-          <Separator> – </Separator>
+          <InputLine ref={maskedStartDateInputRef} placeholder="дд.мм.гггг" style={{ width: 70 }} />
+          <Separator style={{ width: 20 }}> – </Separator>
           <InputLine ref={maskedEndDateInputRef} placeholder="дд.мм.гггг" />
+          <InputIconButton icon={CalendarOutline} />
         </InputBox>
       </WrapperVertical>
 
