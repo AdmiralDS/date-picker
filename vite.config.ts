@@ -20,15 +20,16 @@ export default defineConfig({
       },
     }),
     tsconfigPaths(),
-    typescript({
-      noEmit: false,
-      declaration: true,
-      emitDeclarationOnly: true,
-      noForceEmit: true,
-      declarationDir: resolve(__dirname, 'dist'),
-      rootDir: resolve(__dirname, 'src'),
-      exclude: ['*/**/*.stories.tsx', 'stories/**', '*/**/*.test.*'],
-    }) as PluginOption,
+    // TODO переделать работу с тайпскриптом
+    // typescript({
+    //   noEmit: false,
+    //   declaration: true,
+    //   emitDeclarationOnly: true,
+    //   noForceEmit: true,
+    //   declarationDir: resolve(__dirname, 'dist'),
+    //   rootDir: resolve(__dirname, 'src'),
+    //   exclude: ['*/**/*.stories.tsx', 'stories/**', '*/**/*.test.*'],
+    // }) as PluginOption,
   ],
   build: {
     copyPublicDir: false,
