@@ -31,6 +31,7 @@ export default defineConfig({
     }) as PluginOption,
   ],
   build: {
+    copyPublicDir: false,
     sourcemap: true,
     // use vite library mode to build the package
     // https://vitejs.dev/guide/build.html#library-mode
