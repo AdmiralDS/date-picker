@@ -1,3 +1,4 @@
+import type { PluginOption } from 'vite';
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react-swc';
@@ -9,7 +10,7 @@ import pkg from './package.json';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    react({ plugins: [['@swc/plugin-styled-components', {}]] }),
     svgr({
       svgrOptions: {
         dimensions: false,
@@ -19,17 +20,19 @@ export default defineConfig({
       },
     }),
     tsconfigPaths(),
-    typescript({
-      noEmit: false,
-      declaration: true,
-      emitDeclarationOnly: true,
-      noForceEmit: true,
-      declarationDir: resolve(__dirname, 'dist'),
-      rootDir: resolve(__dirname, 'src'),
-      exclude: ['*/**/*.stories.tsx'],
-    }),
+    // TODO переделать работу с тайпскриптом
+    // typescript({
+    //   noEmit: false,
+    //   declaration: true,
+    //   emitDeclarationOnly: true,
+    //   noForceEmit: true,
+    //   declarationDir: resolve(__dirname, 'dist'),
+    //   rootDir: resolve(__dirname, 'src'),
+    //   exclude: ['*/**/*.stories.tsx', 'stories/**', '*/**/*.test.*'],
+    // }) as PluginOption,
   ],
   build: {
+    copyPublicDir: false,
     sourcemap: true,
     // use vite library mode to build the package
     // https://vitejs.dev/guide/build.html#library-mode

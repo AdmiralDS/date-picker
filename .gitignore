@@ -4,3 +4,5 @@ dist
 package-lock.json
 admiral-ds-date-picker-*.tgz
 .idea
+.swc
+bun.lockb

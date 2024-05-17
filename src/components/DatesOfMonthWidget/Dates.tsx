@@ -41,7 +41,7 @@ export const Dates = ({
   const firstDate = setNoon(dateInner.locale(locale?.localeName).startOf('month').startOf('week'));
   const cellModel = datesArray.map((v) => {
     const date = firstDate.add(v, 'day');
-    const dateValue = date.toString();
+    const dateValue = date.format('YYYY-MM-DD');
     const dateAttrs = dateAttributes?.(date);
     const disabled = !!dateAttrs?.disabled;
     const isHoliday = !!dateAttrs?.isHoliday;
