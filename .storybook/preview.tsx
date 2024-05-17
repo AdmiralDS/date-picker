@@ -1,8 +1,18 @@
-import React, { StrictMode, useEffect, useState } from 'react';
+import * as React from 'react';
+import { useEffect } from 'react';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
-import { addons } from '@storybook/preview-api';
-import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
-import { DARK_THEME, LIGHT_THEME, FontsVTBGroup, DropdownProvider } from '@admiral-ds/react-ui';
+import { DocsContainer } from '@storybook/addon-docs';
+import { useGlobals } from '@storybook/preview-api';
+import { themes } from '@storybook/theming';
+import { useDarkMode } from 'storybook-dark-mode';
+import {
+  DARK_THEME,
+  LIGHT_THEME,
+  FontsVTBGroup,
+  DropdownProvider,
+  LightThemeCssVars,
+  DarkThemeCssVars,
+} from '@admiral-ds/react-ui';
 
 const GlobalStyles = createGlobalStyle`
     body {
@@ -28,41 +38,53 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  docs: {
+    container: (props) => {
+      const theme = useDarkMode() ? themes.dark : themes.normal;
+      return <DocsContainer {...props} theme={theme} />;
+    },
+  },
 };
-
-// get channel to listen to event emitter
-const channel = addons.getChannel();
 
 // create a component that uses the dark mode hook
 function ThemeWrapper(props) {
   // this example uses hook but you can also use class component as well
-  const [isDark, setDark] = useState(false);
+  const isDark = useDarkMode();
 
   useEffect(() => {
-    // listen to DARK_MODE event
-    channel.on(DARK_MODE_EVENT_NAME, setDark);
-    return () => channel.off(DARK_MODE_EVENT_NAME, setDark);
-  }, [channel, setDark]);
+    // document.body refers to body tag inside iframe#storybook-preview-iframe
+    document.body.classList.add(`admiral-theme-${isDark ? 'dark' : 'light'}`);
+    document.body.classList.remove(`admiral-theme-${isDark ? 'light' : 'dark'}`);
+  }, [isDark]);
+
+  const renderCssProps = () => (isDark ? <DarkThemeCssVars /> : <LightThemeCssVars />);
+
   // render your custom theme provider
-  return <ThemeProvider theme={isDark ? DARK_THEME : LIGHT_THEME}>{props.children}</ThemeProvider>;
+  return (
+    <ThemeProvider theme={isDark ? DARK_THEME : LIGHT_THEME}>
+      {props.CSSCustomProps && renderCssProps()}
+      {props.children}
+    </ThemeProvider>
+  );
 }
 
 const StoryContainer = styled.div`
   padding: 3em;
-  background-color: ${(props) => props.theme.color['Neutral/Neutral 00']};
+  background-color: var(--admiral-color-Neutral_Neutral00, ${(p) => p.theme.color['Neutral/Neutral 00']});
 `;
 
 export const decorators = [
-  (renderStory) => (
-    <StrictMode>
-      <ThemeWrapper>
+  (renderStory) => {
+    const [{ CSSCustomProps }] = useGlobals();
+    return (
+      <ThemeWrapper CSSCustomProps={CSSCustomProps}>
         <GlobalStyles />
         <DropdownProvider>
           <StoryContainer>{renderStory()}</StoryContainer>
         </DropdownProvider>
       </ThemeWrapper>
-    </StrictMode>
-  ),
+    );
+  },
   (Story) => (
     <>
       <FontsVTBGroup />
@@ -70,3 +92,18 @@ export const decorators = [
     </>
   ),
 ];
+
+export const globalTypes = {
+  CSSCustomProps: {
+    defaultValue: false,
+    toolbar: {
+      title: 'CSS Custom Props',
+      items: [
+        { value: true, title: 'Enable css custom props', icon: 'passed' },
+        { value: false, title: 'Disable css custom props', icon: 'failed' },
+      ],
+    },
+  },
+};
+
+export const tags = ['autodocs'];
