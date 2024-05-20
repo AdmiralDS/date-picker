@@ -1,10 +1,10 @@
-import type { PluginOption } from 'vite';
+// import type { PluginOption } from 'vite';
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react-swc';
 import svgr from 'vite-plugin-svgr';
-import tsconfigPaths from 'vite-tsconfig-paths';
-import typescript from '@rollup/plugin-typescript';
+// import tsconfigPaths from 'vite-tsconfig-paths';
+// import typescript from '@rollup/plugin-typescript';
 import pkg from './package.json';
 
 // https://vitejs.dev/config/
@@ -19,17 +19,6 @@ export default defineConfig({
         },
       },
     }),
-    tsconfigPaths(),
-    // TODO переделать работу с тайпскриптом
-    // typescript({
-    //   noEmit: false,
-    //   declaration: true,
-    //   emitDeclarationOnly: true,
-    //   noForceEmit: true,
-    //   declarationDir: resolve(__dirname, 'dist'),
-    //   rootDir: resolve(__dirname, 'src'),
-    //   exclude: ['*/**/*.stories.tsx', 'stories/**', '*/**/*.test.*'],
-    // }) as PluginOption,
   ],
   build: {
     copyPublicDir: false,
@@ -44,16 +33,30 @@ export default defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: [...Object.keys(pkg.peerDependencies || {}), 'react/jsx-runtime'],
-      output: {
-        // Provide global variables to use in the UMD build
-        // for externalized deps
-        // globals: {
-        //   react: 'react',
-        //   'react-dom': 'ReactDOM',
-        //   'react/jsx-runtime': 'react/jsx-runtime',
-        // },
-      },
+      external: [...Object.keys(pkg.peerDependencies || {}), /dayjs/, 'react/jsx-runtime'],
+      input: ['./src/index.ts'],
+      output: [
+        {
+          dir: 'dist',
+          entryFileNames: '[name].cjs.js',
+          format: 'cjs',
+          preserveModules: true,
+          preserveModulesRoot: 'src',
+          sourcemap: true,
+          interop: 'auto',
+          assetFileNames: 'assets/[name][extname]',
+        },
+        {
+          dir: 'dist',
+          entryFileNames: '[name].es.js',
+          format: 'es',
+          preserveModules: true,
+          preserveModulesRoot: 'src',
+          sourcemap: true,
+          interop: 'auto',
+          assetFileNames: 'assets/[name][extname]',
+        },
+      ],
     },
   },
 });

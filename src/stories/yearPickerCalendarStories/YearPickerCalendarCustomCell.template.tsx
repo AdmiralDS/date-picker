@@ -73,7 +73,7 @@ export const YearPickerCalendarCustomCellTemplate = (props: YearPickerCalendarPr
 
   return (
     <WrapperHorizontal>
-      <YearPickerCalendar {...props} cell={MemoCell} onClick={handleClick} />
+      <YearPickerCalendar {...props} cell={{ yearCell: MemoCell }} onClick={handleClick} />
       <WrapperVertical>
         <T font="Body/Body 2 Long" as="div">
           Календарь позволяет кастомизировать отображение ячеек при необходимости, например, изменять базовый цвет

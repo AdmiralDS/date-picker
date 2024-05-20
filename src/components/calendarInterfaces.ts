@@ -98,7 +98,7 @@ export interface RangeDoubleCalendarProps
   onDateRangeValueChange?: (dateRange: [Dayjs | undefined, Dayjs | undefined]) => void;
 }
 
-export type cellProps = {
+export type СellProps = {
   dateCell?: FunctionComponent<DateCellProps>;
   monthCell?: FunctionComponent<DateCellProps>;
   yearCell?: FunctionComponent<DateCellProps>;
@@ -112,7 +112,7 @@ export interface PickerCalendarProps {
   /** Коллбэк на переключение экрана */
   onViewModeChange?: (mode: CalendarViewMode) => void;
   /** Кастомное отображение ячеек */
-  cell?: cellProps;
+  cell?: СellProps;
   /** Параметры для кнопки панели "Назад" */
   prevButtonProps?: ArrowButtonProps;
   /** Параметры для кнопки панели "Вперед" */
