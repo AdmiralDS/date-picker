@@ -27,8 +27,7 @@ export default defineConfig({
     // https://vitejs.dev/guide/build.html#library-mode
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      formats: ['cjs', 'es'],
-      fileName: (format, entryName) => `${entryName}.${format}.js`,
+      formats: ['es'],
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
@@ -38,17 +37,7 @@ export default defineConfig({
       output: [
         {
           dir: 'dist',
-          entryFileNames: '[name].cjs.js',
-          format: 'cjs',
-          preserveModules: true,
-          preserveModulesRoot: 'src',
-          sourcemap: true,
-          interop: 'auto',
-          assetFileNames: 'assets/[name][extname]',
-        },
-        {
-          dir: 'dist',
-          entryFileNames: '[name].es.js',
+          entryFileNames: '[name].js',
           format: 'es',
           preserveModules: true,
           preserveModulesRoot: 'src',
