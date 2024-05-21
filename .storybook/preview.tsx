@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useEffect } from 'react';
+import type { Preview } from '@storybook/react';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { DocsContainer } from '@storybook/addon-docs';
 import { useGlobals } from '@storybook/preview-api';
@@ -22,29 +23,6 @@ const GlobalStyles = createGlobalStyle`
       background-color: ${(props) => props.theme.color['Neutral/Neutral 00']};
     }
 `;
-
-export const parameters = {
-  options: {
-    storySort: {
-      includeName: true,
-      locales: 'en-US',
-      order: ['Admiral-2.1', ['Date Picker', 'Range Picker', 'Double Range Picker', 'Widgets']],
-    },
-  },
-  actions: { argTypesRegex: '^on[A-Z].*' },
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/,
-    },
-  },
-  docs: {
-    container: (props) => {
-      const theme = useDarkMode() ? themes.dark : themes.normal;
-      return <DocsContainer {...props} theme={theme} />;
-    },
-  },
-};
 
 // create a component that uses the dark mode hook
 function ThemeWrapper(props) {
@@ -73,37 +51,61 @@ const StoryContainer = styled.div`
   background-color: var(--admiral-color-Neutral_Neutral00, ${(p) => p.theme.color['Neutral/Neutral 00']});
 `;
 
-export const decorators = [
-  (renderStory) => {
-    const [{ CSSCustomProps }] = useGlobals();
-    return (
-      <ThemeWrapper CSSCustomProps={CSSCustomProps}>
-        <GlobalStyles />
-        <DropdownProvider>
-          <StoryContainer>{renderStory()}</StoryContainer>
-        </DropdownProvider>
-      </ThemeWrapper>
-    );
+const preview: Preview = {
+  tags: ['autodocs'],
+  parameters: {
+    options: {
+      storySort: {
+        includeName: true,
+        locales: 'en-US',
+        order: ['Admiral-2.1', ['Date Picker', 'Range Picker', 'Double Range Picker', 'Widgets']],
+      },
+    },
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/,
+      },
+    },
+    docs: {
+      container: (props) => {
+        const theme = useDarkMode() ? themes.dark : themes.normal;
+        return <DocsContainer {...props} theme={theme} />;
+      },
+    },
   },
-  (Story) => (
-    <>
-      <FontsVTBGroup />
-      <Story />
-    </>
-  ),
-];
-
-export const globalTypes = {
-  CSSCustomProps: {
-    defaultValue: false,
-    toolbar: {
-      title: 'CSS Custom Props',
-      items: [
-        { value: true, title: 'Enable css custom props', icon: 'passed' },
-        { value: false, title: 'Disable css custom props', icon: 'failed' },
-      ],
+  decorators: [
+    (renderStory) => {
+      const [{ CSSCustomProps }] = useGlobals();
+      return (
+        <ThemeWrapper CSSCustomProps={CSSCustomProps}>
+          <GlobalStyles />
+          <DropdownProvider>
+            <StoryContainer>{renderStory()}</StoryContainer>
+          </DropdownProvider>
+        </ThemeWrapper>
+      );
+    },
+    (Story) => (
+      <>
+        <FontsVTBGroup />
+        <Story />
+      </>
+    ),
+  ],
+  globalTypes: {
+    CSSCustomProps: {
+      defaultValue: false,
+      toolbar: {
+        title: 'CSS Custom Props',
+        items: [
+          { value: true, title: 'Enable css custom props', icon: 'passed' },
+          { value: false, title: 'Disable css custom props', icon: 'failed' },
+        ],
+      },
     },
   },
 };
 
-export const tags = ['autodocs'];
+export default preview;
