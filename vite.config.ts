@@ -1,10 +1,7 @@
-// import type { PluginOption } from 'vite';
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react-swc';
 import svgr from 'vite-plugin-svgr';
-// import tsconfigPaths from 'vite-tsconfig-paths';
-// import typescript from '@rollup/plugin-typescript';
 import pkg from './package.json';
 
 // https://vitejs.dev/config/
