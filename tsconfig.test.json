@@ -25,7 +25,8 @@
     "paths": {
       "#src/*": ["./src/*"],
       "@admiral-ds/date-picker": ["./src/index"]
-    }
+    },
+    "types": ["vitest/globals"]
   },
   "include": ["src/**/*", "jest.config.ts", ".jest/**/*", "node_modules/@admiral-ds/**/*"]
 }
