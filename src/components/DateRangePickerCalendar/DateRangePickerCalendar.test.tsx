@@ -13,4 +13,15 @@ describe('DateRangePickerCalendar', () => {
     );
     expect(container).toMatchSnapshot();
   });
+
+  test('should render today date', () => {
+    const wrapper = render(
+      <ThemeProvider theme={LIGHT_THEME}>
+        <DateRangePickerCalendar />
+      </ThemeProvider>,
+    );
+    expect(wrapper).toBeTruthy();
+    const currentDateCell = wrapper.container.querySelector('[data-is-current-day-cell]');
+    expect(currentDateCell?.getAttribute('data-value')).toBe(new Date().toISOString().substring(0, 10));
+  });
 });
