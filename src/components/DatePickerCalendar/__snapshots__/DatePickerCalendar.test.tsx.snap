@@ -56,7 +56,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           class="MonthNavigationPanelWidget__TextWrapper-sc-a9d285bb-2 fPXAQY"
           data-panel-target-type="month"
         >
-          Май
+          Июнь
         </div>
         <div
           class="MonthNavigationPanelWidget__TextWrapper-sc-a9d285bb-2 fPXAQY"
@@ -175,7 +175,43 @@ exports[`DatePickerCalendar > should render component 1`] = `
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
             data-hidden-cell="true"
-            data-value="2024-04-29"
+            data-value="2024-05-27"
+          >
+            <div
+              class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
+            />
+            <div
+              class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
+            />
+            <div
+              class="DefaultCell__Cell-sc-a39ffd1b-3 FpoHh"
+            >
+              27
+            </div>
+          </div>
+          <div
+            class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
+            data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-value="2024-05-28"
+          >
+            <div
+              class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
+            />
+            <div
+              class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
+            />
+            <div
+              class="DefaultCell__Cell-sc-a39ffd1b-3 FpoHh"
+            >
+              28
+            </div>
+          </div>
+          <div
+            class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
+            data-cell-type="dateCell"
+            data-hidden-cell="true"
+            data-value="2024-05-29"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -193,7 +229,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
             data-hidden-cell="true"
-            data-value="2024-04-30"
+            data-value="2024-05-30"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -210,8 +246,8 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-disabled-cell="true"
-            data-value="2024-05-01"
+            data-hidden-cell="true"
+            data-value="2024-05-31"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -220,7 +256,26 @@ exports[`DatePickerCalendar > should render component 1`] = `
               class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
             />
             <div
-              class="DefaultCell__Cell-sc-a39ffd1b-3 jezOsq"
+              class="DefaultCell__Cell-sc-a39ffd1b-3 FpoHh"
+            >
+              31
+            </div>
+          </div>
+          <div
+            class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
+            data-cell-type="dateCell"
+            data-disabled-cell="true"
+            data-is-current-day-cell="true"
+            data-value="2024-06-01"
+          >
+            <div
+              class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
+            />
+            <div
+              class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
+            />
+            <div
+              class="DefaultCell__Cell-sc-a39ffd1b-3 eEbeZm"
             >
               1
             </div>
@@ -229,7 +284,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
             data-disabled-cell="true"
-            data-value="2024-05-02"
+            data-value="2024-06-02"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -247,7 +302,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
             data-disabled-cell="true"
-            data-value="2024-05-03"
+            data-value="2024-06-03"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -265,7 +320,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
             data-disabled-cell="true"
-            data-value="2024-05-04"
+            data-value="2024-06-04"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -282,7 +337,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-05"
+            data-value="2024-06-05"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -299,7 +354,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-06"
+            data-value="2024-06-06"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -316,7 +371,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-07"
+            data-value="2024-06-07"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -333,7 +388,8 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-08"
+            data-disabled-cell="true"
+            data-value="2024-06-08"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -342,7 +398,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
               class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
             />
             <div
-              class="DefaultCell__Cell-sc-a39ffd1b-3 lidRvq"
+              class="DefaultCell__Cell-sc-a39ffd1b-3 jezOsq"
             >
               8
             </div>
@@ -350,7 +406,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-09"
+            data-value="2024-06-09"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -367,7 +423,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-10"
+            data-value="2024-06-10"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -384,8 +440,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-disabled-cell="true"
-            data-value="2024-05-11"
+            data-value="2024-06-11"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -394,7 +449,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
               class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
             />
             <div
-              class="DefaultCell__Cell-sc-a39ffd1b-3 jezOsq"
+              class="DefaultCell__Cell-sc-a39ffd1b-3 lidRvq"
             >
               11
             </div>
@@ -402,7 +457,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-12"
+            data-value="2024-06-12"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -419,7 +474,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-13"
+            data-value="2024-06-13"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -436,7 +491,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-14"
+            data-value="2024-06-14"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -453,7 +508,8 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-15"
+            data-disabled-cell="true"
+            data-value="2024-06-15"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -462,7 +518,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
               class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
             />
             <div
-              class="DefaultCell__Cell-sc-a39ffd1b-3 lidRvq"
+              class="DefaultCell__Cell-sc-a39ffd1b-3 jezOsq"
             >
               15
             </div>
@@ -470,7 +526,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-16"
+            data-value="2024-06-16"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -487,7 +543,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-17"
+            data-value="2024-06-17"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -504,8 +560,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-disabled-cell="true"
-            data-value="2024-05-18"
+            data-value="2024-06-18"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -514,7 +569,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
               class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
             />
             <div
-              class="DefaultCell__Cell-sc-a39ffd1b-3 jezOsq"
+              class="DefaultCell__Cell-sc-a39ffd1b-3 lidRvq"
             >
               18
             </div>
@@ -522,7 +577,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-19"
+            data-value="2024-06-19"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -539,7 +594,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-20"
+            data-value="2024-06-20"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -556,7 +611,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-21"
+            data-value="2024-06-21"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -573,7 +628,8 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-22"
+            data-disabled-cell="true"
+            data-value="2024-06-22"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -582,7 +638,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
               class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
             />
             <div
-              class="DefaultCell__Cell-sc-a39ffd1b-3 lidRvq"
+              class="DefaultCell__Cell-sc-a39ffd1b-3 jezOsq"
             >
               22
             </div>
@@ -590,7 +646,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-23"
+            data-value="2024-06-23"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -607,7 +663,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-24"
+            data-value="2024-06-24"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -624,8 +680,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-disabled-cell="true"
-            data-value="2024-05-25"
+            data-value="2024-06-25"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -634,7 +689,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
               class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
             />
             <div
-              class="DefaultCell__Cell-sc-a39ffd1b-3 jezOsq"
+              class="DefaultCell__Cell-sc-a39ffd1b-3 lidRvq"
             >
               25
             </div>
@@ -642,7 +697,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-26"
+            data-value="2024-06-26"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -659,7 +714,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-27"
+            data-value="2024-06-27"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -676,25 +731,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-is-current-day-cell="true"
-            data-value="2024-05-28"
-          >
-            <div
-              class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
-            />
-            <div
-              class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
-            />
-            <div
-              class="DefaultCell__Cell-sc-a39ffd1b-3 bPUDwk"
-            >
-              28
-            </div>
-          </div>
-          <div
-            class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
-            data-cell-type="dateCell"
-            data-value="2024-05-29"
+            data-value="2024-06-28"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -705,13 +742,31 @@ exports[`DatePickerCalendar > should render component 1`] = `
             <div
               class="DefaultCell__Cell-sc-a39ffd1b-3 lidRvq"
             >
+              28
+            </div>
+          </div>
+          <div
+            class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
+            data-cell-type="dateCell"
+            data-disabled-cell="true"
+            data-value="2024-06-29"
+          >
+            <div
+              class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
+            />
+            <div
+              class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
+            />
+            <div
+              class="DefaultCell__Cell-sc-a39ffd1b-3 jezOsq"
+            >
               29
             </div>
           </div>
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-30"
+            data-value="2024-06-30"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -728,26 +783,9 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
-            data-value="2024-05-31"
-          >
-            <div
-              class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
-            />
-            <div
-              class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
-            />
-            <div
-              class="DefaultCell__Cell-sc-a39ffd1b-3 lidRvq"
-            >
-              31
-            </div>
-          </div>
-          <div
-            class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
-            data-cell-type="dateCell"
             data-disabled-cell="true"
             data-hidden-cell="true"
-            data-value="2024-06-01"
+            data-value="2024-07-01"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -766,7 +804,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
             data-cell-type="dateCell"
             data-disabled-cell="true"
             data-hidden-cell="true"
-            data-value="2024-06-02"
+            data-value="2024-07-02"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -785,7 +823,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
             data-cell-type="dateCell"
             data-disabled-cell="true"
             data-hidden-cell="true"
-            data-value="2024-06-03"
+            data-value="2024-07-03"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -804,7 +842,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
             data-cell-type="dateCell"
             data-disabled-cell="true"
             data-hidden-cell="true"
-            data-value="2024-06-04"
+            data-value="2024-07-04"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -822,7 +860,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
             data-hidden-cell="true"
-            data-value="2024-06-05"
+            data-value="2024-07-05"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -839,8 +877,9 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
+            data-disabled-cell="true"
             data-hidden-cell="true"
-            data-value="2024-06-06"
+            data-value="2024-07-06"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -858,7 +897,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
             data-cell-type="dateCell"
             data-hidden-cell="true"
-            data-value="2024-06-07"
+            data-value="2024-07-07"
           >
             <div
               class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
@@ -870,43 +909,6 @@ exports[`DatePickerCalendar > should render component 1`] = `
               class="DefaultCell__Cell-sc-a39ffd1b-3 FpoHh"
             >
               7
-            </div>
-          </div>
-          <div
-            class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
-            data-cell-type="dateCell"
-            data-disabled-cell="true"
-            data-hidden-cell="true"
-            data-value="2024-06-08"
-          >
-            <div
-              class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
-            />
-            <div
-              class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
-            />
-            <div
-              class="DefaultCell__Cell-sc-a39ffd1b-3 FpoHh"
-            >
-              8
-            </div>
-          </div>
-          <div
-            class="DefaultCell__CellContainer-sc-a39ffd1b-0 ljQKIS"
-            data-cell-type="dateCell"
-            data-hidden-cell="true"
-            data-value="2024-06-09"
-          >
-            <div
-              class="DefaultCell__LeftHalf-sc-a39ffd1b-1 heavWc"
-            />
-            <div
-              class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
-            />
-            <div
-              class="DefaultCell__Cell-sc-a39ffd1b-3 FpoHh"
-            >
-              9
             </div>
           </div>
         </div>
@@ -990,7 +992,6 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 PAtFH"
             data-cell-type="monthCell"
-            data-is-current-month="true"
             data-value="Wed, 01 May 2024 09:00:00 GMT"
           >
             <div
@@ -1000,7 +1001,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
               class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
             />
             <div
-              class="DefaultCell__Cell-sc-a39ffd1b-3 hUwjxx"
+              class="DefaultCell__Cell-sc-a39ffd1b-3 iXAtef"
             >
               Май
             </div>
@@ -1008,6 +1009,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-a39ffd1b-0 PAtFH"
             data-cell-type="monthCell"
+            data-is-current-month="true"
             data-value="Sat, 01 Jun 2024 09:00:00 GMT"
           >
             <div
@@ -1017,7 +1019,7 @@ exports[`DatePickerCalendar > should render component 1`] = `
               class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
             />
             <div
-              class="DefaultCell__Cell-sc-a39ffd1b-3 iXAtef"
+              class="DefaultCell__Cell-sc-a39ffd1b-3 hUwjxx"
             >
               Июнь
             </div>

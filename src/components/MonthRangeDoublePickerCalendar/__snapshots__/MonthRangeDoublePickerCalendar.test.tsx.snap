@@ -185,7 +185,6 @@ exports[`MonthRangeDoublePickerCalendar > should render component 1`] = `
             <div
               class="DefaultCell__CellContainer-sc-a39ffd1b-0 PAtFH"
               data-cell-type="monthCell"
-              data-is-current-day-cell="true"
               data-value="Wed, 01 May 2024 09:00:00 GMT"
             >
               <div
@@ -195,7 +194,7 @@ exports[`MonthRangeDoublePickerCalendar > should render component 1`] = `
                 class="DefaultCell__RightHalf-sc-a39ffd1b-2 hMKzer"
               />
               <div
-                class="DefaultCell__Cell-sc-a39ffd1b-3 hUwjxx"
+                class="DefaultCell__Cell-sc-a39ffd1b-3 iXAtef"
               >
                 Май
               </div>
@@ -203,6 +202,7 @@ exports[`MonthRangeDoublePickerCalendar > should render component 1`] = `
             <div
               class="DefaultCell__CellContainer-sc-a39ffd1b-0 PAtFH"
               data-cell-type="monthCell"
+              data-is-current-day-cell="true"
               data-is-end-of-week-cell="true"
               data-value="Sat, 01 Jun 2024 09:00:00 GMT"
             >
@@ -213,7 +213,7 @@ exports[`MonthRangeDoublePickerCalendar > should render component 1`] = `
                 class="DefaultCell__RightHalf-sc-a39ffd1b-2 grRHsh"
               />
               <div
-                class="DefaultCell__Cell-sc-a39ffd1b-3 iXAtef"
+                class="DefaultCell__Cell-sc-a39ffd1b-3 hUwjxx"
               >
                 Июнь
               </div>

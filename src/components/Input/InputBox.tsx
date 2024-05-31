@@ -14,12 +14,9 @@ export const FocusBox = styled.div`
 
   height: 40px;
   padding: 0;
-  :first-child {
-    padding-inline-start: 16px;
-  }
-  :last-child {
-    padding-inline-end: 16px;
-  }
+  padding-inline-start: 16px;
+  padding-inline-end: 16px;
+
   & * {
     ${(p) => p.theme.typography['Body/Body 1 Long']}
     line-height: 40px;
@@ -32,12 +29,8 @@ export const FocusBox = styled.div`
   }
   &[data-size='s'] {
     height: 32px;
-    :first-child {
-      padding-inline-start: 12px;
-    }
-    :last-child {
-      padding-inline-end: 12px;
-    }
+    padding-inline-start: 12px;
+    padding-inline-end: 12px;
     & * {
       ${(p) => p.theme.typography['Body/Body 2 Long']}
       line-height: 32px;

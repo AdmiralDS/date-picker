@@ -2,7 +2,11 @@ import { maskitoDateOptionsGenerator, maskitoDateRangeOptionsGenerator } from '@
 import { useMaskito } from '@maskito/react';
 
 import { T } from '@admiral-ds/react-ui';
-import { InputBox, InputLine, InputIconButton, Separator } from '@admiral-ds/date-picker';
+import { Separator } from '@admiral-ds/date-picker';
+import { InputBox } from '#src/components/Input/InputBox';
+import { InputLine } from '#src/components/Input/InputLine';
+import { InputIconButton } from '#src/components/InputIconButton';
+//import { Separator } from '#src/components/Input';
 import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
@@ -19,11 +23,16 @@ export const DatePickerSimpleTemplate = () => {
     <WrapperHorizontal>
       <WrapperVertical>
         <InputBox>
-          <InputLine ref={maskedDateInputRef} placeholder="дд.мм.гггг" />
+          <InputLine
+            ref={maskedDateInputRef}
+            defaultValue="11."
+            placeholder="Введите дату"
+            dataPlaceholder="дд.мм.гггг"
+          />
           <InputIconButton icon={CalendarOutline} />
         </InputBox>
         <InputBox data-size="xl">
-          <InputLine ref={maskedDateRangeInputRef} placeholder="дд.мм.гггг - дд.мм.гггг" />
+          <InputLine ref={maskedDateRangeInputRef} dataPlaceholder="дд.мм.гггг - дд.мм.гггг" />
           <InputIconButton icon={CalendarOutline} />
         </InputBox>
         <InputBox data-size="s">
