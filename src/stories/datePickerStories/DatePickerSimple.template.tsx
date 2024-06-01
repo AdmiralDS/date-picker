@@ -3,6 +3,7 @@ import { useMaskito } from '@maskito/react';
 
 import { T } from '@admiral-ds/react-ui';
 import { Separator } from '@admiral-ds/date-picker';
+import { DatePickerCalendar as DatePicker } from '#src/components/DatePickerCalendar';
 import { InputBox } from '#src/components/Input/InputBox';
 import { InputLine } from '#src/components/Input/InputLine';
 import { InputIconButton } from '#src/components/InputIconButton';
@@ -10,27 +11,52 @@ import { InputIconButton } from '#src/components/InputIconButton';
 import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
+import { PopoverPanel } from '#src/components/PopoverPanel.js';
+import { useState, type MouseEventHandler } from 'react';
+import styled from 'styled-components';
+import type { Dayjs } from 'dayjs';
 
 const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
 const dateRangeOptions = maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy' });
 
+const Calendar = styled(DatePicker)`
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+`;
+
 export const DatePickerSimpleTemplate = () => {
+  const [defaultDateValue, setDefaultDateValue] = useState('11.');
   const maskedDateInputRef = useMaskito({ options: dateOptions });
   const maskedDateRangeInputRef = useMaskito({ options: dateRangeOptions });
   const maskedStartDateInputRef = useMaskito({ options: dateOptions });
   const maskedEndDateInputRef = useMaskito({ options: dateOptions });
+
+  const handleInputIconButtonClick: MouseEventHandler<Element> = (e) => {
+    e.preventDefault();
+    const calendar = document.getElementById('calendar');
+    calendar?.togglePopover();
+  };
+  const handleSelectedDateValueChange = (date: Dayjs) => {
+    console.log(date.format('DD.MM.YYYY'));
+    setDefaultDateValue(date.format('DD.MM.YYYY'));
+  };
   return (
     <WrapperHorizontal>
       <WrapperVertical>
         <InputBox>
           <InputLine
             ref={maskedDateInputRef}
-            defaultValue="11."
+            value={defaultDateValue}
+            onChange={(e) => setDefaultDateValue(e.target.value)}
             placeholder="Введите дату"
             dataPlaceholder="дд.мм.гггг"
           />
-          <InputIconButton icon={CalendarOutline} />
+          <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonClick} />
         </InputBox>
+        <PopoverPanel id="calendar" popover="manual">
+          <Calendar onSelectedDateValueChange={handleSelectedDateValueChange} />
+        </PopoverPanel>
         <InputBox data-size="xl">
           <InputLine ref={maskedDateRangeInputRef} dataPlaceholder="дд.мм.гггг - дд.мм.гггг" />
           <InputIconButton icon={CalendarOutline} />

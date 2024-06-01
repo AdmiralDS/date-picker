@@ -20,9 +20,21 @@ export const StyledInputLine = styled.input`
   }
 `;
 
+const Visible = styled.span`
+  color: ${(p) => p.theme.color['Neutral/Neutral 10']};
+  transition: color 0.3s ease-in-out;
+`;
+
+const Invisible = styled.span`
+  color: transparent;
+`;
+
 const InputLineContainer = styled.div`
   position: relative;
   display: inline-block;
+  &:focus-within ${Visible} {
+    color: ${(p) => p.theme.color['Neutral/Neutral 50']};
+  }
 `;
 
 const MaskBox = styled.div`
@@ -32,14 +44,6 @@ const MaskBox = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-`;
-
-const Invisible = styled.span`
-  color: transparent;
-`;
-
-const Visible = styled.span`
-  color: ${(p) => p.theme.color['Neutral/Neutral 50']};
 `;
 
 export type InputLineProps = {
@@ -77,7 +81,8 @@ export const InputLine = forwardRef<HTMLInputElement, InputLineProps>((props, re
       inputNode.addEventListener('input', oninput);
       return () => inputNode.removeEventListener('input', oninput);
     }
-  }, [dataPlaceholder, placeholder]);
+    // inputProps.value inputProps.defaultValue важно, изменение не приводит к триггеру события input
+  }, [dataPlaceholder, placeholder, inputProps.value, inputProps.defaultValue]);
 
   return (
     <InputLineContainer {...containerProps}>

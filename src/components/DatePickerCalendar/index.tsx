@@ -31,6 +31,8 @@ export const DatePickerCalendar = ({
   locale = ruLocale,
   prevButtonProps,
   nextButtonProps,
+  className,
+  style,
   ...props
 }: DatePickerCalendarProps) => {
   //<editor-fold desc="Calendar view mode">
@@ -108,7 +110,7 @@ export const DatePickerCalendar = ({
   };
 
   return (
-    <SinglePickerCalendarWrapper>
+    <SinglePickerCalendarWrapper className={className} style={style}>
       <MonthNavigationPanelWidget
         date={dateInner}
         viewMode={viewModeInner}
