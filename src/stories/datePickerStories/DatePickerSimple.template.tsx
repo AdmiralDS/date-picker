@@ -12,9 +12,10 @@ import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 import { PopoverPanel } from '#src/components/PopoverPanel.js';
-import { useState, type MouseEventHandler } from 'react';
+import { useRef, useState, type MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
 const dateRangeOptions = maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy' });
@@ -22,11 +23,13 @@ const dateRangeOptions = maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy' }
 const Calendar = styled(DatePicker)`
   border: none;
   box-shadow: none;
-  background-color: transparent;
 `;
 
 export const DatePickerSimpleTemplate = () => {
   const [defaultDateValue, setDefaultDateValue] = useState('11.');
+  const inputBoxRef = useRef(null);
+  const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
+
   const maskedDateInputRef = useMaskito({ options: dateOptions });
   const maskedDateRangeInputRef = useMaskito({ options: dateRangeOptions });
   const maskedStartDateInputRef = useMaskito({ options: dateOptions });
@@ -34,17 +37,24 @@ export const DatePickerSimpleTemplate = () => {
 
   const handleInputIconButtonClick: MouseEventHandler<Element> = (e) => {
     e.preventDefault();
-    const calendar = document.getElementById('calendar');
-    calendar?.togglePopover();
+    setCalendarOpen((isOpen) => !isOpen);
+    // const calendar = document.getElementById('calendar');
+    // calendar?.togglePopover();
   };
   const handleSelectedDateValueChange = (date: Dayjs) => {
     console.log(date.format('DD.MM.YYYY'));
     setDefaultDateValue(date.format('DD.MM.YYYY'));
   };
+  const handleBlurCalendarContainer = (e: Event) => {
+    if (e.target && inputBoxRef.current?.contains(e.target as Node)) {
+      return;
+    }
+    setCalendarOpen(false);
+  };
   return (
     <WrapperHorizontal>
       <WrapperVertical>
-        <InputBox>
+        <InputBox ref={inputBoxRef}>
           <InputLine
             ref={maskedDateInputRef}
             value={defaultDateValue}
@@ -54,9 +64,18 @@ export const DatePickerSimpleTemplate = () => {
           />
           <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonClick} />
         </InputBox>
-        <PopoverPanel id="calendar" popover="manual">
-          <Calendar onSelectedDateValueChange={handleSelectedDateValueChange} />
-        </PopoverPanel>
+        {isCalendarOpen && (
+          <PopoverPanel
+            targetElement={inputBoxRef.current}
+            alignSelf="auto"
+            onClickOutside={handleBlurCalendarContainer}
+          >
+            <Calendar
+              selectedDateValue={dayjs(defaultDateValue, 'DD.MM.YYYY')}
+              onSelectedDateValueChange={handleSelectedDateValueChange}
+            />
+          </PopoverPanel>
+        )}
         <InputBox data-size="xl">
           <InputLine ref={maskedDateRangeInputRef} dataPlaceholder="дд.мм.гггг - дд.мм.гггг" />
           <InputIconButton icon={CalendarOutline} />

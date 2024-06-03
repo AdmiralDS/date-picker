@@ -1,50 +1,15 @@
 {
   "name": "@admiral-ds/date-picker",
   "version": "0.0.2",
-  "description": "Admiral DS DatePicker",
-  "type": "module",
-  "types": "dist/index.d.ts",
-  "module": "dist/index.es.js",
-  "exports": {
-    ".": "./dist/index.es.js",
-    "./*.json": "./*.json"
-  },
-  "imports": {
-    "#src/*": "./src/*"
-  },
-  "files": [
-    "dist",
-    "src",
-    "tsconfig.json"
-  ],
-  "sideEffects": [
-    "**/*.css"
-  ],
-  "scripts": {
-    "prepare": "npm run build",
-    "test": "vitest run",
-    "test-jest": "jest",
-    "build": "vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --fix",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build --disable-telemetry --output-dir docs",
-    "preview-storybook": "vite preview --outDir docs"
-  },
-  "keywords": [
-    "AdmiralDS",
-    "Admiral",
-    "ui",
-    "react",
-    "library"
-  ],
   "author": "Admiral DS team",
-  "license": "See license in ./LICENSE",
+  "repository": "https://github.com/AdmiralDS/date-picker",
+  "module": "dist/index.es.js",
   "devDependencies": {
     "@admiral-ds/icons": "^4.3.0",
     "@admiral-ds/react-ui": "^8.4.2",
-    "@maskito/core": "^2.3.2",
-    "@maskito/kit": "^2.3.2",
-    "@maskito/react": "^2.3.2",
+    "@maskito/core": "^2.4.0",
+    "@maskito/kit": "^2.4.0",
+    "@maskito/react": "^2.4.0",
     "@storybook/addon-essentials": "^8.1.5",
     "@storybook/blocks": "^8.1.5",
     "@storybook/react": "^8.1.5",
@@ -91,11 +56,46 @@
     "styled-components": "^6.1.0",
     "@admiral-ds/react-ui": "^8.0.0"
   },
-  "repository": "https://github.com/AdmiralDS/date-picker",
+  "exports": {
+    ".": "./dist/index.es.js",
+    "./*.json": "./*.json"
+  },
   "bugs": {
     "url": "https://github.com/AdmiralDS/date-picker/issues"
   },
+  "description": "Admiral DS DatePicker",
+  "files": [
+    "dist",
+    "src",
+    "tsconfig.json"
+  ],
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "keywords": [
+    "AdmiralDS",
+    "Admiral",
+    "ui",
+    "react",
+    "library"
+  ],
+  "license": "See license in ./LICENSE",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "scripts": {
+    "prepare": "npm run build",
+    "test": "vitest run",
+    "test-jest": "jest",
+    "build": "vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --fix",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build --disable-telemetry --output-dir docs",
+    "preview-storybook": "vite preview --outDir docs"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "type": "module",
+  "types": "dist/index.d.ts"
 }

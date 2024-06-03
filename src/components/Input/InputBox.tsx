@@ -56,6 +56,4 @@ export const FocusBox = styled.div`
   transition: box-shadow 0.3s ease-in-out;
 `;
 
-export const InputBox = ({ ...props }: InputBoxProps) => {
-  return <FocusBox {...props}></FocusBox>;
-};
+export const InputBox = FocusBox;
