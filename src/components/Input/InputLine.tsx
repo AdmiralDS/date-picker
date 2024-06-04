@@ -21,7 +21,7 @@ export const StyledInputLine = styled.input<{ $isTmpValue?: boolean }>`
 `;
 
 const Visible = styled.span`
-  color: ${(p) => p.theme.color['Neutral/Neutral 10']};
+  color: ${(p) => p.theme.color['Neutral/Neutral 30']};
   transition: color 0.3s ease-in-out;
 `;
 
