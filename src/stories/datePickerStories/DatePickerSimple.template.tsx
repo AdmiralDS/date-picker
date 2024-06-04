@@ -26,7 +26,7 @@ const Calendar = styled(DatePicker)`
 `;
 
 export const DatePickerSimpleTemplate = () => {
-  const [defaultDateValue, setDefaultDateValue] = useState('11.');
+  const [inputValue, setInputValue] = useState('11.');
   const inputBoxRef = useRef(null);
   const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
 
@@ -41,26 +41,41 @@ export const DatePickerSimpleTemplate = () => {
     // const calendar = document.getElementById('calendar');
     // calendar?.togglePopover();
   };
+
   const handleSelectedDateValueChange = (date: Dayjs) => {
-    console.log(date.format('DD.MM.YYYY'));
-    setDefaultDateValue(date.format('DD.MM.YYYY'));
+    setInputValue(date.format('DD.MM.YYYY'));
+    setCalendarOpen(false);
   };
+
   const handleBlurCalendarContainer = (e: Event) => {
     if (e.target && inputBoxRef.current?.contains(e.target as Node)) {
       return;
     }
     setCalendarOpen(false);
   };
+
+  const handleBlur = () => {
+    setCalendarOpen(false);
+  };
+
+  const handleFocus = () => {
+    setCalendarOpen(true);
+  };
+  const selectedDateValue = dayjs(inputValue, 'DD.MM.YYYY');
+  console.log(`inputValue: ${inputValue}`);
+  console.log(`selectedDateValue: ${selectedDateValue}`);
   return (
     <WrapperHorizontal>
       <WrapperVertical>
         <InputBox ref={inputBoxRef}>
           <InputLine
             ref={maskedDateInputRef}
-            value={defaultDateValue}
-            onChange={(e) => setDefaultDateValue(e.target.value)}
+            value={inputValue}
+            onInput={(e) => setInputValue(e.currentTarget.value)}
             placeholder="Введите дату"
             dataPlaceholder="дд.мм.гггг"
+            onBlur={handleBlur}
+            onFocus={handleFocus}
           />
           <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonClick} />
         </InputBox>
@@ -71,12 +86,12 @@ export const DatePickerSimpleTemplate = () => {
             onClickOutside={handleBlurCalendarContainer}
           >
             <Calendar
-              selectedDateValue={dayjs(defaultDateValue, 'DD.MM.YYYY')}
+              selectedDateValue={dayjs(inputValue, 'DD.MM.YYYY')}
               onSelectedDateValueChange={handleSelectedDateValueChange}
             />
           </PopoverPanel>
         )}
-        <InputBox data-size="xl">
+        {/* <InputBox data-size="xl">
           <InputLine ref={maskedDateRangeInputRef} dataPlaceholder="дд.мм.гггг - дд.мм.гггг" />
           <InputIconButton icon={CalendarOutline} />
         </InputBox>
@@ -85,7 +100,7 @@ export const DatePickerSimpleTemplate = () => {
           <Separator style={{ width: 20 }}> – </Separator>
           <InputLine ref={maskedEndDateInputRef} placeholder="дд.мм.гггг" />
           <InputIconButton icon={CalendarOutline} />
-        </InputBox>
+        </InputBox> */}
       </WrapperVertical>
 
       <WrapperVertical>

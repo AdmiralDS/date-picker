@@ -64,6 +64,7 @@ export const YearCalendar = ({
   };
 
   const handleDateClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    e.preventDefault();
     const targetDataAttributes = (e.target as HTMLDivElement).dataset;
     if (targetDataAttributes['cellType'] !== 'yearCell') {
       return;
@@ -86,7 +87,7 @@ export const YearCalendar = ({
       locale={locale}
       onMouseLeave={handleMouseLeave}
       onMouseOver={handleMouseOver}
-      onClick={handleDateClick}
+      onMouseDown={handleDateClick}
       cell={cell || MemoDefaultYearCell}
     />
   );

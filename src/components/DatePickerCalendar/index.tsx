@@ -80,6 +80,7 @@ export const DatePickerCalendar = ({
   };
 
   const handleMonthNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
+    e.preventDefault();
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
@@ -115,7 +116,7 @@ export const DatePickerCalendar = ({
         date={dateInner}
         viewMode={viewModeInner}
         locale={locale}
-        onClick={handleMonthNavigationPanelClick}
+        onMouseDown={handleMonthNavigationPanelClick}
         prevButtonProps={prevButtonProps}
         nextButtonProps={nextButtonProps}
       />

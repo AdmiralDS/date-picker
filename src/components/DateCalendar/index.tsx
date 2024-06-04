@@ -67,6 +67,7 @@ export const DateCalendar = ({
   };
 
   const handleDateClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    e.preventDefault();
     const targetDataAttributes = (e.target as HTMLDivElement).dataset;
     if (targetDataAttributes['cellType'] !== 'dateCell') {
       return;
@@ -96,7 +97,7 @@ export const DateCalendar = ({
       locale={locale}
       onMouseLeave={handleMouseLeave}
       onMouseOver={handleMouseOver}
-      onClick={handleDateClick}
+      onMouseDown={handleDateClick}
       cell={cell || MemoDefaultDateCell}
     />
   );
