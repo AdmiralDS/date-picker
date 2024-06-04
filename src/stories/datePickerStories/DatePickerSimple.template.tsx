@@ -1,8 +1,7 @@
-import { maskitoDateOptionsGenerator, maskitoDateRangeOptionsGenerator } from '@maskito/kit';
+import { maskitoDateOptionsGenerator } from '@maskito/kit';
 import { useMaskito } from '@maskito/react';
 
-import { T } from '@admiral-ds/react-ui';
-import { Separator } from '@admiral-ds/date-picker';
+import { T, refSetter } from '@admiral-ds/react-ui';
 import { DatePickerCalendar as DatePicker } from '#src/components/DatePickerCalendar';
 import { InputBox } from '#src/components/Input/InputBox';
 import { InputLine } from '#src/components/Input/InputLine';
@@ -18,7 +17,6 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
 const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
-const dateRangeOptions = maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy' });
 
 const Calendar = styled(DatePicker)`
   border: none;
@@ -27,19 +25,18 @@ const Calendar = styled(DatePicker)`
 
 export const DatePickerSimpleTemplate = () => {
   const [inputValue, setInputValue] = useState('11.');
+  const [isFocused, setIsFocused] = useState(false);
   const inputBoxRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
 
   const maskedDateInputRef = useMaskito({ options: dateOptions });
-  const maskedDateRangeInputRef = useMaskito({ options: dateRangeOptions });
-  const maskedStartDateInputRef = useMaskito({ options: dateOptions });
-  const maskedEndDateInputRef = useMaskito({ options: dateOptions });
 
-  const handleInputIconButtonClick: MouseEventHandler<Element> = (e) => {
+  const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
     e.preventDefault();
-    setCalendarOpen((isOpen) => !isOpen);
-    // const calendar = document.getElementById('calendar');
-    // calendar?.togglePopover();
+    if (isFocused) {
+      setCalendarOpen((isOpen) => !isOpen);
+    }
   };
 
   const handleSelectedDateValueChange = (date: Dayjs) => {
@@ -47,29 +44,29 @@ export const DatePickerSimpleTemplate = () => {
     setCalendarOpen(false);
   };
 
-  const handleBlurCalendarContainer = (e: Event) => {
-    if (e.target && inputBoxRef.current?.contains(e.target as Node)) {
-      return;
-    }
-    setCalendarOpen(false);
-  };
-
   const handleBlur = () => {
     setCalendarOpen(false);
+    setIsFocused(false);
   };
 
   const handleFocus = () => {
     setCalendarOpen(true);
+    setIsFocused(true);
   };
-  const selectedDateValue = dayjs(inputValue, 'DD.MM.YYYY');
-  console.log(`inputValue: ${inputValue}`);
-  console.log(`selectedDateValue: ${selectedDateValue}`);
+
+  const handleInputBoxMouseDown: MouseEventHandler<Element> = (e) => {
+    if (e.target === e.currentTarget) e.preventDefault();
+    if (!isFocused) {
+      inputRef.current?.focus();
+    }
+  };
+
   return (
     <WrapperHorizontal>
       <WrapperVertical>
-        <InputBox ref={inputBoxRef}>
+        <InputBox ref={inputBoxRef} onMouseDown={handleInputBoxMouseDown}>
           <InputLine
-            ref={maskedDateInputRef}
+            ref={refSetter(maskedDateInputRef, inputRef)}
             value={inputValue}
             onInput={(e) => setInputValue(e.currentTarget.value)}
             placeholder="Введите дату"
@@ -77,14 +74,10 @@ export const DatePickerSimpleTemplate = () => {
             onBlur={handleBlur}
             onFocus={handleFocus}
           />
-          <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonClick} />
+          <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
         </InputBox>
         {isCalendarOpen && (
-          <PopoverPanel
-            targetElement={inputBoxRef.current}
-            alignSelf="auto"
-            onClickOutside={handleBlurCalendarContainer}
-          >
+          <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto">
             <Calendar
               selectedDateValue={dayjs(inputValue, 'DD.MM.YYYY')}
               onSelectedDateValueChange={handleSelectedDateValueChange}

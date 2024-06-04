@@ -6,6 +6,7 @@ export type InputBoxProps = ComponentProps<'div'> & {
 };
 
 export const FocusBox = styled.div`
+  cursor: text;
   display: inline-flex;
   overflow: hidden;
   flex-wrap: nowrap;
