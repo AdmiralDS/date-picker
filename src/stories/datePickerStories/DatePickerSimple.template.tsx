@@ -11,7 +11,7 @@ import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 import { PopoverPanel } from '#src/components/PopoverPanel.js';
-import { useRef, useState, type MouseEventHandler } from 'react';
+import { FormEventHandler, useRef, useState, type MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
@@ -25,6 +25,7 @@ const Calendar = styled(DatePicker)`
 
 export const DatePickerSimpleTemplate = () => {
   const [inputValue, setInputValue] = useState('11.');
+  const [tmpValue, setTmpValue] = useState<string | undefined>();
   const [isFocused, setIsFocused] = useState(false);
   const inputBoxRef = useRef(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -41,6 +42,7 @@ export const DatePickerSimpleTemplate = () => {
 
   const handleSelectedDateValueChange = (date: Dayjs) => {
     setInputValue(date.format('DD.MM.YYYY'));
+    setTmpValue(undefined);
     setCalendarOpen(false);
   };
 
@@ -61,6 +63,11 @@ export const DatePickerSimpleTemplate = () => {
     }
   };
 
+  const handleInput: FormEventHandler<HTMLInputElement> = (e) => {
+    setInputValue(e.currentTarget.value);
+    setTmpValue(undefined);
+  };
+
   return (
     <WrapperHorizontal>
       <WrapperVertical>
@@ -68,11 +75,12 @@ export const DatePickerSimpleTemplate = () => {
           <InputLine
             ref={refSetter(maskedDateInputRef, inputRef)}
             value={inputValue}
-            onInput={(e) => setInputValue(e.currentTarget.value)}
+            onInput={handleInput}
             placeholder="Введите дату"
             dataPlaceholder="дд.мм.гггг"
             onBlur={handleBlur}
             onFocus={handleFocus}
+            tmpValue={tmpValue}
           />
           <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
         </InputBox>
@@ -81,6 +89,7 @@ export const DatePickerSimpleTemplate = () => {
             <Calendar
               selectedDateValue={dayjs(inputValue, 'DD.MM.YYYY')}
               onSelectedDateValueChange={handleSelectedDateValueChange}
+              onActiveDateValueChange={(date) => setTmpValue(date ? date.format('DD.MM.YYYY') : undefined)}
             />
           </PopoverPanel>
         )}

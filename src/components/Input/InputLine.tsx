@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { forwardRef, useEffect, useRef } from 'react';
 import { refSetter } from '@admiral-ds/react-ui';
 
-export const StyledInputLine = styled.input`
+export const StyledInputLine = styled.input<{ $isTmpValue?: boolean }>`
   border: none;
   outline: none;
   appearance: none;
@@ -14,7 +14,7 @@ export const StyledInputLine = styled.input`
   text-overflow: ellipsis;
   padding: 0;
 
-  color: ${(p) => p.theme.color['Neutral/Neutral 90']};
+  color: ${(p) => (p.$isTmpValue ? p.theme.color['Neutral/Neutral 30'] : p.theme.color['Neutral/Neutral 90'])};
   ::placeholder {
     color: ${(p) => p.theme.color['Neutral/Neutral 50']};
   }
@@ -48,10 +48,11 @@ const MaskBox = styled.div`
 
 export type InputLineProps = {
   dataPlaceholder?: string;
+  tmpValue?: string;
 } & JSX.IntrinsicElements['input'];
 
 export const InputLine = forwardRef<HTMLInputElement, InputLineProps>((props, ref) => {
-  const { className, dataPlaceholder, ...inputProps } = props;
+  const { className, dataPlaceholder, tmpValue, ...inputProps } = props;
   const containerProps = { className };
   const placeholder = props.placeholder;
   const inputRef = useRef<HTMLInputElement>(null);
@@ -82,11 +83,16 @@ export const InputLine = forwardRef<HTMLInputElement, InputLineProps>((props, re
       return () => inputNode.removeEventListener('input', oninput);
     }
     // inputProps.value inputProps.defaultValue важно, изменение не приводит к триггеру события input
-  }, [dataPlaceholder, placeholder, inputProps.value, inputProps.defaultValue]);
-
+  }, [dataPlaceholder, placeholder, inputProps.value, inputProps.defaultValue, tmpValue]);
+  const isTmpValue = typeof tmpValue === 'string';
   return (
     <InputLineContainer {...containerProps}>
-      <StyledInputLine ref={refSetter(ref, inputRef)} {...inputProps} />
+      <StyledInputLine
+        ref={refSetter(ref, inputRef)}
+        {...inputProps}
+        $isTmpValue={isTmpValue}
+        value={isTmpValue ? tmpValue : inputProps.value}
+      />
       <MaskBox>
         <Invisible ref={invisibleRef}></Invisible>
         <Visible ref={visibleRef}></Visible>
