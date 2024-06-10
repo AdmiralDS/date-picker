@@ -1,30 +1,16 @@
-import type { Meta, StoryFn } from '@storybook/react';
-
-import { InputLine } from '@admiral-ds/date-picker';
+import type { Meta } from '@storybook/react';
+import { DatePicker } from '#src/components/DatePicker'; // импорт из сорца обязателен для правильной генерации доки
 import { DatePickerSimpleTemplate } from './DatePickerSimple.template.tsx';
 import DatePickerSimpleTemplateRaw from './DatePickerSimple.template.tsx?raw';
 
-// import { DatePickerCalendarWithHolidaysTemplate } from './DatePickerCalendarWithHolidays.template';
-// import DatePickerCalendarWithHolidaysTemplateRaw from './DatePickerCalendarWithHolidays.template.tsx?raw';
-// import { DatePickerCalendarChangeLocaleTemplate } from './DatePickerCalendarChangeLocale.template';
-// import DatePickerCalendarChangeLocaleTemplateRaw from './DatePickerCalendarChangeLocale.template.tsx?raw';
-// import { DatePickerCalendarCustomCellTemplate } from './DatePickerCalendarCustomCell.template';
-// import DatePickerCalendarCustomCellTemplateRaw from './DatePickerCalendarCustomCell.template.tsx?raw';
-// import { DatePickerCalendarBlockPanelArrowsTemplate } from '#src/stories/datePickerCalendarStories/DatePickerCalendarBlockPanelArrows.template.tsx';
-// import DatePickerCalendarBlockPanelArrowsTemplateRaw from './DatePickerCalendarBlockPanelArrows.template.tsx?raw';
-
 export default {
   title: 'Admiral-2.1/Date Picker/DatePicker',
-  component: InputLine,
+  component: DatePicker,
   parameters: {
     docs: {
       source: {
         language: 'tsx',
       },
-    },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/file/EGEGZsx8WhdxpmFKu8J41G/Admiral-2.1-UI-Kit?node-id=39%3A53407',
     },
   },
   argTypes: {
@@ -41,15 +27,10 @@ export default {
       control: false,
     },
   },
-} as Meta<typeof InputLine>;
-
-const DatePickerCalendarSimpleStory: StoryFn<typeof InputLine> = (props) => {
-  return <DatePickerSimpleTemplate {...props} />;
-};
+} as Meta<typeof DatePicker>;
 
 export const DatePickerCalendarSimple = {
-  render: DatePickerCalendarSimpleStory,
-
+  render: DatePickerSimpleTemplate,
   parameters: {
     docs: {
       source: {

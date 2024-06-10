@@ -1,110 +1,14 @@
-import type { FormEventHandler, MouseEventHandler } from 'react';
-import { useRef, useState } from 'react';
-import { maskitoDateOptionsGenerator } from '@maskito/kit';
-import { useMaskito } from '@maskito/react';
-
-import { T, refSetter } from '@admiral-ds/react-ui';
-import { DatePickerCalendar as DatePicker } from '#src/components/DatePickerCalendar';
-import { InputBox } from '#src/components/Input/InputBox';
-import { InputLine } from '#src/components/Input/InputLine';
-import { InputIconButton } from '#src/components/InputIconButton';
-//import { Separator } from '#src/components/Input';
-import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
+import { T } from '@admiral-ds/react-ui';
+import { DatePicker } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
-import { PopoverPanel } from '#src/components/PopoverPanel.js';
-import styled from 'styled-components';
-import type { Dayjs } from 'dayjs';
-import dayjs from 'dayjs';
+import type { ComponentPropsWithoutRef } from 'react';
 
-const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
-
-const Calendar = styled(DatePicker)`
-  border: none;
-  box-shadow: none;
-`;
-
-export const DatePickerSimpleTemplate = () => {
-  const [inputValue, setInputValue] = useState('11.');
-  const [tmpValue, setTmpValue] = useState<string | undefined>();
-  const [isFocused, setIsFocused] = useState(false);
-  const inputBoxRef = useRef(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
-
-  const maskedDateInputRef = useMaskito({ options: dateOptions });
-
-  const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
-    e.preventDefault();
-    if (isFocused) {
-      setCalendarOpen((isOpen) => !isOpen);
-    }
-  };
-
-  const handleSelectedDateValueChange = (date: Dayjs) => {
-    setInputValue(date.format('DD.MM.YYYY'));
-    setTmpValue(undefined);
-    setCalendarOpen(false);
-  };
-
-  const handleBlur = () => {
-    setCalendarOpen(false);
-    setIsFocused(false);
-    setTmpValue(undefined);
-  };
-
-  const handleFocus = () => {
-    setCalendarOpen(true);
-    setIsFocused(true);
-  };
-
-  const handleInputBoxMouseDown: MouseEventHandler<Element> = (e) => {
-    if (e.target === e.currentTarget) e.preventDefault();
-    if (!isFocused) {
-      inputRef.current?.focus();
-    }
-  };
-
-  const handleInput: FormEventHandler<HTMLInputElement> = (e) => {
-    setInputValue(e.currentTarget.value);
-    setTmpValue(undefined);
-  };
-
+export const DatePickerSimpleTemplate = (props: ComponentPropsWithoutRef<typeof DatePicker>) => {
   return (
     <WrapperHorizontal>
       <WrapperVertical>
-        <InputBox ref={inputBoxRef} onMouseDown={handleInputBoxMouseDown}>
-          <InputLine
-            ref={refSetter(maskedDateInputRef, inputRef)}
-            value={inputValue}
-            onInput={handleInput}
-            placeholder="Введите дату"
-            dataPlaceholder="дд.мм.гггг"
-            onBlur={handleBlur}
-            onFocus={handleFocus}
-            tmpValue={tmpValue}
-          />
-          <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
-        </InputBox>
-        {isCalendarOpen && (
-          <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto">
-            <Calendar
-              selectedDateValue={dayjs(inputValue, 'DD.MM.YYYY')}
-              onSelectedDateValueChange={handleSelectedDateValueChange}
-              onActiveDateValueChange={(date) => setTmpValue(date ? date.format('DD.MM.YYYY') : undefined)}
-            />
-          </PopoverPanel>
-        )}
-        {/* <InputBox data-size="xl">
-          <InputLine ref={maskedDateRangeInputRef} dataPlaceholder="дд.мм.гггг - дд.мм.гггг" />
-          <InputIconButton icon={CalendarOutline} />
-        </InputBox>
-        <InputBox data-size="s">
-          <InputLine ref={maskedStartDateInputRef} placeholder="дд.мм.гггг" style={{ width: 70 }} />
-          <Separator style={{ width: 20 }}> – </Separator>
-          <InputLine ref={maskedEndDateInputRef} placeholder="дд.мм.гггг" />
-          <InputIconButton icon={CalendarOutline} />
-        </InputBox> */}
+        <DatePicker {...props} />
       </WrapperVertical>
 
       <WrapperVertical>

@@ -21,6 +21,7 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
     "paths": {
       "#src/*": ["./src/*"],
       "@admiral-ds/date-picker": ["./src/index"]
