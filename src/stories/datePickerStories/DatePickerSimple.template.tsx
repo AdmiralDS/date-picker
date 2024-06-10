@@ -1,3 +1,5 @@
+import type { FormEventHandler, MouseEventHandler } from 'react';
+import { useRef, useState } from 'react';
 import { maskitoDateOptionsGenerator } from '@maskito/kit';
 import { useMaskito } from '@maskito/react';
 
@@ -11,7 +13,6 @@ import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 import { PopoverPanel } from '#src/components/PopoverPanel.js';
-import { FormEventHandler, useRef, useState, type MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
@@ -49,6 +50,7 @@ export const DatePickerSimpleTemplate = () => {
   const handleBlur = () => {
     setCalendarOpen(false);
     setIsFocused(false);
+    setTmpValue(undefined);
   };
 
   const handleFocus = () => {
