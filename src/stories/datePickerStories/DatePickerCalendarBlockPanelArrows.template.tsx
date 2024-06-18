@@ -8,7 +8,7 @@ import type { CalendarViewMode, DateAttributes, DatePickerCalendarProps } from '
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
-import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
+import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
 
 const minDate = dayjs().startOf('year');
 const maxDate = dayjs().add(10, 'year').endOf('year');

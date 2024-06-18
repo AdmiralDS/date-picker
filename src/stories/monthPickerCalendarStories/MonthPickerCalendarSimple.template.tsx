@@ -2,7 +2,7 @@ import type { MouseEventHandler } from 'react';
 
 import { T } from '@admiral-ds/react-ui';
 import type { MonthPickerCalendarProps } from '@admiral-ds/date-picker';
-import { MonthPickerCalendar } from '#src/components/MonthPickerCalendar';
+import { MonthPickerCalendar } from '#lib/MonthPickerCalendar';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
+import { YearNavigationPanelWidget } from '#lib/YearNavigationPanelWidget';
 import { YearNavigationPanelWidgetSimpleTemplate } from './YearNavigationPanelWidgetSimple.template';
 import YearNavigationPanelWidgetSimpleTemplateRaw from './YearNavigationPanelWidgetSimple.template.tsx?raw';
 

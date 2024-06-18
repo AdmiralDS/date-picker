@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { DateRangeCalendar } from '#src/components/DateRangeCalendar';
+import { DateRangeCalendar } from '#lib/DateRangeCalendar';
 
 import { DateRangeCalendarSimpleTemplate } from './DateRangeCalendarSimple.template.tsx';
 import DateRangeCalendarSimpleTemplateRaw from './DateRangeCalendarSimple.template.tsx?raw';

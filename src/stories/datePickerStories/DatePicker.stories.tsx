@@ -1,5 +1,6 @@
 import type { Meta } from '@storybook/react';
-import { DatePicker } from '#src/components/DatePicker'; // импорт из сорца обязателен для правильной генерации доки
+// импорт из сорца обязателен для правильной генерации доки
+import { DatePicker } from '#lib/DatePicker';
 import { DatePickerSimpleTemplate } from './DatePickerSimple.template.tsx';
 import DatePickerSimpleTemplateRaw from './DatePickerSimple.template.tsx?raw';
 

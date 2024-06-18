@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
-import { getCurrentDate } from '#src/components/utils';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH, ruLocale } from '#src/components/calendarConstants';
-import { MonthsOfYearWidget } from '#src/components/MonthsOfYearWidget';
-import type { YearNavigationPanelWidgetProps } from '#src/components/YearNavigationPanelWidget';
-import { YearNavigationPanelWidget } from '#src/components/YearNavigationPanelWidget';
-import { MemoDefaultMonthCell } from '#src/components/DefaultCell';
+import { getCurrentDate } from '#lib/utils';
+import { CALENDAR_HEIGHT, CALENDAR_WIDTH, ruLocale } from '#lib/calendarConstants';
+import { MonthsOfYearWidget } from '#lib/MonthsOfYearWidget';
+import type { YearNavigationPanelWidgetProps } from '#lib/YearNavigationPanelWidget';
+import { YearNavigationPanelWidget } from '#lib/YearNavigationPanelWidget';
+import { MemoDefaultMonthCell } from '#lib/DefaultCell';
 
 const CalendarWrapper = styled.div`
   box-sizing: border-box;

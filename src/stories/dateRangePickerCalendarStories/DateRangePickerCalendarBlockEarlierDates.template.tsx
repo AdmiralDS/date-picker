@@ -9,8 +9,8 @@ import type { CalendarViewMode, DateRangePickerCalendarProps } from '@admiral-ds
 import { DateRangePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
-import { dateIsInRange, dateIsSelected } from '#src/components/utils.ts';
-import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
+import { dateIsInRange, dateIsSelected } from '#lib/utils.ts';
+import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
 
 dayjs.extend(minMax);
 

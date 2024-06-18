@@ -6,12 +6,12 @@ import type { Dayjs } from 'dayjs';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { capitalizeFirstLetter, getCurrentDate } from '#src/components/utils';
-import { YEARS_OF_YEAR_WIDGET_WIDTH } from '#src/components/YearsOfTwentyYearsWidget/constants';
-import type { YearsOfTwentyYearsWidgetProps } from '#src/components/YearsOfTwentyYearsWidget';
-import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
-import { MemoDefaultYearCell } from '#src/components/DefaultCell';
-import { ruLocale } from '#src/components/calendarConstants.ts';
+import { capitalizeFirstLetter, getCurrentDate } from '#lib/utils';
+import { YEARS_OF_YEAR_WIDGET_WIDTH } from '#lib/YearsOfTwentyYearsWidget/constants';
+import type { YearsOfTwentyYearsWidgetProps } from '#lib/YearsOfTwentyYearsWidget';
+import { YearsOfTwentyYearsWidget } from '#lib/YearsOfTwentyYearsWidget';
+import { MemoDefaultYearCell } from '#lib/DefaultCell';
+import { ruLocale } from '#lib/calendarConstants.ts';
 
 const Wrapper = styled.div`
   display: flex;

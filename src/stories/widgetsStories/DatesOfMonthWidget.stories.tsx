@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
+import { DatesOfMonthWidget } from '#lib/DatesOfMonthWidget';
 
 import { DatesOfMonthWidgetSimpleTemplate } from './DatesOfMonthWidgetSimple.template.tsx';
 import DatesOfMonthWidgetSimpleTemplateRaw from './DatesOfMonthWidgetSimple.template.tsx?raw';

@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
-import { getCurrentDate } from '#src/components/utils';
-import { CALENDAR_HEIGHT, CALENDAR_WIDTH, ruLocale } from '#src/components/calendarConstants';
-import type { TwentyYearsNavigationPanelWidgetProps } from '#src/components/TwentyYearsNavigationPanelWidget';
-import { TwentyYearsNavigationPanelWidget } from '#src/components/TwentyYearsNavigationPanelWidget';
-import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
-import { YEARS_ON_SCREEN } from '#src/components/YearsOfTwentyYearsWidget/constants.ts';
-import { MemoDefaultYearCell } from '#src/components/DefaultCell';
+import { getCurrentDate } from '#lib/utils';
+import { CALENDAR_HEIGHT, CALENDAR_WIDTH, ruLocale } from '#lib/calendarConstants';
+import type { TwentyYearsNavigationPanelWidgetProps } from '#lib/TwentyYearsNavigationPanelWidget';
+import { TwentyYearsNavigationPanelWidget } from '#lib/TwentyYearsNavigationPanelWidget';
+import { YearsOfTwentyYearsWidget } from '#lib/YearsOfTwentyYearsWidget';
+import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
+import { MemoDefaultYearCell } from '#lib/DefaultCell';
 
 const CalendarWrapper = styled.div`
   box-sizing: border-box;

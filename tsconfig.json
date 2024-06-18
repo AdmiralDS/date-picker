@@ -11,7 +11,8 @@
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
     "jsx": "react-jsx",
 
     /* Linting */
@@ -23,11 +24,13 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
+      "#lib/*": ["./lib/components/*"],
       "#src/*": ["./src/*"],
-      "@admiral-ds/date-picker": ["./src/index"]
+      "@admiral-ds/date-picker": ["./lib/index"]
     },
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals","vite-plugin-svgr/client","vite/client"]
   },
-  "include": ["./src"],
+  "include": ["src", "lib", "./.test"],
   "exclude": ["dist", "**/node_modules/*"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -16,8 +16,8 @@ import {
   disabledHolidayDateCellMixin,
   holidayDateCellMixin,
   selectedDateCellMixin,
-} from '#src/components/DefaultCell/mixins.tsx';
-import { DATE_CELL_HEIGHT, DATE_CELL_WIDTH } from '#src/components/DefaultCell/constants.ts';
+} from '#lib/DefaultCell/mixins.tsx';
+import { DATE_CELL_HEIGHT, DATE_CELL_WIDTH } from '#lib/DefaultCell/constants.ts';
 
 import { WrapperHorizontal } from '#src/stories/common.tsx';
 

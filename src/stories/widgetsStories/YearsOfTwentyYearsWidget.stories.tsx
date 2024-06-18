@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { YearsOfTwentyYearsWidget } from '#src/components/YearsOfTwentyYearsWidget';
+import { YearsOfTwentyYearsWidget } from '#lib/YearsOfTwentyYearsWidget';
 
 import { YearsOfTwentyYearsWidgetSimpleTemplate } from './YearsOfTwentyYearsWidgetSimple.template.tsx';
 import YearsOfTwentyYearsWidgetSimpleTemplateRaw from './YearsOfTwentyYearsWidgetSimple.template.tsx?raw';

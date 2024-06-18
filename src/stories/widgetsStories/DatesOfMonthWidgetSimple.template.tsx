@@ -6,13 +6,13 @@ import styled from 'styled-components';
 
 import { typography } from '@admiral-ds/react-ui';
 
-import { capitalizeFirstLetter, getCurrentDate } from '#src/components/utils';
-import { DatesOfMonthWidget } from '#src/components/DatesOfMonthWidget';
-import { DATES_OF_MONTH_WIDGET_WIDTH } from '#src/components/DatesOfMonthWidget/constants';
-import type { DatesOfMonthWidgetProps, CellStateProps } from '#src/components/DatesOfMonthWidget/interfaces';
-import { baseDayNameCellMixin } from '#src/components/DefaultCell/mixins.tsx';
-import { MemoDefaultDateCell } from '#src/components/DefaultCell';
-import { ruLocale } from '#src/components/calendarConstants.ts';
+import { capitalizeFirstLetter, getCurrentDate } from '#lib/utils';
+import { DatesOfMonthWidget } from '#lib/DatesOfMonthWidget';
+import { DATES_OF_MONTH_WIDGET_WIDTH } from '#lib/DatesOfMonthWidget/constants';
+import type { DatesOfMonthWidgetProps, CellStateProps } from '#lib/DatesOfMonthWidget/interfaces';
+import { baseDayNameCellMixin } from '#lib/DefaultCell/mixins.tsx';
+import { MemoDefaultDateCell } from '#lib/DefaultCell';
+import { ruLocale } from '#lib/calendarConstants.ts';
 
 const Wrapper = styled.div`
   display: flex;

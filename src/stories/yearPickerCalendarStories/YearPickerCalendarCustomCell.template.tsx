@@ -5,14 +5,14 @@ import { css } from 'styled-components';
 import { T } from '@admiral-ds/react-ui';
 import { DefaultCell, YearPickerCalendar } from '@admiral-ds/date-picker';
 import type { YearPickerCalendarProps, DefaultCellProps } from '@admiral-ds/date-picker';
-import { YEAR_CELL_HEIGHT, YEAR_CELL_WIDTH } from '#src/components/DefaultCell/constants.ts';
+import { YEAR_CELL_HEIGHT, YEAR_CELL_WIDTH } from '#lib/DefaultCell/constants.ts';
 import {
   baseYearCellMixin,
   currentYearCellMixin,
   disabledYearCellMixin,
   hiddenYearCellMixin,
   selectedYearCellMixin,
-} from '#src/components/DefaultCell/mixins.tsx';
+} from '#lib/DefaultCell/mixins.tsx';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 

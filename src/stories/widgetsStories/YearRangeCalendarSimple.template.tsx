@@ -1,7 +1,7 @@
 import type { MouseEventHandler } from 'react';
 
 import type { YearRangeCalendarProps } from '@admiral-ds/date-picker';
-import { YearRangeCalendar } from '#src/components/YearRangeCalendar';
+import { YearRangeCalendar } from '#lib/YearRangeCalendar';
 
 export const YearRangeCalendarSimpleTemplate = (props: YearRangeCalendarProps) => {
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
