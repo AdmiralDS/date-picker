@@ -17,32 +17,4 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
-  // build: {
-  //   copyPublicDir: false,
-  //   sourcemap: true,
-  //   // use vite library mode to build the package
-  //   // https://vitejs.dev/guide/build.html#library-mode
-  //   lib: {
-  //     entry: resolve(__dirname, 'src/index.ts'),
-  //     fileName: (format, entryName) => `${entryName}.${format}.js`,
-  //     formats: ['es'],
-  //   },
-  //   rollupOptions: {
-  //     // make sure to externalize deps that shouldn't be bundled
-  //     // into your library
-  //     external: [...Object.keys(pkg.peerDependencies || {}).map((dep) => new RegExp(dep))],
-  //     // input: ['./src/index.ts'],
-  //     // output: [
-  //     //   {
-  //     //     dir: 'dist',
-  //     //     entryFileNames: '[name].js',
-  //     //     format: 'es',
-  //     //     preserveModules: true,
-  //     //     preserveModulesRoot: 'src',
-  //     //     interop: 'auto',
-  //     //     assetFileNames: 'assets/[name][extname]',
-  //     //   },
-  //     // ],
-  //   },
-  // },
 });

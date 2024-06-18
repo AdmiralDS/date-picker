@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-// импорт из сорца обязателен для правильной генерации доки
-import { DatePicker } from '#lib/DatePicker';
+import { DatePicker } from '@admiral-ds/date-picker';
 import { DatePickerSimpleTemplate } from './DatePickerSimple.template.tsx';
 import DatePickerSimpleTemplateRaw from './DatePickerSimple.template.tsx?raw';
 
@@ -30,6 +29,7 @@ export default {
   },
 } as Meta<typeof DatePicker>;
 
+//типизация стори обязательна для правильной генерации доки
 type Story = StoryObj<typeof DatePicker>;
 
 export const DatePickerCalendarSimple: Story = {
