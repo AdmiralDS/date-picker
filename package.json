@@ -63,7 +63,8 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
     },
     "./*.json": "./*.json"
   },
@@ -105,5 +106,6 @@
   "sideEffects": [
     "**/*.css"
   ],
+  "main": "./dist/index.cjs.js",
   "types": "./dist/index.d.ts"
 }

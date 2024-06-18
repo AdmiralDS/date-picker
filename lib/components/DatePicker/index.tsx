@@ -93,8 +93,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       ref: refSetter(maskedDateInputRef, inputRef),
       value: inputValue,
       onInput: handleInput,
-      placeholder: 'Введите дату',
-      dataPlaceholder: 'дд.мм.гггг',
       onBlur: handleBlur,
       onFocus: handleFocus,
       tmpValue,

@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 // импорт из сорца обязателен для правильной генерации доки
 import { DatePicker } from '#lib/DatePicker';
 import { DatePickerSimpleTemplate } from './DatePickerSimple.template.tsx';
@@ -30,7 +30,9 @@ export default {
   },
 } as Meta<typeof DatePicker>;
 
-export const DatePickerCalendarSimple = {
+type Story = StoryObj<typeof DatePicker>;
+
+export const DatePickerCalendarSimple: Story = {
   render: DatePickerSimpleTemplate,
   parameters: {
     docs: {
@@ -40,6 +42,12 @@ export const DatePickerCalendarSimple = {
     },
   },
   name: 'Выбор даты',
+  args: {
+    inputProps: {
+      placeholder: 'Введите дату',
+      dataPlaceholder: 'дд.мм.гггг',
+    },
+  },
 };
 
 // const DatePickerCalendarWithHolidaysStory: StoryFn<typeof DatePickerCalendar> = (props) => {
