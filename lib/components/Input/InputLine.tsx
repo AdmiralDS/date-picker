@@ -46,10 +46,11 @@ const MaskBox = styled.div`
   right: 0;
 `;
 
-export type InputLineProps = {
+export type InputLineProps = JSX.IntrinsicElements['input'] & {
   dataPlaceholder?: string;
   tmpValue?: string;
-} & JSX.IntrinsicElements['input'];
+  value?: string;
+};
 
 export const InputLine = forwardRef<HTMLInputElement, InputLineProps>((props, ref) => {
   const { className, dataPlaceholder, tmpValue, ...inputProps } = props;

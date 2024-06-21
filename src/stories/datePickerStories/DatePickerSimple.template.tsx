@@ -1,14 +1,31 @@
 import { T } from '@admiral-ds/react-ui';
 import { DatePicker } from '@admiral-ds/date-picker';
+import { maskitoDateOptionsGenerator } from '@maskito/kit';
+import { useMaskito } from '@maskito/react';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
-import type { ComponentPropsWithoutRef } from 'react';
+import { useState, type ComponentPropsWithoutRef } from 'react';
 
-export const DatePickerSimpleTemplate = (props: ComponentPropsWithoutRef<typeof DatePicker>) => {
+const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
+
+export const DatePickerSimpleTemplate = ({
+  inputProps = {},
+  ...props
+}: ComponentPropsWithoutRef<typeof DatePicker>) => {
+  const [inputValue, setInputValue] = useState(inputProps.value);
+  const maskedDateInputRef = useMaskito({ options: dateOptions });
   return (
     <WrapperHorizontal>
       <WrapperVertical>
-        <DatePicker {...props} />
+        <DatePicker
+          {...props}
+          inputProps={{
+            ...inputProps,
+            value: inputValue,
+            onInput: (e) => setInputValue(e.currentTarget.value),
+            ref: maskedDateInputRef,
+          }}
+        />
       </WrapperVertical>
 
       <WrapperVertical>

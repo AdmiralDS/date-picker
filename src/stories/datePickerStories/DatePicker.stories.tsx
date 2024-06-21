@@ -13,27 +13,15 @@ export default {
       },
     },
   },
-  argTypes: {
-    dateValue: {
-      control: { type: 'text' },
-    },
-    defaultDateValue: {
-      control: { type: 'text' },
-    },
-    onDateValueChange: {
-      control: false,
-    },
-    locale: {
-      control: false,
-    },
-  },
+  argTypes: {},
 } as Meta<typeof DatePicker>;
 
 //типизация стори обязательна для правильной генерации доки
 type Story = StoryObj<typeof DatePicker>;
 
 export const DatePickerCalendarSimple: Story = {
-  render: DatePickerSimpleTemplate,
+  // обязательно для правильной работы хуков внутри темплейта
+  render: (props) => <DatePickerSimpleTemplate {...props} />,
   parameters: {
     docs: {
       source: {
@@ -46,6 +34,7 @@ export const DatePickerCalendarSimple: Story = {
     inputProps: {
       placeholder: 'Введите дату',
       dataPlaceholder: 'дд.мм.гггг',
+      value: '11.',
     },
   },
 };

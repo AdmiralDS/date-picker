@@ -1,10 +1,9 @@
-import type { ComponentProps, FormEventHandler, MouseEventHandler } from 'react';
-import { forwardRef, useRef, useState } from 'react';
-import { maskitoDateOptionsGenerator } from '@maskito/kit';
-import { useMaskito } from '@maskito/react';
+import type { ComponentProps, FocusEvent, MouseEventHandler, Ref } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 
-import { refSetter } from '@admiral-ds/react-ui';
+import { refSetter, changeInputData } from '@admiral-ds/react-ui';
 import { DatePickerCalendar } from '#lib/DatePickerCalendar';
+import type { InputBoxProps } from '#lib/Input/InputBox';
 import { InputBox } from '#lib/Input/InputBox';
 import type { InputLineProps } from '#lib/Input/InputLine';
 import { InputLine } from '#lib/Input/InputLine';
@@ -16,35 +15,24 @@ import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
-const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
-
 const Calendar = styled(DatePickerCalendar)`
   border: none;
   box-shadow: none;
 `;
 
-export type SizeProps = {
-  /** Размеры компонента */
-  'data-size'?: 's' | 'm' | 'xl';
-};
-
-export type DatePickerProps = ComponentProps<typeof InputBox> & {
-  /**
-   * Пропсы внутреннего инпута
-   */
+export type DatePickerProps = InputBoxProps & {
+  /** Пропсы внутреннего инпута */
   inputProps?: InputLineProps;
-} & SizeProps;
+};
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
   ({ inputProps = {}, ...containerProps }, refContainerProps) => {
-    const [inputValue, setInputValue] = useState('11.');
+    const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
     const [tmpValue, setTmpValue] = useState<string | undefined>();
     const [isFocused, setIsFocused] = useState(false);
     const inputBoxRef = useRef(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
-
-    const maskedDateInputRef = useMaskito({ options: dateOptions });
 
     const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
@@ -59,15 +47,17 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       setCalendarOpen(false);
     };
 
-    const handleBlur = () => {
+    const handleBlur = (e: FocusEvent<HTMLInputElement, Element>) => {
       setCalendarOpen(false);
       setIsFocused(false);
       setTmpValue(undefined);
+      inputProps.onBlur?.(e);
     };
 
-    const handleFocus = () => {
+    const handleFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
       setCalendarOpen(true);
       setIsFocused(true);
+      inputProps.onFocus?.(e);
     };
 
     const handleInputBoxMouseDown: MouseEventHandler<Element> = (e) => {
@@ -77,26 +67,58 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
     };
 
-    const handleInput: FormEventHandler<HTMLInputElement> = (e) => {
-      setInputValue(e.currentTarget.value);
-      setTmpValue(undefined);
-    };
-
     // TODO смержить с оригинальными обработчиками из пропсов
     const containerFinalProps: ComponentProps<typeof InputBox> = {
       ...containerProps,
       ref: refSetter(inputBoxRef, refContainerProps),
       onMouseDown: handleInputBoxMouseDown,
     };
+
+    useEffect(() => {
+      const inputNode = inputRef.current;
+      if (inputNode) {
+        changeInputData(inputRef.current, { value: inputValue });
+      }
+    }, [inputValue]);
+
+    useEffect(() => {
+      if (inputRef.current) {
+        const node = inputRef.current;
+        const { value } = node;
+        setInputValue(value);
+      }
+    }, [isCalendarOpen]);
+
+    useEffect(() => {
+      function oninput(this: HTMLInputElement) {
+        const { value } = this;
+        setInputValue(value);
+      }
+
+      if (inputRef.current) {
+        const node = inputRef.current;
+        node.addEventListener('input', oninput, true);
+
+        const { value } = node;
+        setInputValue(value);
+
+        return () => {
+          node.removeEventListener('input', oninput, true);
+        };
+      }
+    }, []);
+
+    const ref = inputProps.ref !== undefined ? refSetter(inputRef, inputProps.ref as Ref<HTMLInputElement>) : inputRef;
     const inputFinalProps: ComponentProps<typeof InputLine> = {
       ...inputProps,
-      ref: refSetter(maskedDateInputRef, inputRef),
-      value: inputValue,
-      onInput: handleInput,
+      ref,
       onBlur: handleBlur,
       onFocus: handleFocus,
       tmpValue,
     };
+
+    const date = dayjs(inputValue, 'DD.MM.YYYY');
+
     return (
       <InputBox {...containerFinalProps}>
         <InputLine {...inputFinalProps} />
@@ -104,8 +126,10 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         {isCalendarOpen && (
           <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto">
             <Calendar
-              selectedDateValue={dayjs(inputValue, 'DD.MM.YYYY')}
+              defaultDateValue={date.isValid() ? date : undefined}
+              selectedDateValue={date}
               onSelectedDateValueChange={handleSelectedDateValueChange}
+              activeDateValue={dayjs(tmpValue, 'DD.MM.YYYY')}
               onActiveDateValueChange={(date) => setTmpValue(date ? date.format('DD.MM.YYYY') : undefined)}
             />
           </PopoverPanel>

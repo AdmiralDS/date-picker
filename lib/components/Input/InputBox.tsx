@@ -1,9 +1,12 @@
 import type { ComponentProps } from 'react';
 import styled from 'styled-components';
 
-export type InputBoxProps = ComponentProps<'div'> & {
-  'data-size'?: 'xl' | 'm' | 's';
+export type SizeProps = {
+  /** Размеры компонента */
+  'data-size'?: 's' | 'm' | 'xl';
 };
+
+export type InputBoxProps = ComponentProps<'div'> & SizeProps;
 
 export const FocusBox = styled.div`
   cursor: text;
