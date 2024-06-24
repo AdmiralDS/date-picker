@@ -28,6 +28,7 @@ export type DatePickerProps = InputBoxProps & {
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
   ({ inputProps = {}, ...containerProps }, refContainerProps) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
+    const [displayDate, setDisplayDate] = useState(dayjs());
     const [tmpValue, setTmpValue] = useState<string | undefined>();
     const [isFocused, setIsFocused] = useState(false);
     const inputBoxRef = useRef(null);
@@ -92,6 +93,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     useEffect(() => {
       function oninput(this: HTMLInputElement) {
         const { value } = this;
+        setTmpValue(undefined);
         setInputValue(value);
       }
 
@@ -107,6 +109,13 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         };
       }
     }, []);
+
+    useEffect(() => {
+      const date = dayjs(inputValue, 'DD.MM.YYYY');
+      if (date.isValid()) {
+        setDisplayDate(date);
+      }
+    }, [inputValue]);
 
     const ref = inputProps.ref !== undefined ? refSetter(inputRef, inputProps.ref as Ref<HTMLInputElement>) : inputRef;
     const inputFinalProps: ComponentProps<typeof InputLine> = {
@@ -126,7 +135,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         {isCalendarOpen && (
           <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto">
             <Calendar
-              defaultDateValue={date.isValid() ? date : undefined}
+              dateValue={displayDate}
+              onDateValueChange={(day) => setDisplayDate(day)}
               selectedDateValue={date}
               onSelectedDateValueChange={handleSelectedDateValueChange}
               activeDateValue={dayjs(tmpValue, 'DD.MM.YYYY')}
