@@ -20,13 +20,22 @@ const Calendar = styled(DatePickerCalendar)`
   box-shadow: none;
 `;
 
+const defaultFormatter = (date: Dayjs) => date.format('DD.MM.YYYY');
+const defaultParcer = (date?: string) => dayjs(date, 'DD.MM.YYYY');
+
 export type DatePickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
   inputProps?: InputLineProps;
+
+  /** Функция для конвертации значение календаря в строку инпута */
+  format?: (date: Dayjs) => string;
+
+  /** Функция для конвертации строки инпута в значение календаря */
+  parce?: (date?: string) => Dayjs;
 };
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
-  ({ inputProps = {}, ...containerProps }, refContainerProps) => {
+  ({ inputProps = {}, format = defaultFormatter, parce = defaultParcer, ...containerProps }, refContainerProps) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
     const [displayDate, setDisplayDate] = useState(dayjs());
     const [tmpValue, setTmpValue] = useState<string | undefined>();
@@ -43,7 +52,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     };
 
     const handleSelectedDateValueChange = (date: Dayjs) => {
-      setInputValue(date.format('DD.MM.YYYY'));
+      setInputValue(format(date));
       setTmpValue(undefined);
       setCalendarOpen(false);
     };
@@ -111,7 +120,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     }, []);
 
     useEffect(() => {
-      const date = dayjs(inputValue, 'DD.MM.YYYY');
+      const date = parce(inputValue);
       if (date.isValid()) {
         setDisplayDate(date);
       }
@@ -126,7 +135,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       tmpValue,
     };
 
-    const date = dayjs(inputValue, 'DD.MM.YYYY');
+    const date = parce(inputValue);
 
     return (
       <InputBox {...containerFinalProps}>
@@ -139,8 +148,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
               onDateValueChange={(day) => setDisplayDate(day)}
               selectedDateValue={date}
               onSelectedDateValueChange={handleSelectedDateValueChange}
-              activeDateValue={dayjs(tmpValue, 'DD.MM.YYYY')}
-              onActiveDateValueChange={(date) => setTmpValue(date ? date.format('DD.MM.YYYY') : undefined)}
+              activeDateValue={parce(tmpValue)}
+              onActiveDateValueChange={(date) => setTmpValue(date ? format(date) : undefined)}
             />
           </PopoverPanel>
         )}
