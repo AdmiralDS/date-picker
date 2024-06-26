@@ -34,9 +34,13 @@ export const DateCalendar = ({
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
+  const [shouldHandleMouseOver, setShouldHandleMouseOver] = useState(false);
+
   const handleActiveDateChange = (date?: Dayjs) => {
     setActiveDateState(date);
-    onActiveDateValueChange?.(date);
+    if (shouldHandleMouseOver) {
+      onActiveDateValueChange?.(date);
+    }
   };
 
   const handleMouseOver: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -95,9 +99,13 @@ export const DateCalendar = ({
       active={activeDateInner}
       dateAttributes={dateAttributes}
       locale={locale}
+      onMouseEnter={(e) => {
+        setShouldHandleMouseOver(true);
+      }}
       onMouseLeave={handleMouseLeave}
       onMouseOver={handleMouseOver}
-      onMouseDown={handleDateClick}
+      onMouseDown={(e) => e.preventDefault()}
+      onMouseUp={handleDateClick}
       cell={cell || MemoDefaultDateCell}
     />
   );

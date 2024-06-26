@@ -39,6 +39,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
     const [displayDate, setDisplayDate] = useState(dayjs());
     const [tmpValue, setTmpValue] = useState<string | undefined>();
+    const [isTmpValueDisplayed, setTmpValueDisplayed] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     const inputBoxRef = useRef(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -52,15 +53,21 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     };
 
     const handleSelectedDateValueChange = (date: Dayjs) => {
-      setInputValue(format(date));
-      setTmpValue(undefined);
+      const formattedValue = format(date);
+      setInputValue(formattedValue);
+      setTmpValueDisplayed(false);
       setCalendarOpen(false);
+    };
+
+    const handleActiveDateValueChange = (date?: Dayjs) => {
+      setTmpValue(date ? format(date) : undefined);
+      setTmpValueDisplayed(!!date);
     };
 
     const handleBlur = (e: FocusEvent<HTMLInputElement, Element>) => {
       setCalendarOpen(false);
       setIsFocused(false);
-      setTmpValue(undefined);
+      setTmpValueDisplayed(false);
       inputProps.onBlur?.(e);
     };
 
@@ -87,12 +94,15 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     useEffect(() => {
       const inputNode = inputRef.current;
       if (inputNode) {
-        changeInputData(inputRef.current, { value: inputValue });
+        const { value } = inputNode;
+        if (inputValue !== value) {
+          changeInputData(inputRef.current, { value: inputValue });
+        }
       }
     }, [inputValue]);
 
     useEffect(() => {
-      if (inputRef.current) {
+      if (isCalendarOpen && inputRef.current) {
         const node = inputRef.current;
         const { value } = node;
         setInputValue(value);
@@ -102,27 +112,28 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     useEffect(() => {
       function oninput(this: HTMLInputElement) {
         const { value } = this;
-        setTmpValue(undefined);
-        setInputValue(value);
+        setTmpValueDisplayed(false);
+        if (value !== inputValue) {
+          setInputValue(value);
+          setCalendarOpen(true);
+        }
       }
 
       if (inputRef.current) {
         const node = inputRef.current;
         node.addEventListener('input', oninput, true);
-
-        const { value } = node;
-        setInputValue(value);
-
         return () => {
           node.removeEventListener('input', oninput, true);
         };
       }
-    }, []);
+    }, [inputValue]);
 
     useEffect(() => {
       const date = parce(inputValue);
       if (date.isValid()) {
         setDisplayDate(date);
+      } else if (!inputValue) {
+        setDisplayDate(dayjs());
       }
     }, [inputValue]);
 
@@ -132,7 +143,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       ref,
       onBlur: handleBlur,
       onFocus: handleFocus,
-      tmpValue,
+      tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
     };
 
     const date = parce(inputValue);
@@ -149,7 +160,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
               selectedDateValue={date}
               onSelectedDateValueChange={handleSelectedDateValueChange}
               activeDateValue={parce(tmpValue)}
-              onActiveDateValueChange={(date) => setTmpValue(date ? format(date) : undefined)}
+              onActiveDateValueChange={handleActiveDateValueChange}
             />
           </PopoverPanel>
         )}
