@@ -10,11 +10,11 @@
     "@maskito/core": "^2.5.0",
     "@maskito/kit": "^2.5.0",
     "@maskito/react": "^2.5.0",
-    "@storybook/addon-essentials": "^8.1.10",
-    "@storybook/blocks": "^8.1.10",
-    "@storybook/react": "^8.1.10",
-    "@storybook/react-vite": "^8.1.10",
-    "@storybook/test": "^8.1.10",
+    "@storybook/addon-essentials": "^8.1.11",
+    "@storybook/blocks": "^8.1.11",
+    "@storybook/react": "^8.1.11",
+    "@storybook/react-vite": "^8.1.11",
+    "@storybook/test": "^8.1.11",
     "@svgr/core": "^8.1.0",
     "@swc/plugin-styled-components": "^2.0.8",
     "@testing-library/jest-dom": "^6.4.6",
@@ -40,7 +40,7 @@
     "prettier": "^3.3.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "storybook": "^8.1.10",
+    "storybook": "^8.1.11",
     "storybook-dark-mode": "4.0.1",
     "styled-components": "^6.1.11",
     "typescript": "^5.5.2",
@@ -63,7 +63,7 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.es.js",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs.js"
     },
     "./*.json": "./*.json"

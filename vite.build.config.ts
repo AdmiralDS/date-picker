@@ -31,7 +31,7 @@ export default defineConfig({
     // https://vitejs.dev/guide/build.html#library-mode
     lib: {
       entry: resolve(__dirname, 'lib/index.ts'),
-      fileName: (format, entryName) => `${entryName}.${format}.js`,
+      fileName: (format, entryName) => (format === 'es' ? `${entryName}.js` : `${entryName}.${format}.js`),
       formats: ['es', 'cjs'],
     },
     rollupOptions: {

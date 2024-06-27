@@ -99,13 +99,10 @@ export const DateCalendar = ({
       active={activeDateInner}
       dateAttributes={dateAttributes}
       locale={locale}
-      onMouseEnter={(e) => {
-        setShouldHandleMouseOver(true);
-      }}
+      onMouseEnter={() => setShouldHandleMouseOver(true)}
       onMouseLeave={handleMouseLeave}
       onMouseOver={handleMouseOver}
-      onMouseDown={(e) => e.preventDefault()}
-      onMouseUp={handleDateClick}
+      onMouseDown={handleDateClick}
       cell={cell || MemoDefaultDateCell}
     />
   );

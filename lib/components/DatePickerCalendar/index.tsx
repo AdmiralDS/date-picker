@@ -35,7 +35,6 @@ export const DatePickerCalendar = ({
   style,
   ...props
 }: DatePickerCalendarProps) => {
-  //<editor-fold desc="Calendar view mode">
   const [viewModeState, setViewModeState] = useState<CalendarViewMode>(defaultViewModeValue || 'dates');
   const viewModeInner = viewModeValue || viewModeState;
 
@@ -43,7 +42,8 @@ export const DatePickerCalendar = ({
     setViewModeState(mode);
     onViewModeChange?.(mode);
   };
-  //</editor-fold>
+
+  //<editor-fold desc="Date shown on calendar">
 
   //<editor-fold desc="Date shown on calendar">
   const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale?.localeName));
@@ -53,7 +53,8 @@ export const DatePickerCalendar = ({
     setDateState(date);
     onDateValueChange?.(date);
   };
-  //</editor-fold>
+
+  //<editor-fold desc="Selected date">
 
   //<editor-fold desc="Selected date">
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
@@ -63,7 +64,6 @@ export const DatePickerCalendar = ({
     setSelectedDateState(date);
     onSelectedDateValueChange?.(date);
   };
-  //</editor-fold>
 
   const handleDateClick = (date: Dayjs) => {
     handleSelectedDateChange(date);

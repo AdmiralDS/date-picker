@@ -1,4 +1,4 @@
-import type { ComponentProps, FocusEvent, MouseEventHandler, Ref } from 'react';
+import type { ComponentProps, FocusEvent, KeyboardEventHandler, MouseEventHandler, Ref } from 'react';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 
 import { refSetter, changeInputData } from '@admiral-ds/react-ui';
@@ -14,6 +14,7 @@ import { PopoverPanel } from '#lib/PopoverPanel';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
+import { CalendarViewMode } from '#lib/calendarInterfaces.js';
 
 const Calendar = styled(DatePickerCalendar)`
   border: none;
@@ -44,6 +45,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const inputBoxRef = useRef(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
+    const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('dates');
 
     const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
@@ -53,15 +55,27 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     };
 
     const handleSelectedDateValueChange = (date: Dayjs) => {
-      const formattedValue = format(date);
-      setInputValue(formattedValue);
-      setTmpValueDisplayed(false);
-      setCalendarOpen(false);
+      if (calendarViewMode === 'dates') {
+        const formattedValue = format(date);
+        setInputValue(formattedValue);
+        setTmpValueDisplayed(false);
+        setCalendarOpen(false);
+      }
     };
 
     const handleActiveDateValueChange = (date?: Dayjs) => {
       setTmpValue(date ? format(date) : undefined);
-      setTmpValueDisplayed(!!date);
+      if (calendarViewMode === 'dates') {
+        setTmpValueDisplayed(!!date);
+      }
+    };
+
+    const handleCalendarViewModeChange = (view: CalendarViewMode) => {
+      setCalendarViewMode(view);
+      if (view !== 'dates') {
+        setTmpValue(undefined);
+        setTmpValueDisplayed(false);
+      }
     };
 
     const handleBlur = (e: FocusEvent<HTMLInputElement, Element>) => {
@@ -84,6 +98,16 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
     };
 
+    const handleInputKeyDown: KeyboardEventHandler<Element> = (e) => {
+      if (e.key === 'Enter' && isCalendarOpen) {
+        e.preventDefault();
+        setCalendarOpen(false);
+        if (isTmpValueDisplayed && tmpValue) {
+          setInputValue(tmpValue);
+          setTmpValueDisplayed(false);
+        }
+      }
+    };
     // TODO смержить с оригинальными обработчиками из пропсов
     const containerFinalProps: ComponentProps<typeof InputBox> = {
       ...containerProps,
@@ -150,11 +174,12 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
     return (
       <InputBox {...containerFinalProps}>
-        <InputLine {...inputFinalProps} />
+        <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} />
         <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
         {isCalendarOpen && (
           <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto">
             <Calendar
+              onViewModeChange={handleCalendarViewModeChange}
               dateValue={displayDate}
               onDateValueChange={(day) => setDisplayDate(day)}
               selectedDateValue={date}
