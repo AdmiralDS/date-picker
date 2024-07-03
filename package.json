@@ -1,12 +1,15 @@
 {
   "name": "@admiral-ds/date-picker",
-  "version": "0.0.4",
+  "description": "Admiral DS DatePicker",
+  "version": "0.0.1",
   "author": "Admiral DS team",
-  "repository": "https://github.com/AdmiralDS/date-picker",
-  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AdmiralDS/date-picker"
+  },
   "devDependencies": {
     "@admiral-ds/icons": "^4.3.1",
-    "@admiral-ds/react-ui": "^8.4.7",
+    "@admiral-ds/react-ui": "^8.5.0",
     "@maskito/core": "^2.5.0",
     "@maskito/kit": "^2.5.0",
     "@maskito/react": "^2.5.0",
@@ -16,14 +19,14 @@
     "@storybook/react-vite": "^8.1.11",
     "@storybook/test": "^8.1.11",
     "@svgr/core": "^8.1.0",
-    "@swc/plugin-styled-components": "^2.0.8",
+    "@swc/plugin-styled-components": "^2.0.9",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^15.0.7",
     "@types/node": "^20.14.9",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.14.1",
-    "@typescript-eslint/parser": "^7.14.1",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "dayjs": "^1.11.11",
@@ -43,8 +46,8 @@
     "storybook": "^8.1.11",
     "storybook-dark-mode": "4.0.1",
     "styled-components": "^6.1.11",
-    "typescript": "^5.5.2",
-    "vite": "^5.3.1",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.3",
     "vite-plugin-dts": "^3.9.1",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^4.3.2",
@@ -60,28 +63,23 @@
     "@maskito/kit": "^2.4.0",
     "@maskito/react": "^2.4.0"
   },
+  "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs.js"
-    },
-    "./*.json": "./*.json"
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.js"
+    }
   },
   "bugs": {
     "url": "https://github.com/AdmiralDS/date-picker/issues"
   },
-  "description": "Admiral DS DatePicker",
   "files": [
     "dist",
     "lib",
     "tsconfig.json",
-    "tsconfig.node.json"
+    "tsconfig.node.json",
+    "LICENSE"
   ],
-  "imports": {
-    "#src/*": "./src/*",
-    "#lib/*": "./lib/components/*"
-  },
   "keywords": [
     "AdmiralDS",
     "Admiral",
@@ -106,6 +104,6 @@
   "sideEffects": [
     "**/*.css"
   ],
-  "main": "./dist/index.cjs.js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts"
 }

@@ -20,17 +20,16 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true,
+    /*"esModuleInterop": true, */
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
       "#lib/*": ["./lib/components/*"],
       "#src/*": ["./src/*"],
-      "@admiral-ds/date-picker": ["./lib/index"]
+      "@admiral-ds/date-picker": ["./lib/main"]
     },
     "types": ["vitest/globals","vite-plugin-svgr/client","vite/client"]
   },
   "include": ["src", "lib", "./.test"],
-  "exclude": ["dist", "**/node_modules/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

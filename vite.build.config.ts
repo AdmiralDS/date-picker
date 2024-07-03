@@ -30,9 +30,8 @@ export default defineConfig({
     // use vite library mode to build the package
     // https://vitejs.dev/guide/build.html#library-mode
     lib: {
-      entry: resolve(__dirname, 'lib/index.ts'),
-      fileName: (format, entryName) => (format === 'es' ? `${entryName}.js` : `${entryName}.${format}.js`),
-      formats: ['es', 'cjs'],
+      entry: resolve(__dirname, 'lib/main.ts'),
+      formats: ['es'],
     },
     rollupOptions: {
       external: [...Object.keys(pkg.peerDependencies || {}), 'react/jsx-runtime'],
@@ -40,6 +39,7 @@ export default defineConfig({
         preserveModules: true,
         preserveModulesRoot: 'lib',
         interop: 'auto',
+        entryFileNames: '[name].js',
       },
     },
   },

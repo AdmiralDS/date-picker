@@ -1,6 +1,8 @@
 import type { ComponentProps, FocusEvent, KeyboardEventHandler, MouseEventHandler, Ref } from 'react';
 import { forwardRef, useEffect, useRef, useState } from 'react';
-
+import styled from 'styled-components';
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { refSetter, changeInputData } from '@admiral-ds/react-ui';
 import { DatePickerCalendar } from '#lib/DatePickerCalendar';
 import type { InputBoxProps } from '#lib/Input/InputBox';
@@ -9,12 +11,8 @@ import type { InputLineProps } from '#lib/Input/InputLine';
 import { InputLine } from '#lib/Input/InputLine';
 import { InputIconButton } from '#lib/InputIconButton';
 import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
-
 import { PopoverPanel } from '#lib/PopoverPanel';
-import styled from 'styled-components';
-import type { Dayjs } from 'dayjs';
-import dayjs from 'dayjs';
-import { CalendarViewMode } from '#lib/calendarInterfaces.js';
+import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
 
 const Calendar = styled(DatePickerCalendar)`
   border: none;
@@ -35,6 +33,9 @@ export type DatePickerProps = InputBoxProps & {
   parce?: (date?: string) => Dayjs;
 };
 
+/**
+ * Компонент DatePicker
+ */
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
   ({ inputProps = {}, format = defaultFormatter, parce = defaultParcer, ...containerProps }, refContainerProps) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
@@ -193,3 +194,4 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     );
   },
 );
+DatePicker.displayName = 'DatePicker';

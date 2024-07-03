@@ -166,7 +166,6 @@ exports[`MonthPickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
             data-cell-type="monthCell"
-            data-is-current-month="true"
             data-value="Sat, 01 Jun 2024 09:00:00 GMT"
           >
             <div
@@ -176,7 +175,7 @@ exports[`MonthPickerCalendar > should render component 1`] = `
               class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kFwVgf"
+              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
             >
               Июнь
             </div>
@@ -184,6 +183,7 @@ exports[`MonthPickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
             data-cell-type="monthCell"
+            data-is-current-month="true"
             data-value="Mon, 01 Jul 2024 09:00:00 GMT"
           >
             <div
@@ -193,7 +193,7 @@ exports[`MonthPickerCalendar > should render component 1`] = `
               class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-c8867fbd-3 kFwVgf"
             >
               Июль
             </div>
