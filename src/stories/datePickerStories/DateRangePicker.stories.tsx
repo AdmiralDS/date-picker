@@ -36,5 +36,6 @@ export const DatePickerCalendarSimple: Story = {
       dataPlaceholder: 'дд.мм.гггг - дд.мм.гггг',
       value: '11.',
     },
+    separator: ' – ',
   },
 };

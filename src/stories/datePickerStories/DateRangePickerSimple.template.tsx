@@ -4,15 +4,17 @@ import { maskitoDateRangeOptionsGenerator } from '@maskito/kit';
 import { useMaskito } from '@maskito/react';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
-import { useState, type ComponentPropsWithoutRef } from 'react';
-
-const dateOptions = maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy' });
+import { useState, useMemo, type ComponentPropsWithoutRef } from 'react';
 
 export const DateRangePickerSimpleTemplate = ({
   inputProps = {},
   ...props
 }: ComponentPropsWithoutRef<typeof DateRangePicker>) => {
   const [inputValue, setInputValue] = useState(inputProps.value);
+  const dateOptions = useMemo(
+    () => maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy', rangeSeparator: props.separator }),
+    [props.separator],
+  );
   const maskedDateInputRef = useMaskito({ options: dateOptions });
   return (
     <WrapperHorizontal>

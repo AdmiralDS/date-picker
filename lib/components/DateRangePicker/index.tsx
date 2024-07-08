@@ -18,10 +18,7 @@ const Calendar = styled(DateRangePickerCalendar)`
   border: none;
   box-shadow: none;
 `;
-const MultipleInputContainer = styled.div`
-  display: flex;
-  overflow: hidden;
-`;
+
 const defaultFormatter = (date?: Dayjs) => (date ? date.format('DD.MM.YYYY') : '');
 const defaultParcer = (date?: string) => dayjs(date, 'DD.MM.YYYY');
 
@@ -34,13 +31,18 @@ export type DateRangePickerProps = InputBoxProps & {
 
   /** Функция для конвертации строки инпута в значение календаря */
   parce?: (date?: string) => Dayjs | undefined;
+
+  separator?: string;
 };
 
 /**
  * Компонент DateRangePicker
  */
 export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
-  ({ inputProps = {}, format = defaultFormatter, parce = defaultParcer, ...containerProps }, refContainerProps) => {
+  (
+    { inputProps = {}, separator = ' – ', format = defaultFormatter, parce = defaultParcer, ...containerProps },
+    refContainerProps,
+  ) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
     const [displayDate, setDisplayDate] = useState(dayjs());
     const [tmpValue, setTmpValue] = useState<string | undefined>();
@@ -59,12 +61,13 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     };
 
     const handleSelectedDateValueChange = (dateRange: readonly [Dayjs | undefined, Dayjs | undefined]) => {
+      console.log(`handleSelectedDateValueChange: ${dateRange}`);
       const [dayStart, dayEnd] = dateRange;
       if (calendarViewMode === 'dates') {
-        const formattedValue = `${format(dayStart)} - ${format(dayEnd)}`;
+        const formattedValue = `${format(dayStart)}${separator}${format(dayEnd)}`;
         setInputValue(formattedValue);
         setTmpValueDisplayed(false);
-        setCalendarOpen(false);
+        if (dayEnd) setCalendarOpen(false);
       }
     };
 
@@ -175,17 +178,16 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
     };
 
-    const date = inputValue ? inputValue.split(' - ').map(parce) : [];
+    const date = inputValue ? inputValue.split(separator).map(parce) : [];
 
     return (
       <InputBox {...containerFinalProps}>
-        <MultipleInputContainer>
-          <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} />
-        </MultipleInputContainer>
+        <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} />
         <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
         {isCalendarOpen && (
           <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto">
             <Calendar
+              onMouseDown={(e) => e.preventDefault()}
               onViewModeChange={handleCalendarViewModeChange}
               dateValue={displayDate}
               onDateValueChange={(day) => setDisplayDate(day)}
