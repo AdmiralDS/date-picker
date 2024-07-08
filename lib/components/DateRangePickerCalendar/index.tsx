@@ -57,10 +57,12 @@ export const DateRangePickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Selected range">
-  const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
+  const [selectedDateRangeState, setSelectedDateRangeState] = useState<readonly [Dayjs | undefined, Dayjs | undefined]>(
+    defaultSelectedDateRangeValue ?? [undefined, undefined],
+  );
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
 
-  const handleSelectedDateRangeChange = (dateRange: [Dayjs | undefined, Dayjs | undefined]) => {
+  const handleSelectedDateRangeChange = (dateRange: readonly [Dayjs | undefined, Dayjs | undefined]) => {
     setSelectedDateRangeState(dateRange);
     onSelectedDateRangeValueChange?.(dateRange);
   };

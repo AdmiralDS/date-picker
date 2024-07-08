@@ -74,11 +74,11 @@ export interface SingleCalendarProps extends CalendarProps {
 
 export interface RangeCalendarProps extends CalendarProps {
   /** Выбранное значение диапазона дат */
-  selectedDateRangeValue?: [Dayjs | undefined, Dayjs | undefined];
+  selectedDateRangeValue?: readonly [Dayjs | undefined, Dayjs | undefined];
   /** Выбранное значение диапазона дат по умолчанию */
   defaultSelectedDateRangeValue?: [Dayjs | undefined, Dayjs | undefined];
   /** Коллбэк на изменение выбранного диапазона дат */
-  onSelectedDateRangeValueChange?: (dateRange: [Dayjs | undefined, Dayjs | undefined]) => void;
+  onSelectedDateRangeValueChange?: (dateRange: readonly [Dayjs | undefined, Dayjs | undefined]) => void;
 
   /** Значение активного конца диапазона дат */
   activeDateRangeEndValue?: Dayjs;

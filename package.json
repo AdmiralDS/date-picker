@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@admiral-ds/icons": "^4.3.1",
-    "@admiral-ds/react-ui": "^8.5.0",
+    "@admiral-ds/react-ui": "^8.6.0",
     "@maskito/core": "^2.5.0",
     "@maskito/kit": "^2.5.0",
     "@maskito/react": "^2.5.0",
@@ -22,7 +22,7 @@
     "@swc/plugin-styled-components": "^2.0.9",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^15.0.7",
-    "@types/node": "^20.14.9",
+    "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.15.0",
