@@ -22,3 +22,4 @@ export * from './components/DatePicker';
 export * from './components/Input';
 export * from './components/InputIconButton';
 export * from './components/DateRangePicker';
+export * from './components/Calendar';
