@@ -14,6 +14,7 @@ import {
 } from '#lib/calendarStyle.ts';
 import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
+import type { DateRange } from 'lib/types';
 
 export interface MonthRangeDoublePickerCalendarProps
   extends Omit<
@@ -102,7 +103,7 @@ export const MonthRangeDoublePickerCalendar = ({
   const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
 
-  const handleSelectedDateRangeChange = (dateRange: [Dayjs | undefined, Dayjs | undefined]) => {
+  const handleSelectedDateRangeChange = (dateRange: DateRange) => {
     setSelectedDateRangeState(dateRange);
     onSelectedDateRangeValueChange?.(dateRange);
   };

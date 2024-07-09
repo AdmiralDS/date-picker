@@ -34,7 +34,6 @@ export const DateRangePickerCalendar = ({
   locale = ruLocale,
   prevButtonProps,
   nextButtonProps,
-  onMouseDown,
   ...props
 }: DateRangePickerCalendarProps) => {
   //<editor-fold desc="Calendar view mode">
@@ -131,7 +130,7 @@ export const DateRangePickerCalendar = ({
   const selectedRangeEnd = getSelectedRangeEnd();
 
   return (
-    <SinglePickerCalendarWrapper onMouseDown={onMouseDown}>
+    <SinglePickerCalendarWrapper>
       <MonthNavigationPanelWidget
         date={dateInner}
         viewMode={viewModeInner}

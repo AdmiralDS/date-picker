@@ -185,9 +185,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} />
         <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
         {isCalendarOpen && (
-          <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto">
+          <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto" onMouseDown={(e) => e.preventDefault()}>
             <Calendar
-              onMouseDown={(e) => e.preventDefault()}
               onViewModeChange={handleCalendarViewModeChange}
               dateValue={displayDate}
               onDateValueChange={(day) => setDisplayDate(day)}

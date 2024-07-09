@@ -15,6 +15,7 @@ import {
 } from '#lib/calendarStyle.ts';
 import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
+import type { DateRange } from 'lib/types';
 
 export interface DateRangeDoublePickerCalendarProps
   extends Omit<
@@ -100,10 +101,12 @@ export const DateRangeDoublePickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Selected range">
-  const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
+  const [selectedDateRangeState, setSelectedDateRangeState] = useState<DateRange>(
+    defaultSelectedDateRangeValue ?? [undefined, undefined],
+  );
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
 
-  const handleSelectedDateRangeChange = (dateRange: [Dayjs | undefined, Dayjs | undefined]) => {
+  const handleSelectedDateRangeChange = (dateRange: readonly [Dayjs | undefined, Dayjs | undefined]) => {
     setSelectedDateRangeState(dateRange);
     onSelectedDateRangeValueChange?.(dateRange);
   };

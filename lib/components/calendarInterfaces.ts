@@ -3,6 +3,7 @@ import type { Dayjs } from 'dayjs';
 
 import type { DateAttributes, DefaultCellProps } from '#lib/DefaultCell';
 import type { ArrowButtonProps } from '#lib/widgetInterfaces.ts';
+import type { DateRange } from 'lib/types';
 
 export type CalendarViewMode = 'dates' | 'months' | 'years';
 
@@ -74,11 +75,11 @@ export interface SingleCalendarProps extends CalendarProps {
 
 export interface RangeCalendarProps extends CalendarProps {
   /** Выбранное значение диапазона дат */
-  selectedDateRangeValue?: readonly [Dayjs | undefined, Dayjs | undefined];
+  selectedDateRangeValue?: DateRange;
   /** Выбранное значение диапазона дат по умолчанию */
-  defaultSelectedDateRangeValue?: [Dayjs | undefined, Dayjs | undefined];
+  defaultSelectedDateRangeValue?: DateRange;
   /** Коллбэк на изменение выбранного диапазона дат */
-  onSelectedDateRangeValueChange?: (dateRange: readonly [Dayjs | undefined, Dayjs | undefined]) => void;
+  onSelectedDateRangeValueChange?: (dateRange: DateRange) => void;
 
   /** Значение активного конца диапазона дат */
   activeDateRangeEndValue?: Dayjs;

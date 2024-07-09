@@ -33,7 +33,7 @@ export const DatePickerCalendarSimple: Story = {
   args: {
     inputProps: {
       placeholder: 'Введите интервал дат',
-      dataPlaceholder: 'дд.мм.гггг - дд.мм.гггг',
+      dataPlaceholder: 'дд.мм.гггг – дд.мм.гггг',
       value: '11.',
     },
     separator: ' – ',

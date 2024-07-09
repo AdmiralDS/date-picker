@@ -8,6 +8,7 @@ import { TwentyYearsNavigationPanelWidget } from '#lib/TwentyYearsNavigationPane
 import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
 import { CalendarContainer, SinglePickerCalendarWrapper, YearRangeCalendarView } from '#lib/calendarStyle.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
+import type { DateRange } from 'lib/types';
 
 export interface YearRangePickerCalendarProps
   extends Omit<
@@ -43,7 +44,7 @@ export const YearRangePickerCalendar = ({
   const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
 
-  const handleSelectedDateRangeChange = (dateRange: [Dayjs | undefined, Dayjs | undefined]) => {
+  const handleSelectedDateRangeChange = (dateRange: DateRange) => {
     setSelectedDateRangeState(dateRange);
     onSelectedDateRangeValueChange?.(dateRange);
   };
