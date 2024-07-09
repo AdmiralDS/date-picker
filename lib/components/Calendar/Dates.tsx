@@ -17,6 +17,7 @@ import {
 } from '#lib/utils';
 import { DATES_ON_SCREEN, DATES_WRAPPER_HEIGHT } from '#lib/DatesOfMonthWidget/constants';
 import { ruLocale } from '#lib/calendarConstants.ts';
+import { MemoDefaultDateCell } from '#lib/DefaultCell';
 import type { DateAttributes } from '#lib/DefaultCell';
 import type { CalendarLocaleProps, DateCellProps } from '#lib/calendarInterfaces';
 import { addOrSubstractDays, firstDayOfTheMonth, mondayOfTheWeek } from 'lib/dateUtils';
@@ -37,7 +38,7 @@ export interface DatesProps extends HTMLAttributes<HTMLDivElement> {
   active?: Dayjs;
   activeRangeEnd?: Dayjs;
   dateAttributes?: (currentDate: Dayjs) => DateAttributes;
-  cell: FunctionComponent<DateCellProps>;
+  cell?: FunctionComponent<DateCellProps>;
   locale?: CalendarLocaleProps;
   range?: boolean;
 }
@@ -48,13 +49,11 @@ export const Dates = ({
   active,
   activeRangeEnd,
   dateAttributes,
-  cell,
+  cell = MemoDefaultDateCell,
   locale = ruLocale,
   range = false,
   ...props
 }: DatesProps) => {
-  // const firstDate = setNoon(dateInner.locale(locale?.localeName).startOf('month').startOf('week'));
-
   const firstOfMonthDate = firstDayOfTheMonth(displayMonthTimestamp);
   const firstDate = mondayOfTheWeek(firstOfMonthDate.getTime());
 

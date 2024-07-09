@@ -30,7 +30,7 @@ export interface CalendarComponentProps extends HTMLAttributes<HTMLDivElement> {
   active?: Dayjs;
   activeRangeEnd?: Dayjs;
   dateAttributes?: (currentDate: Dayjs) => DateAttributes;
-  cell: FunctionComponent<DateCellProps>;
+  cell?: FunctionComponent<DateCellProps>;
   locale?: CalendarLocaleProps;
   range?: boolean;
 }

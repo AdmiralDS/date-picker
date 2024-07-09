@@ -9,7 +9,6 @@ import { typography } from '@admiral-ds/react-ui';
 import { capitalizeFirstLetter, getCurrentDate } from '#lib/utils';
 import { Calendar } from '@admiral-ds/date-picker';
 import { DATES_OF_MONTH_WIDGET_WIDTH } from '#lib/DatesOfMonthWidget/constants';
-import { MemoDefaultDateCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
 
 const Wrapper = styled.div`
@@ -75,7 +74,6 @@ export const CalendarSimpleTemplate = ({ locale = ruLocale, ...props }: Componen
         selected={selectedDate}
         active={activeDateInner}
         locale={locale}
-        cell={MemoDefaultDateCell}
         onMouseLeave={handleMouseLeave}
         onMouseOver={handleMouseOver}
         onClick={handleDateClick}
