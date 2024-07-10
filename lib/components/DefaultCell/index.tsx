@@ -131,8 +131,11 @@ export interface CellProps extends HTMLAttributes<HTMLDivElement>, DateAttribute
   /** Высота ячейки */
   height: number;
 
-  /** Дата в формате string для аттрибута data-value */
-  dateValue: string;
+  /** Дата в формате string для аттрибута data-date */
+  formattedDate?: string;
+
+  /** timestamp для data-value */
+  dateValue: string | number;
   /** Данные для отображения в ячейке (дата, месяц или год в необходимом формате) */
   cellContent?: ReactNode;
   cellMixin: RuleSet<object>;
@@ -208,6 +211,7 @@ const rightHalfIsVisible = (
 
 export const DefaultCell = ({
   dateValue,
+  formattedDate,
   width,
   height,
   cellMixin,
@@ -247,11 +251,15 @@ export const DefaultCell = ({
     !!isRangeSelectingStart,
     !!isRangeSelectingEnd,
   );
+  if (hidden) {
+    props.onClick = (e) => e.stopPropagation();
+  }
   return (
     <CellContainer
       $width={width}
       $height={height}
       data-value={dateValue}
+      data-date={formattedDate}
       data-selected-cell={selected ? true : undefined}
       data-disabled-cell={disabled ? true : undefined}
       data-hidden-cell={hidden ? true : undefined}

@@ -26,18 +26,18 @@ const getDayNameCellState = () => cellMixin;
 export interface CalendarComponentProps extends HTMLAttributes<HTMLDivElement> {
   /** timestamp задает дату календаря для отображения месяца, по умолчанию отображается текущий месяц */
   displayMonthTimestamp?: number;
-  selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined];
-  active?: Dayjs;
+  selectedTimestamp?: number;
+  activeTimestamp?: number;
   activeRangeEnd?: Dayjs;
-  dateAttributes?: (currentDate: Dayjs) => DateAttributes;
+  dateAttributes?: (currentDateTimestamp: number) => DateAttributes;
   cell?: FunctionComponent<DateCellProps>;
   locale?: CalendarLocaleProps;
   range?: boolean;
 }
 
 export const Calendar = ({
-  selected,
-  active,
+  selectedTimestamp,
+  activeTimestamp,
   activeRangeEnd,
   dateAttributes,
   locale = ruLocale,
@@ -51,13 +51,12 @@ export const Calendar = ({
       <Days locale={locale?.localeName} dayNameCellState={getDayNameCellState} />
       <Dates
         displayMonthTimestamp={displayMonthTimestamp}
-        selected={selected}
-        active={active}
+        selectedTimestamp={selectedTimestamp}
+        activeTimestamp={activeTimestamp}
         activeRangeEnd={activeRangeEnd}
         dateAttributes={dateAttributes}
         cell={cell}
         data-container-type="datesWrapper"
-        locale={locale}
         range={range}
       />
     </DatesOfMonthWrapper>

@@ -42,3 +42,30 @@ export function addOrSubstractDays(timestamp: number, n: number) {
   someDate.setHours(24 * n);
   return someDate;
 }
+/**
+ * Проверяет две даты на то что они находятся в одном календарном дне для текущей таймзоны
+ * @param oneTimestamp милисекунды, прошедшие с 1 января 1970 года 00:00:00 по UTC.
+ * @param anotherTimestamp милисекунды, прошедшие с 1 января 1970 года 00:00:00 по UTC.
+ * @returns true если обе даты находятся в одном календарном дне для текущей таймзоны
+ */
+export function isInTheSameCalendarDay(oneTimestamp: number, anotherTimestamp: number) {
+  const oneDate = new Date(oneTimestamp);
+  const anotherDate = new Date(anotherTimestamp);
+  return (
+    oneDate.getDate() === anotherDate.getDate() &&
+    oneDate.getMonth() === anotherDate.getMonth() &&
+    oneDate.getFullYear() === anotherDate.getFullYear()
+  );
+}
+
+/**
+ * Проверяет две даты на то что они находятся в одном календарном месяце для текущей таймзоны
+ * @param oneTimestamp милисекунды, прошедшие с 1 января 1970 года 00:00:00 по UTC.
+ * @param anotherTimestamp милисекунды, прошедшие с 1 января 1970 года 00:00:00 по UTC.
+ * @returns true если обе даты находятся в одном календарном месяце для текущей таймзоны
+ */
+export function isInTheSameCalendarMonth(oneTimestamp: number, anotherTimestamp: number) {
+  const oneDate = new Date(oneTimestamp);
+  const anotherDate = new Date(anotherTimestamp);
+  return oneDate.getMonth() === anotherDate.getMonth() && oneDate.getFullYear() === anotherDate.getFullYear();
+}

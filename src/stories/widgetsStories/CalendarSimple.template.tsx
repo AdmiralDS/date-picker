@@ -1,82 +1,66 @@
 import type { ComponentPropsWithoutRef, MouseEventHandler } from 'react';
 import { useState } from 'react';
-import dayjs from 'dayjs';
-import type { Dayjs } from 'dayjs';
 import styled from 'styled-components';
-
-import { typography } from '@admiral-ds/react-ui';
-
-import { capitalizeFirstLetter, getCurrentDate } from '#lib/utils';
 import { Calendar } from '@admiral-ds/date-picker';
-import { DATES_OF_MONTH_WIDGET_WIDTH } from '#lib/DatesOfMonthWidget/constants';
 import { ruLocale } from '#lib/calendarConstants.ts';
+import { addOrSubstractDays } from 'lib/dateUtils';
 
 const Wrapper = styled.div`
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   align-content: space-between;
-  padding: 10px;
-  width: ${DATES_OF_MONTH_WIDGET_WIDTH}px;
-  border: 1px ${(p) => p.theme.color['Neutral/Neutral 90']} solid;
-`;
-const MonthYear = styled.div`
-  margin-bottom: 10px;
-  ${typography['Subtitle/Subtitle 2']}
+  border: 1px ${(p) => p.theme.color['Neutral/Neutral 20']} dashed;
+  border-radius: 8px;
 `;
 
+function getDateCellAttributeValues(element: HTMLElement) {
+  const isDateCell = element.dataset['cellType'] === 'dateCell';
+  const disabled = element.dataset['disabled'] === 'true' || element.dataset['hiddenCell'] === 'true';
+  const timestampString = element.dataset['value'];
+  const timestamp = timestampString ? Number.parseInt(timestampString) : undefined;
+  const dateString = element.dataset['date'];
+
+  return {
+    isDateCell,
+    disabled,
+    timestamp,
+    dateString,
+  };
+}
 export const CalendarSimpleTemplate = ({ locale = ruLocale, ...props }: ComponentPropsWithoutRef<typeof Calendar>) => {
-  const localeInner = locale?.localeName || 'ru';
-  const dateInner = getCurrentDate(localeInner);
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(localeInner).add(1, 'day'));
+  const [selectedTimestamp, setSelectedDate] = useState<number | undefined>(
+    addOrSubstractDays(Date.now(), 1).getTime(),
+  );
+
+  const [activeTimestamp, setactiveTimestamp] = useState<number | undefined>();
 
   const handleDateClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    const targetDataAttributes = (e.target as HTMLDivElement).dataset;
-    if (targetDataAttributes['cellType'] !== 'dateCell') {
-      return;
+    const cellData = getDateCellAttributeValues(e.target as HTMLElement);
+    if (cellData.isDateCell && !cellData.disabled) {
+      const newTimestamp = cellData.timestamp;
+      setSelectedDate((timestamp) => (timestamp !== newTimestamp ? newTimestamp : undefined));
     }
-    const date = dayjs(targetDataAttributes['value']).locale(localeInner);
-    const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
-    if (!disabled) {
-      setSelectedDate(date);
-    }
-  };
-
-  const [activeDateInner, setActiveDateInner] = useState<Dayjs>();
-
-  const handleActiveDateChange = (date?: Dayjs) => {
-    setActiveDateInner(date);
   };
 
   const handleMouseOver: MouseEventHandler<HTMLDivElement> = (e) => {
-    const targetDataAttributes = (e.target as HTMLDivElement).dataset;
-    if (targetDataAttributes['cellType'] !== 'dateCell') {
-      return;
-    }
-    const date = dayjs(targetDataAttributes['value']).locale(localeInner);
-    console.log(`hiddenCell-${targetDataAttributes['hiddenCell']}`);
-    const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
-    if (!disabled && !date.isSame(activeDateInner)) {
-      handleActiveDateChange(date);
-    }
+    const cellData = getDateCellAttributeValues(e.target as HTMLElement);
+    setactiveTimestamp(cellData.timestamp);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (_) => {
-    handleActiveDateChange(undefined);
+  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
+    setactiveTimestamp(undefined);
   };
 
   return (
     <Wrapper>
-      <MonthYear>Дата: {capitalizeFirstLetter(dateInner.format('D MMMM YYYY'))}</MonthYear>
       <Calendar
         {...props}
-        selected={selectedDate}
-        active={activeDateInner}
-        locale={locale}
+        selectedTimestamp={selectedTimestamp}
+        activeTimestamp={activeTimestamp}
+        onClick={handleDateClick}
         onMouseLeave={handleMouseLeave}
         onMouseOver={handleMouseOver}
-        onClick={handleDateClick}
       />
     </Wrapper>
   );
