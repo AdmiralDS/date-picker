@@ -2,8 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { Calendar } from '@admiral-ds/date-picker';
 
-import { CalendarSimpleTemplate } from './CalendarSimple.template.tsx';
-import CalendarSimpleTemplateRaw from './CalendarSimple.template.tsx?raw';
+import { CalendarDateSelectionTemplate } from './CalendarDateSelection.template.tsx';
+import CalendarDateSelectionTemplateRaw from './CalendarDateSelection.template?raw';
+
+import { CalendarRangeSelectionTemplate } from './CalendarRangeSelection.template.tsx';
+import CalendarRangeSelectionTemplateRaw from './CalendarRangeSelection.template?raw';
 
 export default {
   title: 'Admiral-2.1/Widgets/Calendar',
@@ -18,15 +21,28 @@ export default {
   argTypes: {},
 } as Meta<typeof Calendar>;
 
-export const DatesOfMonthWidgetSimple: StoryObj<typeof Calendar> = {
-  render: (props) => <CalendarSimpleTemplate {...props} />,
+export const CalendarDateSelectionStory: StoryObj<typeof Calendar> = {
+  render: (props) => <CalendarDateSelectionTemplate {...props} />,
 
   parameters: {
     docs: {
       source: {
-        code: CalendarSimpleTemplateRaw,
+        code: CalendarDateSelectionTemplateRaw,
       },
     },
   },
-  name: 'CalendarSimple',
+  name: 'Calendar выбор даты',
+};
+
+export const CalendarRangeSelectionStory: StoryObj<typeof Calendar> = {
+  render: (props) => <CalendarRangeSelectionTemplate {...props} />,
+
+  parameters: {
+    docs: {
+      source: {
+        code: CalendarRangeSelectionTemplateRaw,
+      },
+    },
+  },
+  name: 'Calendar выбор отрезка времени',
 };

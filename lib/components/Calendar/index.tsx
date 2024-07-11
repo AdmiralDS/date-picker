@@ -8,9 +8,8 @@ import { Days } from './Days';
 import { Dates } from './Dates';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { FunctionComponent, HTMLAttributes } from 'react';
-import type { Dayjs } from 'dayjs';
 import type { DateAttributes } from '#lib/DefaultCell';
-import type { CalendarLocaleProps, DateCellProps } from '#lib/calendarInterfaces';
+import type { CalendarLocaleProps, DateCellProps, DateRangeTimestamp, Timestamp } from '#lib/calendarInterfaces';
 import { baseDayNameCellMixin } from '#lib/DefaultCell/mixins';
 
 const DatesOfMonthWrapper = styled.div`
@@ -25,24 +24,22 @@ const getDayNameCellState = () => cellMixin;
 
 export interface CalendarComponentProps extends HTMLAttributes<HTMLDivElement> {
   /** timestamp задает дату календаря для отображения месяца, по умолчанию отображается текущий месяц */
-  displayMonthTimestamp?: number;
-  selectedTimestamp?: number;
-  activeTimestamp?: number;
-  activeRangeEnd?: Dayjs;
-  dateAttributes?: (currentDateTimestamp: number) => DateAttributes;
+  displayMonthTimestamp?: Timestamp;
+  selectedTimestamp?: Timestamp;
+  selectedRangeTimestamp?: DateRangeTimestamp;
+  activeTimestamp?: Timestamp;
+  dateAttributes?: (currentDateTimestamp: Timestamp) => DateAttributes;
   cell?: FunctionComponent<DateCellProps>;
   locale?: CalendarLocaleProps;
-  range?: boolean;
 }
 
 export const Calendar = ({
   selectedTimestamp,
+  selectedRangeTimestamp,
   activeTimestamp,
-  activeRangeEnd,
   dateAttributes,
   locale = ruLocale,
   cell,
-  range,
   displayMonthTimestamp = Date.now(),
   ...props
 }: CalendarComponentProps) => {
@@ -52,12 +49,11 @@ export const Calendar = ({
       <Dates
         displayMonthTimestamp={displayMonthTimestamp}
         selectedTimestamp={selectedTimestamp}
+        selectedRangeTimestamp={selectedRangeTimestamp}
         activeTimestamp={activeTimestamp}
-        activeRangeEnd={activeRangeEnd}
         dateAttributes={dateAttributes}
         cell={cell}
         data-container-type="datesWrapper"
-        range={range}
       />
     </DatesOfMonthWrapper>
   );

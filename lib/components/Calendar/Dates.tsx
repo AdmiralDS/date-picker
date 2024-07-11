@@ -1,29 +1,16 @@
 import type { FunctionComponent, HTMLAttributes } from 'react';
 import { createElement, useMemo } from 'react';
 import styled from 'styled-components';
-import type { Dayjs } from 'dayjs';
-import dayjs from 'dayjs';
-
-import {
-  dateIsInRange,
-  dateIsInRangeSelecting,
-  dateIsRangeEnd,
-  dateIsRangeSelectingEnd,
-  dateIsRangeSelectingStart,
-  dateIsRangeStart,
-  dateIsSelected,
-  getSelectedDate,
-  getSelectedDateRange,
-} from '#lib/utils';
 import { DATES_ON_SCREEN, DATES_WRAPPER_HEIGHT } from '#lib/DatesOfMonthWidget/constants';
 import { MemoDefaultDateCell } from '#lib/DefaultCell';
 import type { DateAttributes } from '#lib/DefaultCell';
-import type { CalendarLocaleProps, DateCellProps } from '#lib/calendarInterfaces';
+import type { DateCellProps, DateRangeTimestamp, Timestamp } from '#lib/calendarInterfaces';
 import {
   addOrSubstractDays,
   firstDayOfTheMonth,
   isInTheSameCalendarDay,
   isInTheSameCalendarMonth,
+  midnightOfTheDate,
   mondayOfTheWeek,
 } from 'lib/dateUtils';
 import { defaultTimestampFormatter } from './defaultTimestampFormatter';
@@ -40,14 +27,16 @@ export function generateCalendarDataCellList(
   initialDateTimestamp: number,
   formatter: (timestamp: number) => string,
 ): CalendarDataCell[] {
+  const start = midnightOfTheDate(initialDateTimestamp).getTime();
   return Array.from(Array(DATES_ON_SCREEN).keys()).map((n) => {
-    const date = addOrSubstractDays(initialDateTimestamp, n);
+    const date = addOrSubstractDays(start, n);
     return {
       timestamp: date.getTime(),
       formattedDate: formatter(date.getTime()),
       dateOfMonth: date.getDate(),
       month: date.getMonth(),
       year: date.getFullYear(),
+      dayOfTheWeek: date.getDay(),
     };
   });
 }
@@ -60,41 +49,64 @@ export function defaultDateAttributes(): DateAttributes {
   };
 }
 
+/** Меняет местами концы отрезка, если они в не естественном порядке и приводит время к полночи в текущей временной зоне */
+export function normalizeTimestampRange(timestampRange: DateRangeTimestamp): DateRangeTimestamp {
+  const [start, end] = timestampRange.map((timestamp) => midnightOfTheDate(timestamp).getTime());
+  if (start > end) {
+    return [end, start];
+  }
+  return [start, end];
+}
+
 export type CalendarDataCell = {
   /** Милисекунды, прошедшие с 1 января 1970 года 00:00:00 по UTC для данного
    * числа месяца и время установлено на полночь в текущей таймзоне */
   timestamp: number;
+
   /** Дата в отформатированном виде */
   formattedDate: string;
+
   /** Число месяца */
   dateOfMonth: number;
+
   /** Месяц в году, 0 - январь, 11 - декабрь */
   month: number;
+
   /** Год */
   year: number;
+
+  /** день недели, где воскресенье = 0, понедельник = 1 */
+  dayOfTheWeek: number;
 };
 
 export interface DatesProps extends HTMLAttributes<HTMLDivElement> {
   /** timestamp задает дату календаря для отображения месяца */
-  displayMonthTimestamp?: number;
-  selectedTimestamp?: number;
-  activeTimestamp?: number;
-  activeRangeEnd?: Dayjs;
-  dateAttributes?: (currentDateTimestamp: number) => DateAttributes;
+  displayMonthTimestamp?: Timestamp;
+
+  /** Задает выбранную дату */
+  selectedTimestamp?: Timestamp;
+
+  /** Задает выбранный интервал */
+  selectedRangeTimestamp?: DateRangeTimestamp;
+
+  activeTimestamp?: Timestamp;
+
+  dateAttributes?: (date: Timestamp) => DateAttributes;
+
   cell?: FunctionComponent<DateCellProps>;
-  range?: boolean;
+
   /** Форматтер в необходимое представление строки */
-  formatter?: (timestamp: number) => string;
+  formatter?: (date: Timestamp) => string;
 }
 
 export const Dates = ({
   displayMonthTimestamp = Date.now(),
   selectedTimestamp,
+  selectedRangeTimestamp,
   activeTimestamp,
-  activeRangeEnd,
   dateAttributes = defaultDateAttributes,
   cell = MemoDefaultDateCell,
-  range,
+
   formatter = defaultTimestampFormatter,
   ...props
 }: DatesProps) => {
@@ -104,7 +116,7 @@ export const Dates = ({
     return generateCalendarDataCellList(firstDate.getTime(), formatter);
   }, [displayMonthTimestamp, formatter]);
 
-  const cellModel = cellDataList.map(({ timestamp, formattedDate, dateOfMonth }) => {
+  const cellModel = cellDataList.map(({ timestamp, formattedDate, dateOfMonth, dayOfTheWeek }) => {
     const { hidden, disabled, isHoliday } = dateAttributes(timestamp);
 
     const isCurrent = isInTheSameCalendarDay(timestamp, Date.now());
@@ -113,53 +125,49 @@ export const Dates = ({
     const cellContent = dateOfMonth;
     const isOutsideMonth = !isInTheSameCalendarMonth(timestamp, displayMonthTimestamp);
 
-    const date = dayjs(timestamp);
-    // if (range) {
-    //   const selectedDateRange = getSelectedDateRange(selected);
-    //   const isInRange = dateIsInRange('date', date, selectedDateRange);
-    //   const isRangeStart = dateIsRangeStart('date', date, selectedDateRange);
-    //   const isRangeEnd = dateIsRangeEnd('date', date, selectedDateRange);
-    //   const isInRangeSelecting = dateIsInRangeSelecting('date', date, dayjs(activeTimestamp), activeRangeEnd);
-    //   const isRangeSelectingStart = dateIsRangeSelectingStart(
-    //     'date',
-    //     date,
-    //     dayjs(activeTimestamp),
-    //     activeRangeEnd,
-    //     disabled,
-    //   );
-    //   const isRangeSelectingEnd = dateIsRangeSelectingEnd(
-    //     'date',
-    //     date,
-    //     dayjs(activeTimestamp),
-    //     activeRangeEnd,
-    //     disabled,
-    //   );
-    //   const isStartOfRow = date.isSame(date.startOf('week'), 'date') || date.isSame(date.startOf('month'), 'date');
-    //   const isEndOfRow = date.isSame(date.endOf('week'), 'date') || date.isSame(date.endOf('month'), 'date');
-    //   return {
-    //     dateValue: timestamp,
-    //     formattedDate,
-    //     key: formattedDate,
-    //     cellContent,
-    //     selected: dateIsSelected('date', date, selectedDateRange),
-    //     isActive,
-    //     isCurrent,
-    //     isOutsideMonth,
+    if (selectedRangeTimestamp) {
+      const [startRangeTimestamp, endRangeTimestamp] = normalizeTimestampRange(selectedRangeTimestamp);
 
-    //     disabled,
-    //     hidden: hidden || isOutsideMonth,
-    //     isHoliday,
+      const isInRange = timestamp > startRangeTimestamp && timestamp < endRangeTimestamp;
+      const isRangeStart = timestamp == startRangeTimestamp;
+      const isRangeEnd = timestamp == endRangeTimestamp;
 
-    //     isInRange,
-    //     isRangeStart,
-    //     isRangeEnd,
-    //     isInRangeSelecting,
-    //     isRangeSelectingStart,
-    //     isRangeSelectingEnd,
-    //     isStartOfRow,
-    //     isEndOfRow,
-    //   };
-    // }
+      const isInRangeSelecting =
+        activeTimestamp && !disabled && !hidden ? isInRange && activeTimestamp == timestamp : false;
+
+      const isRangeSelectingStart =
+        activeTimestamp && !disabled && !hidden ? isRangeStart && activeTimestamp == timestamp : false;
+
+      const isRangeSelectingEnd =
+        activeTimestamp && !disabled && !hidden ? isRangeEnd && activeTimestamp == timestamp : false;
+
+      const isStartOfRow = dayOfTheWeek === 1;
+      const isEndOfRow = dayOfTheWeek === 0;
+
+      return {
+        dateValue: timestamp,
+        formattedDate,
+        key: formattedDate,
+        cellContent,
+        selected: isRangeStart || isRangeEnd,
+        isActive,
+        isCurrent,
+        isOutsideMonth,
+
+        disabled,
+        hidden: hidden || isOutsideMonth,
+        isHoliday,
+
+        isInRange,
+        isRangeStart,
+        isRangeEnd,
+        isInRangeSelecting,
+        isRangeSelectingStart,
+        isRangeSelectingEnd,
+        isStartOfRow,
+        isEndOfRow,
+      };
+    }
 
     return {
       dateValue: timestamp,
