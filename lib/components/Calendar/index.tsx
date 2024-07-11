@@ -9,7 +9,7 @@ import { Dates } from './Dates';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { FunctionComponent, HTMLAttributes } from 'react';
 import type { DateAttributes } from '#lib/DefaultCell';
-import type { CalendarLocaleProps, DateCellProps, DateRangeTimestamp, Timestamp } from '#lib/calendarInterfaces';
+import type { CalendarLocaleProps, DateCellProps, RangeTimestamp, Timestamp } from '#lib/calendarInterfaces';
 import { baseDayNameCellMixin } from '#lib/DefaultCell/mixins';
 
 const DatesOfMonthWrapper = styled.div`
@@ -26,7 +26,7 @@ export interface CalendarComponentProps extends HTMLAttributes<HTMLDivElement> {
   /** timestamp задает дату календаря для отображения месяца, по умолчанию отображается текущий месяц */
   displayMonthTimestamp?: Timestamp;
   selectedTimestamp?: Timestamp;
-  selectedRangeTimestamp?: DateRangeTimestamp;
+  selectedRangeTimestamp?: RangeTimestamp;
   activeTimestamp?: Timestamp;
   dateAttributes?: (currentDateTimestamp: Timestamp) => DateAttributes;
   cell?: FunctionComponent<DateCellProps>;

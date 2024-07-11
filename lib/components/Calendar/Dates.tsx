@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { DATES_ON_SCREEN, DATES_WRAPPER_HEIGHT } from '#lib/DatesOfMonthWidget/constants';
 import { MemoDefaultDateCell } from '#lib/DefaultCell';
 import type { DateAttributes } from '#lib/DefaultCell';
-import type { DateCellProps, DateRangeTimestamp, Timestamp } from '#lib/calendarInterfaces';
+import type { DateCellProps, RangeTimestamp, Timestamp } from '#lib/calendarInterfaces';
 import {
   addOrSubstractDays,
   firstDayOfTheMonth,
@@ -50,7 +50,7 @@ export function defaultDateAttributes(): DateAttributes {
 }
 
 /** Меняет местами концы отрезка, если они в не естественном порядке и приводит время к полночи в текущей временной зоне */
-export function normalizeTimestampRange(timestampRange: DateRangeTimestamp): DateRangeTimestamp {
+export function normalizeTimestampRange(timestampRange: RangeTimestamp): RangeTimestamp {
   const [start, end] = timestampRange.map((timestamp) => midnightOfTheDate(timestamp).getTime());
   if (start > end) {
     return [end, start];
@@ -87,7 +87,7 @@ export interface DatesProps extends HTMLAttributes<HTMLDivElement> {
   selectedTimestamp?: Timestamp;
 
   /** Задает выбранный интервал */
-  selectedRangeTimestamp?: DateRangeTimestamp;
+  selectedRangeTimestamp?: RangeTimestamp;
 
   activeTimestamp?: Timestamp;
 

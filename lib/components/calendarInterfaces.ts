@@ -8,7 +8,7 @@ import type { DateRange } from 'lib/types';
 export type CalendarViewMode = 'dates' | 'months' | 'years';
 
 export type Timestamp = number;
-export type DateRangeTimestamp = readonly [Timestamp, Timestamp];
+export type RangeTimestamp = readonly [Timestamp, Timestamp];
 
 export interface CalendarLocaleProps {
   /** Название локали */

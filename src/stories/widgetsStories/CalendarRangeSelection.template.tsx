@@ -1,7 +1,7 @@
 import type { ComponentPropsWithoutRef, MouseEventHandler } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
-import type { DateRangeTimestamp, Timestamp } from '@admiral-ds/date-picker';
+import type { RangeTimestamp, Timestamp } from '@admiral-ds/date-picker';
 import { Calendar, MemoDefaultDateRangeCell } from '@admiral-ds/date-picker';
 
 const Wrapper = styled.div`
@@ -29,29 +29,46 @@ function getDateCellAttributeValues(element: HTMLElement) {
 }
 
 export const CalendarRangeSelectionTemplate = ({ ...props }: ComponentPropsWithoutRef<typeof Calendar>) => {
-  const [selectedRangeTimestamp, setSelectedRange] = useState<DateRangeTimestamp | undefined>();
+  const [selectedRange, setSelectedRange] = useState<RangeTimestamp | undefined>();
+  const [togle, setTogle] = useState(true);
   const [current, setCurrent] = useState<'start' | 'end' | 'none'>('none');
-  const [activeTimestamp, setactiveTimestamp] = useState<Timestamp | undefined>();
+  const [active, setActive] = useState<Timestamp | undefined>();
 
   const handleDateClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const cellData = getDateCellAttributeValues(e.target as HTMLElement);
     if (cellData.isDateCell && !cellData.disabled && cellData.timestamp) {
       const newTimestamp = cellData.timestamp;
       if (current == 'none') {
-        if (!selectedRangeTimestamp) {
+        if (!selectedRange) {
           setSelectedRange([newTimestamp, newTimestamp]);
           setCurrent('end');
+          setActive(undefined);
         } else {
-          if (newTimestamp > selectedRangeTimestamp[0] && newTimestamp < selectedRangeTimestamp[1]) {
-            setSelectedRange(undefined);
-          } else if (newTimestamp >= selectedRangeTimestamp[1]) {
-            setCurrent('end');
-            setSelectedRange([selectedRangeTimestamp[0], newTimestamp]);
-          } else {
+          if (newTimestamp == selectedRange[0]) {
+            setSelectedRange([newTimestamp, selectedRange[1]]);
             setCurrent('start');
-            setSelectedRange([newTimestamp, selectedRangeTimestamp[1]]);
+            setTogle(false);
+            setActive(newTimestamp);
+          } else if (newTimestamp == selectedRange[1]) {
+            setSelectedRange([selectedRange[0], newTimestamp]);
+            setCurrent('end');
+            setTogle(true);
+            setActive(newTimestamp);
+          } else if (newTimestamp > selectedRange[1]) {
+            setSelectedRange([selectedRange[0], newTimestamp]);
+            setActive(undefined);
+          } else if (newTimestamp < selectedRange[0]) {
+            setSelectedRange([newTimestamp, selectedRange[1]]);
+            setActive(undefined);
+          } else {
+            if (togle) {
+              setSelectedRange([newTimestamp, selectedRange[1]]);
+            } else {
+              setSelectedRange([selectedRange[0], newTimestamp]);
+            }
+            setTogle((c) => !c);
+            setActive(undefined);
           }
-          setactiveTimestamp(newTimestamp);
         }
       } else {
         if (current == 'end') {
@@ -61,7 +78,8 @@ export const CalendarRangeSelectionTemplate = ({ ...props }: ComponentPropsWitho
           setSelectedRange((range) => (range ? [newTimestamp, range[1]] : [newTimestamp, newTimestamp]));
         }
         setCurrent('none');
-        setactiveTimestamp(undefined);
+        setTogle(true);
+        setActive(undefined);
       }
     }
   };
@@ -69,7 +87,7 @@ export const CalendarRangeSelectionTemplate = ({ ...props }: ComponentPropsWitho
   const handleMouseOver: MouseEventHandler<HTMLDivElement> = (e) => {
     const cellData = getDateCellAttributeValues(e.target as HTMLElement);
     const newTimestamp = cellData.timestamp;
-    setactiveTimestamp(newTimestamp);
+    setActive(newTimestamp);
     if (newTimestamp) {
       switch (current) {
         case 'start':
@@ -81,26 +99,23 @@ export const CalendarRangeSelectionTemplate = ({ ...props }: ComponentPropsWitho
           break;
 
         case 'none':
-          if (
-            selectedRangeTimestamp &&
-            (newTimestamp === selectedRangeTimestamp[0] || newTimestamp === selectedRangeTimestamp[1])
-          ) {
-            setactiveTimestamp(undefined);
+          if (selectedRange && (newTimestamp === selectedRange[0] || newTimestamp === selectedRange[1])) {
+            setActive(undefined);
           }
       }
     }
   };
 
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
-    setactiveTimestamp(undefined);
+    setActive(undefined);
   };
 
   return (
     <Wrapper>
       <Calendar
         {...props}
-        selectedRangeTimestamp={selectedRangeTimestamp}
-        activeTimestamp={activeTimestamp}
+        selectedRangeTimestamp={selectedRange}
+        activeTimestamp={active}
         onClick={handleDateClick}
         onMouseLeave={handleMouseLeave}
         onMouseOver={handleMouseOver}

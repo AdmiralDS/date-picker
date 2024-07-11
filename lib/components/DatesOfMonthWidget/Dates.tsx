@@ -96,7 +96,7 @@ export const Dates = ({
       isHoliday,
     };
   });
-  console.dir(cellModel);
+
   const cells = cellModel.map((model) => {
     return createElement(cell, model);
   });
