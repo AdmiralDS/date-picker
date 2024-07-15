@@ -1,8 +1,7 @@
 import type { ComponentPropsWithoutRef, MouseEventHandler } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Calendar } from '@admiral-ds/date-picker';
-import { addOrSubstractDays } from 'lib/dateUtils';
+import { Calendar, addOrSubstractDays } from '@admiral-ds/date-picker';
 
 const Wrapper = styled.div`
   display: inline-flex;

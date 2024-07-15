@@ -2,7 +2,7 @@ import { resolve } from 'node:path';
 import { existsSync, readdirSync, rmSync } from 'node:fs';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import pkg from './package.json';
 import dts from 'vite-plugin-dts';
@@ -12,7 +12,11 @@ emptyDir(resolve(__dirname, 'dist'));
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react({ plugins: [['@swc/plugin-styled-components', {}]] }),
+    react({
+      babel: {
+        plugins: [['styled-components', { displayName: true }]],
+      },
+    }),
     svgr({
       svgrOptions: {
         dimensions: false,
@@ -34,7 +38,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: [...Object.keys(pkg.peerDependencies || {}), 'react/jsx-runtime'],
+      external: Object.keys(pkg.peerDependencies || {}).map((dep) => new RegExp(`^${dep}`, 'i')),
       output: {
         preserveModules: true,
         preserveModulesRoot: 'lib',

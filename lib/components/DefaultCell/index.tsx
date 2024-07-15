@@ -444,6 +444,7 @@ export const DefaultDateRangeCell = ({ isCurrent, isHoliday, ...props }: Default
     />
   );
 };
+
 export const MemoDefaultDateRangeCell = memo(DefaultDateRangeCell);
 
 const getDefaultMonthCellMixin = (

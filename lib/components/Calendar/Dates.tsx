@@ -12,7 +12,7 @@ import {
   isInTheSameCalendarMonth,
   midnightOfTheDate,
   mondayOfTheWeek,
-} from 'lib/dateUtils';
+} from 'lib/dateTimestampUtils';
 import { defaultTimestampFormatter } from './defaultTimestampFormatter';
 
 const DatesWrapper = styled.div`
@@ -27,7 +27,10 @@ export function generateCalendarDataCellList(
   initialDateTimestamp: number,
   formatter: (timestamp: number) => string,
 ): CalendarDataCell[] {
-  const start = midnightOfTheDate(initialDateTimestamp).getTime();
+  const firstOfMonthDate = firstDayOfTheMonth(initialDateTimestamp);
+  const firstDateOfweek = mondayOfTheWeek(firstOfMonthDate.getTime());
+  const startDate = midnightOfTheDate(firstDateOfweek.getTime());
+  const start = startDate.getTime();
   return Array.from(Array(DATES_ON_SCREEN).keys()).map((n) => {
     const date = addOrSubstractDays(start, n);
     return {
@@ -37,6 +40,7 @@ export function generateCalendarDataCellList(
       month: date.getMonth(),
       year: date.getFullYear(),
       dayOfTheWeek: date.getDay(),
+      hidden: date.getMonth() !== firstOfMonthDate.getMonth(),
     };
   });
 }
@@ -77,6 +81,9 @@ export type CalendarDataCell = {
 
   /** день недели, где воскресенье = 0, понедельник = 1 */
   dayOfTheWeek: number;
+
+  /** Должен ли присутствовать в данном сете дат, true = не должен */
+  hidden: boolean;
 };
 
 export interface DatesProps extends HTMLAttributes<HTMLDivElement> {
@@ -183,13 +190,9 @@ export const Dates = ({
     };
   });
 
-  const cells = cellModel.map((model) => {
-    return createElement(cell, model);
-  });
-
   return (
     <DatesWrapper {...props} data-container-type="datesWrapper">
-      {cells}
+      {cellModel.map((model) => createElement(cell, model))}
     </DatesWrapper>
   );
 };

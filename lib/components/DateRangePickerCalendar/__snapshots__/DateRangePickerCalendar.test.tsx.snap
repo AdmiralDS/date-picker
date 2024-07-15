@@ -3,10 +3,10 @@
 exports[`DateRangePickerCalendar > should render component 1`] = `
 <div>
   <div
-    class="calendarStyle__SinglePickerCalendarWrapper-sc-7d70703f-0 kCOhSv"
+    class="calendarStyle__SinglePickerCalendarWrapper-sc-1gbkw52-0 jcbJlq"
   >
     <div
-      class="MonthNavigationPanelWidget__MonthNavigationPanelWrapper-sc-a408e63b-0 lijjDq"
+      class="MonthNavigationPanelWidget__MonthNavigationPanelWrapper-sc-1btz6n2-0 kjgkaS"
     >
       <button
         class="sc-dAlxHm iZWNbA"
@@ -35,16 +35,16 @@ exports[`DateRangePickerCalendar > should render component 1`] = `
         </div>
       </button>
       <div
-        class="MonthNavigationPanelWidget__MonthYearWrapper-sc-a408e63b-1 cplKAj"
+        class="MonthNavigationPanelWidget__MonthYearWrapper-sc-1btz6n2-1 fJBGPL"
       >
         <div
-          class="MonthNavigationPanelWidget__TextWrapper-sc-a408e63b-2 iMVGjY"
+          class="MonthNavigationPanelWidget__TextWrapper-sc-1btz6n2-2 jeyTOE"
           data-panel-target-type="month"
         >
           Июль
         </div>
         <div
-          class="MonthNavigationPanelWidget__TextWrapper-sc-a408e63b-2 iMVGjY"
+          class="MonthNavigationPanelWidget__TextWrapper-sc-1btz6n2-2 jeyTOE"
           data-panel-target-type="year"
         >
           2024
@@ -78,59 +78,59 @@ exports[`DateRangePickerCalendar > should render component 1`] = `
       </button>
     </div>
     <div
-      class="calendarStyle__CalendarContainer-sc-7d70703f-3 jiKbWQ"
+      class="calendarStyle__CalendarContainer-sc-1gbkw52-3 idbZKZ"
     >
       <div
-        class="DatesOfMonthWidget__DatesOfMonthWrapper-sc-651be138-0 dLvVCX calendarStyle__DateRangeCalendarView-sc-7d70703f-4 inwkiK"
+        class="DatesOfMonthWidget__DatesOfMonthWrapper-sc-skcpn8-0 hvHoGd calendarStyle__DateRangeCalendarView-sc-1gbkw52-4 kgRCkf"
         data-container-type="datesOfMonthWrapper"
       >
         <div
-          class="Days__DayNamesWrapper-sc-cf20c94f-0 kZwLHW"
+          class="Days__DayNamesWrapper-sc-1ag7z1q-0 gtUSvD"
         >
           <div
-            class="Days__DayNameCell-sc-cf20c94f-1 ehCMQh"
+            class="Days__DayNameCell-sc-1ag7z1q-1 irNPGk"
             data-cell-type="dayCell"
             data-value="пн"
           >
             Пн
           </div>
           <div
-            class="Days__DayNameCell-sc-cf20c94f-1 ehCMQh"
+            class="Days__DayNameCell-sc-1ag7z1q-1 irNPGk"
             data-cell-type="dayCell"
             data-value="вт"
           >
             Вт
           </div>
           <div
-            class="Days__DayNameCell-sc-cf20c94f-1 ehCMQh"
+            class="Days__DayNameCell-sc-1ag7z1q-1 irNPGk"
             data-cell-type="dayCell"
             data-value="ср"
           >
             Ср
           </div>
           <div
-            class="Days__DayNameCell-sc-cf20c94f-1 ehCMQh"
+            class="Days__DayNameCell-sc-1ag7z1q-1 irNPGk"
             data-cell-type="dayCell"
             data-value="чт"
           >
             Чт
           </div>
           <div
-            class="Days__DayNameCell-sc-cf20c94f-1 ehCMQh"
+            class="Days__DayNameCell-sc-1ag7z1q-1 irNPGk"
             data-cell-type="dayCell"
             data-value="пт"
           >
             Пт
           </div>
           <div
-            class="Days__DayNameCell-sc-cf20c94f-1 ehCMQh"
+            class="Days__DayNameCell-sc-1ag7z1q-1 irNPGk"
             data-cell-type="dayCell"
             data-value="сб"
           >
             Сб
           </div>
           <div
-            class="Days__DayNameCell-sc-cf20c94f-1 ehCMQh"
+            class="Days__DayNameCell-sc-1ag7z1q-1 irNPGk"
             data-cell-type="dayCell"
             data-value="вс"
           >
@@ -138,549 +138,549 @@ exports[`DateRangePickerCalendar > should render component 1`] = `
           </div>
         </div>
         <div
-          class="Dates__DatesWrapper-sc-4ccc9e10-0 dwLnEE"
+          class="Dates__DatesWrapper-sc-pn1zsz-0 dOmTJe"
           data-container-type="datesWrapper"
         >
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-is-start-of-week-cell="true"
             data-value="2024-07-01"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 ljjaNw"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 bIyXHs"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               1
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-02"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               2
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
-            data-is-current-day-cell="true"
             data-value="2024-07-03"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 fhhufO"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               3
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-04"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               4
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-05"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               5
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-06"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               6
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-is-end-of-week-cell="true"
             data-value="2024-07-07"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 jfnsJf"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 hGbcHb"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               7
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-is-start-of-week-cell="true"
             data-value="2024-07-08"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 ljjaNw"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 bIyXHs"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               8
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-09"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               9
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-10"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               10
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-11"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               11
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-12"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               12
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-13"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               13
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
+            data-is-current-day-cell="true"
             data-is-end-of-week-cell="true"
             data-value="2024-07-14"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 jfnsJf"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 hGbcHb"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 gSCNsG"
             >
               14
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-is-start-of-week-cell="true"
             data-value="2024-07-15"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 ljjaNw"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 bIyXHs"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               15
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-16"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               16
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-17"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               17
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-18"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               18
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-19"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               19
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-20"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               20
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-is-end-of-week-cell="true"
             data-value="2024-07-21"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 jfnsJf"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 hGbcHb"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               21
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-is-start-of-week-cell="true"
             data-value="2024-07-22"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 ljjaNw"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 bIyXHs"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               22
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-23"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               23
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-24"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               24
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-25"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               25
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-26"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               26
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-27"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               27
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-is-end-of-week-cell="true"
             data-value="2024-07-28"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 jfnsJf"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 hGbcHb"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               28
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-is-start-of-week-cell="true"
             data-value="2024-07-29"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 ljjaNw"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 bIyXHs"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               29
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-value="2024-07-30"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               30
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-is-end-of-week-cell="true"
             data-value="2024-07-31"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 jfnsJf"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 hGbcHb"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kltbOk"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               31
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-hidden-cell="true"
             data-is-outside-month-date="true"
@@ -688,57 +688,57 @@ exports[`DateRangePickerCalendar > should render component 1`] = `
             data-value="2024-08-01"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 ljjaNw"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 bIyXHs"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 imUfIT"
+              class="DefaultCell__Cell-sc-e57mvj-3 hOkEcP"
             >
               1
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-hidden-cell="true"
             data-is-outside-month-date="true"
             data-value="2024-08-02"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 imUfIT"
+              class="DefaultCell__Cell-sc-e57mvj-3 hOkEcP"
             >
               2
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-hidden-cell="true"
             data-is-outside-month-date="true"
             data-value="2024-08-03"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 imUfIT"
+              class="DefaultCell__Cell-sc-e57mvj-3 hOkEcP"
             >
               3
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-hidden-cell="true"
             data-is-end-of-week-cell="true"
@@ -746,19 +746,19 @@ exports[`DateRangePickerCalendar > should render component 1`] = `
             data-value="2024-08-04"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 jfnsJf"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 hGbcHb"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 imUfIT"
+              class="DefaultCell__Cell-sc-e57mvj-3 hOkEcP"
             >
               4
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-hidden-cell="true"
             data-is-outside-month-date="true"
@@ -766,114 +766,114 @@ exports[`DateRangePickerCalendar > should render component 1`] = `
             data-value="2024-08-05"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 ljjaNw"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 bIyXHs"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 imUfIT"
+              class="DefaultCell__Cell-sc-e57mvj-3 hOkEcP"
             >
               5
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-hidden-cell="true"
             data-is-outside-month-date="true"
             data-value="2024-08-06"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 imUfIT"
+              class="DefaultCell__Cell-sc-e57mvj-3 hOkEcP"
             >
               6
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-hidden-cell="true"
             data-is-outside-month-date="true"
             data-value="2024-08-07"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 imUfIT"
+              class="DefaultCell__Cell-sc-e57mvj-3 hOkEcP"
             >
               7
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-hidden-cell="true"
             data-is-outside-month-date="true"
             data-value="2024-08-08"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 imUfIT"
+              class="DefaultCell__Cell-sc-e57mvj-3 hOkEcP"
             >
               8
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-hidden-cell="true"
             data-is-outside-month-date="true"
             data-value="2024-08-09"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 imUfIT"
+              class="DefaultCell__Cell-sc-e57mvj-3 hOkEcP"
             >
               9
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-hidden-cell="true"
             data-is-outside-month-date="true"
             data-value="2024-08-10"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 imUfIT"
+              class="DefaultCell__Cell-sc-e57mvj-3 hOkEcP"
             >
               10
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 jDPQAc"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
             data-hidden-cell="true"
             data-is-end-of-week-cell="true"
@@ -881,13 +881,13 @@ exports[`DateRangePickerCalendar > should render component 1`] = `
             data-value="2024-08-11"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 jfnsJf"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 hGbcHb"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 imUfIT"
+              class="DefaultCell__Cell-sc-e57mvj-3 hOkEcP"
             >
               11
             </div>
@@ -895,214 +895,214 @@ exports[`DateRangePickerCalendar > should render component 1`] = `
         </div>
       </div>
       <div
-        class="MonthsOfYearWidget__MonthsOfYearWrapper-sc-c9493459-0 iguZXf calendarStyle__MonthCalendarView-sc-7d70703f-8 egGIoF"
+        class="MonthsOfYearWidget__MonthsOfYearWrapper-sc-7tvgx3-0 gbxCvO calendarStyle__MonthCalendarView-sc-1gbkw52-8 jmLuuo"
         data-container-type="monthsOfYearWrapper"
       >
         <div
-          class="Months__MonthsWrapper-sc-a6568585-0 ilmTEr"
+          class="Months__MonthsWrapper-sc-uwz9no-0 bZozzP"
           data-container-type="monthsWrapper"
         >
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 UkVGh"
             data-cell-type="monthCell"
             data-value="Mon, 01 Jan 2024 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               Январь
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 UkVGh"
             data-cell-type="monthCell"
             data-value="Thu, 01 Feb 2024 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               Февраль
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 UkVGh"
             data-cell-type="monthCell"
             data-value="Fri, 01 Mar 2024 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               Март
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 UkVGh"
             data-cell-type="monthCell"
             data-value="Mon, 01 Apr 2024 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               Апрель
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 UkVGh"
             data-cell-type="monthCell"
             data-value="Wed, 01 May 2024 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               Май
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 UkVGh"
             data-cell-type="monthCell"
             data-value="Sat, 01 Jun 2024 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               Июнь
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 UkVGh"
             data-cell-type="monthCell"
             data-is-current-month="true"
             data-value="Mon, 01 Jul 2024 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kFwVgf"
+              class="DefaultCell__Cell-sc-e57mvj-3 efXNND"
             >
               Июль
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 UkVGh"
             data-cell-type="monthCell"
             data-value="Thu, 01 Aug 2024 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               Август
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 UkVGh"
             data-cell-type="monthCell"
             data-value="Sun, 01 Sep 2024 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               Сентябрь
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 UkVGh"
             data-cell-type="monthCell"
             data-value="Tue, 01 Oct 2024 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               Октябрь
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 UkVGh"
             data-cell-type="monthCell"
             data-value="Fri, 01 Nov 2024 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               Ноябрь
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 fSPDOZ"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 UkVGh"
             data-cell-type="monthCell"
             data-value="Sun, 01 Dec 2024 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               Декабрь
             </div>
@@ -1110,350 +1110,350 @@ exports[`DateRangePickerCalendar > should render component 1`] = `
         </div>
       </div>
       <div
-        class="YearsOfTwentyYearsWidget__YearsOfYearWrapper-sc-b822f222-0 iYYzZE calendarStyle__YearCalendarView-sc-7d70703f-9 dqSAFD"
+        class="YearsOfTwentyYearsWidget__YearsOfYearWrapper-sc-o46cop-0 gYrAKf calendarStyle__YearCalendarView-sc-1gbkw52-9 kOuvaW"
         data-container-type="yearsOfYearWrapper"
       >
         <div
-          class="Years__YearsWrapper-sc-1cfb6a7-0 eOnHAN"
+          class="Years__YearsWrapper-sc-4dphf0-0 cbfbbZ"
           data-container-type="yearsWrapper"
         >
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Fri, 01 Jan 2021 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2021
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Sat, 01 Jan 2022 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2022
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Sun, 01 Jan 2023 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2023
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-is-current-year="true"
             data-value="Mon, 01 Jan 2024 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 kFwVgf"
+              class="DefaultCell__Cell-sc-e57mvj-3 efXNND"
             >
               2024
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Wed, 01 Jan 2025 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2025
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Thu, 01 Jan 2026 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2026
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Fri, 01 Jan 2027 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2027
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Sat, 01 Jan 2028 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2028
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Mon, 01 Jan 2029 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2029
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Tue, 01 Jan 2030 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2030
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Wed, 01 Jan 2031 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2031
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Thu, 01 Jan 2032 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2032
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Sat, 01 Jan 2033 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2033
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Sun, 01 Jan 2034 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2034
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Mon, 01 Jan 2035 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2035
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Tue, 01 Jan 2036 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2036
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Thu, 01 Jan 2037 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2037
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Fri, 01 Jan 2038 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2038
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Sat, 01 Jan 2039 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2039
             </div>
           </div>
           <div
-            class="DefaultCell__CellContainer-sc-c8867fbd-0 hNiYln"
+            class="DefaultCell__CellContainer-sc-e57mvj-0 fzFUlH"
             data-cell-type="yearCell"
             data-value="Sun, 01 Jan 2040 09:00:00 GMT"
           >
             <div
-              class="DefaultCell__LeftHalf-sc-c8867fbd-1 fXhssK"
+              class="DefaultCell__LeftHalf-sc-e57mvj-1 hPRNBm"
             />
             <div
-              class="DefaultCell__RightHalf-sc-c8867fbd-2 eyrvzR"
+              class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-c8867fbd-3 djkGbh"
+              class="DefaultCell__Cell-sc-e57mvj-3 ejvavR"
             >
               2040
             </div>

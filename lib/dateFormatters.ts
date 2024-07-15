@@ -1,3 +1,5 @@
+import { addOrSubstractDays } from './dateTimestampUtils';
+
 function toStringPadZero(num: number, targetLength = 2) {
   return String(num).padStart(targetLength, '0');
 }
@@ -43,4 +45,28 @@ export function formatDateToLocalDateString(date: Date, separator = '.') {
     separator +
     toStringPadZero(date.getFullYear(), 4)
   );
+}
+
+/** Возвращает текущую локаль браузера */
+export const getLanguage = () =>
+  (navigator.languages && navigator.languages.length && navigator.languages[0]) || navigator.language || 'en';
+
+/**
+ * Возращает массив имен дней недели для определенной локали
+ * @param locales локаль для имен, по умолчанию текущая
+ * @returns массив имен дней недели, воскресенье под индексом 0, понедельник - 1, итд.
+ */
+export function weekdayNameList(
+  locales: Intl.LocalesArgument = getLanguage(),
+  weekday: 'long' | 'short' | 'narrow' = 'short',
+) {
+  const date = new Date();
+  const day = date.getDay();
+  const formatter = new Intl.DateTimeFormat(locales, { weekday });
+  const weekdayNames = Array.from(Array(7).keys()).map((num) => {
+    const weekDate = addOrSubstractDays(date.getTime(), num - day);
+    const dayName = formatter.format(weekDate);
+    return dayName;
+  });
+  return weekdayNames;
 }

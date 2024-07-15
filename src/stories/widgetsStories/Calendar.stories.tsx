@@ -7,6 +7,8 @@ import CalendarDateSelectionTemplateRaw from './CalendarDateSelection.template?r
 
 import { CalendarRangeSelectionTemplate } from './CalendarRangeSelection.template.tsx';
 import CalendarRangeSelectionTemplateRaw from './CalendarRangeSelection.template?raw';
+import { CalendarCellStoryTemplate } from './CalendarCell.template.tsx';
+import CalendarCellStoryTemplateRaw from './CalendarCell.template.tsx?raw';
 
 export default {
   title: 'Admiral-2.1/Widgets/Calendar',
@@ -45,4 +47,17 @@ export const CalendarRangeSelectionStory: StoryObj<typeof Calendar> = {
     },
   },
   name: 'Calendar выбор отрезка времени',
+};
+
+export const CalendarCellStory: StoryObj<typeof Calendar> = {
+  render: (props) => <CalendarCellStoryTemplate {...props} />,
+
+  parameters: {
+    docs: {
+      source: {
+        code: CalendarCellStoryTemplateRaw,
+      },
+    },
+  },
+  name: 'CalendarDateCell',
 };
