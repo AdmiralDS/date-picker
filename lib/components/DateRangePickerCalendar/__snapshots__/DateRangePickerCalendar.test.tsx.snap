@@ -368,7 +368,6 @@ exports[`DateRangePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
-            data-is-current-day-cell="true"
             data-is-end-of-week-cell="true"
             data-value="2024-07-14"
           >
@@ -379,7 +378,7 @@ exports[`DateRangePickerCalendar > should render component 1`] = `
               class="DefaultCell__RightHalf-sc-e57mvj-2 hGbcHb"
             />
             <div
-              class="DefaultCell__Cell-sc-e57mvj-3 gSCNsG"
+              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
             >
               14
             </div>
@@ -387,6 +386,7 @@ exports[`DateRangePickerCalendar > should render component 1`] = `
           <div
             class="DefaultCell__CellContainer-sc-e57mvj-0 eFlirk"
             data-cell-type="dateCell"
+            data-is-current-day-cell="true"
             data-is-start-of-week-cell="true"
             data-value="2024-07-15"
           >
@@ -397,7 +397,7 @@ exports[`DateRangePickerCalendar > should render component 1`] = `
               class="DefaultCell__RightHalf-sc-e57mvj-2 gssgct"
             />
             <div
-              class="DefaultCell__Cell-sc-e57mvj-3 eDAmds"
+              class="DefaultCell__Cell-sc-e57mvj-3 gSCNsG"
             >
               15
             </div>

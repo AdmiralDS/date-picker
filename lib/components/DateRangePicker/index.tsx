@@ -13,6 +13,7 @@ import { InputIconButton } from '#lib/InputIconButton';
 import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
 import { PopoverPanel } from '#lib/PopoverPanel';
 import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
+import type { DateRange } from 'lib/types';
 
 const Calendar = styled(DateRangePickerCalendar)`
   border: none;
@@ -21,6 +22,23 @@ const Calendar = styled(DateRangePickerCalendar)`
 
 const defaultFormatter = (date?: Dayjs) => (date ? date.format('DD.MM.YYYY') : '');
 const defaultParcer = (date?: string) => dayjs(date, 'DD.MM.YYYY');
+
+function dateRangeFromValue(value?: string, separator = ' – ', parce = defaultParcer): DateRange {
+  const [start, end] = value ? value.split(separator).map(parce) : [];
+  return start && start.isAfter(end) ? ([end, start] as const) : ([start, end] as const);
+}
+
+function formatRangeValue(start?: Dayjs, end?: Dayjs, separator = ' – ', format = defaultFormatter): string {
+  if (start && start.isValid()) {
+    if (!end || !end.isValid()) {
+      return format(start);
+    }
+    return start.isBefore(end) ? format(start) + separator + format(end) : format(end) + separator + format(start);
+  } else if (end && end.isValid()) {
+    return format(end);
+  }
+  return '';
+}
 
 export type DateRangePickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
@@ -52,6 +70,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const inputRef = useRef<HTMLInputElement>(null);
     const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
     const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('dates');
+    const [activeEnd, setActiveEnd] = useState<'start' | 'end' | 'none'>('start');
 
     const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
@@ -61,18 +80,27 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     };
 
     const handleSelectedDateValueChange = (dateRange: readonly [Dayjs | undefined, Dayjs | undefined]) => {
-      console.log(`handleSelectedDateValueChange: ${dateRange}`);
       const [dayStart, dayEnd] = dateRange;
       if (calendarViewMode === 'dates') {
         const formattedValue = `${format(dayStart)}${separator}${format(dayEnd)}`;
         setInputValue(formattedValue);
-        setTmpValueDisplayed(false);
-        if (dayEnd) setCalendarOpen(false);
+        if (activeEnd === 'start') {
+          setActiveEnd('end');
+        } else if (activeEnd === 'end') {
+          setTmpValueDisplayed(false);
+          setCalendarOpen(false);
+        }
       }
     };
 
     const handleActiveDateValueChange = (date?: Dayjs) => {
-      setTmpValue(date ? format(date) : undefined);
+      const [startString, endString] = tmpValue?.split(separator) ?? [];
+      if (activeEnd === 'start') {
+        setTmpValue(date ? format(date) + (endString ? separator + endString : '') : '');
+      } else if (activeEnd === 'end') {
+        setTmpValue(date ? startString + separator + format(date) : '');
+      }
+
       if (calendarViewMode === 'dates') {
         setTmpValueDisplayed(!!date);
       }
@@ -178,8 +206,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
     };
 
-    const date = inputValue ? inputValue.split(separator).map(parce) : [];
-
+    const rangeTimestamp = dateRangeFromValue(inputValue);
+    const [activeTmpStart, activeTmpEnd] = dateRangeFromValue(tmpValue);
     return (
       <InputBox {...containerFinalProps}>
         <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} />
@@ -190,9 +218,9 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               onViewModeChange={handleCalendarViewModeChange}
               dateValue={displayDate}
               onDateValueChange={(day) => setDisplayDate(day)}
-              selectedDateRangeValue={[date[0], date[1]]}
+              selectedDateRangeValue={rangeTimestamp}
               onSelectedDateRangeValueChange={handleSelectedDateValueChange}
-              activeDateValue={parce(tmpValue)}
+              activeDateValue={activeEnd === 'start' ? activeTmpStart : activeTmpEnd}
               onActiveDateValueChange={handleActiveDateValueChange}
             />
           </PopoverPanel>
