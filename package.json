@@ -10,6 +10,7 @@
   "devDependencies": {
     "@admiral-ds/icons": "^4.3.1",
     "@admiral-ds/react-ui": "^8.8.0",
+    "@admiral-ds/web": "^0.0.4",
     "@maskito/core": "^2.5.0",
     "@maskito/kit": "^2.5.0",
     "@maskito/react": "^2.5.0",
@@ -57,6 +58,7 @@
   },
   "peerDependencies": {
     "@admiral-ds/react-ui": "^8.0.0",
+    "@admiral-ds/web": "^0.0.4",
     "@maskito/core": "^2.4.0",
     "@maskito/kit": "^2.4.0",
     "@maskito/react": "^2.4.0",
