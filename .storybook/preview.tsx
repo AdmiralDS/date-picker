@@ -14,14 +14,14 @@ import {
   LightThemeCssVars,
   DarkThemeCssVars,
 } from '@admiral-ds/react-ui';
-import { darkThemeClassName, lightThemeClassName } from '@admiral-ds/web';
+import { darkThemeClassName, lightThemeClassName, vars } from '@admiral-ds/web';
 
 const GlobalStyles = createGlobalStyle`
     body {
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
     html {
-      background-color: ${(props) => props.theme.color['Neutral/Neutral 00']};
+      background-color: ${vars.color.Neutral_Neutral00};
     }
 `;
 
@@ -49,7 +49,7 @@ function ThemeWrapper(props) {
 
 const StoryContainer = styled.div`
   padding: 3em;
-  background-color: var(--admiral-color-Neutral_Neutral00, ${(p) => p.theme.color['Neutral/Neutral 00']});
+  background-color: ${vars.color.Neutral_Neutral00};
 `;
 
 const preview: Preview = {
