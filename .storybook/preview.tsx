@@ -14,6 +14,7 @@ import {
   LightThemeCssVars,
   DarkThemeCssVars,
 } from '@admiral-ds/react-ui';
+import { darkThemeClassName, lightThemeClassName } from '@admiral-ds/web';
 
 const GlobalStyles = createGlobalStyle`
     body {
@@ -41,7 +42,7 @@ function ThemeWrapper(props) {
   return (
     <ThemeProvider theme={isDark ? DARK_THEME : LIGHT_THEME}>
       {props.CSSCustomProps && renderCssProps()}
-      {props.children}
+      <div className={isDark ? darkThemeClassName : lightThemeClassName}>{props.children}</div>
     </ThemeProvider>
   );
 }
@@ -62,12 +63,7 @@ const preview: Preview = {
       },
     },
     actions: { argTypesRegex: '^on[A-Z].*' },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/,
-      },
-    },
+    controls: { matchers: { color: /(background|color)$/i, date: /Date$/ } },
     docs: {
       container: (props) => {
         const theme = useDarkMode() ? themes.dark : themes.normal;
