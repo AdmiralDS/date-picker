@@ -46,11 +46,7 @@ export function generateCalendarDataCellList(
 }
 
 export function defaultDateAttributes(): DateAttributes {
-  return {
-    disabled: false,
-    hidden: false,
-    isHoliday: false,
-  };
+  return { disabled: false, hidden: false, isHoliday: false };
 }
 
 /** Меняет местами концы отрезка, если они в не естественном порядке и приводит время к полночи в текущей временной зоне */
@@ -119,8 +115,7 @@ export const Dates = ({
 }: DatesProps) => {
   const cellDataList = useMemo<CalendarDataCell[]>(() => {
     const firstOfMonthDate = firstDayOfTheMonth(displayMonthTimestamp);
-    const firstDate = mondayOfTheWeek(firstOfMonthDate.getTime());
-    return generateCalendarDataCellList(firstDate.getTime(), formatter);
+    return generateCalendarDataCellList(firstOfMonthDate.getTime(), formatter);
   }, [displayMonthTimestamp, formatter]);
 
   const cellModel = cellDataList.map(({ timestamp, formattedDate, dateOfMonth, dayOfTheWeek }) => {
