@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import 'dayjs/locale/ru';
 
-import { typography } from '@admiral-ds/react-ui';
+import { vars, textValues } from '@admiral-ds/web';
 
 import { getCurrentDate } from '#lib/utils';
 import { Years } from '#lib/YearsOfTwentyYearsWidget/Years.tsx';
@@ -12,10 +12,10 @@ import { ruLocale } from '#lib/calendarConstants.ts';
 export interface YearsOfTwentyYearsWidgetProps extends BaseWidgetProps {}
 
 const YearsOfYearWrapper = styled.div`
-  background-color: ${({ theme }) => theme.color['Special/Elevated BG']};
+  background-color: ${vars.color.Special_ElevatedBG};
   width: ${YEARS_OF_YEAR_WIDGET_WIDTH}px;
   margin: 28px 22px 32px 22px;
-  ${typography['Body/Body 2 Long']}
+  ${textValues['Body/Body 2 Long']}
 `;
 
 export const YearsOfTwentyYearsWidget = ({

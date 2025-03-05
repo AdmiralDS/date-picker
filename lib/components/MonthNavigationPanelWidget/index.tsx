@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-import { IconPlacement, TooltipHoc, typography } from '@admiral-ds/react-ui';
+import { IconPlacement, TooltipHoc } from '@admiral-ds/react-ui';
+import { vars, textValues } from '@admiral-ds/web';
 import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
@@ -17,7 +18,7 @@ const MonthNavigationPanelWrapper = styled.div`
   padding: 0 12px;
   display: flex;
   justify-content: space-between;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
+  background-color: ${vars.color.Special_ElevatedBG};
 `;
 
 const MonthYearWrapper = styled.div`
@@ -27,11 +28,11 @@ const TextWrapper = styled.div<{ $isActive?: boolean }>`
   padding: 4px 8px;
   border-radius: 16px;
   cursor: pointer;
-  color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
-  ${typography['Subtitle/Subtitle 2']}
-  background-color: ${(p) => (p.$isActive ? p.theme.color['Opacity/Focus'] : p.theme.color['Special/Elevated BG'])};
+  color: ${vars.color.Primary_Primary60Main};
+  ${textValues['Subtitle/Subtitle 2']}
+  background-color: ${(p) => (p.$isActive ? vars.color.Opacity_Focus : vars.color.Special_ElevatedBG)};
   &:hover {
-    background-color: ${(p) => p.theme.color['Opacity/Hover']};
+    background-color: ${vars.color.Opacity_Hover};
   }
 `;
 

@@ -1,5 +1,6 @@
 import type { ComponentProps } from 'react';
 import styled from 'styled-components';
+import { vars, textValues } from '@admiral-ds/web';
 
 export type SizeProps = {
   /** Размеры компонента */
@@ -22,7 +23,7 @@ export const FocusBox = styled.div`
   padding-inline-end: 16px;
 
   & * {
-    ${(p) => p.theme.typography['Body/Body 1 Long']}
+    ${textValues['Body/Body 1 Long']}
     line-height: 40px;
   }
   &[data-size='xl'] {
@@ -36,7 +37,7 @@ export const FocusBox = styled.div`
     padding-inline-start: 12px;
     padding-inline-end: 12px;
     & * {
-      ${(p) => p.theme.typography['Body/Body 2 Long']}
+      ${textValues['Body/Body 2 Long']}
       line-height: 32px;
     }
   }
@@ -47,14 +48,14 @@ export const FocusBox = styled.div`
   background: transparent;
   /* https://stackoverflow.com/questions/69658462/inset-box-shadow-visual-artifacts-in-google-chrome */
   transform: translate3d(0, 0, 0);
-  box-shadow: 0px 0px 0px 1px ${(p) => p.theme.color['Neutral/Neutral 40']} inset;
+  box-shadow: 0px 0px 0px 1px ${vars.color.Neutral_Neutral40} inset;
 
   &:hover:not(:focus-within) {
-    box-shadow: 0px 0px 0px 1px ${(p) => p.theme.color['Neutral/Neutral 60']} inset;
+    box-shadow: 0px 0px 0px 1px ${vars.color.Neutral_Neutral60} inset;
   }
 
   &:focus-within {
-    box-shadow: 0px 0px 0px 2px ${(p) => p.theme.color['Primary/Primary 60 Main']} inset;
+    box-shadow: 0px 0px 0px 2px ${vars.color.Primary_Primary60Main} inset;
   }
 
   transition: box-shadow 0.3s ease-in-out;
