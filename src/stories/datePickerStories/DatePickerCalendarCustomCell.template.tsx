@@ -20,10 +20,11 @@ import {
 import { DATE_CELL_HEIGHT, DATE_CELL_WIDTH } from '#lib/DefaultCell/constants.ts';
 
 import { WrapperHorizontal } from '#src/stories/common.tsx';
+import { vars } from '@admiral-ds/web';
 
 const outsideMonthDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseDateCellMixin};
-  color: ${(p) => p.theme.color['Neutral/Neutral 10']};
+  color: ${vars.color.Neutral_Neutral10};
 `;
 
 const getDefaultDateCellMixin = (

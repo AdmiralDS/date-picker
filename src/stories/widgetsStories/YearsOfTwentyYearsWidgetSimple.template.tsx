@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
-import { typography } from '@admiral-ds/react-ui';
+import { textValues, vars } from '@admiral-ds/web';
 
 import { capitalizeFirstLetter, getCurrentDate } from '#lib/utils';
 import { YEARS_OF_YEAR_WIDGET_WIDTH } from '#lib/YearsOfTwentyYearsWidget/constants';
@@ -20,11 +20,11 @@ const Wrapper = styled.div`
   align-content: space-between;
   padding: 10px;
   width: ${YEARS_OF_YEAR_WIDGET_WIDTH}px;
-  border: 1px ${(p) => p.theme.color['Neutral/Neutral 90']} solid;
+  border: 1px ${vars.color.Neutral_Neutral90} solid;
 `;
 const MonthYear = styled.div`
   margin-bottom: 10px;
-  ${typography['Subtitle/Subtitle 2']}
+  ${textValues['Subtitle/Subtitle 2']}
 `;
 
 export const YearsOfTwentyYearsWidgetSimpleTemplate = ({

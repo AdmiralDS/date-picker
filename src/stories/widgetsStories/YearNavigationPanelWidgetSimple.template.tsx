@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
+import { vars } from '@admiral-ds/web';
 import { getCurrentDate } from '#lib/utils';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH, ruLocale } from '#lib/calendarConstants';
 import { MonthsOfYearWidget } from '#lib/MonthsOfYearWidget';
@@ -20,7 +21,7 @@ const CalendarWrapper = styled.div`
   padding-top: 20px;
   width: ${CALENDAR_WIDTH}px;
   height: ${CALENDAR_HEIGHT}px;
-  ${(p) => p.theme.shadow['Shadow 08']}
+  ${vars.boxShadow.Shadow_08}
 `;
 
 export const YearNavigationPanelWidgetSimpleTemplate = ({

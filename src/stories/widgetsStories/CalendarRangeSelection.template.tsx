@@ -3,13 +3,14 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import type { RangeTimestamp, Timestamp } from '@admiral-ds/date-picker';
 import { Calendar, MemoDefaultDateRangeCell } from '@admiral-ds/date-picker';
+import { vars } from '@admiral-ds/web';
 
 const Wrapper = styled.div`
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   align-content: space-between;
-  border: 1px ${(p) => p.theme.color['Neutral/Neutral 20']} dashed;
+  border: 1px ${vars.color.Neutral_Neutral20} dashed;
   border-radius: 8px;
 `;
 
