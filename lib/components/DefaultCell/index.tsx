@@ -2,8 +2,7 @@ import type { HTMLAttributes, ReactNode } from 'react';
 import { memo } from 'react';
 import type { RuleSet } from 'styled-components';
 import styled, { css } from 'styled-components';
-
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
+import { vars } from '@admiral-ds/web';
 
 import {
   DATE_CELL_HEIGHT,
@@ -71,7 +70,7 @@ const rangeLayoutMixin = css<{ $isVisible: boolean; $isSelectingRange: boolean }
   top: 0;
   width: 50%;
   height: 100%;
-  background-color: ${(p) => (p.$isVisible ? p.theme.color['Opacity/Focus'] : 'transparent')};
+  background-color: ${(p) => (p.$isVisible ? vars.color.Opacity_Focus : 'transparent')};
 `;
 
 const LeftHalf = styled.div<{
@@ -83,8 +82,8 @@ const LeftHalf = styled.div<{
   left: 0;
   ${(p) =>
     p.$isStartOfRow &&
-    `border-top-left-radius: ${mediumGroupBorderRadius(p.theme.shape)};
-     border-bottom-left-radius: ${mediumGroupBorderRadius(p.theme.shape)};`}
+    `border-top-left-radius: ${vars.borderRadius.Medium};
+     border-bottom-left-radius: ${vars.borderRadius.Medium};`}
 `;
 const RightHalf = styled.div<{
   $isVisible: boolean;
@@ -95,8 +94,8 @@ const RightHalf = styled.div<{
   right: 0;
   ${(p) =>
     p.$isEndOfRow &&
-    `border-top-right-radius: ${mediumGroupBorderRadius(p.theme.shape)};
-     border-bottom-right-radius: ${mediumGroupBorderRadius(p.theme.shape)};`}
+    `border-top-right-radius: ${vars.borderRadius.Medium};
+     border-bottom-right-radius: ${vars.borderRadius.Medium};`}
 `;
 
 const Cell = styled.div<{
