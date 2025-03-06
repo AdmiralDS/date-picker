@@ -20,7 +20,7 @@ export const SinglePickerCalendarWrapper = styled.div`
   height: ${CALENDAR_HEIGHT}px;
   background-color: ${vars.color.Special_ElevatedBG};
   border-radius: ${vars.borderRadius.Medium};
-  ${vars.boxShadow.Shadow_08}
+  box-shadow: ${vars.boxShadow.Shadow_08};
 `;
 
 export const DoublePickerCalendarWrapper = styled.div`

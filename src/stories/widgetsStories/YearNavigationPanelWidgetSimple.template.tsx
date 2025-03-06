@@ -21,7 +21,7 @@ const CalendarWrapper = styled.div`
   padding-top: 20px;
   width: ${CALENDAR_WIDTH}px;
   height: ${CALENDAR_HEIGHT}px;
-  ${vars.boxShadow.Shadow_08}
+  box-shadow: ${vars.boxShadow.Shadow_08};
 `;
 
 export const YearNavigationPanelWidgetSimpleTemplate = ({
