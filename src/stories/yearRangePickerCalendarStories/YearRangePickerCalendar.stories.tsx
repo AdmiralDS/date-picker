@@ -26,8 +26,8 @@ export default {
   },
 } as Meta<typeof YearRangePickerCalendar>;
 
-const YearRangePickerCalendarSimpleStory: StoryFn<typeof YearRangePickerCalendar> = (props) => {
-  return <YearRangePickerCalendarSimpleTemplate {...props} />;
+const YearRangePickerCalendarSimpleStory: StoryFn<typeof YearRangePickerCalendar> = () => {
+  return <YearRangePickerCalendarSimpleTemplate />;
 };
 export const YearRangePickerCalendarSimple = {
   render: YearRangePickerCalendarSimpleStory,

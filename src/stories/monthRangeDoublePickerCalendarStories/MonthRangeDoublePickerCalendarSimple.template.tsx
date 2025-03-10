@@ -1,12 +1,11 @@
 import type { MouseEventHandler } from 'react';
 
 import { T } from '@admiral-ds/react-ui';
-import type { MonthRangeDoublePickerCalendarProps } from '@admiral-ds/date-picker';
 import { MonthRangeDoublePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
-export const MonthRangeDoublePickerCalendarSimpleTemplate = (props: MonthRangeDoublePickerCalendarProps) => {
+export const MonthRangeDoublePickerCalendarSimpleTemplate = () => {
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
@@ -15,7 +14,6 @@ export const MonthRangeDoublePickerCalendarSimpleTemplate = (props: MonthRangeDo
   return (
     <WrapperHorizontal>
       <MonthRangeDoublePickerCalendar
-        {...props}
         onClick={handleClick}
         //defaultSelectedDateRangeValue={['2023-10-01T12:00:00Z', '2024-07-01T12:00:00Z']}
       />

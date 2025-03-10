@@ -36,8 +36,8 @@ export default {
   },
 } as Meta<typeof DateRangePickerCalendar>;
 
-const DateRangePickerCalendarSimpleStory: StoryFn<typeof DateRangePickerCalendar> = (props) => {
-  return <DateRangePickerCalendarSimpleTemplate {...props} />;
+const DateRangePickerCalendarSimpleStory: StoryFn<typeof DateRangePickerCalendar> = () => {
+  return <DateRangePickerCalendarSimpleTemplate />;
 };
 export const DateRangePickerCalendarSimple = {
   render: DateRangePickerCalendarSimpleStory,
@@ -52,8 +52,8 @@ export const DateRangePickerCalendarSimple = {
   name: 'Выбор диапазона дат',
 };
 
-const DateRangePickerCalendarBlockEarlierDatesStory: StoryFn<typeof DateRangePickerCalendar> = (props) => {
-  return <DateRangePickerCalendarBlockEarlierDatesTemplate {...props} />;
+const DateRangePickerCalendarBlockEarlierDatesStory: StoryFn<typeof DateRangePickerCalendar> = () => {
+  return <DateRangePickerCalendarBlockEarlierDatesTemplate />;
 };
 export const DateRangePickerCalendarBlockEarierDates = {
   render: DateRangePickerCalendarBlockEarlierDatesStory,

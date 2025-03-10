@@ -1,12 +1,11 @@
 import type { MouseEventHandler } from 'react';
 
 import { T } from '@admiral-ds/react-ui';
-import type { YearRangeDoublePickerCalendarProps } from '@admiral-ds/date-picker';
 import { YearRangeDoublePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
-export const YearRangeDoublePickerCalendarSimpleTemplate = (props: YearRangeDoublePickerCalendarProps) => {
+export const YearRangeDoublePickerCalendarSimpleTemplate = () => {
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
@@ -15,7 +14,6 @@ export const YearRangeDoublePickerCalendarSimpleTemplate = (props: YearRangeDoub
   return (
     <WrapperHorizontal>
       <YearRangeDoublePickerCalendar
-        {...props}
         onClick={handleClick}
         //defaultSelectedDateRangeValue={['2023-10-08T12:00:00Z', '2028-10-16T12:00:00Z']}
       />

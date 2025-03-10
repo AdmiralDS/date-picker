@@ -34,8 +34,8 @@ export default {
   },
 } as Meta<typeof MonthRangePickerCalendar>;
 
-const MonthRangePickerCalendarSimpleStory: StoryFn<typeof MonthRangePickerCalendar> = (props) => {
-  return <MonthRangePickerCalendarSimpleTemplate {...props} />;
+const MonthRangePickerCalendarSimpleStory: StoryFn<typeof MonthRangePickerCalendar> = () => {
+  return <MonthRangePickerCalendarSimpleTemplate />;
 };
 export const MonthRangePickerCalendarSimple = {
   render: MonthRangePickerCalendarSimpleStory,

@@ -1,12 +1,11 @@
 import type { MouseEventHandler } from 'react';
 
 import { T } from '@admiral-ds/react-ui';
-import type { DateRangePickerCalendarProps } from '@admiral-ds/date-picker';
 import { DateRangePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
-export const DateRangePickerCalendarSimpleTemplate = (props: DateRangePickerCalendarProps) => {
+export const DateRangePickerCalendarSimpleTemplate = () => {
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
@@ -14,7 +13,7 @@ export const DateRangePickerCalendarSimpleTemplate = (props: DateRangePickerCale
 
   return (
     <WrapperHorizontal>
-      <DateRangePickerCalendar {...props} onClick={handleClick} />
+      <DateRangePickerCalendar onClick={handleClick} />
       <WrapperVertical>
         <T font="Subtitle/Subtitle 2" as="div">
           Выбор диапазона дат

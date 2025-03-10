@@ -4,7 +4,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
 import { T } from '@admiral-ds/react-ui';
-import type { CalendarViewMode, DateAttributes, DatePickerCalendarProps } from '@admiral-ds/date-picker';
+import type { CalendarViewMode, DateAttributes } from '@admiral-ds/date-picker';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
@@ -47,7 +47,7 @@ const getNextDate = (date: Dayjs, viewMode: CalendarViewMode) => {
   }
 };
 
-export const DatePickerCalendarBlockPanelArrowsTemplate = (props: DatePickerCalendarProps) => {
+export const DatePickerCalendarBlockPanelArrowsTemplate = () => {
   const [viewMode, setViewMode] = useState<CalendarViewMode>('dates');
   const handleViewModeChange = (mode: CalendarViewMode) => {
     setViewMode(mode);
@@ -96,7 +96,6 @@ export const DatePickerCalendarBlockPanelArrowsTemplate = (props: DatePickerCale
   return (
     <WrapperHorizontal>
       <DatePickerCalendar
-        {...props}
         onClick={handleClick}
         defaultViewModeValue={'dates'}
         defaultDateValue={dayjs()}

@@ -26,8 +26,8 @@ export default {
   },
 } as Meta<typeof YearRangeDoublePickerCalendar>;
 
-const YearRangeDoublePickerCalendarSimpleStory: StoryFn<typeof YearRangeDoublePickerCalendar> = (props) => {
-  return <YearRangeDoublePickerCalendarSimpleTemplate {...props} />;
+const YearRangeDoublePickerCalendarSimpleStory: StoryFn<typeof YearRangeDoublePickerCalendar> = () => {
+  return <YearRangeDoublePickerCalendarSimpleTemplate />;
 };
 export const YearRangeDoublePickerCalendarSimple = {
   render: YearRangeDoublePickerCalendarSimpleStory,

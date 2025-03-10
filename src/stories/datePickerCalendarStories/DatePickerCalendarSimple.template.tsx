@@ -1,12 +1,11 @@
 import type { MouseEventHandler } from 'react';
 
 import { T } from '@admiral-ds/react-ui';
-import type { DatePickerCalendarProps } from '@admiral-ds/date-picker';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
-export const DatePickerCalendarSimpleTemplate = (props: DatePickerCalendarProps) => {
+export const DatePickerCalendarSimpleTemplate = () => {
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
@@ -14,7 +13,7 @@ export const DatePickerCalendarSimpleTemplate = (props: DatePickerCalendarProps)
 
   return (
     <WrapperHorizontal>
-      <DatePickerCalendar {...props} onClick={handleClick} />
+      <DatePickerCalendar onClick={handleClick} />
       <WrapperVertical>
         <T font="Subtitle/Subtitle 2" as="div">
           Выбор даты

@@ -58,8 +58,8 @@ export const DatePickerCalendarSimple = {
   name: 'Выбор даты',
 };
 
-const DatePickerCalendarWithHolidaysStory: StoryFn<typeof DatePickerCalendar> = (props) => {
-  return <DatePickerCalendarWithHolidaysTemplate {...props} />;
+const DatePickerCalendarWithHolidaysStory: StoryFn<typeof DatePickerCalendar> = () => {
+  return <DatePickerCalendarWithHolidaysTemplate />;
 };
 export const DatePickerCalendarWithHolidays = {
   render: DatePickerCalendarWithHolidaysStory,
@@ -74,8 +74,8 @@ export const DatePickerCalendarWithHolidays = {
   name: 'Отображение выходных и заблокированных дат',
 };
 
-const DatePickerCalendarChangeLocaleStory: StoryFn<typeof DatePickerCalendar> = (props) => {
-  return <DatePickerCalendarChangeLocaleTemplate {...props} />;
+const DatePickerCalendarChangeLocaleStory: StoryFn<typeof DatePickerCalendar> = () => {
+  return <DatePickerCalendarChangeLocaleTemplate />;
 };
 export const DatePickerCalendarChangeLocale = {
   render: DatePickerCalendarChangeLocaleStory,
@@ -90,8 +90,8 @@ export const DatePickerCalendarChangeLocale = {
   name: 'Смена локализации',
 };
 
-const DatePickerCalendarCustomCellStory: StoryFn<typeof DatePickerCalendar> = (props) => {
-  return <DatePickerCalendarCustomCellTemplate {...props} />;
+const DatePickerCalendarCustomCellStory: StoryFn<typeof DatePickerCalendar> = () => {
+  return <DatePickerCalendarCustomCellTemplate />;
 };
 export const DatePickerCalendarCustomCell = {
   render: DatePickerCalendarCustomCellStory,
@@ -106,8 +106,8 @@ export const DatePickerCalendarCustomCell = {
   name: 'Кастомизация отображения дат',
 };
 
-const DatePickerCalendarBlockPanelArrowsStory: StoryFn<typeof DatePickerCalendar> = (props) => {
-  return <DatePickerCalendarBlockPanelArrowsTemplate {...props} />;
+const DatePickerCalendarBlockPanelArrowsStory: StoryFn<typeof DatePickerCalendar> = () => {
+  return <DatePickerCalendarBlockPanelArrowsTemplate />;
 };
 export const DatePickerCalendarBlockPanelArrows = {
   render: DatePickerCalendarBlockPanelArrowsStory,

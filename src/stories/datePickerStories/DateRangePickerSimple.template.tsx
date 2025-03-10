@@ -4,25 +4,24 @@ import { maskitoDateRangeOptionsGenerator } from '@maskito/kit';
 import { useMaskito } from '@maskito/react';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
-import { useState, useMemo, type ComponentPropsWithoutRef } from 'react';
+import { useState, useMemo } from 'react';
 
-export const DateRangePickerSimpleTemplate = ({
-  inputProps = {},
-  ...props
-}: ComponentPropsWithoutRef<typeof DateRangePicker>) => {
-  const [inputValue, setInputValue] = useState(inputProps.value);
-  const dateOptions = useMemo(
-    () => maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy', rangeSeparator: props.separator }),
-    [props.separator],
-  );
+const defaultInputProps = {
+  placeholder: 'Введите интервал дат',
+  dataPlaceholder: 'дд.мм.гггг – дд.мм.гггг',
+  value: '11.',
+};
+
+export const DateRangePickerSimpleTemplate = () => {
+  const [inputValue, setInputValue] = useState(defaultInputProps.value);
+  const dateOptions = useMemo(() => maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy', rangeSeparator: '-' }), []);
   const maskedDateInputRef = useMaskito({ options: dateOptions });
   return (
     <WrapperHorizontal>
       <WrapperVertical>
         <DateRangePicker
-          {...props}
           inputProps={{
-            ...inputProps,
+            ...defaultInputProps,
             value: inputValue,
             onInput: (e) => setInputValue(e.currentTarget.value),
             ref: maskedDateInputRef,
