@@ -21,7 +21,7 @@ type Story = StoryObj<typeof DateRangePicker>;
 
 export const DatePickerCalendarSimple: Story = {
   // обязательно для правильной работы хуков внутри темплейта
-  render: (props) => <DateRangePickerSimpleTemplate {...props} />,
+  render: () => <DateRangePickerSimpleTemplate />,
   parameters: {
     docs: {
       source: {

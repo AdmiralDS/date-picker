@@ -18,7 +18,7 @@ export default {
 
 export const DatePickerCalendarSimple: StoryObj<typeof DatePicker> = {
   // обязательно для правильной работы хуков внутри темплейта
-  render: (props) => <DatePickerSimpleTemplate {...props} />,
+  render: () => <DatePickerSimpleTemplate />,
   parameters: {
     docs: {
       source: {

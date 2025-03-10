@@ -3,7 +3,7 @@ import { useState } from 'react';
 import 'dayjs/locale/es';
 
 import { Button, T } from '@admiral-ds/react-ui';
-import type { DatePickerCalendarProps, CalendarLocaleProps } from '@admiral-ds/date-picker';
+import type { CalendarLocaleProps } from '@admiral-ds/date-picker';
 import { DatePickerCalendar, enLocale, ruLocale } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
@@ -21,7 +21,7 @@ const esLocale: CalendarLocaleProps = {
   },
 };
 
-export const DatePickerCalendarChangeLocaleTemplate = (props: DatePickerCalendarProps) => {
+export const DatePickerCalendarChangeLocaleTemplate = () => {
   const [locale, setLocale] = useState(esLocale);
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -45,7 +45,7 @@ export const DatePickerCalendarChangeLocaleTemplate = (props: DatePickerCalendar
 
   return (
     <WrapperHorizontal>
-      <DatePickerCalendar {...props} onClick={handleClick} locale={locale} />
+      <DatePickerCalendar onClick={handleClick} locale={locale} />
       <WrapperVertical>
         <T font="Body/Body 2 Long" as="div">
           По умолчанию в календаре используется русская локализация, также есть английский вариант. Если требуется

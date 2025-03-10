@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import minMax from 'dayjs/plugin/minMax';
 
 import { T } from '@admiral-ds/react-ui';
-import type { CalendarViewMode, DateRangePickerCalendarProps } from '@admiral-ds/date-picker';
+import type { CalendarViewMode } from '@admiral-ds/date-picker';
 import { DateRangePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
@@ -46,7 +46,7 @@ const getMinDate = (date1?: Dayjs, date2?: Dayjs, date3?: Dayjs) => {
   return dayjs.min(dates);
 };
 
-export const DateRangePickerCalendarBlockEarlierDatesTemplate = (props: DateRangePickerCalendarProps) => {
+export const DateRangePickerCalendarBlockEarlierDatesTemplate = () => {
   const [viewMode, setViewMode] = useState<CalendarViewMode>('dates');
   const handleViewModeChange = (mode: CalendarViewMode) => {
     setViewMode(mode);
@@ -98,10 +98,10 @@ export const DateRangePickerCalendarBlockEarlierDatesTemplate = (props: DateRang
   return (
     <WrapperHorizontal>
       <DateRangePickerCalendar
-        {...props}
         onClick={handleClick}
         onActiveDateRangeEndValueChange={handleActiveDateRangeEndChange}
         dateAttributes={dateAttrs}
+        // TODO:
         onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
         defaultViewModeValue={'dates'}
         defaultDateValue={dayjs()}

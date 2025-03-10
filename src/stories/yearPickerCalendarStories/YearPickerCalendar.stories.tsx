@@ -36,8 +36,8 @@ export default {
   },
 } as Meta<typeof YearPickerCalendar>;
 
-const YearPickerCalendarSimpleStory: StoryFn<typeof YearPickerCalendar> = (props) => {
-  return <YearPickerCalendarSimpleTemplate {...props} />;
+const YearPickerCalendarSimpleStory: StoryFn<typeof YearPickerCalendar> = () => {
+  return <YearPickerCalendarSimpleTemplate />;
 };
 export const YearPickerCalendarSimple = {
   render: YearPickerCalendarSimpleStory,
@@ -52,8 +52,8 @@ export const YearPickerCalendarSimple = {
   name: 'Выбор года',
 };
 
-const YearPickerCalendarCustomCellStory: StoryFn<typeof YearPickerCalendar> = (props) => {
-  return <YearPickerCalendarCustomCellTemplate {...props} />;
+const YearPickerCalendarCustomCellStory: StoryFn<typeof YearPickerCalendar> = () => {
+  return <YearPickerCalendarCustomCellTemplate />;
 };
 export const YearPickerCalendarCustomCell = {
   render: YearPickerCalendarCustomCellStory,

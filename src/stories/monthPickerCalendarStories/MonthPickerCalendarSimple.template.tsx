@@ -1,12 +1,11 @@
 import type { MouseEventHandler } from 'react';
 
 import { T } from '@admiral-ds/react-ui';
-import type { MonthPickerCalendarProps } from '@admiral-ds/date-picker';
 import { MonthPickerCalendar } from '#lib/MonthPickerCalendar';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
-export const MonthPickerCalendarSimpleTemplate = (props: MonthPickerCalendarProps) => {
+export const MonthPickerCalendarSimpleTemplate = () => {
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
@@ -14,7 +13,7 @@ export const MonthPickerCalendarSimpleTemplate = (props: MonthPickerCalendarProp
 
   return (
     <WrapperHorizontal>
-      <MonthPickerCalendar {...props} onClick={handleClick} />
+      <MonthPickerCalendar onClick={handleClick} />
       <WrapperVertical>
         <T font="Subtitle/Subtitle 2" as="div">
           Выбор месяца

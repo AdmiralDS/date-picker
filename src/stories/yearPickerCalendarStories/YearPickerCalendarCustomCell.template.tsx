@@ -5,7 +5,7 @@ import { css } from 'styled-components';
 import { vars } from '@admiral-ds/web';
 import { T } from '@admiral-ds/react-ui';
 import { DefaultCell, YearPickerCalendar } from '@admiral-ds/date-picker';
-import type { YearPickerCalendarProps, DefaultCellProps } from '@admiral-ds/date-picker';
+import type { DefaultCellProps } from '@admiral-ds/date-picker';
 import { YEAR_CELL_HEIGHT, YEAR_CELL_WIDTH } from '#lib/DefaultCell/constants.ts';
 import {
   baseYearCellMixin,
@@ -66,7 +66,7 @@ const DefaultYearCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) =
 };
 const MemoCell = memo(DefaultYearCell);
 
-export const YearPickerCalendarCustomCellTemplate = (props: YearPickerCalendarProps) => {
+export const YearPickerCalendarCustomCellTemplate = () => {
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
@@ -74,7 +74,7 @@ export const YearPickerCalendarCustomCellTemplate = (props: YearPickerCalendarPr
 
   return (
     <WrapperHorizontal>
-      <YearPickerCalendar {...props} cell={{ yearCell: MemoCell }} onClick={handleClick} />
+      <YearPickerCalendar cell={{ yearCell: MemoCell }} onClick={handleClick} />
       <WrapperVertical>
         <T font="Body/Body 2 Long" as="div">
           Календарь позволяет кастомизировать отображение ячеек при необходимости, например, изменять базовый цвет

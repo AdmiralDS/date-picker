@@ -3,12 +3,12 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
 import { T } from '@admiral-ds/react-ui';
-import type { DatePickerCalendarProps, DateAttributes } from '@admiral-ds/date-picker';
+import type { DateAttributes } from '@admiral-ds/date-picker';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
-export const DatePickerCalendarWithHolidaysTemplate = (props: DatePickerCalendarProps) => {
+export const DatePickerCalendarWithHolidaysTemplate = () => {
   const dateAttrs: (date: Dayjs) => DateAttributes = (date: Dayjs) => {
     return {
       disabled: date.isBefore(dayjs()),
@@ -23,7 +23,7 @@ export const DatePickerCalendarWithHolidaysTemplate = (props: DatePickerCalendar
 
   return (
     <WrapperHorizontal>
-      <DatePickerCalendar {...props} onClick={handleClick} dateAttributes={dateAttrs} />
+      <DatePickerCalendar onClick={handleClick} dateAttributes={dateAttrs} />
       <WrapperVertical>
         <T font="Body/Body 2 Long" as="div">
           Можно блокировать для выбора как отдельные даты, так и диапазон. Так же можно блокировать для выбора месяцы и

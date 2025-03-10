@@ -1,12 +1,11 @@
 import type { MouseEventHandler } from 'react';
 
 import { T } from '@admiral-ds/react-ui';
-import type { YearRangePickerCalendarProps } from '@admiral-ds/date-picker';
 import { YearRangePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
-export const YearRangePickerCalendarSimpleTemplate = (props: YearRangePickerCalendarProps) => {
+export const YearRangePickerCalendarSimpleTemplate = () => {
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
@@ -14,7 +13,7 @@ export const YearRangePickerCalendarSimpleTemplate = (props: YearRangePickerCale
 
   return (
     <WrapperHorizontal>
-      <YearRangePickerCalendar {...props} onClick={handleClick} />
+      <YearRangePickerCalendar onClick={handleClick} />
       <WrapperVertical>
         <T font="Subtitle/Subtitle 2" as="div">
           Выбор диапазона лет

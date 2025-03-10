@@ -1,12 +1,11 @@
 import type { MouseEventHandler } from 'react';
 
 import { T } from '@admiral-ds/react-ui';
-import type { MonthRangePickerCalendarProps } from '@admiral-ds/date-picker';
 import { MonthRangePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
-export const MonthRangePickerCalendarSimpleTemplate = (props: MonthRangePickerCalendarProps) => {
+export const MonthRangePickerCalendarSimpleTemplate = () => {
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const clickedCell = (e.target as HTMLDivElement).dataset.value;
     console.log(`click on ${clickedCell}`);
@@ -14,7 +13,7 @@ export const MonthRangePickerCalendarSimpleTemplate = (props: MonthRangePickerCa
 
   return (
     <WrapperHorizontal>
-      <MonthRangePickerCalendar {...props} onClick={handleClick} />
+      <MonthRangePickerCalendar onClick={handleClick} />
       <WrapperVertical>
         <T font="Subtitle/Subtitle 2" as="div">
           Выбор диапазона месяцев
