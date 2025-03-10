@@ -34,13 +34,14 @@ export interface CalendarLocaleProps {
 
 export interface RenderFunctionProps {
   date: Dayjs;
-  selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined];
+  selected?: Dayjs | DateRange;
   active?: Dayjs;
   activeRangeEnd?: Dayjs;
   onCellMouseEnter?: (date: Dayjs, disabled?: boolean) => void;
   onCellClick?: (date: Dayjs, disabled?: boolean) => void;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface DateCellProps extends DefaultCellProps {}
 
 export type RenderFunctionType = (props: RenderFunctionProps) => ReactNode;
@@ -97,9 +98,9 @@ export interface RangeDoubleCalendarProps
   /** Выбранное значение диапазона дат */
   dateRangeValue?: [Dayjs, Dayjs];
   /** Выбранное значение диапазона дат по умолчанию */
-  defaultDateRangeValue?: [Dayjs | undefined, Dayjs | undefined];
+  defaultDateRangeValue?: DateRange;
   /** Коллбэк на изменение выбранного диапазона дат */
-  onDateRangeValueChange?: (dateRange: [Dayjs | undefined, Dayjs | undefined]) => void;
+  onDateRangeValueChange?: (dateRange: DateRange) => void;
 }
 
 export type СellProps = {

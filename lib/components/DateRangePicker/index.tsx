@@ -79,7 +79,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       }
     };
 
-    const handleSelectedDateValueChange = (dateRange: readonly [Dayjs | undefined, Dayjs | undefined]) => {
+    const handleSelectedDateValueChange = (dateRange: DateRange) => {
       const [dayStart, dayEnd] = dateRange;
       if (calendarViewMode === 'dates') {
         const formattedValue = `${format(dayStart)}${separator}${format(dayEnd)}`;
