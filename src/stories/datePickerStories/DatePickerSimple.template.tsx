@@ -9,8 +9,8 @@ import { useState } from 'react';
 const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
 
 const defaultInputProps = {
-  placeholder: 'Введите интервал дат',
-  dataPlaceholder: 'дд.мм.гггг – дд.мм.гггг',
+  placeholder: 'Введите дату',
+  dataPlaceholder: 'дд.мм.гггг',
   value: '11.',
 };
 
