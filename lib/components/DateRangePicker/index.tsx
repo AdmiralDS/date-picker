@@ -28,17 +28,17 @@ function dateRangeFromValue(value?: string, separator = ' – ', parce = default
   return start && start.isAfter(end) ? ([end, start] as const) : ([start, end] as const);
 }
 
-function formatRangeValue(start?: Dayjs, end?: Dayjs, separator = ' – ', format = defaultFormatter): string {
-  if (start && start.isValid()) {
-    if (!end || !end.isValid()) {
-      return format(start);
-    }
-    return start.isBefore(end) ? format(start) + separator + format(end) : format(end) + separator + format(start);
-  } else if (end && end.isValid()) {
-    return format(end);
-  }
-  return '';
-}
+// function formatRangeValue(start?: Dayjs, end?: Dayjs, separator = ' – ', format = defaultFormatter): string {
+//   if (start && start.isValid()) {
+//     if (!end || !end.isValid()) {
+//       return format(start);
+//     }
+//     return start.isBefore(end) ? format(start) + separator + format(end) : format(end) + separator + format(start);
+//   } else if (end && end.isValid()) {
+//     return format(end);
+//   }
+//   return '';
+// }
 
 export type DateRangePickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */

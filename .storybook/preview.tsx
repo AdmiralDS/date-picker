@@ -1,11 +1,12 @@
-import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { Preview } from '@storybook/react';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { DocsContainer } from '@storybook/addon-docs';
-import { useGlobals } from '@storybook/preview-api';
+import { useGlobals, addons } from '@storybook/preview-api';
 import { themes } from '@storybook/theming';
-import { useDarkMode } from 'storybook-dark-mode';
+import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
+import { lightThemeClassName, darkThemeClassName, vars } from '@admiral-ds/web';
+
 import {
   DARK_THEME,
   LIGHT_THEME,
@@ -14,7 +15,19 @@ import {
   LightThemeCssVars,
   DarkThemeCssVars,
 } from '@admiral-ds/react-ui';
-import { darkThemeClassName, lightThemeClassName, vars } from '@admiral-ds/web';
+
+const channel = addons.getChannel();
+
+function useDarkMode() {
+  const [isDark, setDark] = useState<boolean>(false);
+
+  useEffect(() => {
+    channel.on(DARK_MODE_EVENT_NAME, setDark);
+    return () => channel.off(DARK_MODE_EVENT_NAME, setDark);
+  }, []);
+
+  return isDark;
+}
 
 const GlobalStyles = createGlobalStyle`
     body {
@@ -26,7 +39,7 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 // create a component that uses the dark mode hook
-function ThemeWrapper(props) {
+function ThemeWrapper(props: { CSSCustomProps: boolean; children: React.ReactNode }) {
   // this example uses hook but you can also use class component as well
   const isDark = useDarkMode();
 
@@ -65,7 +78,7 @@ const preview: Preview = {
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: { matchers: { color: /(background|color)$/i, date: /Date$/ } },
     docs: {
-      container: (props) => {
+      container: (props: React.ComponentProps<typeof DocsContainer>) => {
         const theme = useDarkMode() ? themes.dark : themes.normal;
         return <DocsContainer {...props} theme={theme} />;
       },
@@ -75,7 +88,7 @@ const preview: Preview = {
     (renderStory) => {
       const [{ CSSCustomProps }] = useGlobals();
       return (
-        <ThemeWrapper CSSCustomProps={CSSCustomProps}>
+        <ThemeWrapper CSSCustomProps={CSSCustomProps as boolean}>
           <GlobalStyles />
           <DropdownProvider>
             <StoryContainer>{renderStory()}</StoryContainer>

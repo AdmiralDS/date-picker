@@ -5,6 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "noEmit": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -12,7 +13,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "declaration": true,
-    "emitDeclarationOnly": true,
     "jsx": "react-jsx",
 
     /* Linting */
@@ -20,16 +20,19 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    /*"esModuleInterop": true, */
-    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    // "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
       "#lib/*": ["./lib/components/*"],
       "#src/*": ["./src/*"],
-      "@admiral-ds/date-picker": ["./lib/main"]
+      "@admiral-ds/date-picker": ["./lib/main"],
+      "/*": ["./public/*"]
     },
-    "types": ["vitest/globals","vite-plugin-svgr/client","vite/client"]
+    "types": ["vitest/globals", "vite-plugin-svgr/client", "vite/client", "@testing-library/jest-dom"],
+    "plugins": [{"name": "typescript-plugin-css-modules"}]
   },
-  "include": ["src", "lib", "./.test"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", "lib", "public", "./.vitest/*", "./.storybook/*", "*.ts", "eslint.config.js"]
 }
+
+

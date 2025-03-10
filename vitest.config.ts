@@ -9,7 +9,8 @@ export default mergeConfig(
       setupFiles: ['./.test/setup.ts'],
       globals: true,
       // css: { include: /.+/ }, // https://vitest.dev/config/#css
-      // deps: { web: { transformCss: false } }, // https://vitest.dev/config/#deps-web-transformcss
+      pool: 'vmThreads',
+      // deps: { web: { transformCss: true } }, // https://vitest.dev/config/#deps-web-transformcss
       // server: { deps: { inline: ['@receter/my-component-library'] } },
     },
   }),
