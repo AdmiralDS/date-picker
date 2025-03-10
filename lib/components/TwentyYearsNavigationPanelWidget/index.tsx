@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-import { IconPlacement, TooltipHoc, typography } from '@admiral-ds/react-ui';
+import { vars, textValues } from '@admiral-ds/web';
+import { IconPlacement, TooltipHoc } from '@admiral-ds/react-ui';
 import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutline.svg?react';
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
@@ -22,9 +23,9 @@ const TwentyYearsNavigationPanelWrapper = styled.div`
 
 const TwentyYearsWrapper = styled.div`
   padding: 4px 8px;
-  color: ${(p) => p.theme.color['Neutral/Neutral 90']};
+  color: ${vars.color.Neutral_Neutral90};
   cursor: default;
-  ${typography['Subtitle/Subtitle 2']}
+  ${textValues['Subtitle/Subtitle 2']}
 `;
 
 const IconWithTooltip = TooltipHoc(IconPlacement);

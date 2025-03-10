@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import 'dayjs/locale/ru';
 
-import { typography } from '@admiral-ds/react-ui';
+import { vars, textValues } from '@admiral-ds/web';
 
 import { getCurrentDate } from '#lib/utils';
 import type { DatesOfMonthWidgetProps } from '#lib/DatesOfMonthWidget/interfaces';
@@ -11,10 +11,10 @@ import { Dates } from '#lib/DatesOfMonthWidget/Dates';
 import { ruLocale } from '#lib/calendarConstants.ts';
 
 const DatesOfMonthWrapper = styled.div`
-  background-color: ${({ theme }) => theme.color['Special/Elevated BG']};
+  background-color: ${vars.color.Special_ElevatedBG};
   width: ${DATES_OF_MONTH_WIDGET_WIDTH}px;
   margin: 12px 16px 16px 16px;
-  ${typography['Body/Body 2 Long']}
+  ${textValues['Body/Body 2 Long']}
 `;
 
 export const DatesOfMonthWidget = ({

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { vars } from '@admiral-ds/web';
 
 export interface AnyIconProps extends React.SVGProps<SVGSVGElement> {
   icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
@@ -16,13 +17,13 @@ export const InputIconButton = styled(AnyIcon)`
   }
 
   & *[fill^='#'] {
-    fill: var(--admiral-color-Neutral_Neutral50, ${(p) => p.theme.color['Neutral/Neutral 50']});
+    fill: ${vars.color.Neutral_Neutral50};
   }
 
   [disabled] &&& {
     pointer-events: none;
     & *[fill^='#'] {
-      fill: var(--admiral-color-Neutral_Neutral30, ${(p) => p.theme.color['Neutral/Neutral 30']});
+      fill: ${vars.color.Neutral_Neutral30};
     }
   }
 
@@ -31,6 +32,6 @@ export const InputIconButton = styled(AnyIcon)`
   }
 
   &:hover *[fill^='#'] {
-    fill: var(--admiral-color-Primary_Primary70, ${(p) => p.theme.color['Primary/Primary 70']});
+    fill: ${vars.color.Primary_Primary70};
   }
 `;

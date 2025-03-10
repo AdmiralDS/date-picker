@@ -14,13 +14,14 @@ import {
   LightThemeCssVars,
   DarkThemeCssVars,
 } from '@admiral-ds/react-ui';
+import { darkThemeClassName, lightThemeClassName, vars } from '@admiral-ds/web';
 
 const GlobalStyles = createGlobalStyle`
     body {
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
     html {
-      background-color: ${(props) => props.theme.color['Neutral/Neutral 00']};
+      background-color: ${vars.color.Neutral_Neutral00};
     }
 `;
 
@@ -41,14 +42,14 @@ function ThemeWrapper(props) {
   return (
     <ThemeProvider theme={isDark ? DARK_THEME : LIGHT_THEME}>
       {props.CSSCustomProps && renderCssProps()}
-      {props.children}
+      <div className={isDark ? darkThemeClassName : lightThemeClassName}>{props.children}</div>
     </ThemeProvider>
   );
 }
 
 const StoryContainer = styled.div`
   padding: 3em;
-  background-color: var(--admiral-color-Neutral_Neutral00, ${(p) => p.theme.color['Neutral/Neutral 00']});
+  background-color: ${vars.color.Neutral_Neutral00};
 `;
 
 const preview: Preview = {
@@ -62,12 +63,7 @@ const preview: Preview = {
       },
     },
     actions: { argTypesRegex: '^on[A-Z].*' },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/,
-      },
-    },
+    controls: { matchers: { color: /(background|color)$/i, date: /Date$/ } },
     docs: {
       container: (props) => {
         const theme = useDarkMode() ? themes.dark : themes.normal;

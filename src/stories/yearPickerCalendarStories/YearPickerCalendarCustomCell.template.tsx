@@ -2,6 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { memo } from 'react';
 import { css } from 'styled-components';
 
+import { vars } from '@admiral-ds/web';
 import { T } from '@admiral-ds/react-ui';
 import { DefaultCell, YearPickerCalendar } from '@admiral-ds/date-picker';
 import type { YearPickerCalendarProps, DefaultCellProps } from '@admiral-ds/date-picker';
@@ -49,7 +50,7 @@ const DefaultYearCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) =
   );
   const cellMixin = css`
     ${yearCellMixin};
-    color: ${(p) => p.theme.color['Success/Success 50 Main']};
+    color: ${vars.color.Success_Success50Main};
   `;
 
   return (

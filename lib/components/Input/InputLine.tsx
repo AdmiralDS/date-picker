@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { forwardRef, useEffect, useRef } from 'react';
 import { refSetter } from '@admiral-ds/react-ui';
+import { vars } from '@admiral-ds/web';
 
 export const StyledInputLine = styled.input<{ $isTmpValue?: boolean }>`
   border: none;
@@ -14,14 +15,14 @@ export const StyledInputLine = styled.input<{ $isTmpValue?: boolean }>`
   text-overflow: ellipsis;
   padding: 0;
 
-  color: ${(p) => (p.$isTmpValue ? p.theme.color['Neutral/Neutral 30'] : p.theme.color['Neutral/Neutral 90'])};
+  color: ${(p) => (p.$isTmpValue ? vars.color.Neutral_Neutral30 : vars.color.Neutral_Neutral90)};
   ::placeholder {
-    color: ${(p) => p.theme.color['Neutral/Neutral 50']};
+    color: ${vars.color.Neutral_Neutral50};
   }
 `;
 
 const Visible = styled.span`
-  color: ${(p) => p.theme.color['Neutral/Neutral 30']};
+  color: ${vars.color.Neutral_Neutral30};
   transition: color 0.3s ease-in-out;
 `;
 
@@ -33,7 +34,7 @@ const InputLineContainer = styled.div`
   position: relative;
   display: inline-block;
   &:focus-within ${Visible} {
-    color: ${(p) => p.theme.color['Neutral/Neutral 50']};
+    color: ${vars.color.Neutral_Neutral50};
   }
 `;
 

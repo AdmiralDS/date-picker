@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import 'dayjs/locale/ru';
 
-import { typography } from '@admiral-ds/react-ui';
+import { vars, textValues } from '@admiral-ds/web';
 
 import { DATES_OF_MONTH_WIDGET_WIDTH } from './constants';
 import { Days } from './Days';
@@ -13,10 +13,10 @@ import type { CalendarLocaleProps, DateCellProps, RangeTimestamp, Timestamp } fr
 import { baseDayNameCellMixin } from '#lib/DefaultCell/mixins';
 
 const DatesOfMonthWrapper = styled.div`
-  background-color: ${({ theme }) => theme.color['Special/Elevated BG']};
+  background-color: ${vars.color.Special_ElevatedBG};
   width: ${DATES_OF_MONTH_WIDGET_WIDTH}px;
   margin: 12px 16px 16px 16px;
-  ${typography['Body/Body 2 Long']}
+  ${textValues['Body/Body 2 Long']}
 `;
 
 const cellMixin = { cellMixin: baseDayNameCellMixin };

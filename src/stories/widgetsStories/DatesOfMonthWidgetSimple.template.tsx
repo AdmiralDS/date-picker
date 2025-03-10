@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import styled from 'styled-components';
 
-import { typography } from '@admiral-ds/react-ui';
+import { vars, textValues } from '@admiral-ds/web';
 
 import { capitalizeFirstLetter, getCurrentDate } from '#lib/utils';
 import { DatesOfMonthWidget } from '#lib/DatesOfMonthWidget';
@@ -21,11 +21,11 @@ const Wrapper = styled.div`
   align-content: space-between;
   padding: 10px;
   width: ${DATES_OF_MONTH_WIDGET_WIDTH}px;
-  border: 1px ${(p) => p.theme.color['Neutral/Neutral 90']} solid;
+  border: 1px ${vars.color.Neutral_Neutral90} solid;
 `;
 const MonthYear = styled.div`
   margin-bottom: 10px;
-  ${typography['Subtitle/Subtitle 2']}
+  ${textValues['Subtitle/Subtitle 2']}
 `;
 
 export const DatesOfMonthWidgetSimpleTemplate = ({ date, locale = ruLocale, ...props }: DatesOfMonthWidgetProps) => {

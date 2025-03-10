@@ -1,49 +1,49 @@
 import { css } from 'styled-components';
-import { typography } from '@admiral-ds/react-ui';
+import { vars, textValues } from '@admiral-ds/web';
 import { CELL_PADDING } from '#lib/DefaultCell/constants.ts';
 
 //<editor-fold desc="Base cell mixins">
 const baseCellMixin = css`
   padding: ${CELL_PADDING};
-  ${typography['Body/Body 2 Long']}
-  color: ${(p) => p.theme.color['Neutral/Neutral 90']};
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border: 1px ${(p) => p.theme.color['Special/Elevated BG']} solid;
+  ${textValues['Body/Body 2 Long']}
+  color: ${vars.color.Neutral_Neutral90};
+  background-color: ${vars.color.Special_ElevatedBG};
+  border: 1px ${vars.color.Special_ElevatedBG} solid;
 `;
 
 const activeCellMixin = css<{ $isActive?: boolean }>`
-  ${(p) => (p.$isActive ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};` : '')}
+  ${(p) => (p.$isActive ? `border-color: ${vars.color.Primary_Primary60Main};` : '')}
 `;
 
 const activeRangeCellMixin = css<{ $isActive?: boolean }>`
   ${(p) =>
     p.$isActive
-      ? `background-color: ${p.theme.color['Special/Elevated BG']};
-         border-color: ${p.theme.color['Primary/Primary 60 Main']};`
+      ? `background-color: ${vars.color.Special_ElevatedBG};
+         border-color: ${vars.color.Primary_Primary60Main};`
       : ''}
 `;
 
 const selectedCellMixin = css<{ $isActive?: boolean }>`
-  background-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
-  border-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
-  color: ${(p) => p.theme.color['Special/Static White']};
+  background-color: ${vars.color.Primary_Primary60Main};
+  border-color: ${vars.color.Primary_Primary60Main};
+  color: ${vars.color.Special_StaticWhite};
   ${(p) =>
     p.$isActive
-      ? `background-color: ${p.theme.color['Primary/Primary 70']};
-         border-color: ${p.theme.color['Primary/Primary 70']};`
+      ? `background-color: ${vars.color.Primary_Primary70};
+         border-color: ${vars.color.Primary_Primary70};`
       : ''}
 `;
 
 const hiddenCellMixin = css`
-  color: ${(p) => p.theme.color['Special/Elevated BG']};
+  color: ${vars.color.Special_ElevatedBG};
 `;
 
 const currentCellMixin = css`
-  border-color: ${(p) => p.theme.color['Neutral/Neutral 90']};
+  border-color: ${vars.color.Neutral_Neutral90};
 `;
 
 const disabledCellMixin = css`
-  color: ${(p) => p.theme.color['Neutral/Neutral 30']};
+  color: ${vars.color.Neutral_Neutral30};
 `;
 
 const rangeCellMixin = css`
@@ -69,9 +69,9 @@ export const selectedDateCellMixin = css<{ $isActive?: boolean }>`
 
 /*export const selectingRangeEndDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseDateMixin};
-  background-color: ${(p) => p.theme.color['Primary/Primary 70']};
-  border-color: ${(p) => p.theme.color['Primary/Primary 70']};
-  color: ${(p) => p.theme.color['Special/Static White']};
+  background-color: ${vars.color.Primary_Primary70};
+  border-color: ${vars.color.Primary_Primary70};
+  color: ${vars.color.Special_StaticWhite};
 `;*/
 
 export const disabledDateCellMixin = css<{ $isActive?: boolean }>`
@@ -93,32 +93,32 @@ export const hiddenDateCellMixin = css<{ $isActive?: boolean }>`
 export const holidayDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseDateMixin};
   ${activeCellMixin};
-  color: ${(p) => p.theme.color['Error/Error 60 Main']};
+  color: ${vars.color.Error_Error60Main};
 `;
 
 export const disabledHolidayDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseDateMixin};
-  color: ${(p) => p.theme.color['Error/Error 30']};
+  color: ${vars.color.Error_Error30};
 `;
 
 export const disabledCurrentDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseDateMixin};
   ${currentCellMixin};
-  border-color: ${(p) => p.theme.color['Neutral/Neutral 30']};
+  border-color: ${vars.color.Neutral_Neutral30};
   ${disabledCellMixin}
 `;
 
 export const disabledCurrentHolidayDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseDateMixin};
   ${currentCellMixin};
-  border-color: ${(p) => p.theme.color['Neutral/Neutral 30']};
-  color: ${(p) => p.theme.color['Error/Error 30']};
+  border-color: ${vars.color.Neutral_Neutral30};
+  color: ${vars.color.Error_Error30};
 `;
 
 export const rangeDisabledHolidayDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseDateMixin};
   ${rangeCellMixin};
-  color: ${(p) => p.theme.color['Error/Error 30']};
+  color: ${vars.color.Error_Error30};
 `;
 
 export const currentDateCellMixin = css<{ $isActive?: boolean }>`
@@ -137,7 +137,7 @@ export const currentDateHolidayDateCellMixin = css<{ $isActive?: boolean }>`
 /*export const outsideMonthDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseDateMixin};
   cursor: default;
-  color: ${(p) => p.theme.color['Neutral/Neutral 20']};
+  color: ${vars.color.Neutral_Neutral20};
 `;*/
 
 export const rangeDateCellMixin = css<{ $isActive?: boolean }>`
@@ -157,12 +157,12 @@ export const rangeCurrentDateCellMixin = css<{ $isActive?: boolean }>`
 
 export const rangeHolidayDateCellMixin = css<{ $isActive?: boolean }>`
   ${rangeDateCellMixin};
-  color: ${(p) => p.theme.color['Error/Error 60 Main']};
+  color: ${vars.color.Error_Error60Main};
 `;
 
 export const rangeCurrentHolidayDateCellMixin = css<{ $isActive?: boolean }>`
   ${rangeCurrentDateCellMixin};
-  color: ${(p) => p.theme.color['Error/Error 60 Main']};
+  color: ${vars.color.Error_Error60Main};
 `;
 //</editor-fold>
 
@@ -228,28 +228,28 @@ export const monthCellMixin = css<{
   $hidden?: boolean;
 }>`
   ${baseMonthMixin};
-  ${(p) => (p.$isCurrent ? `border-color: ${p.theme.color['Neutral/Neutral 90']};` : '')}
+  ${(p) => (p.$isCurrent ? `border-color: ${vars.color.Neutral_Neutral90};` : '')}
   ${(p) =>
     p.$isSelected
-      ? `border-color: ${p.theme.color['Primary/Primary 60 Main']};
-         background-color: ${p.theme.color['Primary/Primary 60 Main']};`
+      ? `border-color: ${vars.color.Primary_Primary60Main};
+         background-color: ${vars.color.Primary_Primary60Main};`
       : ''}
   ${(p) =>
     p.$isActive
       ? p.$isSelected
-        ? `border-color: ${p.theme.color['Primary/Primary 70']};
-           background-color: ${p.theme.color['Primary/Primary 70']};`
-        : `border-color: ${p.theme.color['Primary/Primary 60 Main']};`
+        ? `border-color: ${vars.color.Primary_Primary70};
+           background-color: ${vars.color.Primary_Primary70};`
+        : `border-color: ${vars.color.Primary_Primary60Main};`
       : ''}
   ${(p) =>
     p.$disabled
-      ? `color: ${p.theme.color['Neutral/Neutral 30']};
-         border-color: ${p.theme.color['Special/Elevated BG']};`
+      ? `color: ${vars.color.Neutral_Neutral30};
+         border-color: ${vars.color.Special_ElevatedBG};`
       : ''}
   ${(p) =>
     p.$hidden
-      ? `color: ${p.theme.color['Special/Elevated BG']};
-         border-color: ${p.theme.color['Special/Elevated BG']};`
+      ? `color: ${vars.color.Special_ElevatedBG};
+         border-color: ${vars.color.Special_ElevatedBG};`
       : ''}
 `;
 //</editor-fold>

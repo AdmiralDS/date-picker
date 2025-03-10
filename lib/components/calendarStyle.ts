@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-
-import { mediumGroupBorderRadius } from '@admiral-ds/react-ui';
+import { vars } from '@admiral-ds/web';
 
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH } from '#lib/calendarConstants.ts';
 import { DateCalendar } from '#lib/DateCalendar';
@@ -19,9 +18,9 @@ export const SinglePickerCalendarWrapper = styled.div`
   padding-top: 20px;
   width: ${CALENDAR_WIDTH}px;
   height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
+  background-color: ${vars.color.Special_ElevatedBG};
+  border-radius: ${vars.borderRadius.Medium};
+  box-shadow: ${vars.boxShadow.Shadow_08};
 `;
 
 export const DoublePickerCalendarWrapper = styled.div`
@@ -29,9 +28,9 @@ export const DoublePickerCalendarWrapper = styled.div`
   display: flex;
   width: ${CALENDAR_WIDTH * 2}px;
   height: ${CALENDAR_HEIGHT}px;
-  background-color: ${(p) => p.theme.color['Special/Elevated BG']};
-  border-radius: ${(p) => mediumGroupBorderRadius(p.theme.shape)};
-  ${(p) => p.theme.shadow['Shadow 08']}
+  background-color: ${vars.color.Special_ElevatedBG};
+  border-radius: ${vars.borderRadius.Medium};
+  ${vars.boxShadow.Shadow_08}
 `;
 
 export const SingleContainer = styled.div`

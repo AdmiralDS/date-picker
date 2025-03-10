@@ -1,16 +1,17 @@
 import { useMemo, type ComponentPropsWithoutRef } from 'react';
 import styled from 'styled-components';
-import { firstDayOfTheMonth, mondayOfTheWeek, weekdayNameList } from '@admiral-ds/date-picker';
+import { weekdayNameList } from '@admiral-ds/date-picker';
 import type { CalendarDataCell } from '#lib/Calendar/Dates';
 import { generateCalendarDataCellList } from '#lib/Calendar/Dates';
 import { defaultTimestampFormatter } from '#lib/Calendar/defaultTimestampFormatter';
+import { vars } from '@admiral-ds/web';
 
 const StoryComponentWrapper = styled.div`
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   align-content: space-between;
-  border: 1px ${(p) => p.theme.color['Neutral/Neutral 20']} dashed;
+  border: 1px ${vars.color.Neutral_Neutral20} dashed;
   border-radius: 8px;
 `;
 
@@ -68,23 +69,23 @@ const CalendarCell = styled.div`
   }
 
   & .calendar-cell-date_ring[data-type='ring-solid'] {
-    background-color: ${(p) => p.theme.color['Primary/Primary 60 Main']};
+    background-color: ${vars.color.Primary_Primary60Main};
   }
 
   & .calendar-cell-date_ring[data-type='ring-solid'] + .calendar-cell-text {
-    color: ${(p) => p.theme.color['Special/Static White']};
+    color: ${vars.color.Special_StaticWhite};
   }
 
   &:hover .calendar-cell-date_ring[data-type='ring-solid'] {
-    background-color: ${(p) => p.theme.color['Primary/Primary 70']};
+    background-color: ${vars.color.Primary_Primary70};
   }
 
   & .calendar-cell-date_ring[data-type='ring-blue'] {
-    border: solid 1px ${(p) => p.theme.color['Primary/Primary 60 Main']};
+    border: solid 1px ${vars.color.Primary_Primary60Main};
   }
 
   & .calendar-cell-date_ring[data-type='ring-black'] {
-    border: solid 1px ${(p) => p.theme.color['Neutral/Neutral 90']};
+    border: solid 1px ${vars.color.Neutral_Neutral90};
   }
 
   &:hover {
@@ -135,7 +136,7 @@ const LeftHalf = styled.div`
   bottom: 0;
   left: 0;
   width: 50%;
-  background-color: ${(p) => p.theme.color['Opacity/Focus']};
+  background-color: ${vars.color.Opacity_Focus};
 `;
 
 const RightHalf = styled.div`
@@ -145,7 +146,7 @@ const RightHalf = styled.div`
   bottom: 0;
   right: 0;
   width: 50%;
-  background-color: ${(p) => p.theme.color['Opacity/Focus']};
+  background-color: ${vars.color.Opacity_Focus};
 `;
 
 export const firstCapitalized = (s: string) => s.charAt(0).toUpperCase() + s.substring(1).toLowerCase();
