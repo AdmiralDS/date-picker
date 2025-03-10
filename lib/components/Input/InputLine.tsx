@@ -31,6 +31,7 @@ const Invisible = styled.span`
 `;
 
 const InputLineContainer = styled.div`
+  text-align: start;
   position: relative;
   display: inline-block;
   &:focus-within ${Visible} {
