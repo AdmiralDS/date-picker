@@ -1,7 +1,7 @@
 {
   "name": "@admiral-ds/date-picker",
   "description": "Admiral DS DatePicker",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Admiral DS team",
   "repository": {
     "type": "git",

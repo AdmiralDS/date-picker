@@ -45,8 +45,8 @@ function ThemeWrapper(props: { CSSCustomProps: boolean; children: React.ReactNod
 
   useEffect(() => {
     // document.body refers to body tag inside iframe#storybook-preview-iframe
-    document.body.classList.add(`admiral-theme-${isDark ? 'dark' : 'light'}`);
-    document.body.classList.remove(`admiral-theme-${isDark ? 'light' : 'dark'}`);
+    document.body.classList.add(...(isDark ? darkThemeClassName : lightThemeClassName).split(' '));
+    document.body.classList.remove(...(isDark ? lightThemeClassName : darkThemeClassName).split(' '));
   }, [isDark]);
 
   const renderCssProps = () => (isDark ? <DarkThemeCssVars /> : <LightThemeCssVars />);
@@ -55,7 +55,7 @@ function ThemeWrapper(props: { CSSCustomProps: boolean; children: React.ReactNod
   return (
     <ThemeProvider theme={isDark ? DARK_THEME : LIGHT_THEME}>
       {props.CSSCustomProps && renderCssProps()}
-      <div className={isDark ? darkThemeClassName : lightThemeClassName}>{props.children}</div>
+      {props.children}
     </ThemeProvider>
   );
 }
