@@ -11,6 +11,7 @@ import { DateRangePickerCalendar } from '@admiral-ds/date-picker';
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 import { dateIsInRange, dateIsSelected } from '#lib/utils.ts';
 import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
+import type { DateRange } from 'lib/types';
 
 dayjs.extend(minMax);
 
@@ -62,8 +63,8 @@ export const DateRangePickerCalendarBlockEarlierDatesTemplate = () => {
     setActiveDateRangeEnd(date);
   };
 
-  const [selectedDateRange, setSelectedDateRange] = useState<[Dayjs | undefined, Dayjs | undefined] | undefined>();
-  const handleSelectedDateRangeChange = (dateRange: [Dayjs | undefined, Dayjs | undefined]) => {
+  const [selectedDateRange, setSelectedDateRange] = useState<DateRange | undefined>();
+  const handleSelectedDateRangeChange = (dateRange: DateRange) => {
     setSelectedDateRange(dateRange);
   };
 
@@ -101,7 +102,6 @@ export const DateRangePickerCalendarBlockEarlierDatesTemplate = () => {
         onClick={handleClick}
         onActiveDateRangeEndValueChange={handleActiveDateRangeEndChange}
         dateAttributes={dateAttrs}
-        // TODO:
         onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
         defaultViewModeValue={'dates'}
         defaultDateValue={dayjs()}

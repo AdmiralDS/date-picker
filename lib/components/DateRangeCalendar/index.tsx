@@ -10,7 +10,9 @@ import { baseDayNameCellMixin } from '#lib/DefaultCell/mixins.tsx';
 import type { RangeCalendarProps } from '#lib/calendarInterfaces';
 import { MemoDefaultDateRangeCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
+import type { DateRange } from 'lib/types';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface DateRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
 
 export const DateRangeCalendar = ({
@@ -112,39 +114,41 @@ export const DateRangeCalendar = ({
     const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName);
     const disabled = targetDataAttributes['disabledCell'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
-      const newSelectedDateRangeValue: [Dayjs | undefined, Dayjs | undefined] = [undefined, undefined];
+      let first: Dayjs | undefined = undefined;
+      let second: Dayjs | undefined = undefined;
       if (!dateRangeActiveEndInner) {
         if (dateRangeFirstInner && !dateRangeSecondInner) {
           handleDateRangeSecondChange(date);
-          newSelectedDateRangeValue[0] = dateRangeFirstInner;
-          newSelectedDateRangeValue[1] = date;
+          first = dateRangeFirstInner;
+          second = date;
         } else {
           handleDateRangeFirstChange(date);
-          newSelectedDateRangeValue[0] = date;
-          newSelectedDateRangeValue[1] = dateRangeSecondInner;
+          first = date;
+          second = dateRangeSecondInner;
         }
       } else {
         if (dateRangeFirstInner && dateRangeSecondInner) {
           if (dateRangeActiveEndInner.isSame(dateRangeFirstInner, 'date')) {
             handleDateRangeSecondChange(date);
-            newSelectedDateRangeValue[0] = dateRangeFirstInner;
-            newSelectedDateRangeValue[1] = date;
+            first = dateRangeFirstInner;
+            second = date;
           }
           if (dateRangeActiveEndInner.isSame(dateRangeSecondInner, 'date')) {
             handleDateRangeFirstChange(date);
-            newSelectedDateRangeValue[0] = date;
-            newSelectedDateRangeValue[1] = dateRangeSecondInner;
+            first = date;
+            second = dateRangeSecondInner;
           }
         } else if (dateRangeFirstInner && !dateRangeSecondInner) {
           handleDateRangeSecondChange(date);
-          newSelectedDateRangeValue[0] = dateRangeFirstInner;
-          newSelectedDateRangeValue[1] = date;
+          first = dateRangeFirstInner;
+          second = date;
         } else {
           handleDateRangeFirstChange(date);
-          newSelectedDateRangeValue[0] = date;
-          newSelectedDateRangeValue[1] = dateRangeSecondInner;
+          first = date;
+          second = dateRangeSecondInner;
         }
       }
+      const newSelectedDateRangeValue: DateRange = [first, second];
       handleDateRangeActiveEndChange(date);
       onSelectedDateRangeValueChange?.(newSelectedDateRangeValue);
     }

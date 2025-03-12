@@ -106,7 +106,7 @@ export const DateRangeDoublePickerCalendar = ({
   );
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
 
-  const handleSelectedDateRangeChange = (dateRange: readonly [Dayjs | undefined, Dayjs | undefined]) => {
+  const handleSelectedDateRangeChange = (dateRange: DateRange) => {
     setSelectedDateRangeState(dateRange);
     onSelectedDateRangeValueChange?.(dateRange);
   };

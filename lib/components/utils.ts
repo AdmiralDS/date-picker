@@ -9,6 +9,7 @@ import isBetween from 'dayjs/plugin/isBetween';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import dayOfYear from 'dayjs/plugin/dayOfYear';
 import type { DateAttributes } from '#lib/DefaultCell';
+import type { DateRange } from 'lib/types';
 
 [localeData, customParseFormat, localizedFormat, utc, isLeapYear, isBetween, isSameOrAfter, dayOfYear].forEach(
   (plugin) => extend(plugin),
@@ -112,7 +113,7 @@ export const sortDatesAsc = (date1: Dayjs, date2: Dayjs, unit: dayjs.OpUnitType 
 export const dateIsInRange = (
   unit: dayjs.OpUnitType | undefined,
   dateCurrent?: Dayjs,
-  selectedDateRange?: [Dayjs | undefined, Dayjs | undefined],
+  selectedDateRange?: DateRange,
 ) => {
   if (!dateCurrent || !selectedDateRange) return false;
   if (selectedDateRange[0] && selectedDateRange[1]) {
@@ -124,7 +125,7 @@ export const dateIsInRange = (
 export const dateIsSelected = (
   unit: dayjs.OpUnitType | undefined,
   dateCurrent?: Dayjs,
-  selectedDateRange?: [Dayjs | undefined, Dayjs | undefined],
+  selectedDateRange?: DateRange,
 ) => {
   if (!dateCurrent || !selectedDateRange) return false;
   const sameAsFirst = selectedDateRange[0] ? dateCurrent.isSame(selectedDateRange[0], unit) : false;
@@ -134,7 +135,7 @@ export const dateIsSelected = (
 export const dateIsRangeStart = (
   unit: dayjs.OpUnitType | undefined,
   dateCurrent?: Dayjs,
-  selectedDateRange?: [Dayjs | undefined, Dayjs | undefined],
+  selectedDateRange?: DateRange,
 ) => {
   if (!dateCurrent || !selectedDateRange || !selectedDateRange[0] || !selectedDateRange[1]) return false;
   const dates = sortDatesAsc(selectedDateRange[0], selectedDateRange[1], unit);
@@ -143,7 +144,7 @@ export const dateIsRangeStart = (
 export const dateIsRangeEnd = (
   unit: dayjs.OpUnitType | undefined,
   dateCurrent?: Dayjs,
-  selectedDateRange?: [Dayjs | undefined, Dayjs | undefined],
+  selectedDateRange?: DateRange,
 ) => {
   if (!dateCurrent || !selectedDateRange || !selectedDateRange[0] || !selectedDateRange[1]) return false;
   const dates = sortDatesAsc(selectedDateRange[0], selectedDateRange[1], unit);
@@ -232,9 +233,9 @@ export function getYearAttributes(startDate: Dayjs, dateAttrs?: (currentDate: Da
   return getUnitAttributes(startDate, 'year', dateAttrs);
 }
 
-export const getSelectedDate = (selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined]) => {
+export const getSelectedDate = (selected?: Dayjs | DateRange) => {
   return isDayjs(selected) ? selected : undefined;
 };
-export const getSelectedDateRange = (selected?: Dayjs | [Dayjs | undefined, Dayjs | undefined]) => {
+export const getSelectedDateRange = (selected?: Dayjs | DateRange) => {
   return isDayjs(selected) ? undefined : selected;
 };

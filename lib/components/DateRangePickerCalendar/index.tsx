@@ -14,6 +14,7 @@ import {
 } from '#lib/calendarStyle.ts';
 import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
+import type { DateRange } from 'lib/types';
 
 export interface DateRangePickerCalendarProps
   extends Omit<RangeCalendarProps, 'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'cell'>,
@@ -57,12 +58,12 @@ export const DateRangePickerCalendar = ({
   //</editor-fold>
 
   //<editor-fold desc="Selected range">
-  const [selectedDateRangeState, setSelectedDateRangeState] = useState<readonly [Dayjs | undefined, Dayjs | undefined]>(
+  const [selectedDateRangeState, setSelectedDateRangeState] = useState<DateRange>(
     defaultSelectedDateRangeValue ?? [undefined, undefined],
   );
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
 
-  const handleSelectedDateRangeChange = (dateRange: readonly [Dayjs | undefined, Dayjs | undefined]) => {
+  const handleSelectedDateRangeChange = (dateRange: DateRange) => {
     setSelectedDateRangeState(dateRange);
     onSelectedDateRangeValueChange?.(dateRange);
   };
