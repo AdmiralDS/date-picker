@@ -31,9 +31,6 @@ function useDarkMode() {
 
 const GlobalStyles = createGlobalStyle`
     body {
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-    html {
       background-color: ${vars.color.Neutral_Neutral00};
     }
 `;
