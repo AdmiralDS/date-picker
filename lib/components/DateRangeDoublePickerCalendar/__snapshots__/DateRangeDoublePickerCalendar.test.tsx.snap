@@ -401,7 +401,6 @@ exports[`DateRangeDoublePickerCalendar > should render component 1`] = `
             <div
               class="DefaultCell__CellContainer-sc-e57mvj-0 bjgiss"
               data-cell-type="dateCell"
-              data-is-current-day-cell="true"
               data-is-start-of-week-cell="true"
               data-value="2025-03-10"
             >
@@ -412,7 +411,7 @@ exports[`DateRangeDoublePickerCalendar > should render component 1`] = `
                 class="DefaultCell__RightHalf-sc-e57mvj-2 zYrnR"
               />
               <div
-                class="DefaultCell__Cell-sc-e57mvj-3 gRNLXI"
+                class="DefaultCell__Cell-sc-e57mvj-3 kgEvmr"
               >
                 10
               </div>
@@ -437,6 +436,7 @@ exports[`DateRangeDoublePickerCalendar > should render component 1`] = `
             <div
               class="DefaultCell__CellContainer-sc-e57mvj-0 bjgiss"
               data-cell-type="dateCell"
+              data-is-current-day-cell="true"
               data-value="2025-03-12"
             >
               <div
@@ -446,7 +446,7 @@ exports[`DateRangeDoublePickerCalendar > should render component 1`] = `
                 class="DefaultCell__RightHalf-sc-e57mvj-2 zYrnR"
               />
               <div
-                class="DefaultCell__Cell-sc-e57mvj-3 kgEvmr"
+                class="DefaultCell__Cell-sc-e57mvj-3 gRNLXI"
               >
                 12
               </div>
