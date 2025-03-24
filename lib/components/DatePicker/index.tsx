@@ -13,6 +13,8 @@ import { InputIconButton } from '#lib/InputIconButton';
 import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
 import { PopoverPanel } from '#lib/PopoverPanel';
 import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
+import { ruLocale } from '#lib/calendarConstants.ts';
+import type { CalendarLocaleProps } from '#lib/calendarInterfaces.js';
 
 const Calendar = styled(DatePickerCalendar)`
   border: none;
@@ -31,13 +33,19 @@ export type DatePickerProps = InputBoxProps & {
 
   /** Функция для конвертации строки инпута в значение календаря */
   parce?: (date?: string) => Dayjs;
+
+  /** Изменение локали выпадающего календаря */
+  Calendarlocale?: CalendarLocaleProps;
 };
 
 /**
  * Компонент DatePicker
  */
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
-  ({ inputProps = {}, format = defaultFormatter, parce = defaultParcer, ...containerProps }, refContainerProps) => {
+  (
+    { inputProps = {}, format = defaultFormatter, parce = defaultParcer, Calendarlocale = ruLocale, ...containerProps },
+    refContainerProps,
+  ) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
     const [displayDate, setDisplayDate] = useState(dayjs());
     const [tmpValue, setTmpValue] = useState<string | undefined>();
@@ -187,6 +195,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
               onSelectedDateValueChange={handleSelectedDateValueChange}
               activeDateValue={parce(tmpValue)}
               onActiveDateValueChange={handleActiveDateValueChange}
+              locale={Calendarlocale}
             />
           </PopoverPanel>
         )}
