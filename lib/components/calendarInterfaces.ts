@@ -6,6 +6,7 @@ import type { ArrowButtonProps } from '#lib/widgetInterfaces.ts';
 import type { DateRange } from 'lib/types';
 
 export type CalendarViewMode = 'dates' | 'months' | 'years';
+// export type MonthCalendarViewMode = 'months' | 'years';
 
 export type Timestamp = number;
 export type RangeTimestamp = readonly [Timestamp, Timestamp];
@@ -109,13 +110,13 @@ export type СellProps = {
   yearCell?: FunctionComponent<DateCellProps>;
 };
 
-export interface PickerCalendarProps {
+export interface PickerCalendarProps<T = CalendarViewMode> {
   /** Экран выбора дат, месяцев, лет */
-  viewModeValue?: CalendarViewMode;
+  viewModeValue?: T;
   /** Режим отображения по умолчанию */
-  defaultViewModeValue?: CalendarViewMode;
+  defaultViewModeValue?: T;
   /** Коллбэк на переключение экрана */
-  onViewModeChange?: (mode: CalendarViewMode) => void;
+  onViewModeChange?: (mode: T) => void;
   /** Кастомное отображение ячеек */
   cell?: СellProps;
   /** Параметры для кнопки панели "Назад" */
@@ -123,3 +124,5 @@ export interface PickerCalendarProps {
   /** Параметры для кнопки панели "Вперед" */
   nextButtonProps?: ArrowButtonProps;
 }
+
+// export interface MonthInputProps extends PickerCalendarProps<MonthCalendarViewMode> {}

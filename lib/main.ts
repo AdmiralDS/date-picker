@@ -11,6 +11,8 @@ export * from './components/YearRangeDoublePickerCalendar';
 export * from './components/DateCalendar';
 export * from './components/DateRangeCalendar';
 export * from './components/MonthCalendar';
+export * from './components/MonthInput';
+export * from './components/MonthPickerCalendar';
 export * from './components/MonthRangeCalendar';
 export * from './components/YearCalendar';
 export * from './components/YearRangeCalendar';
