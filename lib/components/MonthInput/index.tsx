@@ -68,7 +68,7 @@ export const MonthInput = forwardRef<HTMLDivElement, MonthInputProps>(
         const formattedValue = format(date);
         setInputValue(formattedValue);
         setTmpValueDisplayed(false);
-        // setCalendarOpen(false);
+        setCalendarOpen(false);
       }
     };
 
@@ -80,10 +80,12 @@ export const MonthInput = forwardRef<HTMLDivElement, MonthInputProps>(
     };
 
     const handleCalendarViewModeChange = (view: CalendarViewMode) => {
-      setCalendarViewMode(view);
-      if (view !== 'months') {
-        setTmpValue(undefined);
-        setTmpValueDisplayed(false);
+      if (view === 'months' || view === 'years') {
+        setCalendarViewMode(view);
+        if (view !== 'months') {
+          setTmpValue(undefined);
+          setTmpValueDisplayed(false);
+        }
       }
     };
 
