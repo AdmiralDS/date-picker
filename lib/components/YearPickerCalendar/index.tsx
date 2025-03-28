@@ -51,6 +51,7 @@ export const YearPickerCalendar = ({
   };
 
   const handleTwentyYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
+    e.preventDefault();
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
@@ -68,7 +69,7 @@ export const YearPickerCalendar = ({
         date={dateInner}
         viewMode={'years'}
         locale={locale}
-        onClick={handleTwentyYearsNavigationPanelClick}
+        onMouseDown={handleTwentyYearsNavigationPanelClick}
         prevButtonProps={prevButtonProps}
         nextButtonProps={nextButtonProps}
       />

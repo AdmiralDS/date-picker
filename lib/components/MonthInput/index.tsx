@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { refSetter, changeInputData } from '@admiral-ds/react-ui';
-import { DatePickerCalendar } from '#lib/DatePickerCalendar';
+import { MonthPickerCalendar } from '#lib/MonthPickerCalendar';
 import type { InputBoxProps } from '#lib/Input/InputBox';
 import { InputBox } from '#lib/Input/InputBox';
 import type { InputLineProps } from '#lib/Input/InputLine';
@@ -16,15 +16,15 @@ import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { CalendarLocaleProps } from '#lib/calendarInterfaces.js';
 
-const Calendar = styled(DatePickerCalendar)`
+const Calendar = styled(MonthPickerCalendar)`
   border: none;
   box-shadow: none;
 `;
 
-const defaultFormatter = (date: Dayjs) => date.format('DD.MM.YYYY');
-const defaultParcer = (date?: string) => dayjs(date, 'DD.MM.YYYY');
+const defaultFormatter = (date: Dayjs) => date.format('MM.YYYY');
+const defaultParcer = (date?: string) => dayjs(date, 'MM.YYYY');
 
-export type DatePickerProps = InputBoxProps & {
+export type MonthInputProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
   inputProps?: InputLineProps;
 
@@ -39,9 +39,9 @@ export type DatePickerProps = InputBoxProps & {
 };
 
 /**
- * Компонент DatePicker
+ * Компонент MonthInput
  */
-export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
+export const MonthInput = forwardRef<HTMLDivElement, MonthInputProps>(
   (
     { inputProps = {}, format = defaultFormatter, parce = defaultParcer, Calendarlocale = ruLocale, ...containerProps },
     refContainerProps,
@@ -54,7 +54,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const inputBoxRef = useRef(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
-    const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('dates');
+    const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('months');
 
     const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
@@ -64,7 +64,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     };
 
     const handleSelectedDateValueChange = (date: Dayjs) => {
-      if (calendarViewMode === 'dates') {
+      if (calendarViewMode === 'months') {
         const formattedValue = format(date);
         setInputValue(formattedValue);
         setTmpValueDisplayed(false);
@@ -74,16 +74,18 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
     const handleActiveDateValueChange = (date?: Dayjs) => {
       setTmpValue(date ? format(date) : undefined);
-      if (calendarViewMode === 'dates') {
+      if (calendarViewMode === 'months') {
         setTmpValueDisplayed(!!date);
       }
     };
 
     const handleCalendarViewModeChange = (view: CalendarViewMode) => {
-      setCalendarViewMode(view);
-      if (view !== 'dates') {
-        setTmpValue(undefined);
-        setTmpValueDisplayed(false);
+      if (view === 'months' || view === 'years') {
+        setCalendarViewMode(view);
+        if (view !== 'months') {
+          setTmpValue(undefined);
+          setTmpValueDisplayed(false);
+        }
       }
     };
 
@@ -190,7 +192,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
             <Calendar
               onViewModeChange={handleCalendarViewModeChange}
               dateValue={displayDate}
-              onDateValueChange={(day) => setDisplayDate(day)}
+              onDateValueChange={(month) => setDisplayDate(month)}
               selectedDateValue={date}
               onSelectedDateValueChange={handleSelectedDateValueChange}
               activeDateValue={parce(tmpValue)}
@@ -203,4 +205,4 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     );
   },
 );
-DatePicker.displayName = 'DatePicker';
+MonthInput.displayName = 'MonthInput';

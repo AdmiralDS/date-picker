@@ -129,6 +129,7 @@ export const MonthRangeDoublePickerCalendar = ({
   };
 
   const handleLeftYearNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
+    e.preventDefault();
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
@@ -151,6 +152,7 @@ export const MonthRangeDoublePickerCalendar = ({
     }
   };
   const handleRightYearNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
+    e.preventDefault();
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
@@ -191,7 +193,7 @@ export const MonthRangeDoublePickerCalendar = ({
           date={dateLeftInner}
           viewMode={viewModeLeftInner}
           locale={locale}
-          onClick={handleLeftYearNavigationPanelClick}
+          onMouseDown={handleLeftYearNavigationPanelClick}
           prevButtonProps={prevButtonProps}
           nextButtonProps={nextButtonProps}
         />
@@ -226,7 +228,7 @@ export const MonthRangeDoublePickerCalendar = ({
           date={dateRightInner}
           viewMode={viewModeRightInner}
           locale={locale}
-          onClick={handleRightYearNavigationPanelClick}
+          onMouseDown={handleRightYearNavigationPanelClick}
           prevButtonProps={prevButtonProps}
           nextButtonProps={nextButtonProps}
         />
