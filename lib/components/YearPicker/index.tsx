@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { refSetter, changeInputData } from '@admiral-ds/react-ui';
-import { MonthPickerCalendar } from '#lib/MonthPickerCalendar';
+import { YearPickerCalendar } from '#lib/YearPickerCalendar';
 import type { InputBoxProps } from '#lib/Input/InputBox';
 import { InputBox } from '#lib/Input/InputBox';
 import type { InputLineProps } from '#lib/Input/InputLine';
@@ -16,15 +16,15 @@ import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { CalendarLocaleProps } from '#lib/calendarInterfaces.js';
 
-const Calendar = styled(MonthPickerCalendar)`
+const Calendar = styled(YearPickerCalendar)`
   border: none;
   box-shadow: none;
 `;
 
-const defaultFormatter = (date: Dayjs) => date.format('MM.YYYY');
-const defaultParcer = (date?: string) => dayjs(date, 'MM.YYYY');
+const defaultFormatter = (date: Dayjs) => date.format('YYYY');
+const defaultParcer = (date?: string) => dayjs(date, 'YYYY');
 
-export type MonthInputProps = InputBoxProps & {
+export type YearPickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
   inputProps?: InputLineProps;
 
@@ -39,9 +39,9 @@ export type MonthInputProps = InputBoxProps & {
 };
 
 /**
- * Компонент MonthInput
+ * Компонент MonthPicker
  */
-export const MonthInput = forwardRef<HTMLDivElement, MonthInputProps>(
+export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
   (
     { inputProps = {}, format = defaultFormatter, parce = defaultParcer, Calendarlocale = ruLocale, ...containerProps },
     refContainerProps,
@@ -54,7 +54,7 @@ export const MonthInput = forwardRef<HTMLDivElement, MonthInputProps>(
     const inputBoxRef = useRef(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
-    const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('months');
+    const [calendarViewMode] = useState<CalendarViewMode>('years');
 
     const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
@@ -64,7 +64,7 @@ export const MonthInput = forwardRef<HTMLDivElement, MonthInputProps>(
     };
 
     const handleSelectedDateValueChange = (date: Dayjs) => {
-      if (calendarViewMode === 'months') {
+      if (calendarViewMode === 'years') {
         const formattedValue = format(date);
         setInputValue(formattedValue);
         setTmpValueDisplayed(false);
@@ -74,18 +74,8 @@ export const MonthInput = forwardRef<HTMLDivElement, MonthInputProps>(
 
     const handleActiveDateValueChange = (date?: Dayjs) => {
       setTmpValue(date ? format(date) : undefined);
-      if (calendarViewMode === 'months') {
+      if (calendarViewMode === 'years') {
         setTmpValueDisplayed(!!date);
-      }
-    };
-
-    const handleCalendarViewModeChange = (view: CalendarViewMode) => {
-      if (view === 'months' || view === 'years') {
-        setCalendarViewMode(view);
-        if (view !== 'months') {
-          setTmpValue(undefined);
-          setTmpValueDisplayed(false);
-        }
       }
     };
 
@@ -190,7 +180,6 @@ export const MonthInput = forwardRef<HTMLDivElement, MonthInputProps>(
         {isCalendarOpen && (
           <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto">
             <Calendar
-              onViewModeChange={handleCalendarViewModeChange}
               dateValue={displayDate}
               onDateValueChange={(month) => setDisplayDate(month)}
               selectedDateValue={date}
@@ -205,4 +194,4 @@ export const MonthInput = forwardRef<HTMLDivElement, MonthInputProps>(
     );
   },
 );
-MonthInput.displayName = 'MonthInput';
+YearPicker.displayName = 'YearPicker';

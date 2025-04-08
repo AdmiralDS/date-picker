@@ -1,5 +1,5 @@
 import { T, Select, Option } from '@admiral-ds/react-ui';
-import { MonthInput, enLocale, ruLocale } from '@admiral-ds/date-picker';
+import { YearPicker, enLocale, ruLocale } from '@admiral-ds/date-picker';
 import { maskitoDateOptionsGenerator } from '@maskito/kit';
 import { useMaskito } from '@maskito/react';
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
@@ -8,31 +8,31 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
 const defaultInputProps = {
-  placeholder: 'Введите дату',
-  dataPlaceholder: 'мм.гггг',
-  value: '1',
+  placeholder: 'Введите год',
+  dataPlaceholder: 'гггг',
+  value: '2',
 };
 
 const locales = [
-  { label: 'Русский', value: 'ru-RU', placeholder: 'Введите дату', dataPlaceholder: 'мм.гггг' },
-  { label: 'English', value: 'en-US', placeholder: 'Enter the date', dataPlaceholder: 'yyyy-mm' },
+  { label: 'Русский', value: 'ru-RU', placeholder: 'Введите год', dataPlaceholder: 'гггг' },
+  { label: 'English', value: 'en-US', placeholder: 'Enter the year', dataPlaceholder: 'yyyy' },
 ];
 
-const getDefaultFormatter = (locale: string) => {
-  return locale === 'en-US' ? (date: Dayjs) => date.format('YYYY-MM') : (date: Dayjs) => date.format('MM.YYYY');
+const getDefaultFormatter = () => {
+  return (date: Dayjs) => date.format('YYYY');
 };
 
-const getDefaultParcer = (locale: string) => {
-  return locale === 'en-US' ? (date?: string) => dayjs(date, 'YYYY-MM') : (date?: string) => dayjs(date, 'MM.YYYY');
+const getDefaultParcer = () => {
+  return (date?: string) => dayjs(date, 'YYYY');
 };
 
 const getDateOptions = (locale: string) => {
   return locale === 'ru-RU'
-    ? maskitoDateOptionsGenerator({ mode: 'mm/yyyy', separator: '.' })
-    : maskitoDateOptionsGenerator({ mode: 'yyyy/mm', separator: '-' });
+    ? maskitoDateOptionsGenerator({ mode: 'yyyy', separator: '.' })
+    : maskitoDateOptionsGenerator({ mode: 'yyyy', separator: '-' });
 };
 
-export const MonthInputChangeLocaleTemplate = () => {
+export const YearPickerChangeLocaleTemplate = () => {
   const [inputProps, setInputProps] = useState(defaultInputProps);
   const [inputValue, setInputValue] = useState(inputProps.value);
   const [locale, setLocale] = useState(locales[0].value);
@@ -52,21 +52,18 @@ export const MonthInputChangeLocaleTemplate = () => {
     }
   };
 
-  const formatter = getDefaultFormatter(locale);
-  const parcer = getDefaultParcer(locale);
-
   return (
     <WrapperHorizontal>
       <WrapperVertical>
-        <MonthInput
+        <YearPicker
           inputProps={{
             ...inputProps,
             value: inputValue,
             onInput: (e) => setInputValue(e.currentTarget.value),
             ref: maskedDateInputRef,
           }}
-          format={formatter}
-          parce={parcer}
+          format={getDefaultFormatter()}
+          parce={getDefaultParcer()}
           Calendarlocale={calendarLocale}
         />
       </WrapperVertical>
@@ -84,8 +81,8 @@ export const MonthInputChangeLocaleTemplate = () => {
         </Select>
         <T font="Body/Body 2 Long" as="div">
           Выбор локали даты из выпадающего списка позволяет изменять формат отображения даты (регулируется маской из
-          библиотеки maskito) и локаль календаря с остальными параметрами (такие как первый день недели, названия
-          месяцев и дней недели и т.п.) контроллируются с помощью локализации, предоставляемой библиотекой dayjs.
+          библиотеки maskito) и локаль календаря с остальными параметрами (подсказки при hover) контроллируются с
+          помощью локализации, предоставляемой библиотекой dayjs.
         </T>
       </WrapperVertical>
     </WrapperHorizontal>
