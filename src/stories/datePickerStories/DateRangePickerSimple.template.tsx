@@ -1,30 +1,44 @@
 import { T } from '@admiral-ds/react-ui';
-import { DateRangePicker } from '@admiral-ds/date-picker';
-import { maskitoDateRangeOptionsGenerator } from '@maskito/kit';
+import { DateRangePicker2 } from '@admiral-ds/date-picker';
+import { maskitoDateOptionsGenerator } from '@maskito/kit';
 import { useMaskito } from '@maskito/react';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 import { useState, useMemo } from 'react';
 
-const defaultInputProps = {
-  placeholder: 'Введите интервал дат',
-  dataPlaceholder: 'дд.мм.гггг – дд.мм.гггг',
-  value: '11.',
+const defaultInputStartProps = {
+  //placeholder: 'Введите интервал дат',
+  dataPlaceholder: 'дд.мм.гггг',
+  value: '',
+};
+const defaultInputEndProps = {
+  //placeholder: 'Введите интервал дат',
+  dataPlaceholder: 'дд.мм.гггг',
+  value: '',
 };
 
 export const DateRangePickerSimpleTemplate = () => {
-  const [inputValue, setInputValue] = useState(defaultInputProps.value);
-  const dateOptions = useMemo(() => maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy', rangeSeparator: '-' }), []);
-  const maskedDateInputRef = useMaskito({ options: dateOptions });
+  const [inputStartValue, setInputStartValue] = useState(defaultInputStartProps.value);
+  const [inputEndValue, setInputEndValue] = useState(defaultInputEndProps.value);
+  //const dateOptions = useMemo(() => maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy', rangeSeparator: '-' }), []);
+  const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
+  const maskedDateInputStartRef = useMaskito({ options: dateOptions });
+  const maskedDateInputEndRef = useMaskito({ options: dateOptions });
   return (
     <WrapperHorizontal>
       <WrapperVertical>
-        <DateRangePicker
-          inputProps={{
-            ...defaultInputProps,
-            value: inputValue,
-            onInput: (e) => setInputValue(e.currentTarget.value),
-            ref: maskedDateInputRef,
+        <DateRangePicker2
+          inputPropsStart={{
+            ...defaultInputStartProps,
+            value: inputStartValue,
+            onInput: (e) => setInputStartValue(e.currentTarget.value),
+            ref: maskedDateInputStartRef,
+          }}
+          inputPropsEnd={{
+            ...defaultInputEndProps,
+            value: inputEndValue,
+            onInput: (e) => setInputEndValue(e.currentTarget.value),
+            ref: maskedDateInputEndRef,
           }}
         />
       </WrapperVertical>
