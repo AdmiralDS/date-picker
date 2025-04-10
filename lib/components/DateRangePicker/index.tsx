@@ -23,9 +23,17 @@ const Calendar = styled(DateRangePickerCalendar)`
 const defaultFormatter = (date?: Dayjs) => (date ? date.format('DD.MM.YYYY') : '');
 const defaultParcer = (date?: string) => dayjs(date, 'DD.MM.YYYY');
 
-function dateRangeFromValue(value?: string, separator = ' – ', parce = defaultParcer): DateRange {
-  const [start, end] = value ? value.split(separator).map(parce) : [];
-  return start && start.isAfter(end) ? ([end, start] as const) : ([start, end] as const);
+function dateRangeFromValue(
+  values?: Array<string | undefined>,
+  parce: (date?: string) => Dayjs | undefined = defaultParcer,
+): DateRange {
+  const [start, end] = values
+    ? values.map((item) => {
+        const parcedItem = parce(item);
+        return parcedItem?.isValid() ? parcedItem : undefined;
+      })
+    : [undefined, undefined];
+  return start && end && start.isAfter(end) ? ([end, start] as const) : ([start, end] as const);
 }
 
 // function formatRangeValue(start?: Dayjs, end?: Dayjs, separator = ' – ', format = defaultFormatter): string {
@@ -42,7 +50,9 @@ function dateRangeFromValue(value?: string, separator = ' – ', parce = default
 
 export type DateRangePickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
-  inputProps?: InputLineProps;
+  inputPropsStart?: InputLineProps;
+  /** Пропсы внутреннего инпута */
+  inputPropsEnd?: InputLineProps;
 
   /** Функция для конвертации значение календаря в строку инпута */
   format?: (date?: Dayjs) => string;
@@ -58,23 +68,39 @@ export type DateRangePickerProps = InputBoxProps & {
  */
 export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
   (
-    { inputProps = {}, separator = ' – ', format = defaultFormatter, parce = defaultParcer, ...containerProps },
+    {
+      inputPropsStart = {},
+      inputPropsEnd = {},
+      separator = ' – ',
+      format = defaultFormatter,
+      parce = defaultParcer,
+      ...containerProps
+    },
     refContainerProps,
   ) => {
-    const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
+    const [inputStartValue, setInputStartValue] = useState<string | undefined>(inputPropsStart.value);
+    const [inputEndValue, setInputEndValue] = useState<string | undefined>(inputPropsEnd.value);
     const [displayDate, setDisplayDate] = useState(dayjs());
-    const [tmpValue, setTmpValue] = useState<string | undefined>();
-    const [isTmpValueDisplayed, setTmpValueDisplayed] = useState(false);
-    const [isFocused, setIsFocused] = useState(false);
+    const [tmpValueStart, setTmpValueStart] = useState<string | undefined>();
+    const [isTmpValueStartDisplayed, setTmpValueStartDisplayed] = useState(false);
+    const [tmpValueEnd, setTmpValueEnd] = useState<string | undefined>();
+    const [isTmpValueEndDisplayed, setTmpValueEndDisplayed] = useState(false);
+    const [isStartFocused, setIsStartFocused] = useState(false);
+    const [isEndFocused, setIsEndFocused] = useState(false);
     const inputBoxRef = useRef(null);
-    const inputRef = useRef<HTMLInputElement>(null);
+    const inputRefStart = useRef<HTMLInputElement>(null);
+    const inputRefEnd = useRef<HTMLInputElement>(null);
     const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
     const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('dates');
     const [activeEnd, setActiveEnd] = useState<'start' | 'end' | 'none'>('start');
+    const handleActiveEndChange = (newValue: 'start' | 'end' | 'none') => {
+      setActiveEnd(newValue);
+      console.log('handleActiveEndChange', newValue);
+    };
 
     const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
-      if (isFocused) {
+      if (isStartFocused || isEndFocused) {
         setCalendarOpen((isOpen) => !isOpen);
       }
     };
@@ -82,65 +108,112 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const handleSelectedDateValueChange = (dateRange: DateRange) => {
       const [dayStart, dayEnd] = dateRange;
       if (calendarViewMode === 'dates') {
-        const formattedValue = `${format(dayStart)}${separator}${format(dayEnd)}`;
-        setInputValue(formattedValue);
+        setInputStartValue(format(dayStart));
+        setInputEndValue(format(dayEnd));
         if (activeEnd === 'start') {
-          setActiveEnd('end');
+          handleActiveEndChange('end');
+          setIsStartFocused(false);
+          setIsEndFocused(true);
+          if (inputRefStart.current) {
+            inputRefStart.current.blur();
+          }
+          if (inputRefEnd.current) {
+            inputRefEnd.current.focus();
+          }
         } else if (activeEnd === 'end') {
-          setTmpValueDisplayed(false);
+          setTmpValueEndDisplayed(false);
+          setTmpValueStartDisplayed(false);
           setCalendarOpen(false);
+          setIsEndFocused(false);
+          if (inputRefEnd.current) {
+            inputRefEnd.current.blur();
+          }
         }
       }
     };
 
     const handleActiveDateValueChange = (date?: Dayjs) => {
-      const [startString, endString] = tmpValue?.split(separator) ?? [];
-      if (activeEnd === 'start') {
-        setTmpValue(date ? format(date) + (endString ? separator + endString : '') : '');
-      } else if (activeEnd === 'end') {
-        setTmpValue(date ? startString + separator + format(date) : '');
-      }
+      console.log(activeEnd);
 
-      if (calendarViewMode === 'dates') {
-        setTmpValueDisplayed(!!date);
+      if (activeEnd === 'start') {
+        setTmpValueStart(date ? format(date) : '');
+        if (calendarViewMode === 'dates') {
+          setTmpValueStartDisplayed(!!date);
+        }
+      } else if (activeEnd === 'end') {
+        setTmpValueEnd(date ? format(date) : '');
+        if (calendarViewMode === 'dates') {
+          setTmpValueEndDisplayed(!!date);
+        }
       }
     };
 
     const handleCalendarViewModeChange = (view: CalendarViewMode) => {
       setCalendarViewMode(view);
       if (view !== 'dates') {
-        setTmpValue(undefined);
-        setTmpValueDisplayed(false);
+        setTmpValueStart(undefined);
+        setTmpValueEnd(undefined);
+        setTmpValueStartDisplayed(false);
+        setTmpValueEndDisplayed(false);
       }
     };
 
-    const handleBlur = (e: FocusEvent<HTMLInputElement, Element>) => {
+    const handleBlurStart = (e: FocusEvent<HTMLInputElement, Element>) => {
       setCalendarOpen(false);
-      setIsFocused(false);
-      setTmpValueDisplayed(false);
-      inputProps.onBlur?.(e);
+      setIsStartFocused(false);
+      setTmpValueStartDisplayed(false);
+      inputPropsStart.onBlur?.(e);
+    };
+    const handleBlurEnd = (e: FocusEvent<HTMLInputElement, Element>) => {
+      setCalendarOpen(false);
+      setIsEndFocused(false);
+      setTmpValueEndDisplayed(false);
+      inputPropsEnd.onBlur?.(e);
     };
 
-    const handleFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
+    const handleFocusStart = (e: FocusEvent<HTMLInputElement, Element>) => {
       setCalendarOpen(true);
-      setIsFocused(true);
-      inputProps.onFocus?.(e);
+      setIsStartFocused(true);
+      handleActiveEndChange('start');
+      inputPropsStart.onFocus?.(e);
+    };
+    const handleFocusEnd = (e: FocusEvent<HTMLInputElement, Element>) => {
+      setCalendarOpen(true);
+      setIsEndFocused(true);
+      handleActiveEndChange('end');
+      inputPropsEnd.onFocus?.(e);
     };
 
     const handleInputBoxMouseDown: MouseEventHandler<Element> = (e) => {
       if (e.target === e.currentTarget) e.preventDefault();
-      if (!isFocused) {
-        inputRef.current?.focus();
+      if (!isStartFocused) {
+        inputRefStart.current?.focus();
       }
     };
+    // const handleInputEndBoxMouseDown: MouseEventHandler<Element> = (e) => {
+    //   if (e.target === e.currentTarget) e.preventDefault();
+    //   if (!isEndFocused) {
+    //     inputRefEnd.current?.focus();
+    //   }
+    // };
 
-    const handleInputKeyDown: KeyboardEventHandler<Element> = (e) => {
+    const handleInputStartKeyDown: KeyboardEventHandler<Element> = (e) => {
       if (e.key === 'Enter' && isCalendarOpen) {
         e.preventDefault();
         setCalendarOpen(false);
-        if (isTmpValueDisplayed && tmpValue) {
-          setInputValue(tmpValue);
-          setTmpValueDisplayed(false);
+        if (isTmpValueStartDisplayed && tmpValueStart) {
+          setInputStartValue(tmpValueStart);
+          setTmpValueStartDisplayed(false);
+        }
+      }
+    };
+    const handleInputEndKeyDown: KeyboardEventHandler<Element> = (e) => {
+      if (e.key === 'Enter' && isCalendarOpen) {
+        e.preventDefault();
+        setCalendarOpen(false);
+        if (isTmpValueEndDisplayed && tmpValueEnd) {
+          setInputEndValue(tmpValueEnd);
+          setTmpValueEndDisplayed(false);
         }
       }
     };
@@ -152,41 +225,75 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     };
 
     useEffect(() => {
-      const inputNode = inputRef.current;
+      const inputNode = inputRefStart.current;
       if (inputNode) {
         const { value } = inputNode;
-        if (inputValue !== value) {
-          changeInputData(inputRef.current, { value: inputValue });
+        if (inputStartValue !== value) {
+          changeInputData(inputRefStart.current, { value: inputStartValue });
         }
       }
-    }, [inputValue]);
+    }, [inputStartValue]);
+    useEffect(() => {
+      const inputNode = inputRefEnd.current;
+      if (inputNode) {
+        const { value } = inputNode;
+        if (inputEndValue !== value) {
+          changeInputData(inputRefEnd.current, { value: inputEndValue });
+        }
+      }
+    }, [inputEndValue]);
 
     useEffect(() => {
-      if (isCalendarOpen && inputRef.current) {
-        const node = inputRef.current;
-        const { value } = node;
-        setInputValue(value);
+      if (isCalendarOpen) {
+        if (inputRefStart.current) {
+          const node = inputRefStart.current;
+          const { value } = node;
+          setInputStartValue(value);
+        }
+        if (inputRefEnd.current) {
+          const node = inputRefEnd.current;
+          const { value } = node;
+          setInputEndValue(value);
+        }
       }
     }, [isCalendarOpen]);
 
     useEffect(() => {
       function oninput(this: HTMLInputElement) {
         const { value } = this;
-        setTmpValueDisplayed(false);
-        if (value !== inputValue) {
-          setInputValue(value);
+        setTmpValueStartDisplayed(false);
+        if (value !== inputStartValue) {
+          setInputStartValue(value);
           setCalendarOpen(true);
         }
       }
 
-      if (inputRef.current) {
-        const node = inputRef.current;
+      if (inputRefStart.current) {
+        const node = inputRefStart.current;
         node.addEventListener('input', oninput, true);
         return () => {
           node.removeEventListener('input', oninput, true);
         };
       }
-    }, [inputValue]);
+    }, [inputStartValue]);
+    useEffect(() => {
+      function oninput(this: HTMLInputElement) {
+        const { value } = this;
+        setTmpValueEndDisplayed(false);
+        if (value !== inputEndValue) {
+          setInputEndValue(value);
+          setCalendarOpen(true);
+        }
+      }
+
+      if (inputRefEnd.current) {
+        const node = inputRefEnd.current;
+        node.addEventListener('input', oninput, true);
+        return () => {
+          node.removeEventListener('input', oninput, true);
+        };
+      }
+    }, [inputEndValue]);
 
     // useEffect(() => {
     //   const date = parce(inputValue);
@@ -197,20 +304,42 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     //   }
     // }, [inputValue]);
 
-    const ref = inputProps.ref !== undefined ? refSetter(inputRef, inputProps.ref as Ref<HTMLInputElement>) : inputRef;
-    const inputFinalProps: ComponentProps<typeof InputLine> = {
-      ...inputProps,
-      ref,
-      onBlur: handleBlur,
-      onFocus: handleFocus,
-      tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
+    const refStart =
+      inputPropsStart.ref !== undefined
+        ? refSetter(inputRefStart, inputPropsStart.ref as Ref<HTMLInputElement>)
+        : inputRefStart;
+    const refEnd =
+      inputPropsEnd.ref !== undefined
+        ? refSetter(inputRefEnd, inputPropsEnd.ref as Ref<HTMLInputElement>)
+        : inputRefEnd;
+    const inputStartFinalProps: ComponentProps<typeof InputLine> = {
+      ...inputPropsStart,
+      ref: refStart,
+      onBlur: handleBlurStart,
+      onFocus: handleFocusStart,
+      onKeyDown: handleInputStartKeyDown,
+      tmpValue: isTmpValueStartDisplayed ? tmpValueStart : undefined,
+    };
+    const inputEndFinalProps: ComponentProps<typeof InputLine> = {
+      ...inputPropsEnd,
+      ref: refEnd,
+      onBlur: handleBlurEnd,
+      onFocus: handleFocusEnd,
+      onKeyDown: handleInputEndKeyDown,
+      tmpValue: isTmpValueEndDisplayed ? tmpValueEnd : undefined,
     };
 
-    const rangeTimestamp = dateRangeFromValue(inputValue);
-    const [activeTmpStart, activeTmpEnd] = dateRangeFromValue(tmpValue);
+    console.log(inputStartValue, inputEndValue);
+
+    const rangeTimestamp = dateRangeFromValue([inputStartValue, inputEndValue], parce);
+    console.log(rangeTimestamp);
+
+    const [activeTmpStart, activeTmpEnd] = dateRangeFromValue([tmpValueStart, tmpValueEnd]);
     return (
-      <InputBox {...containerFinalProps}>
-        <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} />
+      <InputBox {...containerFinalProps} style={{ alignItems: 'center' }}>
+        <InputLine {...inputStartFinalProps} style={{ width: '6em' }} />
+        {separator}
+        <InputLine {...inputEndFinalProps} style={{ width: '6em' }} />
         <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
         {isCalendarOpen && (
           <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto" onMouseDown={(e) => e.preventDefault()}>
@@ -220,7 +349,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               onDateValueChange={(day) => setDisplayDate(day)}
               selectedDateRangeValue={rangeTimestamp}
               onSelectedDateRangeValueChange={handleSelectedDateValueChange}
-              activeDateValue={activeEnd === 'start' ? activeTmpStart : activeTmpEnd}
               onActiveDateValueChange={handleActiveDateValueChange}
             />
           </PopoverPanel>

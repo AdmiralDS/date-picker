@@ -1,5 +1,5 @@
 import { T } from '@admiral-ds/react-ui';
-import { DateRangePicker2 } from '@admiral-ds/date-picker';
+import { DateRangePicker } from '@admiral-ds/date-picker';
 import { maskitoDateOptionsGenerator } from '@maskito/kit';
 import { useMaskito } from '@maskito/react';
 
@@ -27,7 +27,7 @@ export const DateRangePickerSimpleTemplate = () => {
   return (
     <WrapperHorizontal>
       <WrapperVertical>
-        <DateRangePicker2
+        <DateRangePicker
           inputPropsStart={{
             ...defaultInputStartProps,
             value: inputStartValue,
