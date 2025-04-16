@@ -15,6 +15,7 @@ import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?
 import { PopoverPanel } from '#lib/PopoverPanel';
 import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
+import { sortDateRange } from '#lib/utils';
 
 const SeparatorWrapper = styled.div`
   box-sizing: border-box;
@@ -116,7 +117,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     };
 
     const handleSelectedDateValueChange = (dateRange: DateRange) => {
-      const [dayStart, dayEnd] = dateRange;
+      const [dayStart, dayEnd] = sortDateRange(dateRange, 'date');
       if (calendarViewMode === 'dates') {
         setInputStartValue(format(dayStart));
         setInputEndValue(format(dayEnd));

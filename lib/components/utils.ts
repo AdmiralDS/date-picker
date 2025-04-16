@@ -110,6 +110,10 @@ export const sortDatesAsc = (date1: Dayjs, date2: Dayjs, unit: dayjs.OpUnitType 
   return [dateFirst, dateSecond];
 };
 
+export const sortDateRange = (dateRange: DateRange, unit: dayjs.OpUnitType | undefined) => {
+  return dateRange[0] && dateRange[1] ? sortDatesAsc(dateRange[0], dateRange[1], unit) : dateRange;
+};
+
 export const dateIsInRange = (
   unit: dayjs.OpUnitType | undefined,
   dateCurrent?: Dayjs,
