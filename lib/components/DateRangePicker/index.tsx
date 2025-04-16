@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { refSetter, changeInputData } from '@admiral-ds/react-ui';
+import { vars } from '@admiral-ds/web';
 import { DateRangePickerCalendar } from '#lib/DateRangePickerCalendar';
 import type { InputBoxProps } from '#lib/Input/InputBox';
 import { InputBox } from '#lib/Input/InputBox';
@@ -15,6 +16,13 @@ import { PopoverPanel } from '#lib/PopoverPanel';
 import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
 
+const SeparatorWrapper = styled.div`
+  box-sizing: border-box;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  color: ${vars.color.Neutral_Neutral30};
+`;
 const Calendar = styled(DateRangePickerCalendar)`
   border: none;
   box-shadow: none;
@@ -71,7 +79,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     {
       inputPropsStart = {},
       inputPropsEnd = {},
-      separator = ' – ',
+      separator = '–',
       format = defaultFormatter,
       parce = defaultParcer,
       ...containerProps
@@ -300,7 +308,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     return (
       <InputBox {...containerFinalProps} style={{ alignItems: 'center' }}>
         <InputLine {...inputStartFinalProps} style={{ width: '6em' }} />
-        {separator}
+        <SeparatorWrapper>{separator}</SeparatorWrapper>
         <InputLine {...inputEndFinalProps} style={{ width: '6em' }} />
         <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
         {isCalendarOpen && (
