@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { refSetter, changeInputData } from '@admiral-ds/react-ui';
-import { vars } from '@admiral-ds/web';
 import { DateRangePickerCalendar } from '#lib/DateRangePickerCalendar';
 import type { InputBoxProps } from '#lib/Input/InputBox';
 import { InputBox } from '#lib/Input/InputBox';
 import type { InputLineProps } from '#lib/Input/InputLine';
 import { InputLine } from '#lib/Input/InputLine';
+import { InputSeparator, InputSeparatorProps } from '#lib/Input/InputSeparator';
 import { InputIconButton } from '#lib/InputIconButton';
 import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
 import { PopoverPanel } from '#lib/PopoverPanel';
@@ -17,13 +17,6 @@ import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
 import { sortDateRange } from '#lib/utils';
 
-const SeparatorWrapper = styled.div`
-  box-sizing: border-box;
-  padding: 0 5px;
-  display: flex;
-  align-items: center;
-  color: ${vars.color.Neutral_Neutral30};
-`;
 const Calendar = styled(DateRangePickerCalendar)`
   border: none;
   box-shadow: none;
@@ -44,18 +37,6 @@ function dateRangeFromValue(
     : [undefined, undefined];
   return start && end && start.isAfter(end) ? ([end, start] as const) : ([start, end] as const);
 }
-
-// function formatRangeValue(start?: Dayjs, end?: Dayjs, separator = ' – ', format = defaultFormatter): string {
-//   if (start && start.isValid()) {
-//     if (!end || !end.isValid()) {
-//       return format(start);
-//     }
-//     return start.isBefore(end) ? format(start) + separator + format(end) : format(end) + separator + format(start);
-//   } else if (end && end.isValid()) {
-//     return format(end);
-//   }
-//   return '';
-// }
 
 export type DateRangePickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
@@ -80,7 +61,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     {
       inputPropsStart = {},
       inputPropsEnd = {},
-      separator = '–',
+      separator = '\u2014',
       format = defaultFormatter,
       parce = defaultParcer,
       ...containerProps
@@ -290,6 +271,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         : inputRefEnd;
     const inputStartFinalProps: ComponentProps<typeof InputLine> = {
       ...inputPropsStart,
+      'data-size': containerProps['data-size'],
       ref: refStart,
       onBlur: handleBlurStart,
       onFocus: handleFocusStart,
@@ -298,19 +280,23 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     };
     const inputEndFinalProps: ComponentProps<typeof InputLine> = {
       ...inputPropsEnd,
+      'data-size': containerProps['data-size'],
       ref: refEnd,
       onBlur: handleBlurEnd,
       onFocus: handleFocusEnd,
       onKeyDown: handleInputEndKeyDown,
       tmpValue: isTmpValueEndDisplayed ? tmpValueEnd : undefined,
     };
+    const inputSeparatorProps: InputSeparatorProps = {
+      'data-size': containerProps['data-size'],
+    };
 
     const rangeTimestamp = dateRangeFromValue([inputStartValue, inputEndValue], parce);
     return (
       <InputBox {...containerFinalProps} style={{ alignItems: 'center' }}>
-        <InputLine {...inputStartFinalProps} style={{ width: '6em' }} />
-        <SeparatorWrapper>{separator}</SeparatorWrapper>
-        <InputLine {...inputEndFinalProps} style={{ width: '6em' }} />
+        <InputLine {...inputStartFinalProps} />
+        <InputSeparator {...inputSeparatorProps}>{separator}</InputSeparator>
+        <InputLine {...inputEndFinalProps} />
         <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
         {isCalendarOpen && (
           <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto" onMouseDown={(e) => e.preventDefault()}>
