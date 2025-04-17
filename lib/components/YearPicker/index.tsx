@@ -1,5 +1,5 @@
 import type { ComponentProps, FocusEvent, KeyboardEventHandler, MouseEventHandler, Ref } from 'react';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
@@ -38,9 +38,6 @@ export type YearPickerProps = InputBoxProps & {
   Calendarlocale?: CalendarLocaleProps;
 };
 
-/**
- * Компонент MonthPicker
- */
 export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
   (
     { inputProps = {}, format = defaultFormatter, parce = defaultParcer, Calendarlocale = ruLocale, ...containerProps },
@@ -63,21 +60,27 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
       }
     };
 
-    const handleSelectedDateValueChange = (date: Dayjs) => {
-      if (calendarViewMode === 'years') {
-        const formattedValue = format(date);
-        setInputValue(formattedValue);
-        setTmpValueDisplayed(false);
-        setCalendarOpen(false);
-      }
-    };
+    const handleSelectedDateValueChange = useCallback(
+      (date: Dayjs) => {
+        if (calendarViewMode === 'years') {
+          const formattedValue = format(date);
+          setInputValue(formattedValue);
+          setTmpValueDisplayed(false);
+          setCalendarOpen(false);
+        }
+      },
+      [calendarViewMode, format],
+    );
 
-    const handleActiveDateValueChange = (date?: Dayjs) => {
-      setTmpValue(date ? format(date) : undefined);
-      if (calendarViewMode === 'years') {
-        setTmpValueDisplayed(!!date);
-      }
-    };
+    const handleActiveDateValueChange = useCallback(
+      (date?: Dayjs) => {
+        setTmpValue(date ? format(date) : undefined);
+        if (calendarViewMode === 'years') {
+          setTmpValueDisplayed(!!date);
+        }
+      },
+      [format],
+    );
 
     const handleBlur = (e: FocusEvent<HTMLInputElement, Element>) => {
       setCalendarOpen(false);
@@ -109,7 +112,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
         }
       }
     };
-    // TODO смержить с оригинальными обработчиками из пропсов
+
     const containerFinalProps: ComponentProps<typeof InputBox> = {
       ...containerProps,
       ref: refSetter(inputBoxRef, refContainerProps),
@@ -121,36 +124,32 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
       if (inputNode) {
         const { value } = inputNode;
         if (inputValue !== value) {
-          changeInputData(inputRef.current, { value: inputValue });
+          changeInputData(inputNode, { value: inputValue });
         }
       }
     }, [inputValue]);
 
     useEffect(() => {
       if (isCalendarOpen && inputRef.current) {
-        const node = inputRef.current;
-        const { value } = node;
-        setInputValue(value);
+        setInputValue(inputRef.current.value);
       }
     }, [isCalendarOpen]);
 
     useEffect(() => {
-      function oninput(this: HTMLInputElement) {
-        const { value } = this;
+      const handleInput = () => {
+        const value = inputRef.current?.value;
         setTmpValueDisplayed(false);
         if (value !== inputValue) {
           setInputValue(value);
           setCalendarOpen(true);
         }
-      }
+      };
 
-      if (inputRef.current) {
-        const node = inputRef.current;
-        node.addEventListener('input', oninput, true);
-        return () => {
-          node.removeEventListener('input', oninput, true);
-        };
-      }
+      const inputNode = inputRef.current;
+      inputNode?.addEventListener('input', handleInput);
+      return () => {
+        inputNode?.removeEventListener('input', handleInput);
+      };
     }, [inputValue]);
 
     useEffect(() => {
