@@ -2,7 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import type { PickerCalendarProps, SingleCalendarProps } from '#lib/calendarInterfaces.ts';
+import type { PickerCalendarProps, SingleCalendarProps, CalendarLocaleProps } from '#lib/calendarInterfaces.ts';
 import { getCurrentDate } from '#lib/utils.ts';
 import { TwentyYearsNavigationPanelWidget } from '#lib/TwentyYearsNavigationPanelWidget';
 import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
@@ -11,7 +11,9 @@ import { ruLocale } from '#lib/calendarConstants.ts';
 
 export interface YearPickerCalendarProps
   extends Omit<SingleCalendarProps, 'cell'>,
-    Omit<PickerCalendarProps, 'viewModeValue' | 'defaultViewModeValue' | 'onViewModeChange'> {}
+    Omit<PickerCalendarProps, 'viewModeValue' | 'defaultViewModeValue' | 'onViewModeChange'> {
+  calendarLocale?: CalendarLocaleProps;
+}
 
 export const YearPickerCalendar = ({
   dateValue,
