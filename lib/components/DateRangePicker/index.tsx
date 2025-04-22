@@ -51,7 +51,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
     const handleCalendarVisibilityChange = (newState: boolean) => {
       setCalendarOpen(newState);
-      console.log(newState);
     };
 
     const [activeDate, setActiveDate] = useState<Dayjs | undefined>(undefined);

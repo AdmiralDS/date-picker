@@ -133,20 +133,22 @@ export const RangeInput = ({
 
   // отслеживаем клик на календаре
   useEffect(() => {
-    const [dayStart, dayEnd] = sortDateRange(selectedRange, 'date');
-    setInputStartValue(format(dayStart));
-    setInputEndValue(format(dayEnd));
-    if (activeEnd === 'start') {
-      handleActiveEndChange('end');
-      if (inputRefEnd.current) {
-        inputRefEnd.current.focus();
-      }
-    } else if (activeEnd === 'end') {
-      setTmpValueEndDisplayed(false);
-      setTmpValueStartDisplayed(false);
-      changeCalendarVisibility(false);
-      if (inputRefEnd.current) {
-        inputRefEnd.current.blur();
+    if (isCalendarOpen) {
+      const [dayStart, dayEnd] = sortDateRange(selectedRange, 'date');
+      setInputStartValue(format(dayStart));
+      setInputEndValue(format(dayEnd));
+      if (activeEnd === 'start') {
+        handleActiveEndChange('end');
+        if (inputRefEnd.current) {
+          inputRefEnd.current.focus();
+        }
+      } else if (activeEnd === 'end') {
+        setTmpValueEndDisplayed(false);
+        setTmpValueStartDisplayed(false);
+        changeCalendarVisibility(false);
+        if (inputRefEnd.current) {
+          inputRefEnd.current.blur();
+        }
       }
     }
   }, [selectedRange]);
