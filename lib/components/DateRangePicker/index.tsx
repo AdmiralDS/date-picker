@@ -74,15 +74,9 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       }
     };
 
-    // const handleCalendarViewModeChange = (view: CalendarViewMode) => {
-    //   setCalendarViewMode(view);
-    //   if (view !== 'dates') {
-    //     setTmpValueStart(undefined);
-    //     setTmpValueEnd(undefined);
-    //     setTmpValueStartDisplayed(false);
-    //     setTmpValueEndDisplayed(false);
-    //   }
-    // };
+    const handleCalendarViewModeChange = (view: CalendarViewMode) => {
+      setCalendarViewMode(view);
+    };
 
     // TODO смержить с оригинальными обработчиками из пропсов
     const containerFinalProps: ComponentProps<typeof InputBox> = {
@@ -112,7 +106,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         {isCalendarOpen && (
           <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto" onMouseDown={(e) => e.preventDefault()}>
             <Calendar
-              //onViewModeChange={handleCalendarViewModeChange}
+              onViewModeChange={handleCalendarViewModeChange}
               dateValue={displayDate}
               onDateValueChange={(day) => setDisplayDate(day)}
               selectedDateRangeValue={selectedRange}

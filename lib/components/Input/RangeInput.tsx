@@ -173,6 +173,7 @@ export const RangeInput = ({
     }
   }, [inputEndValue]);
 
+  // вешаем листенеры на инпуты
   useEffect(() => {
     function oninput(this: HTMLInputElement) {
       const { value } = this;
