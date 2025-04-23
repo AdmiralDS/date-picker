@@ -153,7 +153,7 @@ export const RangeInput = ({
     }
   }, [selectedRange]);
 
-  // отслеживаем изменение значения в инпутах
+  // передаем изменение значений по клику на календаре в инпуты
   useEffect(() => {
     const inputNode = inputRefStart.current;
     if (inputNode) {
@@ -173,7 +173,7 @@ export const RangeInput = ({
     }
   }, [inputEndValue]);
 
-  // вешаем листенеры на инпуты
+  // вешаем листенеры на инпуты для ручного ввода
   useEffect(() => {
     function oninput(this: HTMLInputElement) {
       const { value } = this;
@@ -181,6 +181,10 @@ export const RangeInput = ({
       if (value !== inputStartValue) {
         setInputStartValue(value);
         changeCalendarVisibility(true);
+        const parcedValue = parce(value);
+        if (parcedValue?.isValid()) {
+          onSelectedRangeChange(dateRangeFromValue([value, inputEndValue], parce));
+        }
       }
     }
 
@@ -192,6 +196,7 @@ export const RangeInput = ({
       };
     }
   }, [inputStartValue]);
+
   useEffect(() => {
     function oninput(this: HTMLInputElement) {
       const { value } = this;
@@ -199,6 +204,10 @@ export const RangeInput = ({
       if (value !== inputEndValue) {
         setInputEndValue(value);
         changeCalendarVisibility(true);
+        const parcedValue = parce(value);
+        if (parcedValue?.isValid()) {
+          onSelectedRangeChange(dateRangeFromValue([inputStartValue, value], parce));
+        }
       }
     }
 
