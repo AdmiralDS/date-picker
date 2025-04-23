@@ -20,7 +20,7 @@ const Calendar = styled(DateRangePickerCalendar)`
   box-shadow: none;
 `;
 
-const defaultParcer = (date?: string) => dayjs(date, 'DD.MM.YYYY');
+const defaultParser = (date?: string) => dayjs(date, 'DD.MM.YYYY');
 
 export type DateRangePickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
@@ -33,7 +33,7 @@ export type DateRangePickerProps = InputBoxProps & {
 
   // TODO: typo!!! parSe
   /** Функция для конвертации строки инпута в значение календаря */
-  parce?: (date?: string) => Dayjs | undefined;
+  parse?: (date?: string) => Dayjs | undefined;
 
   separator?: string;
 };
@@ -48,7 +48,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       inputPropsEnd = {},
       separator = '\u2014',
       format,
-      parce = defaultParcer,
+      parse: parse = defaultParser,
       ...containerProps
     },
     refContainerProps,
@@ -77,8 +77,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     };
 
     const [selectedRange, setSelectedRange] = useState<DateRange>([
-      parce(inputPropsStart.value),
-      parce(inputPropsEnd.value),
+      parse(inputPropsStart.value),
+      parse(inputPropsEnd.value),
     ]);
     const handleSelectedDateValueChange = (dateRange: DateRange) => {
       if (calendarViewMode === 'dates') {
@@ -108,7 +108,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       selectedRange: selectedRange,
       onSelectedRangeChange: handleSelectedDateValueChange,
       format: format,
-      parce: parce,
+      parse: parse,
     };
 
     return (

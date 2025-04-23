@@ -8,16 +8,16 @@ import { DateRange } from 'lib/types';
 import { sortDateRange } from '#lib/utils';
 
 const defaultFormatter = (date?: Dayjs) => (date ? date.format('DD.MM.YYYY') : '');
-const defaultParcer = (date?: string) => dayjs(date, 'DD.MM.YYYY');
+const defaultParser = (date?: string) => dayjs(date, 'DD.MM.YYYY');
 
 function dateRangeFromValue(
   values?: Array<string | undefined>,
-  parce: (date?: string) => Dayjs | undefined = defaultParcer,
+  parse: (date?: string) => Dayjs | undefined = defaultParser,
 ): DateRange {
   const [start, end] = values
     ? values.map((item) => {
-        const parcedItem = parce(item);
-        return parcedItem?.isValid() ? parcedItem : undefined;
+        const parsedItem = parse(item);
+        return parsedItem?.isValid() ? parsedItem : undefined;
       })
     : [undefined, undefined];
   return start && end && start.isAfter(end) ? ([end, start] as const) : ([start, end] as const);
@@ -38,7 +38,7 @@ export interface RangeInputProps extends InputLineProps {
   /** Функция для конвертации значение календаря в строку инпута */
   format?: (date?: Dayjs) => string;
   /** Функция для конвертации строки инпута в значение календаря */
-  parce?: (date?: string) => Dayjs | undefined;
+  parse?: (date?: string) => Dayjs | undefined;
 }
 
 export const RangeInput = ({
@@ -51,7 +51,7 @@ export const RangeInput = ({
   selectedRange,
   onSelectedRangeChange,
   format = defaultFormatter,
-  parce = defaultParcer,
+  parse: parse = defaultParser,
   ...props
 }: RangeInputProps) => {
   const inputRefStart = useRef<HTMLInputElement>(null);
@@ -181,9 +181,9 @@ export const RangeInput = ({
       if (value !== inputStartValue) {
         setInputStartValue(value);
         changeCalendarVisibility(true);
-        const parcedValue = parce(value);
-        if (parcedValue?.isValid()) {
-          onSelectedRangeChange(dateRangeFromValue([value, inputEndValue], parce));
+        const parsedValue = parse(value);
+        if (parsedValue?.isValid()) {
+          onSelectedRangeChange(dateRangeFromValue([value, inputEndValue], parse));
         }
       }
     }
@@ -204,9 +204,9 @@ export const RangeInput = ({
       if (value !== inputEndValue) {
         setInputEndValue(value);
         changeCalendarVisibility(true);
-        const parcedValue = parce(value);
-        if (parcedValue?.isValid()) {
-          onSelectedRangeChange(dateRangeFromValue([inputStartValue, value], parce));
+        const parsedValue = parse(value);
+        if (parsedValue?.isValid()) {
+          onSelectedRangeChange(dateRangeFromValue([inputStartValue, value], parse));
         }
       }
     }

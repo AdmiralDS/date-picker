@@ -22,7 +22,7 @@ const getDefaultFormatter = () => {
   return (date: Dayjs) => date.format('YYYY');
 };
 
-const getDefaultParcer = () => {
+const getDefaultParser = () => {
   return (date?: string) => dayjs(date, 'YYYY');
 };
 
@@ -63,7 +63,7 @@ export const YearPickerChangeLocaleTemplate = () => {
             ref: maskedDateInputRef,
           }}
           format={getDefaultFormatter()}
-          parce={getDefaultParcer()}
+          parse={getDefaultParser()}
           Calendarlocale={calendarLocale}
         />
       </WrapperVertical>

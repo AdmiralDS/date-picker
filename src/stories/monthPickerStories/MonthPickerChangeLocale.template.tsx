@@ -22,7 +22,7 @@ const getDefaultFormatter = (locale: string) => {
   return locale === 'en-US' ? (date: Dayjs) => date.format('YYYY-MM') : (date: Dayjs) => date.format('MM.YYYY');
 };
 
-const getDefaultParcer = (locale: string) => {
+const getDefaultParser = (locale: string) => {
   return locale === 'en-US' ? (date?: string) => dayjs(date, 'YYYY-MM') : (date?: string) => dayjs(date, 'MM.YYYY');
 };
 
@@ -53,7 +53,7 @@ export const MonthPickerChangeLocaleTemplate = () => {
   };
 
   const formatter = getDefaultFormatter(locale);
-  const parcer = getDefaultParcer(locale);
+  const parser = getDefaultParser(locale);
 
   return (
     <WrapperHorizontal>
@@ -66,7 +66,7 @@ export const MonthPickerChangeLocaleTemplate = () => {
             ref: maskedDateInputRef,
           }}
           format={formatter}
-          parce={parcer}
+          parse={parser}
           Calendarlocale={calendarLocale}
         />
       </WrapperVertical>

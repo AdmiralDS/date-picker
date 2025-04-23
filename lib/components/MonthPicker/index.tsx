@@ -22,7 +22,7 @@ const Calendar = styled(MonthPickerCalendar)`
 `;
 
 const defaultFormatter = (date: Dayjs) => date.format('MM.YYYY');
-const defaultParcer = (date?: string) => dayjs(date, 'MM.YYYY');
+const defaultParser = (date?: string) => dayjs(date, 'MM.YYYY');
 
 export type MonthPickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
@@ -32,7 +32,7 @@ export type MonthPickerProps = InputBoxProps & {
   format?: (date: Dayjs) => string;
 
   /** Функция для конвертации строки инпута в значение календаря */
-  parce?: (date?: string) => Dayjs;
+  parse?: (date?: string) => Dayjs;
 
   /** Изменение локали выпадающего календаря */
   Calendarlocale?: CalendarLocaleProps;
@@ -43,7 +43,7 @@ export type MonthPickerProps = InputBoxProps & {
  */
 export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
   (
-    { inputProps = {}, format = defaultFormatter, parce = defaultParcer, Calendarlocale = ruLocale, ...containerProps },
+    { inputProps = {}, format = defaultFormatter, parse = defaultParser, Calendarlocale = ruLocale, ...containerProps },
     refContainerProps,
   ) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
@@ -164,7 +164,7 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
     }, [inputValue]);
 
     useEffect(() => {
-      const date = parce(inputValue);
+      const date = parse(inputValue);
       if (date.isValid()) {
         setDisplayDate(date);
       } else if (!inputValue) {
@@ -181,7 +181,7 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
       tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
     };
 
-    const date = parce(inputValue);
+    const date = parse(inputValue);
 
     return (
       <InputBox {...containerFinalProps}>
@@ -195,7 +195,7 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
               onDateValueChange={(month) => setDisplayDate(month)}
               selectedDateValue={date}
               onSelectedDateValueChange={handleSelectedDateValueChange}
-              activeDateValue={parce(tmpValue)}
+              activeDateValue={parse(tmpValue)}
               onActiveDateValueChange={handleActiveDateValueChange}
               locale={Calendarlocale}
             />
