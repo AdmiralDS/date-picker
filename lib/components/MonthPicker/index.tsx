@@ -15,14 +15,12 @@ import { PopoverPanel } from '#lib/PopoverPanel';
 import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { CalendarLocaleProps } from '#lib/calendarInterfaces.js';
+import { defaultMonthFormatter, defaultMonthParser } from '#lib/utils';
 
 const Calendar = styled(MonthPickerCalendar)`
   border: none;
   box-shadow: none;
 `;
-
-const defaultFormatter = (date: Dayjs) => date.format('MM.YYYY');
-const defaultParser = (date?: string) => dayjs(date, 'MM.YYYY');
 
 export type MonthPickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
@@ -43,7 +41,13 @@ export type MonthPickerProps = InputBoxProps & {
  */
 export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
   (
-    { inputProps = {}, format = defaultFormatter, parse = defaultParser, Calendarlocale = ruLocale, ...containerProps },
+    {
+      inputProps = {},
+      format = defaultMonthFormatter,
+      parse = defaultMonthParser,
+      Calendarlocale = ruLocale,
+      ...containerProps
+    },
     refContainerProps,
   ) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);

@@ -1,18 +1,15 @@
 import type { ComponentProps, FocusEvent, KeyboardEventHandler, Ref } from 'react';
 import { useEffect, useRef, useState } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
 import { changeInputData, refSetter } from '@admiral-ds/react-ui';
 import { InputLine, InputLineProps } from './InputLine';
 import { InputSeparatorProps, InputSeparator } from './InputSeparator';
 import { DateRange } from 'lib/types';
-import { sortDateRange } from '#lib/utils';
-
-const defaultFormatter = (date?: Dayjs) => (date ? date.format('DD.MM.YYYY') : '');
-const defaultParser = (date?: string) => dayjs(date, 'DD.MM.YYYY');
+import { defaultDateFormatter, defaultDateParser, sortDateRange } from '#lib/utils';
 
 function dateRangeFromValue(
   values?: Array<string | undefined>,
-  parse: (date?: string) => Dayjs | undefined = defaultParser,
+  parse: (date?: string) => Dayjs | undefined = defaultDateParser,
 ): DateRange {
   const [start, end] = values
     ? values.map((item) => {
@@ -50,8 +47,8 @@ export const RangeInput = ({
   activeDate,
   selectedRange,
   onSelectedRangeChange,
-  format = defaultFormatter,
-  parse: parse = defaultParser,
+  format = defaultDateFormatter,
+  parse: parse = defaultDateParser,
   ...props
 }: RangeInputProps) => {
   const inputRefStart = useRef<HTMLInputElement>(null);

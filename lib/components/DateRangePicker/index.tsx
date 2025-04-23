@@ -14,13 +14,12 @@ import { PopoverPanel } from '#lib/PopoverPanel';
 import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
 import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
+import { defaultDateParser } from '#lib/utils';
 
 const Calendar = styled(DateRangePickerCalendar)`
   border: none;
   box-shadow: none;
 `;
-
-const defaultParser = (date?: string) => dayjs(date, 'DD.MM.YYYY');
 
 export type DateRangePickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
@@ -31,7 +30,6 @@ export type DateRangePickerProps = InputBoxProps & {
   /** Функция для конвертации значение календаря в строку инпута */
   format?: (date?: Dayjs) => string;
 
-  // TODO: typo!!! parSe
   /** Функция для конвертации строки инпута в значение календаря */
   parse?: (date?: string) => Dayjs | undefined;
 
@@ -48,7 +46,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       inputPropsEnd = {},
       separator = '\u2014',
       format,
-      parse: parse = defaultParser,
+      parse = defaultDateParser,
       ...containerProps
     },
     refContainerProps,

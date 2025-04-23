@@ -15,14 +15,12 @@ import { PopoverPanel } from '#lib/PopoverPanel';
 import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { CalendarLocaleProps } from '#lib/calendarInterfaces.js';
+import { defaultYearFormatter, defaultYearParser } from '#lib/utils';
 
 const Calendar = styled(YearPickerCalendar)`
   border: none;
   box-shadow: none;
 `;
-
-const defaultFormatter = (date: Dayjs) => date.format('YYYY');
-const defaultParser = (date?: string) => dayjs(date, 'YYYY');
 
 export type YearPickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
@@ -40,7 +38,13 @@ export type YearPickerProps = InputBoxProps & {
 
 export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
   (
-    { inputProps = {}, format = defaultFormatter, parse = defaultParser, Calendarlocale = ruLocale, ...containerProps },
+    {
+      inputProps = {},
+      format = defaultYearFormatter,
+      parse = defaultYearParser,
+      Calendarlocale = ruLocale,
+      ...containerProps
+    },
     refContainerProps,
   ) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);

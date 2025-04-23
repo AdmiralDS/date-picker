@@ -14,16 +14,14 @@ import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?
 import { PopoverPanel } from '#lib/PopoverPanel';
 import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
+import { defaultDateFormatter, defaultDateParser } from '#lib/utils';
 
 const Calendar = styled(DateRangePickerCalendar)`
   border: none;
   box-shadow: none;
 `;
 
-const defaultFormatter = (date?: Dayjs) => (date ? date.format('DD.MM.YYYY') : '');
-const defaultParser = (date?: string) => dayjs(date, 'DD.MM.YYYY');
-
-function dateRangeFromValue(value?: string, separator = ' – ', parse = defaultParser): DateRange {
+function dateRangeFromValue(value?: string, separator = ' – ', parse = defaultDateParser): DateRange {
   const [start, end] = value ? value.split(separator).map(parse) : [];
   return start && start.isAfter(end) ? ([end, start] as const) : ([start, end] as const);
 }
@@ -58,7 +56,7 @@ export type DateRangePickerProps = InputBoxProps & {
  */
 export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
   (
-    { inputProps = {}, separator = ' – ', format = defaultFormatter, parse = defaultParser, ...containerProps },
+    { inputProps = {}, separator = ' – ', format = defaultDateFormatter, parse = defaultDateParser, ...containerProps },
     refContainerProps,
   ) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
