@@ -53,16 +53,20 @@ export const RangeInput = ({
 }: RangeInputProps) => {
   const inputRefStart = useRef<HTMLInputElement>(null);
   const inputRefEnd = useRef<HTMLInputElement>(null);
-  // Values after click
+
+  //<editor-fold desc="Значения инпутов после клика или ручного ввода">
   const [inputStartValue, setInputStartValue] = useState<string | undefined>(inputPropsStart.value);
   const [inputEndValue, setInputEndValue] = useState<string | undefined>(inputPropsEnd.value);
+  //</editor-fold>
 
-  // Values after activeDate change (hovered date)
+  //<editor-fold desc="Значения инпутов после изменения активной даты в календаре (hovered date)">
   const [tmpValueStart, setTmpValueStart] = useState<string | undefined>();
   const [isTmpValueStartDisplayed, setTmpValueStartDisplayed] = useState(false);
   const [tmpValueEnd, setTmpValueEnd] = useState<string | undefined>();
   const [isTmpValueEndDisplayed, setTmpValueEndDisplayed] = useState(false);
+  //</editor-fold>
 
+  //<editor-fold desc="Фокусировка на первом инпуте при открытии календаря">
   useEffect(() => {
     const startFocused = document.activeElement === inputRefStart.current;
     const endFocused = document.activeElement === inputRefEnd.current;
@@ -70,10 +74,16 @@ export const RangeInput = ({
       inputRefStart.current?.focus();
     }
   }, [isCalendarOpen]);
+  //</editor-fold>
+
+  //<editor-fold desc="Активный инпут">
   const [activeEnd, setActiveEnd] = useState<'start' | 'end' | 'none'>('start');
   const handleActiveEndChange = (newValue: 'start' | 'end' | 'none') => {
     setActiveEnd(newValue);
   };
+  //</editor-fold>
+
+  //<editor-fold desc="Обработчики событий focus и blur на инпутах">
   const handleBlurStart = (e: FocusEvent<HTMLInputElement, Element>) => {
     changeCalendarVisibility(false);
     setTmpValueStartDisplayed(false);
@@ -95,7 +105,9 @@ export const RangeInput = ({
     handleActiveEndChange('end');
     inputPropsEnd.onFocus?.(e);
   };
+  //</editor-fold>
 
+  //<editor-fold desc="Обработчики нажатия Enter на инпутах">
   const handleInputStartKeyDown: KeyboardEventHandler<Element> = (e) => {
     if (e.key === 'Enter' && isCalendarOpen) {
       e.preventDefault();
@@ -116,8 +128,9 @@ export const RangeInput = ({
       }
     }
   };
+  //</editor-fold>
 
-  // отслеживаем изменение ховера на календаре
+  //<editor-fold desc="Отслеживаем изменение ховера на календаре">
   useEffect(() => {
     if (activeEnd === 'start') {
       setTmpValueStart(activeDate ? format(activeDate) : '');
@@ -127,8 +140,9 @@ export const RangeInput = ({
       setTmpValueEndDisplayed(!!activeDate);
     }
   }, [activeDate]);
+  //</editor-fold>
 
-  // отслеживаем клик на календаре
+  //<editor-fold desc="Отслеживаем клик на календаре">
   useEffect(() => {
     if (isCalendarOpen) {
       const [dayStart, dayEnd] = sortDateRange(selectedRange, 'date');
@@ -149,8 +163,9 @@ export const RangeInput = ({
       }
     }
   }, [selectedRange]);
+  //</editor-fold>
 
-  // передаем изменение значений по клику на календаре в инпуты
+  //<editor-fold desc="Передаем изменение значений по клику на календаре в инпуты">
   useEffect(() => {
     const inputNode = inputRefStart.current;
     if (inputNode) {
@@ -169,8 +184,9 @@ export const RangeInput = ({
       }
     }
   }, [inputEndValue]);
+  //</editor-fold>
 
-  // вешаем листенеры на инпуты для ручного ввода
+  //<editor-fold desc="Вешаем листенеры на инпуты для ручного ввода">
   useEffect(() => {
     function oninput(this: HTMLInputElement) {
       const { value } = this;
@@ -216,13 +232,18 @@ export const RangeInput = ({
       };
     }
   }, [inputEndValue]);
+  //</editor-fold>
 
+  //<editor-fold desc="Итоговые ref и props инпутов">
+  //ref на инпуты
   const refStart =
     inputPropsStart.ref !== undefined
       ? refSetter(inputRefStart, inputPropsStart.ref as Ref<HTMLInputElement>)
       : inputRefStart;
   const refEnd =
     inputPropsEnd.ref !== undefined ? refSetter(inputRefEnd, inputPropsEnd.ref as Ref<HTMLInputElement>) : inputRefEnd;
+
+  // props для инпутов
   const inputStartFinalProps: ComponentProps<typeof InputLine> = {
     ...inputPropsStart,
     'data-size': props['data-size'],
@@ -244,6 +265,8 @@ export const RangeInput = ({
   const inputSeparatorProps: InputSeparatorProps = {
     'data-size': props['data-size'],
   };
+  //</editor-fold>
+
   return (
     <>
       <InputLine {...inputStartFinalProps} />
