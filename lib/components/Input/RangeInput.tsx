@@ -145,26 +145,34 @@ export const RangeInput = ({
   //<editor-fold desc="Отслеживаем клик на календаре">
   useEffect(() => {
     if (isCalendarOpen) {
-      const [dayStart, dayEnd] = sortDateRange(selectedRange, 'date');
-      setInputStartValue(format(dayStart));
-      setInputEndValue(format(dayEnd));
+      const [dayStart, dayEnd] = sortDateRange(selectedRange, 'date').map((date) => format(date));
+
       if (activeEnd === 'start') {
+        setInputStartValue(dayStart);
+        setTmpValueStartDisplayed(false);
         handleActiveEndChange('end');
+        const inputNode = inputRefStart.current;
+        if (inputNode) {
+          changeInputData(inputNode, { value: dayStart });
+        }
         if (inputRefEnd.current) {
           inputRefEnd.current.focus();
         }
       } else if (activeEnd === 'end') {
+        setInputEndValue(dayEnd);
         setTmpValueEndDisplayed(false);
-        setTmpValueStartDisplayed(false);
         changeCalendarVisibility(false);
-        if (inputRefEnd.current) {
-          inputRefEnd.current.blur();
+        const inputNode = inputRefEnd.current;
+        if (inputNode) {
+          changeInputData(inputNode, { value: dayEnd });
+          inputNode.blur();
         }
       }
     }
   }, [selectedRange]);
   //</editor-fold>
 
+  /*
   //<editor-fold desc="Передаем изменение значений по клику на календаре в инпуты">
   useEffect(() => {
     const inputNode = inputRefStart.current;
@@ -185,10 +193,13 @@ export const RangeInput = ({
     }
   }, [inputEndValue]);
   //</editor-fold>
+  */
 
   //<editor-fold desc="Вешаем листенеры на инпуты для ручного ввода">
   useEffect(() => {
     function oninput(this: HTMLInputElement) {
+      console.log();
+
       const { value } = this;
       setTmpValueStartDisplayed(false);
       if (value !== inputStartValue) {
