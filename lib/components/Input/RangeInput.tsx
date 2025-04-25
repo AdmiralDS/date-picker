@@ -172,77 +172,44 @@ export const RangeInput = ({
   }, [selectedRange]);
   //</editor-fold>
 
-  /*
-  //<editor-fold desc="Передаем изменение значений по клику на календаре в инпуты">
-  useEffect(() => {
-    const inputNode = inputRefStart.current;
-    if (inputNode) {
-      const { value } = inputNode;
-      if (inputStartValue !== value) {
-        changeInputData(inputRefStart.current, { value: inputStartValue });
-      }
-    }
-  }, [inputStartValue]);
-  useEffect(() => {
-    const inputNode = inputRefEnd.current;
-    if (inputNode) {
-      const { value } = inputNode;
-      if (inputEndValue !== value) {
-        changeInputData(inputRefEnd.current, { value: inputEndValue });
-      }
-    }
-  }, [inputEndValue]);
-  //</editor-fold>
-  */
-
   //<editor-fold desc="Вешаем листенеры на инпуты для ручного ввода">
   useEffect(() => {
-    function oninput(this: HTMLInputElement) {
-      console.log();
-
+    function oninputStart(this: HTMLInputElement) {
       const { value } = this;
       setTmpValueStartDisplayed(false);
       if (value !== inputStartValue) {
-        setInputStartValue(value);
         changeCalendarVisibility(true);
         const parsedValue = parse(value);
         if (parsedValue?.isValid()) {
+          setInputStartValue(value);
           onSelectedRangeChange(dateRangeFromValue([value, inputEndValue], parse));
         }
       }
     }
-
-    if (inputRefStart.current) {
-      const node = inputRefStart.current;
-      node.addEventListener('input', oninput, true);
-      return () => {
-        node.removeEventListener('input', oninput, true);
-      };
-    }
-  }, [inputStartValue]);
-
-  useEffect(() => {
-    function oninput(this: HTMLInputElement) {
+    function oninputEnd(this: HTMLInputElement) {
       const { value } = this;
       setTmpValueEndDisplayed(false);
       if (value !== inputEndValue) {
-        setInputEndValue(value);
         changeCalendarVisibility(true);
         const parsedValue = parse(value);
         if (parsedValue?.isValid()) {
+          setInputEndValue(value);
           onSelectedRangeChange(dateRangeFromValue([inputStartValue, value], parse));
         }
       }
     }
 
-    if (inputRefEnd.current) {
-      const node = inputRefEnd.current;
-      node.addEventListener('input', oninput, true);
+    if (inputRefStart.current && inputRefEnd.current) {
+      const nodeStart = inputRefStart.current;
+      const nodeEnd = inputRefEnd.current;
+      nodeStart.addEventListener('input', oninputStart, true);
+      nodeEnd.addEventListener('input', oninputEnd, true);
       return () => {
-        node.removeEventListener('input', oninput, true);
+        nodeStart.removeEventListener('input', oninputStart, true);
+        nodeEnd.removeEventListener('input', oninputEnd, true);
       };
     }
-  }, [inputEndValue]);
+  }, [inputStartValue, inputEndValue]);
   //</editor-fold>
 
   //<editor-fold desc="Итоговые ref и props инпутов">
