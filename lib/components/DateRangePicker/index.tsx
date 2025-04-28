@@ -56,9 +56,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const inputBoxRef = useRef(null);
 
     const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
-    const handleCalendarVisibilityChange = (newState: boolean) => {
-      setCalendarOpen(newState);
-    };
 
     const [activeDate, setActiveDate] = useState<Dayjs | undefined>(undefined);
     const handleActiveDateValueChange = (date?: Dayjs) => {
@@ -85,6 +82,13 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       setCalendarViewMode(view);
     };
 
+    const handleRangeInputBegin = () => {
+      setCalendarOpen(true);
+    };
+    const handleRangeInputFinish = () => {
+      setCalendarOpen(false);
+    };
+
     // TODO смержить с оригинальными обработчиками из пропсов
     const containerFinalProps: ComponentProps<typeof InputBox> = {
       ...containerProps,
@@ -97,7 +101,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       inputPropsStart: inputPropsStart,
       inputPropsEnd: inputPropsEnd,
       isCalendarOpen: isCalendarOpen,
-      changeCalendarVisibility: handleCalendarVisibilityChange,
+      onRangeInputBegin: handleRangeInputBegin,
+      onRangeInputFinish: handleRangeInputFinish,
       separator: separator,
       activeDate: activeDate,
       selectedRange: selectedRange,

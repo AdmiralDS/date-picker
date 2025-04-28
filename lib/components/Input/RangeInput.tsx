@@ -7,6 +7,8 @@ import { InputSeparatorProps, InputSeparator } from './InputSeparator';
 import { DateRange } from 'lib/types';
 import { defaultDateFormatter, defaultDateParser, sortDateRange } from '#lib/utils';
 
+type InputProcessStatusType = 'notStarted' | 'halfDone' | 'finished';
+
 function dateRangeFromValue(
   values?: Array<string | undefined>,
   parse: (date?: string) => Dayjs | undefined = defaultDateParser,
@@ -27,7 +29,9 @@ export interface RangeInputProps extends InputLineProps {
   inputPropsEnd: InputLineProps;
 
   isCalendarOpen: boolean;
-  changeCalendarVisibility: (newState: boolean) => void;
+  //changeCalendarVisibility: (newState: boolean) => void;
+  onRangeInputBegin?: () => void;
+  onRangeInputFinish?: () => void;
   separator?: string;
   activeDate?: Dayjs;
   selectedRange: DateRange;
@@ -42,7 +46,9 @@ export const RangeInput = ({
   inputPropsStart,
   inputPropsEnd,
   isCalendarOpen,
-  changeCalendarVisibility,
+  //changeCalendarVisibility,
+  onRangeInputBegin,
+  onRangeInputFinish,
   separator,
   activeDate,
   selectedRange,
@@ -53,6 +59,15 @@ export const RangeInput = ({
 }: RangeInputProps) => {
   const inputRefStart = useRef<HTMLInputElement>(null);
   const inputRefEnd = useRef<HTMLInputElement>(null);
+
+  const [inputsConfirmed, setInputsConfirmed] = useState(0);
+  const handleRangeInputBegin = () => {
+    onRangeInputBegin?.();
+  };
+  const handleRangeInputFinish = () => {
+    onRangeInputFinish?.();
+    setInputsConfirmed(0);
+  };
 
   //<editor-fold desc="Значения инпутов после клика или ручного ввода">
   const [inputStartValue, setInputStartValue] = useState<string | undefined>(inputPropsStart.value);
@@ -85,23 +100,27 @@ export const RangeInput = ({
 
   //<editor-fold desc="Обработчики событий focus и blur на инпутах">
   const handleBlurStart = (e: FocusEvent<HTMLInputElement, Element>) => {
-    changeCalendarVisibility(false);
+    handleRangeInputFinish();
+    //changeCalendarVisibility(false);
     setTmpValueStartDisplayed(false);
     inputPropsStart.onBlur?.(e);
   };
   const handleBlurEnd = (e: FocusEvent<HTMLInputElement, Element>) => {
-    changeCalendarVisibility(false);
+    handleRangeInputFinish();
+    //changeCalendarVisibility(false);
     setTmpValueEndDisplayed(false);
     inputPropsEnd.onBlur?.(e);
   };
 
   const handleFocusStart = (e: FocusEvent<HTMLInputElement, Element>) => {
-    changeCalendarVisibility(true);
+    handleRangeInputBegin();
+    //changeCalendarVisibility(true);
     handleActiveEndChange('start');
     inputPropsStart.onFocus?.(e);
   };
   const handleFocusEnd = (e: FocusEvent<HTMLInputElement, Element>) => {
-    changeCalendarVisibility(true);
+    handleRangeInputBegin();
+    //changeCalendarVisibility(true);
     handleActiveEndChange('end');
     inputPropsEnd.onFocus?.(e);
   };
@@ -109,19 +128,29 @@ export const RangeInput = ({
 
   //<editor-fold desc="Обработчики нажатия Enter на инпутах">
   const handleInputStartKeyDown: KeyboardEventHandler<Element> = (e) => {
-    if (e.key === 'Enter' && isCalendarOpen) {
-      e.preventDefault();
-      changeCalendarVisibility(false);
-      if (isTmpValueStartDisplayed && tmpValueStart) {
-        setInputStartValue(tmpValueStart);
-        setTmpValueStartDisplayed(false);
+    if (isCalendarOpen) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+
+        handleRangeInputFinish();
+        //changeCalendarVisibility(false);
+        if (isTmpValueStartDisplayed && tmpValueStart) {
+          setInputStartValue(tmpValueStart);
+          setTmpValueStartDisplayed(false);
+        }
+
+        const parsedValue = parse(inputStartValue);
+        if (parsedValue?.isValid()) {
+          onSelectedRangeChange(dateRangeFromValue([inputStartValue, inputEndValue], parse));
+        }
       }
     }
   };
   const handleInputEndKeyDown: KeyboardEventHandler<Element> = (e) => {
     if (e.key === 'Enter' && isCalendarOpen) {
       e.preventDefault();
-      changeCalendarVisibility(false);
+      handleRangeInputFinish();
+      //changeCalendarVisibility(false);
       if (isTmpValueEndDisplayed && tmpValueEnd) {
         setInputEndValue(tmpValueEnd);
         setTmpValueEndDisplayed(false);
@@ -150,22 +179,40 @@ export const RangeInput = ({
       if (activeEnd === 'start') {
         setInputStartValue(dayStart);
         setTmpValueStartDisplayed(false);
-        handleActiveEndChange('end');
         const inputNode = inputRefStart.current;
         if (inputNode) {
           changeInputData(inputNode, { value: dayStart });
         }
-        if (inputRefEnd.current) {
-          inputRefEnd.current.focus();
+        if (inputsConfirmed < 2) {
+          setInputsConfirmed((prev) => prev + 1);
+          handleActiveEndChange('end');
+          if (inputRefEnd.current) {
+            inputRefEnd.current.focus();
+          }
+        } else {
+          if (inputNode) {
+            inputNode.blur();
+            handleRangeInputFinish();
+          }
         }
       } else if (activeEnd === 'end') {
         setInputEndValue(dayEnd);
         setTmpValueEndDisplayed(false);
-        changeCalendarVisibility(false);
         const inputNode = inputRefEnd.current;
         if (inputNode) {
           changeInputData(inputNode, { value: dayEnd });
-          inputNode.blur();
+        }
+        if (inputsConfirmed < 2) {
+          setInputsConfirmed((prev) => prev + 1);
+          handleActiveEndChange('start');
+          if (inputRefStart.current) {
+            inputRefStart.current.focus();
+          }
+        } else {
+          if (inputNode) {
+            inputNode.blur();
+            handleRangeInputFinish();
+          }
         }
       }
     }
@@ -174,11 +221,12 @@ export const RangeInput = ({
 
   //<editor-fold desc="Вешаем листенеры на инпуты для ручного ввода">
   useEffect(() => {
-    function oninputStart(this: HTMLInputElement) {
+    function oninputStart(this: HTMLInputElement, ev: Event) {
       const { value } = this;
       setTmpValueStartDisplayed(false);
       if (value !== inputStartValue) {
-        changeCalendarVisibility(true);
+        handleRangeInputBegin();
+        //changeCalendarVisibility(true);
         const parsedValue = parse(value);
         if (parsedValue?.isValid()) {
           setInputStartValue(value);
@@ -186,11 +234,12 @@ export const RangeInput = ({
         }
       }
     }
-    function oninputEnd(this: HTMLInputElement) {
+    function oninputEnd(this: HTMLInputElement, ev: Event) {
       const { value } = this;
       setTmpValueEndDisplayed(false);
       if (value !== inputEndValue) {
-        changeCalendarVisibility(true);
+        handleRangeInputBegin();
+        //changeCalendarVisibility(true);
         const parsedValue = parse(value);
         if (parsedValue?.isValid()) {
           setInputEndValue(value);
@@ -210,6 +259,36 @@ export const RangeInput = ({
       };
     }
   }, [inputStartValue, inputEndValue]);
+  /*
+  const handleInputStart = () => {
+    if (inputRefStart.current) {
+      const { value } = inputRefStart.current;
+      setTmpValueStartDisplayed(false);
+      if (value !== inputStartValue) {
+        changeCalendarVisibility(true);
+        const parsedValue = parse(value);
+        if (parsedValue?.isValid()) {
+          setInputStartValue(value);
+          onSelectedRangeChange(dateRangeFromValue([value, inputEndValue], parse));
+        }
+      }
+    }
+  };
+  const handleInputEnd = () => {
+    if (inputRefEnd.current) {
+      const { value } = inputRefEnd.current;
+      setTmpValueEndDisplayed(false);
+      if (value !== inputEndValue) {
+        changeCalendarVisibility(true);
+        const parsedValue = parse(value);
+        if (parsedValue?.isValid()) {
+          setInputEndValue(value);
+          onSelectedRangeChange(dateRangeFromValue([value, inputEndValue], parse));
+        }
+      }
+    }
+  };
+  */
   //</editor-fold>
 
   //<editor-fold desc="Итоговые ref и props инпутов">
@@ -229,6 +308,7 @@ export const RangeInput = ({
     onBlur: handleBlurStart,
     onFocus: handleFocusStart,
     onKeyDown: handleInputStartKeyDown,
+    //onInput: handleInputStart,
     tmpValue: isTmpValueStartDisplayed ? tmpValueStart : undefined,
   };
   const inputEndFinalProps: ComponentProps<typeof InputLine> = {
@@ -238,6 +318,7 @@ export const RangeInput = ({
     onBlur: handleBlurEnd,
     onFocus: handleFocusEnd,
     onKeyDown: handleInputEndKeyDown,
+    //onInput: handleInputEnd,
     tmpValue: isTmpValueEndDisplayed ? tmpValueEnd : undefined,
   };
   const inputSeparatorProps: InputSeparatorProps = {
