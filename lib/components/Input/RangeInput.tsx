@@ -7,8 +7,6 @@ import { InputSeparatorProps, InputSeparator } from './InputSeparator';
 import { DateRange } from 'lib/types';
 import { defaultDateFormatter, defaultDateParser, sortDateRange } from '#lib/utils';
 
-type InputProcessStatusType = 'notStarted' | 'halfDone' | 'finished';
-
 function dateRangeFromValue(
   values?: Array<string | undefined>,
   parse: (date?: string) => Dayjs | undefined = defaultDateParser,
@@ -60,13 +58,11 @@ export const RangeInput = ({
   const inputRefStart = useRef<HTMLInputElement>(null);
   const inputRefEnd = useRef<HTMLInputElement>(null);
 
-  const [inputsConfirmed, setInputsConfirmed] = useState(0);
   const handleRangeInputBegin = () => {
     onRangeInputBegin?.();
   };
   const handleRangeInputFinish = () => {
     onRangeInputFinish?.();
-    setInputsConfirmed(0);
   };
 
   //<editor-fold desc="Значения инпутов после клика или ручного ввода">
@@ -176,52 +172,51 @@ export const RangeInput = ({
     if (isCalendarOpen) {
       const [dayStart, dayEnd] = sortDateRange(selectedRange, 'date').map((date) => format(date));
 
-      if (activeEnd === 'start') {
+      if (!!dayStart && !dayEnd) {
         setInputStartValue(dayStart);
         setTmpValueStartDisplayed(false);
-        const inputNode = inputRefStart.current;
-        if (inputNode) {
-          changeInputData(inputNode, { value: dayStart });
+        handleActiveEndChange('end');
+        if (inputRefEnd.current) {
+          inputRefEnd.current.focus();
         }
-        if (inputsConfirmed < 2) {
-          setInputsConfirmed((prev) => prev + 1);
-          handleActiveEndChange('end');
-          if (inputRefEnd.current) {
-            inputRefEnd.current.focus();
-          }
-        } else {
-          if (inputNode) {
-            inputNode.blur();
-            handleRangeInputFinish();
-          }
-        }
-      } else if (activeEnd === 'end') {
+      } else if (!!dayStart && !!dayEnd) {
+        setInputStartValue(dayStart);
         setInputEndValue(dayEnd);
+        setTmpValueStartDisplayed(false);
         setTmpValueEndDisplayed(false);
-        const inputNode = inputRefEnd.current;
-        if (inputNode) {
-          changeInputData(inputNode, { value: dayEnd });
-        }
-        if (inputsConfirmed < 2) {
-          setInputsConfirmed((prev) => prev + 1);
-          handleActiveEndChange('start');
-          if (inputRefStart.current) {
-            inputRefStart.current.focus();
-          }
-        } else {
-          if (inputNode) {
-            inputNode.blur();
-            handleRangeInputFinish();
-          }
-        }
+        inputRefStart.current?.blur();
+        inputRefEnd.current?.blur();
+        handleRangeInputFinish();
       }
     }
   }, [selectedRange]);
   //</editor-fold>
 
+  //<editor-fold desc="Передаем изменение значений по клику на календаре в инпуты">
+  // Необходим из-за наличия листенеров, вызывается после clean-up листенеров до того, как они создадутся снова
+  useEffect(() => {
+    const inputNode = inputRefStart.current;
+    if (inputNode) {
+      const { value } = inputNode;
+      if (inputStartValue !== value) {
+        changeInputData(inputNode, { value: inputStartValue });
+      }
+    }
+  }, [inputStartValue]);
+  useEffect(() => {
+    const inputNode = inputRefEnd.current;
+    if (inputNode) {
+      const { value } = inputNode;
+      if (inputEndValue !== value) {
+        changeInputData(inputNode, { value: inputEndValue });
+      }
+    }
+  }, [inputEndValue]);
+  //</editor-fold>
+
   //<editor-fold desc="Вешаем листенеры на инпуты для ручного ввода">
   useEffect(() => {
-    function oninputStart(this: HTMLInputElement, ev: Event) {
+    function oninputStart(this: HTMLInputElement) {
       const { value } = this;
       setTmpValueStartDisplayed(false);
       if (value !== inputStartValue) {
@@ -234,7 +229,7 @@ export const RangeInput = ({
         }
       }
     }
-    function oninputEnd(this: HTMLInputElement, ev: Event) {
+    function oninputEnd(this: HTMLInputElement) {
       const { value } = this;
       setTmpValueEndDisplayed(false);
       if (value !== inputEndValue) {
