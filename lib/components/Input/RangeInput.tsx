@@ -168,16 +168,22 @@ export const RangeInput = ({
   //</editor-fold>
 
   //<editor-fold desc="Отслеживаем клик на календаре">
+  // TODO: проверить алгоритм выбора start/end в RangeCalendar
   useEffect(() => {
     if (isCalendarOpen) {
       const [dayStart, dayEnd] = sortDateRange(selectedRange, 'date').map((date) => format(date));
 
       if (!!dayStart && !dayEnd) {
-        setInputStartValue(dayStart);
-        setTmpValueStartDisplayed(false);
-        handleActiveEndChange('end');
-        if (inputRefEnd.current) {
-          inputRefEnd.current.focus();
+        if (activeEnd === 'start') {
+          setInputStartValue(dayStart);
+          setTmpValueStartDisplayed(false);
+          handleActiveEndChange('end');
+          inputRefEnd.current?.focus();
+        } else {
+          setInputEndValue(dayStart);
+          setTmpValueEndDisplayed(false);
+          handleActiveEndChange('start');
+          inputRefStart.current?.focus();
         }
       } else if (!!dayStart && !!dayEnd) {
         setInputStartValue(dayStart);
