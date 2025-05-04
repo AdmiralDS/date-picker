@@ -4,7 +4,7 @@ import { maskitoDateOptionsGenerator } from '@maskito/kit';
 import { useMaskito } from '@maskito/react';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
 
@@ -17,6 +17,7 @@ const defaultInputProps = {
 export const DatePickerSimpleTemplate = () => {
   const [inputValue, setInputValue] = useState(defaultInputProps.value);
   const maskedDateInputRef = useMaskito({ options: dateOptions });
+
   return (
     <WrapperHorizontal>
       <WrapperVertical>
@@ -24,7 +25,7 @@ export const DatePickerSimpleTemplate = () => {
           inputProps={{
             ...defaultInputProps,
             value: inputValue,
-            onInput: (e) => setInputValue(e.currentTarget.value),
+            onInput: (e: FormEvent<HTMLInputElement>) => setInputValue(e.currentTarget.value),
             ref: maskedDateInputRef,
           }}
         />

@@ -4,7 +4,7 @@ import { maskitoDateOptionsGenerator } from '@maskito/kit';
 import { useMaskito } from '@maskito/react';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 
 const defaultInputStartProps = {
   //placeholder: 'Введите интервал дат',
@@ -24,6 +24,9 @@ export const DateRangePickerSimpleTemplate = () => {
   const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
   const maskedDateInputStartRef = useMaskito({ options: dateOptions });
   const maskedDateInputEndRef = useMaskito({ options: dateOptions });
+
+  // const handleChangeValue = (value: Array<any>) => {}
+
   return (
     <WrapperHorizontal>
       <WrapperVertical>

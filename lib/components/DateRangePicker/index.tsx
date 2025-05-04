@@ -1,5 +1,5 @@
 import type { ComponentProps, MouseEventHandler } from 'react';
-import { forwardRef, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
@@ -15,6 +15,19 @@ import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
 import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
 import { defaultDateParser } from '#lib/utils';
+
+function dateRangeFromValue(
+  values?: Array<string | undefined>,
+  parse: (date?: string) => Dayjs | undefined = defaultDateParser,
+): DateRange {
+  const [start, end] = values
+    ? values.map((item) => {
+        const parsedItem = parse(item);
+        return parsedItem?.isValid() ? parsedItem : undefined;
+      })
+    : [undefined, undefined];
+  return start && end && start.isAfter(end) ? ([end, start] as const) : ([start, end] as const);
+}
 
 const Calendar = styled(DateRangePickerCalendar)`
   border: none;
@@ -78,16 +91,28 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       }
     };
 
+    useEffect(() => {
+      if (calendarViewMode === 'dates') {
+        const startDate = parse(inputPropsStart.value);
+        const endDate = parse(inputPropsEnd.value);
+
+        const start = startDate?.isValid() ? startDate : undefined;
+        const end = endDate?.isValid() ? endDate : undefined;
+
+        setSelectedRange([start, end]);
+      }
+    }, [inputPropsStart, inputPropsEnd]);
+
     const handleCalendarViewModeChange = (view: CalendarViewMode) => {
       setCalendarViewMode(view);
     };
 
-    const handleRangeInputBegin = () => {
-      setCalendarOpen(true);
-    };
-    const handleRangeInputFinish = () => {
-      setCalendarOpen(false);
-    };
+    // const handleRangeInputBegin = () => {
+    //   setCalendarOpen(true);
+    // };
+    // const handleRangeInputFinish = () => {
+    //   setCalendarOpen(false);
+    // };
 
     // TODO смержить с оригинальными обработчиками из пропсов
     const containerFinalProps: ComponentProps<typeof InputBox> = {
@@ -95,20 +120,30 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       ref: refSetter(inputBoxRef, refContainerProps),
     };
 
+    const handleInputFocus = () => {
+      setCalendarOpen(true);
+    };
+
+    const handleInputBlur = () => {
+      setCalendarOpen(false);
+    };
+
     const rangeInputProps: RangeInputProps = {
       'data-size': containerProps['data-size'],
 
       inputPropsStart: inputPropsStart,
       inputPropsEnd: inputPropsEnd,
-      isCalendarOpen: isCalendarOpen,
-      onRangeInputBegin: handleRangeInputBegin,
-      onRangeInputFinish: handleRangeInputFinish,
+      // isCalendarOpen: isCalendarOpen,
+      // onRangeInputBegin: handleRangeInputBegin,
+      // onRangeInputFinish: handleRangeInputFinish,
       separator: separator,
       activeDate: activeDate,
-      selectedRange: selectedRange,
+      // selectedRange: selectedRange,
       onSelectedRangeChange: handleSelectedDateValueChange,
       format: format,
       parse: parse,
+      onFocus: handleInputFocus,
+      onBlur: handleInputBlur,
     };
 
     return (

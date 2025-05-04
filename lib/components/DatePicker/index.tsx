@@ -121,22 +121,27 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         }
       }
     };
-    // TODO смержить с оригинальными обработчиками из пропсов
+    // TODO: смержить с оригинальными обработчиками из пропсов
     const containerFinalProps: ComponentProps<typeof InputBox> = {
       ...containerProps,
       ref: refSetter(inputBoxRef, refContainerProps),
       onMouseDown: handleInputBoxMouseDown,
     };
 
-    useEffect(() => {
-      const inputNode = inputRef.current;
-      if (inputNode) {
-        const { value } = inputNode;
-        if (inputValue !== value) {
-          changeInputData(inputRef.current, { value: inputValue });
-        }
-      }
-    }, [inputValue]);
+    // useEffect(() => {
+    //   const inputNode = inputRef.current;
+    //   if (inputNode) {
+    //     const { value, selectionStart, selectionEnd } = inputNode;
+    //     if (inputValue !== value) {
+    //       console.log(value, selectionStart, selectionEnd);
+    //       changeInputData(inputRef.current, {
+    //         value: inputValue,
+    //         selectionStart: (selectionStart || 0) + 1,
+    //         selectionEnd: (selectionEnd || 0) + 1,
+    //       });
+    //     }
+    //   }
+    // }, [inputValue]);
 
     useEffect(() => {
       if (isCalendarOpen && inputRef.current) {
@@ -146,24 +151,26 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
     }, [isCalendarOpen]);
 
-    useEffect(() => {
-      function oninput(this: HTMLInputElement) {
-        const { value } = this;
-        setTmpValueDisplayed(false);
-        if (value !== inputValue) {
-          setInputValue(value);
-          setCalendarOpen(true);
-        }
-      }
+    // useEffect(() => {
+    //   function oninput(this: HTMLInputElement) {
+    //     const { value } = this;
+    //     console.log(value);
 
-      if (inputRef.current) {
-        const node = inputRef.current;
-        node.addEventListener('input', oninput, true);
-        return () => {
-          node.removeEventListener('input', oninput, true);
-        };
-      }
-    }, [inputValue]);
+    //     setTmpValueDisplayed(false);
+    //     if (value !== inputValue) {
+    //       setInputValue(value);
+    //       setCalendarOpen(true);
+    //     }
+    //   }
+
+    //   if (inputRef.current) {
+    //     const node = inputRef.current;
+    //     node.addEventListener('input', oninput, true);
+    //     return () => {
+    //       node.removeEventListener('input', oninput, true);
+    //     };
+    //   }
+    // }, [inputValue]);
 
     useEffect(() => {
       const date = parse(inputValue);
@@ -185,9 +192,21 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
     const date = parse(inputValue);
 
+    const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+      const value = e.currentTarget.value;
+
+      setTmpValueDisplayed(false);
+      if (value !== inputValue) {
+        setInputValue(value);
+        setCalendarOpen(true);
+      }
+
+      inputProps.onInput?.(e);
+    };
+
     return (
       <InputBox {...containerFinalProps}>
-        <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} />
+        <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} onInput={handleInput} />
         <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
         {isCalendarOpen && (
           <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto">
