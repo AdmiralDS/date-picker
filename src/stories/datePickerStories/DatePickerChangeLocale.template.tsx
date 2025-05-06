@@ -15,7 +15,7 @@ const defaultInputProps = {
 
 const locales = [
   { label: 'Русский', value: 'ru-RU', placeholder: 'Введите дату', dataPlaceholder: 'дд.мм.гггг' },
-  { label: 'English', value: 'en-US', placeholder: 'Enter the date', dataPlaceholder: 'mm/dd/yyyy' },
+  { label: 'English (US)', value: 'en-US', placeholder: 'Enter the date', dataPlaceholder: 'mm/dd/yyyy' },
 ];
 
 const getDefaultFormatter = (locale: string) => {

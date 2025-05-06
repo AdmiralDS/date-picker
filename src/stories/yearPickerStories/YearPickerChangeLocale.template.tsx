@@ -15,7 +15,7 @@ const defaultInputProps = {
 
 const locales = [
   { label: 'Русский', value: 'ru-RU', placeholder: 'Введите год', dataPlaceholder: 'гггг' },
-  { label: 'English', value: 'en-US', placeholder: 'Enter the year', dataPlaceholder: 'yyyy' },
+  { label: 'English (US)', value: 'en-US', placeholder: 'Enter the year', dataPlaceholder: 'yyyy' },
 ];
 
 const getDefaultFormatter = () => {
@@ -29,7 +29,7 @@ const getDefaultParcer = () => {
 const getDateOptions = (locale: string) => {
   return locale === 'ru-RU'
     ? maskitoDateOptionsGenerator({ mode: 'yyyy', separator: '.' })
-    : maskitoDateOptionsGenerator({ mode: 'yyyy', separator: '-' });
+    : maskitoDateOptionsGenerator({ mode: 'yyyy', separator: '/' });
 };
 
 export const YearPickerChangeLocaleTemplate = () => {
