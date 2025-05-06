@@ -35,6 +35,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ThemeProvider } from 'styled-components';
 import { LIGHT_THEME, FontsVTBGroup, DropdownProvider } from '@admiral-ds/react-ui';
+import { lightThemeClassName } from '@admiral-ds/web';
 import App from './App';
 import './index.css';
 
@@ -50,11 +51,18 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 );
 ```
 
+Также для корректной работы необходимо использовать тему из '@admiral-ds/web':
+
 ```jsx
-import React from "react";
-import { DatePickerCalendar} from "@admiral-ds/date-picker";
+import React from 'react';
+import { DatePickerCalendar } from '@admiral-ds/date-picker';
+import { lightThemeClassName } from '@admiral-ds/web';
 
 function App() {
+  React.useEffect(() => {
+    document.body.classList.add(...lightThemeClassName.split(' '));
+  }, []);
+
   const handleClick = (e) => {
     const clickedCell = e.target.dataset.value;
     console.log(`click on ${clickedCell}`);
