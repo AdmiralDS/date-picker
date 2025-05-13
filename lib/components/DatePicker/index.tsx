@@ -70,6 +70,9 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const handleSelectedDateValueChange = (date: Dayjs) => {
       if (calendarViewMode === 'dates') {
         const formattedValue = format(date);
+        if (inputRef.current) {
+          changeInputData(inputRef.current, { value: formattedValue });
+        }
         setInputValue(formattedValue);
         setTmpValueDisplayed(false);
         setCalendarOpen(false);

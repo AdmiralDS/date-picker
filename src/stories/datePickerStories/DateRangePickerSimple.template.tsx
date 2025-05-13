@@ -20,12 +20,9 @@ const defaultInputEndProps = {
 export const DateRangePickerSimpleTemplate = () => {
   const [inputStartValue, setInputStartValue] = useState(defaultInputStartProps.value);
   const [inputEndValue, setInputEndValue] = useState(defaultInputEndProps.value);
-  //const dateOptions = useMemo(() => maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy', rangeSeparator: '-' }), []);
   const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
   const maskedDateInputStartRef = useMaskito({ options: dateOptions });
   const maskedDateInputEndRef = useMaskito({ options: dateOptions });
-
-  // const handleChangeValue = (value: Array<any>) => {}
 
   return (
     <WrapperHorizontal>
