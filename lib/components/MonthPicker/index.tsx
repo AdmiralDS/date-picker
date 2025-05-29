@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import { refSetter, changeInputData } from '@admiral-ds/react-ui';
+import { refSetter } from '@admiral-ds/react-ui';
 import { MonthPickerCalendar } from '#lib/MonthPickerCalendar';
 import type { InputBoxProps } from '#lib/Input/InputBox';
 import { InputBox } from '#lib/Input/InputBox';
@@ -127,41 +127,12 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
     };
 
     useEffect(() => {
-      const inputNode = inputRef.current;
-      if (inputNode) {
-        const { value } = inputNode;
-        if (inputValue !== value) {
-          changeInputData(inputRef.current, { value: inputValue });
-        }
-      }
-    }, [inputValue]);
-
-    useEffect(() => {
       if (isCalendarOpen && inputRef.current) {
         const node = inputRef.current;
         const { value } = node;
         setInputValue(value);
       }
     }, [isCalendarOpen]);
-
-    useEffect(() => {
-      function oninput(this: HTMLInputElement) {
-        const { value } = this;
-        setTmpValueDisplayed(false);
-        if (value !== inputValue) {
-          setInputValue(value);
-          setCalendarOpen(true);
-        }
-      }
-
-      if (inputRef.current) {
-        const node = inputRef.current;
-        node.addEventListener('input', oninput, true);
-        return () => {
-          node.removeEventListener('input', oninput, true);
-        };
-      }
-    }, [inputValue]);
 
     useEffect(() => {
       const date = parce(inputValue);
@@ -183,9 +154,20 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
 
     const date = parce(inputValue);
 
+    const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+      const value = e.currentTarget.value;
+
+      setTmpValueDisplayed(false);
+      if (value !== inputValue) {
+        setInputValue(value);
+        setCalendarOpen(true);
+      }
+      inputProps.onInput?.(e);
+    };
+
     return (
       <InputBox {...containerFinalProps}>
-        <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} />
+        <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} onInput={handleInput} />
         <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
         {isCalendarOpen && (
           <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto">
