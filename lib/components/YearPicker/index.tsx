@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import { refSetter } from '@admiral-ds/react-ui';
+import { refSetter, changeInputData } from '@admiral-ds/react-ui';
 import { YearPickerCalendar } from '#lib/YearPickerCalendar';
 import type { InputBoxProps } from '#lib/Input/InputBox';
 import { InputBox } from '#lib/Input/InputBox';
@@ -60,17 +60,17 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
       }
     };
 
-    const handleSelectedDateValueChange = useCallback(
-      (date: Dayjs) => {
-        if (calendarViewMode === 'years') {
-          const formattedValue = format(date);
-          setInputValue(formattedValue);
-          setTmpValueDisplayed(false);
-          setCalendarOpen(false);
+    const handleSelectedDateValueChange = (date: Dayjs) => {
+      if (calendarViewMode === 'years') {
+        const formattedValue = format(date);
+        if (inputRef.current) {
+          changeInputData(inputRef.current, { value: formattedValue });
         }
-      },
-      [calendarViewMode, format],
-    );
+        setInputValue(formattedValue);
+        setTmpValueDisplayed(false);
+        setCalendarOpen(false);
+      }
+    };
 
     const handleActiveDateValueChange = useCallback(
       (date?: Dayjs) => {
