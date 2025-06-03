@@ -223,6 +223,14 @@ export const RangeInput = ({
 
     if (parsedValue?.isValid()) {
       if (value !== inputStartValue) {
+        // changeCalendarVisibility(true);
+        const parsedValue = parse(value);
+        if (parsedValue?.isValid()) {
+          setInputStartValue(value);
+          onStartDateChanged?.(parsedValue);
+          inputRefEnd.current?.focus();
+          // onSelectedRangeChange(dateRangeFromValue([value, inputEndValue], parse));
+        }
         setInputStartValue(value);
         onStartDateChanged?.(parsedValue);
       }

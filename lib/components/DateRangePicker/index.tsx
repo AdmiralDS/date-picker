@@ -96,7 +96,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const [selectedRange, setSelectedRange] = useState<DateRange>([undefined, undefined]);
     const handleSelectedDateValueChange = (dateRange: DateRange) => {
       if (calendarViewMode === 'dates') {
-        console.log(dateRange);
+        // console.log(dateRange);
 
         const start = dateRange[0];
         const end = dateRange[1];

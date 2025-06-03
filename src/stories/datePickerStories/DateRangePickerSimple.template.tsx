@@ -24,6 +24,11 @@ export const DateRangePickerSimpleTemplate = () => {
   const maskedDateInputStartRef = useMaskito({ options: dateOptions });
   const maskedDateInputEndRef = useMaskito({ options: dateOptions });
 
+  const handleInputStartValue = (e: React.FormEvent<HTMLInputElement>) => {
+    console.log(e.currentTarget.value);
+    setInputStartValue(e.currentTarget.value);
+  };
+
   return (
     <WrapperHorizontal>
       <WrapperVertical>
@@ -31,7 +36,7 @@ export const DateRangePickerSimpleTemplate = () => {
           inputPropsStart={{
             ...defaultInputStartProps,
             value: inputStartValue,
-            onInput: (e) => setInputStartValue(e.currentTarget.value),
+            onInput: handleInputStartValue,
             ref: maskedDateInputStartRef,
           }}
           inputPropsEnd={{
