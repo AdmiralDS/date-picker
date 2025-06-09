@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import { refSetter } from '@admiral-ds/react-ui';
+import { refSetter, changeInputData } from '@admiral-ds/react-ui';
 import { MonthPickerCalendar } from '#lib/MonthPickerCalendar';
 import type { InputBoxProps } from '#lib/Input/InputBox';
 import { InputBox } from '#lib/Input/InputBox';
@@ -66,6 +66,9 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
     const handleSelectedDateValueChange = (date: Dayjs) => {
       if (calendarViewMode === 'months') {
         const formattedValue = format(date);
+        if (inputRef.current) {
+          changeInputData(inputRef.current, { value: formattedValue });
+        }
         setInputValue(formattedValue);
         setTmpValueDisplayed(false);
         setCalendarOpen(false);
