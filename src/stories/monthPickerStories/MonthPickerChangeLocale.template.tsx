@@ -15,21 +15,21 @@ const defaultInputProps = {
 
 const locales = [
   { label: 'Русский', value: 'ru-RU', placeholder: 'Введите дату', dataPlaceholder: 'мм.гггг' },
-  { label: 'English', value: 'en-US', placeholder: 'Enter the date', dataPlaceholder: 'yyyy-mm' },
+  { label: 'English (US)', value: 'en-US', placeholder: 'Enter the date', dataPlaceholder: 'mm/yyyy' },
 ];
 
 const getDefaultFormatter = (locale: string) => {
-  return locale === 'en-US' ? (date: Dayjs) => date.format('YYYY-MM') : (date: Dayjs) => date.format('MM.YYYY');
+  return locale === 'en-US' ? (date: Dayjs) => date.format('MM/YYYY') : (date: Dayjs) => date.format('MM.YYYY');
 };
 
 const getDefaultParcer = (locale: string) => {
-  return locale === 'en-US' ? (date?: string) => dayjs(date, 'YYYY-MM') : (date?: string) => dayjs(date, 'MM.YYYY');
+  return locale === 'en-US' ? (date?: string) => dayjs(date, 'MM/YYYY') : (date?: string) => dayjs(date, 'MM.YYYY');
 };
 
 const getDateOptions = (locale: string) => {
   return locale === 'ru-RU'
     ? maskitoDateOptionsGenerator({ mode: 'mm/yyyy', separator: '.' })
-    : maskitoDateOptionsGenerator({ mode: 'yyyy/mm', separator: '-' });
+    : maskitoDateOptionsGenerator({ mode: 'mm/yyyy', separator: '/' });
 };
 
 export const MonthPickerChangeLocaleTemplate = () => {

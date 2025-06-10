@@ -117,17 +117,17 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
       }
     };
 
-    const handleSelectedDateValueChange = useCallback(
-      (date: Dayjs) => {
-        if (calendarViewMode === 'years') {
-          const formattedValue = format(date);
-          setInputValue(formattedValue);
-          setTmpValueDisplayed(false);
-          setCalendarOpen(false);
+    const handleSelectedDateValueChange = (date: Dayjs) => {
+      if (calendarViewMode === 'years') {
+        const formattedValue = format(date);
+        if (inputRef.current) {
+          changeInputData(inputRef.current, { value: formattedValue });
         }
-      },
-      [calendarViewMode, format],
-    );
+        setInputValue(formattedValue);
+        setTmpValueDisplayed(false);
+        setCalendarOpen(false);
+      }
+    };
 
     const handleActiveDateValueChange = useCallback(
       (date?: Dayjs) => {
@@ -169,45 +169,22 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
         }
       }
     };
+    const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+      const value = e.currentTarget.value;
 
-    const containerFinalProps: ComponentProps<typeof InputBox> = {
-      ...containerProps,
-      ref: refSetter(inputBoxRef, refContainerProps),
-      onMouseDown: handleInputBoxMouseDown,
-    };
-
-    useEffect(() => {
-      const inputNode = inputRef.current;
-      if (inputNode) {
-        const { value } = inputNode;
-        if (inputValue !== value) {
-          changeInputData(inputNode, { value: inputValue });
-        }
+      setTmpValueDisplayed(false);
+      if (value !== inputValue) {
+        setInputValue(value);
+        setCalendarOpen(true);
       }
-    }, [inputValue]);
+      inputProps.onInput?.(e);
+    };
 
     useEffect(() => {
       if (isCalendarOpen && inputRef.current) {
         setInputValue(inputRef.current.value);
       }
     }, [isCalendarOpen]);
-
-    useEffect(() => {
-      const handleInput = () => {
-        const value = inputRef.current?.value;
-        setTmpValueDisplayed(false);
-        if (value !== inputValue) {
-          setInputValue(value);
-          setCalendarOpen(true);
-        }
-      };
-
-      const inputNode = inputRef.current;
-      inputNode?.addEventListener('input', handleInput);
-      return () => {
-        inputNode?.removeEventListener('input', handleInput);
-      };
-    }, [inputValue]);
 
     useEffect(() => {
       const date = parce(inputValue);
@@ -229,6 +206,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
       onFocus: handleFocus,
       tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
       onKeyDown: handleInputKeyDown,
+      onInput: handleInput,
     };
 
     const iconButtonFinalProps: ComponentProps<typeof InputIconButton> = {
@@ -239,6 +217,12 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
     const dropdownFinalProps: ComponentProps<typeof PopoverPanel> = {
       targetElement: inputBoxRef.current,
       alignSelf: 'auto',
+    };
+
+    const containerFinalProps: ComponentProps<typeof InputBox> = {
+      ...containerProps,
+      ref: refSetter(inputBoxRef, refContainerProps),
+      onMouseDown: handleInputBoxMouseDown,
     };
 
     return (

@@ -66,6 +66,9 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const handleSelectedDateValueChange = (date: Dayjs) => {
       if (calendarViewMode === 'dates') {
         const formattedValue = format(date);
+        if (inputRef.current) {
+          changeInputData(inputRef.current, { value: formattedValue });
+        }
         setInputValue(formattedValue);
         setTmpValueDisplayed(false);
         setCalendarOpen(false);
@@ -117,22 +120,12 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         }
       }
     };
-    // TODO смержить с оригинальными обработчиками из пропсов
+    // TODO: смержить с оригинальными обработчиками из пропсов
     const containerFinalProps: ComponentProps<typeof InputBox> = {
       ...containerProps,
       ref: refSetter(inputBoxRef, refContainerProps),
       onMouseDown: handleInputBoxMouseDown,
     };
-
-    useEffect(() => {
-      const inputNode = inputRef.current;
-      if (inputNode) {
-        const { value } = inputNode;
-        if (inputValue !== value) {
-          changeInputData(inputRef.current, { value: inputValue });
-        }
-      }
-    }, [inputValue]);
 
     useEffect(() => {
       if (isCalendarOpen && inputRef.current) {
@@ -141,25 +134,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         setInputValue(value);
       }
     }, [isCalendarOpen]);
-
-    useEffect(() => {
-      function oninput(this: HTMLInputElement) {
-        const { value } = this;
-        setTmpValueDisplayed(false);
-        if (value !== inputValue) {
-          setInputValue(value);
-          setCalendarOpen(true);
-        }
-      }
-
-      if (inputRef.current) {
-        const node = inputRef.current;
-        node.addEventListener('input', oninput, true);
-        return () => {
-          node.removeEventListener('input', oninput, true);
-        };
-      }
-    }, [inputValue]);
 
     useEffect(() => {
       const date = parce(inputValue);
@@ -181,9 +155,20 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
     const date = parce(inputValue);
 
+    const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+      const value = e.currentTarget.value;
+
+      setTmpValueDisplayed(false);
+      if (value !== inputValue) {
+        setInputValue(value);
+        setCalendarOpen(true);
+      }
+      inputProps.onInput?.(e);
+    };
+
     return (
       <InputBox {...containerFinalProps}>
-        <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} />
+        <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} onInput={handleInput} />
         <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
         {isCalendarOpen && (
           <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto">
