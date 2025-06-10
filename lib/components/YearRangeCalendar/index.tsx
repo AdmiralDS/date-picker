@@ -5,13 +5,15 @@ import dayjs from 'dayjs';
 
 import { getCurrentDate } from '#lib/utils';
 import type { RangeCalendarProps } from '#lib/calendarInterfaces';
-import { YearsOfTwentyYearsWidget } from '#lib/YearsOfTwentyYearsWidget';
+import { YearsWidget } from '#lib/YearsWidget';
 import { MemoDefaultYearRangeCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { DateRange } from 'lib/types';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface YearRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface YearRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {
+  yearsOnScreen?: number;
+  yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof YearsWidget>['yearsWidgetContainerPropsConfig'];
+}
 
 export const YearRangeCalendar = ({
   selectedDateRangeValue,
@@ -27,6 +29,8 @@ export const YearRangeCalendar = ({
   onActiveDateValueChange,
   locale = ruLocale,
   cell,
+  yearsOnScreen,
+  yearsWidgetContainerPropsConfig,
   ...props
 }: YearRangeCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -153,7 +157,7 @@ export const YearRangeCalendar = ({
   };
 
   return (
-    <YearsOfTwentyYearsWidget
+    <YearsWidget
       {...props}
       date={dateInner}
       selected={[dateRangeFirstInner, dateRangeSecondInner]}
@@ -166,6 +170,8 @@ export const YearRangeCalendar = ({
       onClick={handleDateClick}
       cell={cell || MemoDefaultYearRangeCell}
       range={true}
+      yearsOnScreen={yearsOnScreen}
+      yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
     />
   );
 };

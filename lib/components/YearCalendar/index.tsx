@@ -4,12 +4,17 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
 import { getCurrentDate } from '#lib/utils';
-import { YearsOfTwentyYearsWidget } from '#lib/YearsOfTwentyYearsWidget';
+import { YearsWidget } from '#lib/YearsWidget';
 import type { SingleCalendarProps } from '#lib/calendarInterfaces.ts';
 import { MemoDefaultYearCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
 
-export interface YearCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface YearCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {
+  yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof YearsWidget>['yearsWidgetContainerPropsConfig'];
+  yearModel?: React.ComponentProps<typeof YearsWidget>['yearModel'];
+  yearsOnScreen?: number;
+  yearsColumns?: number;
+}
 
 export const YearCalendar = ({
   selectedDateValue,
@@ -22,6 +27,10 @@ export const YearCalendar = ({
   onActiveDateValueChange,
   cell,
   locale = ruLocale,
+  yearsWidgetContainerPropsConfig,
+  yearModel,
+  yearsOnScreen,
+  yearsColumns,
   ...props
 }: YearCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -78,7 +87,7 @@ export const YearCalendar = ({
   //</editor-fold>
 
   return (
-    <YearsOfTwentyYearsWidget
+    <YearsWidget
       {...props}
       date={dateInner}
       selected={selectedDateInner}
@@ -89,6 +98,10 @@ export const YearCalendar = ({
       onMouseOver={handleMouseOver}
       onMouseDown={handleDateClick}
       cell={cell || MemoDefaultYearCell}
+      yearModel={yearModel}
+      yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
+      yearsOnScreen={yearsOnScreen}
+      yearsColumns={yearsColumns}
     />
   );
 };

@@ -4,8 +4,7 @@ import type { Dayjs } from 'dayjs';
 
 import type { PickerCalendarProps, RangeCalendarProps } from '#lib/calendarInterfaces.ts';
 import { getCurrentDate } from '#lib/utils.ts';
-import { TwentyYearsNavigationPanelWidget } from '#lib/TwentyYearsNavigationPanelWidget';
-import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
+import { RangeYearsNavigationPanelWidget } from '#lib/RangeYearsNavigationPanelWidget';
 import { CalendarContainer, SinglePickerCalendarWrapper, YearRangeCalendarView } from '#lib/calendarStyle.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { DateRange } from 'lib/types';
@@ -15,7 +14,9 @@ export interface YearRangePickerCalendarProps
       RangeCalendarProps,
       'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'cell'
     >,
-    Omit<PickerCalendarProps, 'viewModeValue' | 'defaultViewModeValue' | 'onViewModeChange'> {}
+    Omit<PickerCalendarProps, 'viewModeValue' | 'defaultViewModeValue' | 'onViewModeChange'> {
+  yearsOnScreen?: number;
+}
 
 export const YearRangePickerCalendar = ({
   dateValue,
@@ -26,8 +27,9 @@ export const YearRangePickerCalendar = ({
   onSelectedDateRangeValueChange,
   cell,
   locale = ruLocale,
-  prevButtonProps,
-  nextButtonProps,
+  prevButtonPropsConfig,
+  nextButtonPropsConfig,
+  yearsOnScreen = 20,
   ...props
 }: YearRangePickerCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -50,28 +52,29 @@ export const YearRangePickerCalendar = ({
   };
   //</editor-fold>
 
-  const handleTwentyYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
+  const handleRangeYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
-        handleDateChange(dateInner.subtract(YEARS_ON_SCREEN, 'year'));
+        handleDateChange(dateInner.subtract(yearsOnScreen, 'year'));
         break;
       case 'right':
-        handleDateChange(dateInner.add(YEARS_ON_SCREEN, 'year'));
+        handleDateChange(dateInner.add(yearsOnScreen, 'year'));
         break;
     }
   };
 
   return (
     <SinglePickerCalendarWrapper>
-      <TwentyYearsNavigationPanelWidget
+      <RangeYearsNavigationPanelWidget
         date={dateInner}
         viewMode={'years'}
         locale={locale}
-        onMouseDown={handleTwentyYearsNavigationPanelClick}
-        prevButtonProps={prevButtonProps}
-        nextButtonProps={nextButtonProps}
+        onMouseDown={handleRangeYearsNavigationPanelClick}
+        prevButtonPropsConfig={prevButtonPropsConfig}
+        nextButtonPropsConfig={nextButtonPropsConfig}
+        yearsOnScreen={yearsOnScreen}
       />
       <CalendarContainer>
         <YearRangeCalendarView
@@ -82,6 +85,7 @@ export const YearRangePickerCalendar = ({
           onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
           locale={locale}
           $isVisible={true}
+          yearsOnScreen={yearsOnScreen}
         />
       </CalendarContainer>
     </SinglePickerCalendarWrapper>

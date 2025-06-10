@@ -10,7 +10,6 @@ import { DateRangePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 import { dateIsInRange, dateIsSelected } from '#lib/utils.ts';
-import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
 import type { DateRange } from 'lib/types';
 
 dayjs.extend(minMax);
@@ -29,7 +28,7 @@ const getUnitType = (mode: CalendarViewMode) => {
 const getPrevDate = (date: Dayjs, viewMode: CalendarViewMode) => {
   switch (viewMode) {
     case 'years':
-      return date.subtract(YEARS_ON_SCREEN, 'year');
+      return date.subtract(20, 'year');
     case 'months':
       return date.subtract(1, 'year');
     case 'dates':
@@ -107,7 +106,7 @@ export const DateRangePickerCalendarBlockEarlierDatesTemplate = () => {
         defaultDateValue={dayjs()}
         onDateValueChange={handleViewDateChange}
         onViewModeChange={handleViewModeChange}
-        prevButtonProps={{ disabled: prevArrowDisabled }}
+        prevButtonPropsConfig={(p) => ({ ...p, disabled: prevArrowDisabled })}
       />
       <WrapperVertical>
         <T font="Subtitle/Subtitle 2" as="div">

@@ -11,22 +11,33 @@ const dateOptions = maskitoDateOptionsGenerator({ mode: 'yyyy' });
 const defaultInputProps = {
   placeholder: 'Введите год',
   dataPlaceholder: 'гггг',
-  value: '2',
+  // value: '2',
 };
 
+const yearsArray = Array.from(Array(20).keys());
+const yearModel = yearsArray.map(() => ({ 'data-testid': 'test-cell' }));
+
 export const YearPickerSimpleTemplate = () => {
-  const [inputValue, setInputValue] = useState(defaultInputProps.value);
+  const [inputValue, setInputValue] = useState('');
   const maskedDateInputRef = useMaskito({ options: dateOptions });
+
   return (
     <WrapperHorizontal>
       <WrapperVertical>
         <YearPicker
+          yearModel={yearModel}
+          iconButtonPropsConfig={() => ({ role: 'button' })}
           inputProps={{
             ...defaultInputProps,
             value: inputValue,
             onInput: (e) => setInputValue(e.currentTarget.value),
             ref: maskedDateInputRef,
           }}
+          inputPropsConfig={(props) => ({
+            ...props,
+            placeholder: 'test',
+            'data-testid': 'inputYear',
+          })}
         />
       </WrapperVertical>
 

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { DataAttributes } from 'styled-components';
 
 import { vars, textValues } from '@admiral-ds/web';
 import { IconPlacement, TooltipHoc } from '@admiral-ds/react-ui';
@@ -6,12 +6,19 @@ import ChevronLeftOutline from '@admiral-ds/icons/build/system/ChevronLeftOutlin
 import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutline.svg?react';
 
 import { CALENDAR_WIDTH, ruLocale } from '#lib/calendarConstants';
-import { getCurrentDate } from '#lib/utils';
+import { getCurrentDate, yearsRange } from '#lib/utils';
 import type { BasePanelWidgetProps } from '#lib/widgetInterfaces.ts';
 
-export type YearNavigationPanelWidgetProps = BasePanelWidgetProps;
+export interface RangeYearsNavigationPanelWidgetProps extends BasePanelWidgetProps {
+  /** Конфиг функция пропсов для контейнера с годами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  yearsNavigationContainerPropsConfig?: (
+    props: React.ComponentProps<typeof YearsWrapper>,
+  ) => Partial<React.ComponentProps<typeof YearsWrapper> & DataAttributes>;
+  yearsOnScreen?: number;
+}
 
-const YearNavigationPanelWrapper = styled.div`
+const RangeYearsNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
   width: ${CALENDAR_WIDTH}PX;
   height: 32px;
@@ -20,34 +27,33 @@ const YearNavigationPanelWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const TextWrapper = styled.div<{ $isActive?: boolean }>`
+const YearsWrapper = styled.div`
   padding: 4px 8px;
-  border-radius: 16px;
-  cursor: pointer;
-  color: ${vars.color.Primary_Primary60Main};
+  color: ${vars.color.Neutral_Neutral90};
+  cursor: default;
   ${textValues['Subtitle/Subtitle 2']}
-  background-color: ${(p) => (p.$isActive ? vars.color.Opacity_Focus : vars.color.Special_ElevatedBG)};
-  &:hover {
-    background-color: ${vars.color.Opacity_Hover};
-  }
 `;
 
 const IconWithTooltip = TooltipHoc(IconPlacement);
-const TextWithTooltip = TooltipHoc(TextWrapper);
 
 const nothing = () => ({});
 
-export const YearNavigationPanelWidget = ({
+export const RangeYearsNavigationPanelWidget = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   viewMode,
   date,
   locale = ruLocale,
+  //todo удалить при дальнейшем рефакторинге month date
   prevButtonProps,
   nextButtonProps,
   prevButtonPropsConfig = nothing,
   nextButtonPropsConfig = nothing,
+  yearsNavigationContainerPropsConfig = nothing,
+  yearsOnScreen = 20,
   ...props
-}: YearNavigationPanelWidgetProps) => {
+}: RangeYearsNavigationPanelWidgetProps) => {
   const dateInner = date?.locale(locale?.localeName) || getCurrentDate(locale?.localeName);
+  const { start, end } = yearsRange(dateInner, yearsOnScreen);
 
   const prevButtonPropsFinal = {
     dimension: 'lSmall',
@@ -66,20 +72,14 @@ export const YearNavigationPanelWidget = ({
   } as const;
 
   return (
-    <YearNavigationPanelWrapper {...props}>
+    <RangeYearsNavigationPanelWrapper {...props}>
       <IconWithTooltip {...prevButtonPropsFinal} {...prevButtonPropsConfig(prevButtonPropsFinal)}>
         <ChevronLeftOutline />
       </IconWithTooltip>
-      <TextWithTooltip
-        data-panel-target-type="year"
-        $isActive={viewMode === 'years'}
-        renderContent={() => (viewMode === 'years' ? locale?.localeText.returnText : locale.localeText.selectYearText)}
-      >
-        {dateInner.year()}
-      </TextWithTooltip>
+      <YearsWrapper {...yearsNavigationContainerPropsConfig({})}>{`${start}–${end}`}</YearsWrapper>
       <IconWithTooltip {...nextButtonPropsFinal} {...nextButtonPropsConfig(nextButtonPropsFinal)}>
         <ChevronRightOutline />
       </IconWithTooltip>
-    </YearNavigationPanelWrapper>
+    </RangeYearsNavigationPanelWrapper>
   );
 };
