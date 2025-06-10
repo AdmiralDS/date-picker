@@ -1,5 +1,5 @@
-import { createElement } from 'react';
-import styled from 'styled-components';
+import { createElement, useMemo } from 'react';
+import styled, { DataAttributes } from 'styled-components';
 import dayjs from 'dayjs';
 
 import {
@@ -17,23 +17,38 @@ import {
   setNoon,
   yearsRange,
 } from '#lib/utils';
-import { YEARS_COLUMNS, YEARS_ON_SCREEN, YEARS_WRAPPER_HEIGHT } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
 import type { BaseWidgetProps } from '#lib/widgetInterfaces.ts';
-import { ruLocale } from '#lib/calendarConstants.ts';
+import { ruLocale } from '#lib/calendarConstants';
+import { textValues, vars } from '@admiral-ds/web';
 
-interface YearsProps extends BaseWidgetProps {}
+export interface YearsWidgetProps<T extends object> extends BaseWidgetProps {
+  yearsOnScreen?: number;
+  yearsColumns?: number;
+  yearModel?: T[];
+  yearsWidgetContainerPropsConfig?: (
+    props: React.ComponentProps<typeof YearsWidgetContainer>,
+  ) => Partial<React.ComponentProps<typeof YearsWidgetContainer> & DataAttributes>;
+}
 
-const YearsWrapper = styled.div`
-  height: ${YEARS_WRAPPER_HEIGHT}px;
+const YearsWidgetContainer = styled.div`
+  background-color: ${vars.color.Special_ElevatedBG};
+  width: 240px;
+  margin: 28px 22px 32px 22px;
+  ${textValues['Body/Body 2 Long']};
+  height: 244px;
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   align-content: space-between;
 `;
 
-const yearsArray = Array.from(Array(YEARS_ON_SCREEN).keys());
+export const createDefaultModel = <T extends object>(yearsOnScreen: number) => {
+  const yearsList = new Array(yearsOnScreen).fill({});
 
-export const Years = ({
+  return yearsList as T[];
+};
+
+export const YearsWidget = <T extends object>({
   date,
   selected,
   active,
@@ -42,17 +57,27 @@ export const Years = ({
   cell,
   locale = ruLocale,
   range = false,
-  ...props
-}: YearsProps) => {
-  const { start } = yearsRange(date, YEARS_ON_SCREEN);
+  yearsColumns = 4,
+  yearsOnScreen = 20,
+  yearModel,
+  yearsWidgetContainerPropsConfig = () => ({}),
+  ...containerProps
+}: YearsWidgetProps<T>) => {
+  const innerYearModelList = useMemo(() => yearModel ?? createDefaultModel(yearsOnScreen), [yearModel, yearsOnScreen]);
+
+  const { start } = yearsRange(date, yearsOnScreen);
   const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`).locale(locale?.localeName || 'ru'));
-  const cellModel = yearsArray.map((v) => {
-    const date = firstYear.add(v, 'year');
+
+  //Определение пропсов для ячеек
+  const cellProps = innerYearModelList.map((additionalProps, index) => {
+    const date = firstYear.add(index, 'year');
     const dateValue = date.toString();
     const { disabled, isHoliday, hidden } = getYearAttributes(date, dateAttributes);
     const isCurrent = date.isSame(getCurrentDate(), 'year');
     const isActive = active ? date.isSame(active, 'year') : false;
     const cellContent = date.year();
+    const selectedDate = getSelectedDate(selected);
+
     if (range) {
       const selectedDateRange = getSelectedDateRange(selected);
       const isInRange = dateIsInRange('year', date, selectedDateRange);
@@ -61,11 +86,11 @@ export const Years = ({
       const isInRangeSelecting = dateIsInRangeSelecting('year', date, active, activeRangeEnd);
       const isRangeSelectingStart = dateIsRangeSelectingStart('year', date, active, activeRangeEnd, disabled);
       const isRangeSelectingEnd = dateIsRangeSelectingEnd('year', date, active, activeRangeEnd, disabled);
-      const isStartOfRow = (date.year() - 1) % YEARS_COLUMNS === 0;
-      const isEndOfRow = (date.year() - 1) % YEARS_COLUMNS === 3;
+      const isStartOfRow = (date.year() - 1) % yearsColumns === 0;
+      const isEndOfRow = (date.year() - 1) % yearsColumns === 3;
+
       return {
         dateValue,
-        key: dateValue,
         cellContent,
         selected: dateIsSelected('year', date, selectedDateRange),
         isCurrent,
@@ -82,12 +107,12 @@ export const Years = ({
         isRangeSelectingEnd,
         isStartOfRow,
         isEndOfRow,
+        ...additionalProps,
       };
     }
-    const selectedDate = getSelectedDate(selected);
+
     return {
       dateValue,
-      key: dateValue,
       cellContent,
       selected: selectedDate ? date.isSame(selectedDate, 'year') : false,
       isCurrent,
@@ -95,11 +120,23 @@ export const Years = ({
       disabled,
       isHoliday,
       hidden,
+      ...additionalProps,
     };
   });
-  const cells = cellModel.map((model) => {
-    return createElement(cell, model);
-  });
 
-  return <YearsWrapper {...props}>{cells}</YearsWrapper>;
+  const cells = cellProps.map((props) => createElement(cell, { ...props, key: props.dateValue }));
+
+  const yearsWidgetContainerProps = {
+    'data-container-type': 'yearsWidgetContainer',
+    ...containerProps,
+  };
+
+  return (
+    <YearsWidgetContainer
+      {...yearsWidgetContainerProps}
+      {...yearsWidgetContainerPropsConfig(yearsWidgetContainerProps)}
+    >
+      {cells}
+    </YearsWidgetContainer>
+  );
 };

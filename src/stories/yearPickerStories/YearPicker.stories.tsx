@@ -4,6 +4,7 @@ import { YearPickerSimpleTemplate } from './YearPickerSimple.template.tsx';
 import YearPickerSimpleTemplateRaw from './YearPickerSimple.template.tsx?raw';
 import { YearPickerChangeLocaleTemplate } from './YearPickerChangeLocale.template.tsx';
 import YearPickerChangeLocaleTemplateRaw from './YearPickerChangeLocale.template.tsx?raw';
+import { userEvent, within } from '@storybook/test';
 
 export default {
   title: 'Admiral-2.1/Date Picker/YearPicker',
@@ -28,6 +29,12 @@ export const YearPickerSimple: StoryObj<typeof YearPicker> = {
     },
   },
   name: 'Выбор года',
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.type(canvas.getByTestId('inputYear'), '2025');
+    await userEvent.click(canvas.getByRole('button'));
+  },
 };
 
 export const YearPickerChangeLocale: StoryObj<typeof YearPicker> = {

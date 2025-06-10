@@ -1,6 +1,6 @@
 import type { ComponentProps, FocusEvent, KeyboardEventHandler, MouseEventHandler, Ref } from 'react';
 import { forwardRef, useEffect, useRef, useState, useCallback } from 'react';
-import styled from 'styled-components';
+import styled, { DataAttributes } from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { refSetter, changeInputData } from '@admiral-ds/react-ui';
@@ -23,6 +23,7 @@ const Calendar = styled(YearPickerCalendar)`
 
 const defaultFormatter = (date: Dayjs) => date.format('YYYY');
 const defaultParcer = (date?: string) => dayjs(date, 'YYYY');
+const nothing = () => {};
 
 export type YearPickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
@@ -36,11 +37,67 @@ export type YearPickerProps = InputBoxProps & {
 
   /** Изменение локали выпадающего календаря */
   Calendarlocale?: CalendarLocaleProps;
+
+  /** Конфиг функция пропсов для кнопки. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  iconButtonPropsConfig?: (
+    props: React.ComponentProps<typeof InputIconButton>,
+  ) => Partial<React.ComponentProps<typeof InputIconButton> & DataAttributes>;
+
+  /** Конфиг функция пропсов для input. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  inputPropsConfig?: (
+    props: React.ComponentProps<typeof InputLine>,
+  ) => Partial<React.ComponentProps<typeof InputLine> & DataAttributes>;
+
+  /** Конфиг функция пропсов для dropdown. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  dropdownPropsConfig?: (
+    props: React.ComponentProps<typeof PopoverPanel>,
+  ) => Partial<React.ComponentProps<typeof PopoverPanel> & DataAttributes>;
+
+  /** Модель массива для рендера ячеек с годами, на выход должна отдавать массив по размеру равный yearsOnScreen,
+   * а также можно в добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  yearModel?: React.ComponentProps<typeof Calendar>['yearModel'];
+
+  /** Конфиг функция пропсов для контейнера с годами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof Calendar>['yearsWidgetContainerPropsConfig'];
+
+  /** Конфиг функция пропсов для кнопки панели "Назад". На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  prevButtonPropsConfig?: React.ComponentProps<typeof Calendar>['prevButtonPropsConfig'];
+
+  /** Конфиг функция пропсов для кнопки панели "Вперед". На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  nextButtonPropsConfig?: React.ComponentProps<typeof Calendar>['nextButtonPropsConfig'];
+
+  yearsNavigationContainerPropsConfig?: React.ComponentProps<typeof Calendar>['yearsNavigationContainerPropsConfig'];
+  //** Количество ячеек в виджете с годами */
+  yearsOnScreen?: number;
+  //** Количество столбцов в виджете с годами */
+  yearsColumns?: number;
 };
 
 export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
   (
-    { inputProps = {}, format = defaultFormatter, parce = defaultParcer, Calendarlocale = ruLocale, ...containerProps },
+    {
+      inputProps = {},
+      format = defaultFormatter,
+      parce = defaultParcer,
+      Calendarlocale = ruLocale,
+      iconButtonPropsConfig = nothing,
+      inputPropsConfig = nothing,
+      dropdownPropsConfig = nothing,
+      yearModel,
+      yearsWidgetContainerPropsConfig,
+      yearsOnScreen = 20,
+      yearsNavigationContainerPropsConfig,
+      prevButtonPropsConfig,
+      nextButtonPropsConfig,
+      yearsColumns = 4,
+      ...containerProps
+    },
     refContainerProps,
   ) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
@@ -154,6 +211,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
 
     useEffect(() => {
       const date = parce(inputValue);
+
       if (date.isValid()) {
         setDisplayDate(date);
       } else if (!inputValue) {
@@ -162,22 +220,33 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
     }, [inputValue]);
 
     const ref = inputProps.ref !== undefined ? refSetter(inputRef, inputProps.ref as Ref<HTMLInputElement>) : inputRef;
+    const date = parce(inputValue);
+
     const inputFinalProps: ComponentProps<typeof InputLine> = {
       ...inputProps,
       ref,
       onBlur: handleBlur,
       onFocus: handleFocus,
       tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
+      onKeyDown: handleInputKeyDown,
     };
 
-    const date = parce(inputValue);
+    const iconButtonFinalProps: ComponentProps<typeof InputIconButton> = {
+      icon: CalendarOutline,
+      onMouseDown: handleInputIconButtonMouseDown,
+    };
+
+    const dropdownFinalProps: ComponentProps<typeof PopoverPanel> = {
+      targetElement: inputBoxRef.current,
+      alignSelf: 'auto',
+    };
 
     return (
       <InputBox {...containerFinalProps}>
-        <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} />
-        <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
+        <InputLine {...inputFinalProps} {...inputPropsConfig(inputFinalProps)} />
+        <InputIconButton {...iconButtonFinalProps} {...iconButtonPropsConfig(iconButtonFinalProps)} />
         {isCalendarOpen && (
-          <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto">
+          <PopoverPanel {...dropdownFinalProps} {...dropdownPropsConfig(dropdownFinalProps)}>
             <Calendar
               dateValue={displayDate}
               onDateValueChange={(month) => setDisplayDate(month)}
@@ -186,6 +255,13 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
               activeDateValue={parce(tmpValue)}
               onActiveDateValueChange={handleActiveDateValueChange}
               locale={Calendarlocale}
+              yearModel={yearModel}
+              yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
+              yearsOnScreen={yearsOnScreen}
+              yearsColumns={yearsColumns}
+              yearsNavigationContainerPropsConfig={yearsNavigationContainerPropsConfig}
+              prevButtonPropsConfig={prevButtonPropsConfig}
+              nextButtonPropsConfig={nextButtonPropsConfig}
             />
           </PopoverPanel>
         )}

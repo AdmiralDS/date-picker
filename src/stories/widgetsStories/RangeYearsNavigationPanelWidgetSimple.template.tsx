@@ -7,10 +7,9 @@ import dayjs from 'dayjs';
 import { vars } from '@admiral-ds/web';
 import { getCurrentDate } from '#lib/utils';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH, ruLocale } from '#lib/calendarConstants';
-import type { TwentyYearsNavigationPanelWidgetProps } from '#lib/TwentyYearsNavigationPanelWidget';
-import { TwentyYearsNavigationPanelWidget } from '#lib/TwentyYearsNavigationPanelWidget';
-import { YearsOfTwentyYearsWidget } from '#lib/YearsOfTwentyYearsWidget';
-import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
+import type { RangeYearsNavigationPanelWidgetProps } from '#lib/RangeYearsNavigationPanelWidget';
+import { RangeYearsNavigationPanelWidget } from '#lib/RangeYearsNavigationPanelWidget';
+import { YearsWidget } from '#lib/YearsWidget';
 import { MemoDefaultYearCell } from '#lib/DefaultCell';
 
 const CalendarWrapper = styled.div`
@@ -25,11 +24,12 @@ const CalendarWrapper = styled.div`
   box-shadow: ${vars.boxShadow.Shadow_08};
 `;
 
-export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
+export const RangeYearsNavigationPanelWidgetSimpleTemplate = ({
   locale = ruLocale,
   date,
+  yearsOnScreen = 20,
   ...props
-}: TwentyYearsNavigationPanelWidgetProps) => {
+}: RangeYearsNavigationPanelWidgetProps) => {
   const localeInner = locale?.localeName || 'ru';
   const [dateState, setDateState] = useState(date || getCurrentDate(locale?.localeName));
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(localeInner).add(1, 'day'));
@@ -71,26 +71,27 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
     }
   };
 
-  const handleTwentyYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
+  const handleRangeYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
-        setDateState(dateState.subtract(YEARS_ON_SCREEN, 'year'));
+        setDateState(dateState.subtract(yearsOnScreen, 'year'));
         break;
       case 'right':
-        setDateState(dateState.add(YEARS_ON_SCREEN, 'year'));
+        setDateState(dateState.add(yearsOnScreen, 'year'));
         break;
     }
   };
 
   return (
     <CalendarWrapper>
-      <TwentyYearsNavigationPanelWidget
+      <RangeYearsNavigationPanelWidget
         date={dateState}
         locale={locale}
-        onClick={handleTwentyYearsNavigationPanelClick}
+        onClick={handleRangeYearsNavigationPanelClick}
+        yearsOnScreen={yearsOnScreen}
       />
-      <YearsOfTwentyYearsWidget
+      <YearsWidget
         {...props}
         date={dateState}
         selected={selectedDate}
@@ -100,6 +101,7 @@ export const TwentyYearsNavigationPanelWidgetSimpleTemplate = ({
         onMouseLeave={handleMouseLeave}
         onMouseOver={handleMouseOver}
         onClick={handleDateClick}
+        yearsOnScreen={yearsOnScreen}
       />
     </CalendarWrapper>
   );

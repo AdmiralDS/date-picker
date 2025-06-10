@@ -1,7 +1,11 @@
 import type { MouseEventHandler } from 'react';
 
 import type { YearCalendarProps } from '@admiral-ds/date-picker';
+
 import { YearCalendar } from '@admiral-ds/date-picker';
+
+const yearsArray = Array.from(Array(20).keys());
+const yearModel = yearsArray.map(() => ({ 'data-testid': 'test' }));
 
 export const YearCalendarSimpleTemplate = (props: YearCalendarProps) => {
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -9,5 +13,5 @@ export const YearCalendarSimpleTemplate = (props: YearCalendarProps) => {
     console.log(`click on ${clickedCell}`);
   };
 
-  return <YearCalendar {...props} onClick={handleClick} />;
+  return <YearCalendar {...props} yearModel={yearModel} onClick={handleClick} />;
 };

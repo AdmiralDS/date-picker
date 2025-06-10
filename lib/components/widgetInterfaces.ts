@@ -3,8 +3,9 @@ import type { Dayjs } from 'dayjs';
 
 import type { CalendarLocaleProps, CalendarViewMode, DateCellProps } from '#lib/calendarInterfaces.ts';
 import type { DateAttributes } from '#lib/DefaultCell';
-import type { IconPlacementProps } from '@admiral-ds/react-ui';
+import type { IconPlacementProps, TooltipHocProps } from '@admiral-ds/react-ui';
 import type { DateRange } from 'lib/types';
+import { DataAttributes } from 'styled-components';
 
 export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   /** Дата */
@@ -18,8 +19,11 @@ export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   range?: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ArrowButtonProps extends IconPlacementProps {}
+export type ArrowButtonProps = IconPlacementProps;
+
+export type ArrowButtonPropsConfig = (
+  props: IconPlacementProps & TooltipHocProps & DataAttributes,
+) => Partial<IconPlacementProps & TooltipHocProps & DataAttributes>;
 
 export interface BasePanelWidgetProps extends HTMLAttributes<HTMLDivElement> {
   viewMode?: CalendarViewMode;
@@ -28,4 +32,10 @@ export interface BasePanelWidgetProps extends HTMLAttributes<HTMLDivElement> {
   locale: CalendarLocaleProps;
   prevButtonProps?: ArrowButtonProps;
   nextButtonProps?: ArrowButtonProps;
+  /** Конфиг функция пропсов для кнопки панели "Назад". На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  prevButtonPropsConfig?: ArrowButtonPropsConfig;
+  /** Конфиг функция пропсов для кнопки панели "Вперед". На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  nextButtonPropsConfig?: ArrowButtonPropsConfig;
 }

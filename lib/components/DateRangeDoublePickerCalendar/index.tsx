@@ -13,7 +13,7 @@ import {
   MonthCalendarView,
   YearCalendarView,
 } from '#lib/calendarStyle.ts';
-import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
+import { YEARS_ON_SCREEN } from '#lib/YearsWidget/constants.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { DateRange } from 'lib/types';
 

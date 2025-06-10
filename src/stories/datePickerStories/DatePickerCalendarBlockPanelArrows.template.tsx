@@ -8,7 +8,6 @@ import type { CalendarViewMode, DateAttributes } from '@admiral-ds/date-picker';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
-import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
 
 const minDate = dayjs().startOf('year');
 const maxDate = dayjs().add(10, 'year').endOf('year');
@@ -27,7 +26,7 @@ const getUnitType = (mode: CalendarViewMode) => {
 const getPrevDate = (date: Dayjs, viewMode: CalendarViewMode) => {
   switch (viewMode) {
     case 'years':
-      return date.subtract(YEARS_ON_SCREEN, 'year');
+      return date.subtract(20, 'year');
     case 'months':
       return date.subtract(1, 'year');
     case 'dates':
@@ -38,7 +37,7 @@ const getPrevDate = (date: Dayjs, viewMode: CalendarViewMode) => {
 const getNextDate = (date: Dayjs, viewMode: CalendarViewMode) => {
   switch (viewMode) {
     case 'years':
-      return date.add(YEARS_ON_SCREEN, 'year');
+      return date.add(20, 'year');
     case 'months':
       return date.add(1, 'year');
     case 'dates':
@@ -101,8 +100,8 @@ export const DatePickerCalendarBlockPanelArrowsTemplate = () => {
         defaultDateValue={dayjs()}
         onDateValueChange={handleViewDateChange}
         onViewModeChange={handleViewModeChange}
-        prevButtonProps={{ disabled: prevArrowDisabled }}
-        nextButtonProps={{ disabled: nextArrowDisabled }}
+        prevButtonPropsConfig={(p) => ({ ...p, disabled: prevArrowDisabled })}
+        nextButtonPropsConfig={(p) => ({ ...p, disabled: nextArrowDisabled })}
         dateAttributes={dateAttrs}
       />
       <WrapperVertical>

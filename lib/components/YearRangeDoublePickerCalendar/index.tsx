@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
 import { dateIsSameOrAfter, getCurrentDate } from '#lib/utils.ts';
-import { TwentyYearsNavigationPanelWidget } from '#lib/TwentyYearsNavigationPanelWidget';
-import { YEARS_ON_SCREEN } from '#lib/YearsOfTwentyYearsWidget/constants.ts';
+import { RangeYearsNavigationPanelWidget } from '#lib/RangeYearsNavigationPanelWidget';
 import type { PickerCalendarProps, RangeDoubleCalendarProps } from '#lib/calendarInterfaces.ts';
 import {
   CalendarContainer,
@@ -20,7 +19,9 @@ export interface YearRangeDoublePickerCalendarProps
       RangeDoubleCalendarProps,
       'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'cell'
     >,
-    Omit<PickerCalendarProps, 'viewModeValue' | 'defaultViewModeValue' | 'onViewModeChange'> {}
+    Omit<PickerCalendarProps, 'viewModeValue' | 'defaultViewModeValue' | 'onViewModeChange'> {
+  yearsOnScreen?: number;
+}
 
 export const YearRangeDoublePickerCalendar = ({
   dateRangeValue,
@@ -34,8 +35,9 @@ export const YearRangeDoublePickerCalendar = ({
   onActiveDateValueChange,
   cell,
   locale = ruLocale,
-  prevButtonProps,
-  nextButtonProps,
+  prevButtonPropsConfig,
+  nextButtonPropsConfig,
+  yearsOnScreen = 20,
   ...props
 }: YearRangeDoublePickerCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -48,7 +50,7 @@ export const YearRangeDoublePickerCalendar = ({
   };
 
   const [dateRightState, setDateRightState] = useState(
-    defaultDateRangeValue?.[1] || dateLeftInner.add(YEARS_ON_SCREEN, 'year'),
+    defaultDateRangeValue?.[1] || dateLeftInner.add(yearsOnScreen, 'year'),
   );
   const dateRightInner = dateRangeValue?.[1] || dateRightState;
 
@@ -59,12 +61,12 @@ export const YearRangeDoublePickerCalendar = ({
 
   useEffect(() => {
     if (dateIsSameOrAfter(dateLeftInner, dateRightInner, 'year')) {
-      handleDateRightChange(dateLeftInner.add(YEARS_ON_SCREEN, 'year'));
+      handleDateRightChange(dateLeftInner.add(yearsOnScreen, 'year'));
     }
   }, [dateLeftInner]);
   useEffect(() => {
     if (dateIsSameOrAfter(dateRightInner, dateLeftInner, 'year')) {
-      handleDateLeftChange(dateRightInner.subtract(YEARS_ON_SCREEN, 'year'));
+      handleDateLeftChange(dateRightInner.subtract(yearsOnScreen, 'year'));
     }
   }, [dateRightInner]);
   //</editor-fold>
@@ -97,27 +99,27 @@ export const YearRangeDoublePickerCalendar = ({
   };
   //</editor-fold>
 
-  const handleLeftTwentyYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
+  const handleLeftRangeYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
-        handleDateLeftChange(dateLeftInner.subtract(YEARS_ON_SCREEN, 'year'));
+        handleDateLeftChange(dateLeftInner.subtract(yearsOnScreen, 'year'));
         break;
       case 'right':
-        handleDateLeftChange(dateLeftInner.add(YEARS_ON_SCREEN, 'year'));
+        handleDateLeftChange(dateLeftInner.add(yearsOnScreen, 'year'));
         break;
     }
   };
-  const handleRightTwentyYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
+  const handleRightRangeYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
     const targetType = (e.target as HTMLElement).dataset.panelTargetType;
     switch (targetType) {
       case 'left':
-        handleDateRightChange(dateRightInner.subtract(YEARS_ON_SCREEN, 'year'));
+        handleDateRightChange(dateRightInner.subtract(yearsOnScreen, 'year'));
         break;
       case 'right':
-        handleDateRightChange(dateRightInner.add(YEARS_ON_SCREEN, 'year'));
+        handleDateRightChange(dateRightInner.add(yearsOnScreen, 'year'));
         break;
     }
   };
@@ -125,13 +127,14 @@ export const YearRangeDoublePickerCalendar = ({
   return (
     <DoublePickerCalendarWrapper>
       <SingleContainer>
-        <TwentyYearsNavigationPanelWidget
+        <RangeYearsNavigationPanelWidget
           date={dateLeftInner}
           viewMode={'years'}
           locale={locale}
-          onMouseDown={handleLeftTwentyYearsNavigationPanelClick}
-          prevButtonProps={prevButtonProps}
-          nextButtonProps={nextButtonProps}
+          onMouseDown={handleLeftRangeYearsNavigationPanelClick}
+          prevButtonPropsConfig={prevButtonPropsConfig}
+          nextButtonPropsConfig={nextButtonPropsConfig}
+          yearsOnScreen={yearsOnScreen}
         />
         <CalendarContainer>
           <YearRangeCalendarView
@@ -146,17 +149,19 @@ export const YearRangeDoublePickerCalendar = ({
             onActiveDateRangeEndValueChange={handleDateRangeActiveEndChange}
             locale={locale}
             $isVisible={true}
+            yearsOnScreen={yearsOnScreen}
           />
         </CalendarContainer>
       </SingleContainer>
       <SingleContainer>
-        <TwentyYearsNavigationPanelWidget
+        <RangeYearsNavigationPanelWidget
           date={dateRightInner}
           viewMode={'years'}
           locale={locale}
-          onMouseDown={handleRightTwentyYearsNavigationPanelClick}
-          prevButtonProps={prevButtonProps}
-          nextButtonProps={nextButtonProps}
+          onMouseDown={handleRightRangeYearsNavigationPanelClick}
+          prevButtonPropsConfig={prevButtonPropsConfig}
+          nextButtonPropsConfig={nextButtonPropsConfig}
+          yearsOnScreen={yearsOnScreen}
         />
         <CalendarContainer>
           <YearRangeCalendarView
@@ -171,6 +176,7 @@ export const YearRangeDoublePickerCalendar = ({
             onActiveDateRangeEndValueChange={handleDateRangeActiveEndChange}
             locale={locale}
             $isVisible={true}
+            yearsOnScreen={yearsOnScreen}
           />
         </CalendarContainer>
       </SingleContainer>
