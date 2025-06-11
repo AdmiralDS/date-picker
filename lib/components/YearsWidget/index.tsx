@@ -1,6 +1,6 @@
-import { createElement, useMemo } from 'react';
+import { createElement, memo, useMemo } from 'react';
 import styled, { DataAttributes } from 'styled-components';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 import {
   dateIsInRange,
@@ -20,6 +20,8 @@ import {
 import type { BaseWidgetProps } from '#lib/widgetInterfaces.ts';
 import { ruLocale } from '#lib/calendarConstants';
 import { textValues, vars } from '@admiral-ds/web';
+import { DateAttributes } from '#lib/DefaultCell';
+import { DateRange } from 'lib/types';
 
 export interface YearsWidgetProps<T extends object> extends BaseWidgetProps {
   yearsOnScreen?: number;
@@ -48,28 +50,17 @@ export const createDefaultModel = <T extends object>(yearsOnScreen: number) => {
   return yearsList as T[];
 };
 
-export const YearsWidget = <T extends object>({
-  date,
-  selected,
-  active,
-  activeRangeEnd,
-  dateAttributes,
-  cell,
-  locale = ruLocale,
-  range = false,
-  yearsColumns = 4,
-  yearsOnScreen = 20,
-  yearModel,
-  yearsWidgetContainerPropsConfig = () => ({}),
-  ...containerProps
-}: YearsWidgetProps<T>) => {
-  const innerYearModelList = useMemo(() => yearModel ?? createDefaultModel(yearsOnScreen), [yearModel, yearsOnScreen]);
-
-  const { start } = yearsRange(date, yearsOnScreen);
-  const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`).locale(locale?.localeName || 'ru'));
-
-  //Определение пропсов для ячеек
-  const cellProps = innerYearModelList.map((additionalProps, index) => {
+export function mapStateToProps<T extends object>(
+  model: T[],
+  firstYear: Dayjs,
+  range: boolean,
+  yearsColumns: number,
+  active?: Dayjs,
+  selected?: Dayjs | DateRange,
+  activeRangeEnd?: Dayjs,
+  dateAttributes?: (currentDate: Dayjs) => DateAttributes,
+) {
+  return model.map((additionalProps, index) => {
     const date = firstYear.add(index, 'year');
     const dateValue = date.toString();
     const { disabled, isHoliday, hidden } = getYearAttributes(date, dateAttributes);
@@ -123,20 +114,62 @@ export const YearsWidget = <T extends object>({
       ...additionalProps,
     };
   });
+}
 
-  const cells = cellProps.map((props) => createElement(cell, { ...props, key: props.dateValue }));
+export const YearsWidget = memo(
+  <T extends object>({
+    date,
+    selected,
+    active,
+    activeRangeEnd,
+    dateAttributes,
+    cell,
+    locale = ruLocale,
+    range = false,
+    yearsColumns = 4,
+    yearsOnScreen = 20,
+    yearModel,
+    yearsWidgetContainerPropsConfig = () => ({}),
+    ...containerProps
+  }: YearsWidgetProps<T>) => {
+    const innerYearModelList = useMemo(
+      () => yearModel ?? createDefaultModel(yearsOnScreen),
+      [yearModel, yearsOnScreen],
+    );
 
-  const yearsWidgetContainerProps = {
-    'data-container-type': 'yearsWidgetContainer',
-    ...containerProps,
-  };
+    const { start } = yearsRange(date, yearsOnScreen);
+    const firstYear = setNoon(dayjs(`${start}-01-01T12:00:00`).locale(locale?.localeName || 'ru'));
 
-  return (
-    <YearsWidgetContainer
-      {...yearsWidgetContainerProps}
-      {...yearsWidgetContainerPropsConfig(yearsWidgetContainerProps)}
-    >
-      {cells}
-    </YearsWidgetContainer>
-  );
-};
+    //Определение пропсов для ячеек
+    const cellProps = useMemo(
+      () =>
+        mapStateToProps(
+          innerYearModelList,
+          firstYear,
+          range,
+          yearsColumns,
+          active,
+          selected,
+          activeRangeEnd,
+          dateAttributes,
+        ),
+      [innerYearModelList, firstYear, active, selected, range, activeRangeEnd, yearsColumns, dateAttributes],
+    );
+
+    const cells = cellProps.map((props) => createElement(cell, { ...props, key: props.dateValue }));
+
+    const yearsWidgetContainerProps = {
+      'data-container-type': 'yearsWidgetContainer',
+      ...containerProps,
+    };
+
+    return (
+      <YearsWidgetContainer
+        {...yearsWidgetContainerProps}
+        {...yearsWidgetContainerPropsConfig(yearsWidgetContainerProps)}
+      >
+        {cells}
+      </YearsWidgetContainer>
+    );
+  },
+);

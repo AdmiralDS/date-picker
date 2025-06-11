@@ -72,7 +72,7 @@ const preview: Preview = {
         order: ['Admiral-2.1', ['Date Picker', 'Range Picker', 'Double Range Picker', 'Widgets']],
       },
     },
-    actions: { argTypesRegex: '^on[A-Z].*' },
+    actions: { disabled: true },
     controls: { matchers: { color: /(background|color)$/i, date: /Date$/ } },
     docs: {
       container: (props: React.ComponentProps<typeof DocsContainer>) => {
