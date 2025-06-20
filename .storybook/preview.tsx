@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Preview } from '@storybook/react';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { DocsContainer } from '@storybook/addon-docs';
@@ -84,11 +84,13 @@ const preview: Preview = {
   decorators: [
     (renderStory) => {
       const [{ CSSCustomProps }] = useGlobals();
+      const refDropdown = useRef(null);
       return (
         <ThemeWrapper CSSCustomProps={CSSCustomProps as boolean}>
           <GlobalStyles />
-          <DropdownProvider>
+          <DropdownProvider rootRef={refDropdown}>
             <StoryContainer>{renderStory()}</StoryContainer>
+            <div ref={refDropdown} />
           </DropdownProvider>
         </ThemeWrapper>
       );

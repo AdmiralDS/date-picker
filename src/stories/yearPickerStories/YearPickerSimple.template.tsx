@@ -11,11 +11,13 @@ const dateOptions = maskitoDateOptionsGenerator({ mode: 'yyyy' });
 const defaultInputProps = {
   placeholder: 'Введите год',
   dataPlaceholder: 'гггг',
-  // value: '2',
 };
 
 const yearsArray = Array.from(Array(20).keys());
-const yearModel = yearsArray.map(() => ({ 'data-testid': 'test-cell' }));
+
+const yearModel = yearsArray.map((_, i) => {
+  return { 'data-testid': `test-cell-${i}` };
+});
 
 export const YearPickerSimpleTemplate = () => {
   const [inputValue, setInputValue] = useState('');
@@ -26,7 +28,9 @@ export const YearPickerSimpleTemplate = () => {
       <WrapperVertical>
         <YearPicker
           yearModel={yearModel}
-          iconButtonPropsConfig={() => ({ role: 'button' })}
+          iconButtonPropsConfig={(p) => ({ ...p, role: 'iconButton' })}
+          prevButtonPropsConfig={(p) => ({ ...p, role: 'prevButtonNavigationPanel' })}
+          nextButtonPropsConfig={(p) => ({ ...p, role: 'nextButtonNavigationPanel' })}
           inputProps={{
             ...defaultInputProps,
             value: inputValue,
@@ -35,9 +39,9 @@ export const YearPickerSimpleTemplate = () => {
           }}
           inputPropsConfig={(props) => ({
             ...props,
-            placeholder: 'test',
             'data-testid': 'inputYear',
           })}
+          yearsWidgetContainerPropsConfig={(props) => ({ ...props, 'data-testid': 'containerCells' })}
         />
       </WrapperVertical>
 
