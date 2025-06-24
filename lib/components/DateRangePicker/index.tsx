@@ -149,6 +149,9 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     // const handleRangeInputFinish = () => {
     //   setCalendarOpen(false);
     // };
+    const handleRangeInputCancel = () => {
+      setCalendarOpen(false);
+    };
 
     // TODO смержить с оригинальными обработчиками из пропсов
     const containerFinalProps: ComponentProps<typeof InputBox> = {
@@ -186,6 +189,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       parse: parse,
       onFocus: handleInputFocus,
       onBlur: handleInputBlur,
+      onCancelInput: handleRangeInputCancel,
     };
 
     return (

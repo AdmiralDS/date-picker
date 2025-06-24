@@ -126,6 +126,8 @@ export const RangeInput = ({
       if (parsedValue?.isValid()) {
         onSelectedRangeChange(dateRangeFromValue([value, inputEndValue], parse));
       }
+    } else if (e.key === 'Escape') {
+      onCancelInput();
     }
   };
 
@@ -137,6 +139,8 @@ export const RangeInput = ({
         setInputEndValue(tmpValueEnd);
         setTmpValueEndDisplayed(false);
       }
+    } else if (e.key === 'Escape') {
+      onCancelInput();
     }
   };
   //#endregion
@@ -180,12 +184,10 @@ export const RangeInput = ({
       const { value } = inputRefEnd.current;
       setTmpValueEndDisplayed(false);
       if (value !== inputEndValue) {
-        // changeCalendarVisibility(true);
         const parsedValue = parse(value);
         if (parsedValue?.isValid()) {
           setInputEndValue(value);
           onEndDateChanged?.(parsedValue);
-          // onSelectedRangeChange(dateRangeFromValue([value, inputEndValue], parse));
         }
       }
     }
