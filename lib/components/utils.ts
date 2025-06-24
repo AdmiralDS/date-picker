@@ -239,3 +239,11 @@ export const getSelectedDate = (selected?: Dayjs | DateRange) => {
 export const getSelectedDateRange = (selected?: Dayjs | DateRange) => {
   return isDayjs(selected) ? undefined : selected;
 };
+
+export const defaultDateParser = (date?: string) => dayjs(date, 'DD.MM.YYYY');
+export const defaultMonthParser = (date?: string) => dayjs(date, 'MM.YYYY');
+export const defaultYearParser = (date?: string) => dayjs(date, 'YYYY');
+
+export const defaultDateFormatter = (date?: Dayjs) => (date ? date.format('DD.MM.YYYY') : '');
+export const defaultMonthFormatter = (date?: Dayjs) => (date ? date.format('MM.YYYY') : '');
+export const defaultYearFormatter = (date?: Dayjs) => (date ? date.format('YYYY') : '');
