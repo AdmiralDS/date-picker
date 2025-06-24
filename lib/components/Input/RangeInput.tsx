@@ -20,6 +20,8 @@ function dateRangeFromValue(
   return start && end && start.isAfter(end) ? ([end, start] as const) : ([start, end] as const);
 }
 
+const DefaultCancelHandler = () => undefined;
+
 export interface RangeInputProps extends InputLineProps {
   /** Пропсы внутреннего инпута */
   inputPropsStart: InputLineProps;
@@ -49,21 +51,21 @@ export const RangeInput = ({
   onRangeInputFinish,
   separator,
   activeDate,
-  selectedRange,
   onSelectedRangeChange,
-  onStartDateChanged,
-  onEndDateChanged,
   format = defaultDateFormatter,
   parse: parse = defaultDateParser,
+  onCancelInput = DefaultCancelHandler,
+  onStartDateChanged,
+  onStartDateInputComplete,
+  onEndDateChanged,
+  onEndDateInputComplete,
   ...props
 }: RangeInputProps) => {
   const inputRefStart = useRef<HTMLInputElement>(null);
   const inputRefEnd = useRef<HTMLInputElement>(null);
 
   const [inputsConfirmed, setInputsConfirmed] = useState(0);
-  // const handleRangeInputBegin = () => {
-  //   onRangeInputBegin?.();
-  // };
+
   const handleRangeInputFinish = () => {
     onRangeInputFinish?.();
     setInputsConfirmed(0);
@@ -80,16 +82,6 @@ export const RangeInput = ({
   const [isTmpValueEndDisplayed, setTmpValueEndDisplayed] = useState(false);
   //#endregion
 
-  //#region "Фокусировка на первом инпуте при открытии календаря"
-  // useEffect(() => {
-  //   const startFocused = document.activeElement === inputRefStart.current;
-  //   const endFocused = document.activeElement === inputRefEnd.current;
-  //   if (isCalendarOpen && !startFocused && !endFocused) {
-  //     inputRefStart.current?.focus();
-  //   }
-  // }, [isCalendarOpen]);
-  //#endregion
-
   const [activeEnd, setActiveEnd] = useState<'start' | 'end' | 'none'>('start');
 
   //#region "Обработчики событий focus и blur на инпутах"
@@ -102,8 +94,6 @@ export const RangeInput = ({
     inputPropsStart.onBlur?.(e);
   };
   const handleBlurEnd = (e: FocusEvent<HTMLInputElement, Element>) => {
-    // handleRangeInputFinish();
-    //changeCalendarVisibility(false);
     if (e.relatedTarget !== inputRefStart.current) {
       props.onBlur?.(e);
     }
@@ -113,15 +103,11 @@ export const RangeInput = ({
 
   const handleFocusStart = (e: FocusEvent<HTMLInputElement, Element>) => {
     props.onFocus?.(e);
-    // handleRangeInputBegin();
-    //changeCalendarVisibility(true);
     setActiveEnd('start');
     inputPropsStart.onFocus?.(e);
   };
   const handleFocusEnd = (e: FocusEvent<HTMLInputElement, Element>) => {
     props.onFocus?.(e);
-    // handleRangeInputBegin();
-    //changeCalendarVisibility(true);
     setActiveEnd('end');
     inputPropsEnd.onFocus?.(e);
   };
@@ -129,16 +115,10 @@ export const RangeInput = ({
 
   //#region "Обработчики нажатия Enter на инпутах"
   const handleInputStartKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // if (isCalendarOpen) {
     if (e.key === 'Enter') {
       e.preventDefault();
 
       handleRangeInputFinish();
-      //changeCalendarVisibility(false);
-      // if (isTmpValueStartDisplayed && tmpValueStart) {
-      //   setInputStartValue(tmpValueStart);
-      //   setTmpValueStartDisplayed(false);
-      // }
 
       const value = e.currentTarget.value;
 
@@ -147,14 +127,12 @@ export const RangeInput = ({
         onSelectedRangeChange(dateRangeFromValue([value, inputEndValue], parse));
       }
     }
-    // }
   };
 
   const handleInputEndKeyDown: KeyboardEventHandler<Element> = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       handleRangeInputFinish();
-      //changeCalendarVisibility(false);
       if (isTmpValueEndDisplayed && tmpValueEnd) {
         setInputEndValue(tmpValueEnd);
         setTmpValueEndDisplayed(false);
@@ -174,47 +152,6 @@ export const RangeInput = ({
     }
   }, [activeDate]);
   //#endregion
-
-  //#region "Вешаем листенеры на инпуты для ручного ввода"
-  // useEffect(() => {
-  //   function oninputStart(this: HTMLInputElement, ev: Event) {
-  //     const { value } = this;
-  //     setTmpValueStartDisplayed(false);
-  //     if (value !== inputStartValue) {
-  //       handleRangeInputBegin();
-  //       //changeCalendarVisibility(true);
-  //       const parsedValue = parse(value);
-  //       if (parsedValue?.isValid()) {
-  //         setInputStartValue(value);
-  //         onSelectedRangeChange(dateRangeFromValue([value, inputEndValue], parse));
-  //       }
-  //     }
-  //   }
-  //   function oninputEnd(this: HTMLInputElement, ev: Event) {
-  //     const { value } = this;
-  //     setTmpValueEndDisplayed(false);
-  //     if (value !== inputEndValue) {
-  //       handleRangeInputBegin();
-  //       //changeCalendarVisibility(true);
-  //       const parsedValue = parse(value);
-  //       if (parsedValue?.isValid()) {
-  //         setInputEndValue(value);
-  //         onSelectedRangeChange(dateRangeFromValue([inputStartValue, value], parse));
-  //       }
-  //     }
-  //   }
-
-  //   if (inputRefStart.current && inputRefEnd.current) {
-  //     // const nodeStart = inputRefStart.current;
-  //     // const nodeEnd = inputRefEnd.current;
-  //     // nodeStart.addEventListener('input', oninputStart, true);
-  //     // nodeEnd.addEventListener('input', oninputEnd, true);
-  //     return () => {
-  //       // nodeStart.removeEventListener('input', oninputStart, true);
-  //       // nodeEnd.removeEventListener('input', oninputEnd, true);
-  //     };
-  //   }
-  // }, [inputStartValue, inputEndValue]);
 
   const handleInputStart = (e: React.FormEvent<HTMLInputElement>) => {
     const { value, selectionStart } = e.currentTarget;

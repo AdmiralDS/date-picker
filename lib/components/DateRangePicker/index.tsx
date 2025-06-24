@@ -126,6 +126,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       if (isCalendarOpen) setRangeSelectedState(RangeSalectedState.initial);
     }, [isCalendarOpen]);
 
+    // TODO: fix! Зацикливавется
     // useEffect(() => {
     //   if (calendarViewMode === 'dates') {
     //     const startDate = parse(inputPropsStart.value);
