@@ -49,6 +49,12 @@ export type DateRangePickerProps = InputBoxProps & {
   separator?: string;
 };
 
+enum RangeSalectedState {
+  initial = 0,
+  firstSelected = 1,
+  bothSelected = 2,
+}
+
 /**
  * Компонент DateRangePicker
  */
@@ -65,6 +71,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     refContainerProps,
   ) => {
     const [displayDate, setDisplayDate] = useState(dayjs());
+    const [rangeSelectedState, setRangeSelectedState] = useState<RangeSalectedState>(RangeSalectedState.initial);
 
     const inputBoxRef = useRef(null);
     const startInputRef = useRef<HTMLInputElement>(null);
@@ -107,8 +114,17 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         }
 
         setSelectedRange(dateRange);
+        if (rangeSelectedState >= RangeSalectedState.firstSelected) {
+          setCalendarOpen(false);
+        } else {
+          setRangeSelectedState(rangeSelectedState + 1);
+        }
       }
     };
+
+    useEffect(() => {
+      if (isCalendarOpen) setRangeSelectedState(RangeSalectedState.initial);
+    }, [isCalendarOpen]);
 
     useEffect(() => {
       if (calendarViewMode === 'dates') {
@@ -162,12 +178,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
       inputPropsStart: { ...inputPropsStart, ref: startRef },
       inputPropsEnd: { ...inputPropsEnd, ref: endRef },
-      // isCalendarOpen: isCalendarOpen,
-      // onRangeInputBegin: handleRangeInputBegin,
-      // onRangeInputFinish: handleRangeInputFinish,
       separator: separator,
       activeDate: activeDate,
-      // selectedRange: selectedRange,
       onSelectedRangeChange: handleSelectedDateValueChange,
       format: format,
       parse: parse,
