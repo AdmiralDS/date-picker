@@ -21,10 +21,10 @@ const Calendar = styled(DateRangePickerCalendar)`
 `;
 
 const defaultFormatter = (date?: Dayjs) => (date ? date.format('DD.MM.YYYY') : '');
-const defaultParcer = (date?: string) => dayjs(date, 'DD.MM.YYYY');
+const defaultParser = (date?: string) => dayjs(date, 'DD.MM.YYYY');
 
-function dateRangeFromValue(value?: string, separator = ' – ', parce = defaultParcer): DateRange {
-  const [start, end] = value ? value.split(separator).map(parce) : [];
+function dateRangeFromValue(value?: string, separator = ' – ', parse = defaultParser): DateRange {
+  const [start, end] = value ? value.split(separator).map(parse) : [];
   return start && start.isAfter(end) ? ([end, start] as const) : ([start, end] as const);
 }
 
@@ -48,7 +48,7 @@ export type DateRangePickerProps = InputBoxProps & {
   format?: (date?: Dayjs) => string;
 
   /** Функция для конвертации строки инпута в значение календаря */
-  parce?: (date?: string) => Dayjs | undefined;
+  parse?: (date?: string) => Dayjs | undefined;
 
   separator?: string;
 };
@@ -58,7 +58,7 @@ export type DateRangePickerProps = InputBoxProps & {
  */
 export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
   (
-    { inputProps = {}, separator = ' – ', format = defaultFormatter, parce = defaultParcer, ...containerProps },
+    { inputProps = {}, separator = ' – ', format = defaultFormatter, parse = defaultParser, ...containerProps },
     refContainerProps,
   ) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
@@ -189,7 +189,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     }, [inputValue]);
 
     // useEffect(() => {
-    //   const date = parce(inputValue);
+    //   const date = parse(inputValue);
     //   if (date.isValid()) {
     //     setDisplayDate(date);
     //   } else if (!inputValue) {
