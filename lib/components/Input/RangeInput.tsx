@@ -117,28 +117,30 @@ export const RangeInput = ({
   const handleInputStartKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-
-      handleRangeInputFinish();
-
+      //handleRangeInputFinish();
       const value = e.currentTarget.value;
-
       const parsedValue = parse(value);
       if (parsedValue?.isValid()) {
         onSelectedRangeChange(dateRangeFromValue([value, inputEndValue], parse));
+        onStartDateInputComplete?.(parsedValue);
       }
     } else if (e.key === 'Escape') {
       onCancelInput();
     }
   };
 
-  const handleInputEndKeyDown: KeyboardEventHandler<Element> = (e) => {
+  const handleInputEndKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      handleRangeInputFinish();
-      if (isTmpValueEndDisplayed && tmpValueEnd) {
-        setInputEndValue(tmpValueEnd);
-        setTmpValueEndDisplayed(false);
+      //handleRangeInputFinish();
+      const value = e.currentTarget.value;
+      const parsedValue = parse(value);
+
+      if (parsedValue?.isValid()) {
+        onSelectedRangeChange(dateRangeFromValue([inputStartValue, value], parse));
+        onEndDateInputComplete?.(parsedValue);
       }
+      // }
     } else if (e.key === 'Escape') {
       onCancelInput();
     }

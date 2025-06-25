@@ -72,6 +72,13 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
   ) => {
     const [displayDate, setDisplayDate] = useState(dayjs());
     const [rangeSelectedState, setRangeSelectedState] = useState<RangeSalectedState>(RangeSalectedState.initial);
+    const handleRangeSalectedStateChange = () => {
+      if (rangeSelectedState >= RangeSalectedState.firstSelected) {
+        setCalendarOpen(false);
+      } else {
+        setRangeSelectedState(rangeSelectedState + 1);
+      }
+    };
 
     const inputBoxRef = useRef(null);
     const startInputRef = useRef<HTMLInputElement>(null);
@@ -114,11 +121,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         }
 
         setSelectedRange(dateRange);
-        if (rangeSelectedState >= RangeSalectedState.firstSelected) {
-          setCalendarOpen(false);
-        } else {
-          setRangeSelectedState(rangeSelectedState + 1);
-        }
+        handleRangeSalectedStateChange();
       }
     };
 
@@ -151,6 +154,12 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     // };
     const handleRangeInputCancel = () => {
       setCalendarOpen(false);
+    };
+    const handleStartDateInputComplete = () => {
+      handleRangeSalectedStateChange();
+    };
+    const handleEndDateInputComplete = () => {
+      handleRangeSalectedStateChange();
     };
 
     // TODO смержить с оригинальными обработчиками из пропсов
@@ -190,6 +199,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       onFocus: handleInputFocus,
       onBlur: handleInputBlur,
       onCancelInput: handleRangeInputCancel,
+      onStartDateInputComplete: handleStartDateInputComplete,
+      onEndDateInputComplete: handleEndDateInputComplete,
     };
 
     return (
