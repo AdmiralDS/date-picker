@@ -7,12 +7,12 @@ import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 import { useState } from 'react';
 
 const defaultInputStartProps = {
-  //placeholder: 'Введите интервал дат',
+  placeholder: 'дд.мм.гггг',
   dataPlaceholder: 'дд.мм.гггг',
   value: '',
 };
 const defaultInputEndProps = {
-  //placeholder: 'Введите интервал дат',
+  placeholder: 'дд.мм.гггг',
   dataPlaceholder: 'дд.мм.гггг',
   value: '',
 };

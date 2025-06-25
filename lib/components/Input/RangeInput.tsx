@@ -2,10 +2,10 @@ import type { ComponentProps, FocusEvent, KeyboardEventHandler, Ref } from 'reac
 import { useEffect, useRef, useState } from 'react';
 import { Dayjs } from 'dayjs';
 import { refSetter } from '@admiral-ds/react-ui';
-import { InputLine, InputLineProps } from './InputLine';
 import { InputSeparatorProps, InputSeparator } from './InputSeparator';
 import { DateRange } from 'lib/types';
 import { defaultDateFormatter, defaultDateParser } from '#lib/utils';
+import { SingleInput, SingleInputProps } from './SingleInput';
 
 function dateRangeFromValue(
   values?: Array<string | undefined>,
@@ -22,11 +22,11 @@ function dateRangeFromValue(
 
 const DefaultCancelHandler = () => undefined;
 
-export interface RangeInputProps extends InputLineProps {
+export interface RangeInputProps extends SingleInputProps {
   /** Пропсы внутреннего инпута */
-  inputPropsStart: InputLineProps;
+  inputPropsStart: ComponentProps<typeof SingleInput>;
   /** Пропсы внутреннего инпута */
-  inputPropsEnd: InputLineProps;
+  inputPropsEnd: ComponentProps<typeof SingleInput>;
 
   onRangeInputFinish?: () => void;
   separator?: string;
@@ -208,7 +208,7 @@ export const RangeInput = ({
     inputPropsEnd.ref !== undefined ? refSetter(inputRefEnd, inputPropsEnd.ref as Ref<HTMLInputElement>) : inputRefEnd;
 
   // props для инпутов
-  const inputStartFinalProps: ComponentProps<typeof InputLine> = {
+  const inputStartFinalProps: ComponentProps<typeof SingleInput> = {
     ...inputPropsStart,
     'data-size': props['data-size'],
     ref: refStart,
@@ -218,7 +218,7 @@ export const RangeInput = ({
     onInput: handleInputStart,
     tmpValue: isTmpValueStartDisplayed ? tmpValueStart : undefined,
   };
-  const inputEndFinalProps: ComponentProps<typeof InputLine> = {
+  const inputEndFinalProps: ComponentProps<typeof SingleInput> = {
     ...inputPropsEnd,
     'data-size': props['data-size'],
     ref: refEnd,
@@ -235,9 +235,9 @@ export const RangeInput = ({
 
   return (
     <>
-      <InputLine {...inputStartFinalProps} />
+      <SingleInput {...inputStartFinalProps} />
       <InputSeparator {...inputSeparatorProps}>{separator}</InputSeparator>
-      <InputLine {...inputEndFinalProps} />
+      <SingleInput {...inputEndFinalProps} />
     </>
   );
 };
