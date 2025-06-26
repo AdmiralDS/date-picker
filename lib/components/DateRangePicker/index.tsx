@@ -7,7 +7,6 @@ import { changeInputData, refSetter } from '@admiral-ds/react-ui';
 import { DateRangePickerCalendar } from '#lib/DateRangePickerCalendar';
 import type { InputBoxProps } from '#lib/Input/InputBox';
 import { InputBox } from '#lib/Input/InputBox';
-import type { InputLineProps } from '#lib/Input/InputLine';
 import { InputIconButton } from '#lib/InputIconButton';
 import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
 import { PopoverPanel } from '#lib/PopoverPanel';
@@ -15,6 +14,7 @@ import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
 import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
 import { defaultDateFormatter, defaultDateParser } from '#lib/utils';
+import { DimensionInterface } from '#lib/Input/types';
 
 function dateRangeFromValue(
   values?: Array<string | undefined>,
@@ -34,12 +34,10 @@ const Calendar = styled(DateRangePickerCalendar)`
   box-shadow: none;
 `;
 
-export type DateRangePickerProps = InputBoxProps & {
-  /** Пропсы внутреннего инпута */
-  inputPropsStart?: InputLineProps;
-  /** Пропсы внутреннего инпута */
-  inputPropsEnd?: InputLineProps;
-
+export interface DateRangePickerProps
+  extends RangeInputProps,
+    DimensionInterface,
+    Omit<InputBoxProps, 'onBlur' | 'onFocus'> {
   /** Функция для конвертации значение календаря в строку инпута */
   format?: (date?: Dayjs) => string;
 
@@ -47,7 +45,7 @@ export type DateRangePickerProps = InputBoxProps & {
   parse?: (date?: string) => Dayjs | undefined;
 
   separator?: string;
-};
+}
 
 enum RangeSalectedState {
   initial = 0,
@@ -61,6 +59,7 @@ enum RangeSalectedState {
 export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
   (
     {
+      dimension = 'm',
       inputPropsStart = {},
       inputPropsEnd = {},
       separator = '\u2014',
@@ -165,6 +164,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     // TODO смержить с оригинальными обработчиками из пропсов
     const containerFinalProps: ComponentProps<typeof InputBox> = {
       ...containerProps,
+      $dimension: dimension,
       ref: refSetter(inputBoxRef, refContainerProps),
     };
 
@@ -187,7 +187,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         : endInputRef;
 
     const rangeInputProps: RangeInputProps = {
-      'data-size': containerProps['data-size'],
+      dimension: dimension,
 
       inputPropsStart: { ...inputPropsStart, ref: startRef },
       inputPropsEnd: { ...inputPropsEnd, ref: endRef },

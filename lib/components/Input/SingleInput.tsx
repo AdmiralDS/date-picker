@@ -1,21 +1,28 @@
 import styled from 'styled-components';
 import { forwardRef } from 'react';
 import { InputLine, InputLineProps } from '@admiral-ds/react-ui';
-import { SizeProps } from './InputBox';
+import { DimensionInterface, InputDimension } from './types';
 
-const Wrapper = styled.div`
-  width: 84px;
-
-  &[data-size='s'] {
-    width: 74px;
+function getInputWidth(dimension: InputDimension) {
+  switch (dimension) {
+    case 's':
+      return 73;
+    case 'xl':
+    case 'm':
+    default:
+      return 83;
   }
+}
+
+const Wrapper = styled.div<{ $dimension: InputDimension }>`
+  width: ${(p) => getInputWidth(p.$dimension)}px;
 `;
 
-export interface SingleInputProps extends InputLineProps, SizeProps {}
+export interface SingleInputProps extends InputLineProps, DimensionInterface {}
 
-export const SingleInput = forwardRef<HTMLInputElement, SingleInputProps>((props, ref) => {
+export const SingleInput = forwardRef<HTMLInputElement, SingleInputProps>(({ dimension = 'm', ...props }, ref) => {
   return (
-    <Wrapper>
+    <Wrapper $dimension={dimension}>
       <InputLine ref={ref} {...props} />
     </Wrapper>
   );

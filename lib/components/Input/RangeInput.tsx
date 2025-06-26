@@ -5,7 +5,8 @@ import { refSetter } from '@admiral-ds/react-ui';
 import { InputSeparatorProps, InputSeparator } from './InputSeparator';
 import { DateRange } from 'lib/types';
 import { defaultDateFormatter, defaultDateParser } from '#lib/utils';
-import { SingleInput, SingleInputProps } from './SingleInput';
+import { SingleInput } from './SingleInput';
+import { DimensionInterface } from './types';
 
 function dateRangeFromValue(
   values?: Array<string | undefined>,
@@ -22,7 +23,7 @@ function dateRangeFromValue(
 
 const DefaultCancelHandler = () => undefined;
 
-export interface RangeInputProps extends SingleInputProps {
+export interface RangeInputProps extends DimensionInterface {
   /** Пропсы внутреннего инпута */
   inputPropsStart: ComponentProps<typeof SingleInput>;
   /** Пропсы внутреннего инпута */
@@ -31,7 +32,7 @@ export interface RangeInputProps extends SingleInputProps {
   onRangeInputFinish?: () => void;
   separator?: string;
   activeDate?: Dayjs;
-  onSelectedRangeChange: (range: DateRange) => void;
+  onSelectedRangeChange?: (range: DateRange) => void;
   /** Функция для конвертации значение календаря в строку инпута */
   format?: (date?: Dayjs) => string;
   /** Функция для конвертации строки инпута в значение календаря */
@@ -43,15 +44,19 @@ export interface RangeInputProps extends SingleInputProps {
   onStartDateInputComplete?: (date: Dayjs) => void;
   onEndDateChanged?: (date: Dayjs) => void;
   onEndDateInputComplete?: (date: Dayjs) => void;
+
+  onFocus?: React.FocusEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
 }
 
 export const RangeInput = ({
+  dimension = 'm',
   inputPropsStart,
   inputPropsEnd,
   onRangeInputFinish,
   separator,
   activeDate,
-  onSelectedRangeChange,
+  onSelectedRangeChange = () => undefined,
   format = defaultDateFormatter,
   parse: parse = defaultDateParser,
   onCancelInput = DefaultCancelHandler,
@@ -59,7 +64,8 @@ export const RangeInput = ({
   onStartDateInputComplete,
   onEndDateChanged,
   onEndDateInputComplete,
-  ...props
+  onFocus,
+  onBlur,
 }: RangeInputProps) => {
   const inputRefStart = useRef<HTMLInputElement>(null);
   const inputRefEnd = useRef<HTMLInputElement>(null);
@@ -87,7 +93,7 @@ export const RangeInput = ({
   //#region "Обработчики событий focus и blur на инпутах"
   const handleBlurStart = (e: FocusEvent<HTMLInputElement, Element>) => {
     if (e.relatedTarget !== inputRefEnd.current) {
-      props.onBlur?.(e);
+      onBlur?.(e);
     }
 
     setTmpValueStartDisplayed(false);
@@ -95,19 +101,19 @@ export const RangeInput = ({
   };
   const handleBlurEnd = (e: FocusEvent<HTMLInputElement, Element>) => {
     if (e.relatedTarget !== inputRefStart.current) {
-      props.onBlur?.(e);
+      onBlur?.(e);
     }
     setTmpValueEndDisplayed(false);
     inputPropsEnd.onBlur?.(e);
   };
 
   const handleFocusStart = (e: FocusEvent<HTMLInputElement, Element>) => {
-    props.onFocus?.(e);
+    onFocus?.(e);
     setActiveEnd('start');
     inputPropsStart.onFocus?.(e);
   };
   const handleFocusEnd = (e: FocusEvent<HTMLInputElement, Element>) => {
-    props.onFocus?.(e);
+    onFocus?.(e);
     setActiveEnd('end');
     inputPropsEnd.onFocus?.(e);
   };
@@ -210,8 +216,8 @@ export const RangeInput = ({
   // props для инпутов
   const inputStartFinalProps: ComponentProps<typeof SingleInput> = {
     ...inputPropsStart,
-    'data-size': props['data-size'],
     ref: refStart,
+    dimension: dimension,
     onBlur: handleBlurStart,
     onFocus: handleFocusStart,
     onKeyDown: handleInputStartKeyDown,
@@ -220,8 +226,8 @@ export const RangeInput = ({
   };
   const inputEndFinalProps: ComponentProps<typeof SingleInput> = {
     ...inputPropsEnd,
-    'data-size': props['data-size'],
     ref: refEnd,
+    dimension: dimension,
     onBlur: handleBlurEnd,
     onFocus: handleFocusEnd,
     onKeyDown: handleInputEndKeyDown,
@@ -229,7 +235,7 @@ export const RangeInput = ({
     tmpValue: isTmpValueEndDisplayed ? tmpValueEnd : undefined,
   };
   const inputSeparatorProps: InputSeparatorProps = {
-    'data-size': props['data-size'],
+    $dimension: dimension,
   };
   //#endregion
 

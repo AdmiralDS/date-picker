@@ -2,7 +2,11 @@ import styled from 'styled-components';
 import { forwardRef, useEffect, useRef } from 'react';
 import { refSetter } from '@admiral-ds/react-ui';
 import { vars } from '@admiral-ds/web';
-import { SizeProps } from './InputBox';
+
+export type SizeProps = {
+  /** Размеры компонента */
+  'data-size'?: 's' | 'm' | 'xl';
+};
 
 export const StyledInputLine = styled.input<{ $isTmpValue?: boolean }>`
   border: none;
