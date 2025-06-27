@@ -56,7 +56,7 @@ export const RangeInput = ({
   onRangeInputFinish,
   separator,
   activeDate,
-  onSelectedRangeChange = () => undefined,
+  onSelectedRangeChange,
   format = defaultDateFormatter,
   parse: parse = defaultDateParser,
   onCancelInput = DefaultCancelHandler,
@@ -127,7 +127,7 @@ export const RangeInput = ({
       const value = e.currentTarget.value;
       const parsedValue = parse(value);
       if (parsedValue?.isValid()) {
-        onSelectedRangeChange(dateRangeFromValue([value, inputEndValue], parse));
+        onSelectedRangeChange?.(dateRangeFromValue([value, inputEndValue], parse));
         onStartDateInputComplete?.(parsedValue);
       }
     } else if (e.key === 'Escape') {
@@ -143,10 +143,9 @@ export const RangeInput = ({
       const parsedValue = parse(value);
 
       if (parsedValue?.isValid()) {
-        onSelectedRangeChange(dateRangeFromValue([inputStartValue, value], parse));
+        onSelectedRangeChange?.(dateRangeFromValue([inputStartValue, value], parse));
         onEndDateInputComplete?.(parsedValue);
       }
-      // }
     } else if (e.key === 'Escape') {
       onCancelInput();
     }
