@@ -13,21 +13,8 @@ import { PopoverPanel } from '#lib/PopoverPanel';
 import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
 import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
-import { defaultDateFormatter, defaultDateParser } from '#lib/utils';
+import { defaultDateFormatter, defaultDateParser, sortDatesAsc } from '#lib/utils';
 import { DimensionInterface } from '#lib/Input/types';
-
-function dateRangeFromValue(
-  values?: Array<string | undefined>,
-  parse: (date?: string) => Dayjs | undefined = defaultDateParser,
-): DateRange {
-  const [start, end] = values
-    ? values.map((item) => {
-        const parsedItem = parse(item);
-        return parsedItem?.isValid() ? parsedItem : undefined;
-      })
-    : [undefined, undefined];
-  return start && end && start.isAfter(end) ? ([end, start] as const) : ([start, end] as const);
-}
 
 const Calendar = styled(DateRangePickerCalendar)`
   border: none;
@@ -44,13 +31,21 @@ export interface DateRangePickerProps
   /** Функция для конвертации строки инпута в значение календаря */
   parse?: (date?: string) => Dayjs | undefined;
 
+  /** Разделитель между инпутами */
   separator?: string;
+
+  /** Проверка диапазона */
+  checkDateRange?: (dateRange: DateRange) => DateRange;
 }
 
 enum RangeSalectedState {
   initial = 0,
   firstSelected = 1,
   bothSelected = 2,
+}
+
+function checkDateRangeDefault(dateRange: DateRange) {
+  return sortDatesAsc(...dateRange, 'date');
 }
 
 /**
@@ -63,8 +58,10 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       inputPropsStart = {},
       inputPropsEnd = {},
       separator = '\u2014',
+      checkDateRange = checkDateRangeDefault,
       format = defaultDateFormatter,
       parse = defaultDateParser,
+      onSelectedRangeChange,
       ...containerProps
     },
     refContainerProps,
@@ -104,8 +101,9 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       if (calendarViewMode === 'dates') {
         console.log(dateRange);
 
-        const start = dateRange[0];
-        const end = dateRange[1];
+        const checkedRange = checkDateRange(dateRange);
+        const start = checkedRange[0];
+        const end = checkedRange[1];
 
         if (start && start.isValid() && !start.isSame(selectedRange[0])) {
           const formattedStart = format(start);
@@ -119,27 +117,15 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
           if (endInputRef.current) changeInputData(endInputRef.current, { value: formattedEnd });
         }
 
-        setSelectedRange(dateRange);
+        setSelectedRange(checkedRange);
         handleRangeSalectedStateChange();
+        onSelectedRangeChange?.(checkedRange);
       }
     };
 
     useEffect(() => {
       if (isCalendarOpen) setRangeSelectedState(RangeSalectedState.initial);
     }, [isCalendarOpen]);
-
-    // TODO: fix! Зацикливавется
-    // useEffect(() => {
-    //   if (calendarViewMode === 'dates') {
-    //     const startDate = parse(inputPropsStart.value);
-    //     const endDate = parse(inputPropsEnd.value);
-
-    //     const start = startDate?.isValid() ? startDate : undefined;
-    //     const end = endDate?.isValid() ? endDate : undefined;
-
-    //     setSelectedRange([start, end]);
-    //   }
-    // }, [inputPropsStart, inputPropsEnd]);
 
     const handleCalendarViewModeChange = (view: CalendarViewMode) => {
       setCalendarViewMode(view);
