@@ -104,9 +104,11 @@ export const yearsRange = (date: Dayjs, yearCount: number) => {
   return { start, end };
 };
 
-export const sortDatesAsc = (date1: Dayjs, date2: Dayjs, unit: dayjs.OpUnitType | undefined) => {
-  const dateFirst = date1.isBefore(date2, unit) ? date1 : date2;
-  const dateSecond = dateFirst.isSame(date1, unit) ? date2 : date1;
+export const sortDatesAsc = (date1?: Dayjs, date2?: Dayjs, unit?: dayjs.OpUnitType): DateRange => {
+  if (!date1 || !date2) {
+    return [date1, date2];
+  }
+  const [dateFirst, dateSecond] = date1.isBefore(date2, unit) ? [date1, date2] : [date2, date1];
   return [dateFirst, dateSecond];
 };
 
