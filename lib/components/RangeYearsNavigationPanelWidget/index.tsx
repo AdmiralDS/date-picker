@@ -15,6 +15,7 @@ export interface RangeYearsNavigationPanelWidgetProps extends BasePanelWidgetPro
   yearsNavigationContainerPropsConfig?: (
     props: React.ComponentProps<typeof YearsWrapper>,
   ) => Partial<React.ComponentProps<typeof YearsWrapper> & DataAttributes>;
+  //** Количество ячеек в виджете с годами */
   yearsOnScreen?: number;
 }
 
@@ -43,9 +44,6 @@ export const RangeYearsNavigationPanelWidget = ({
   viewMode,
   date,
   locale = ruLocale,
-  //todo удалить при дальнейшем рефакторинге month date
-  prevButtonProps,
-  nextButtonProps,
   prevButtonPropsConfig = nothing,
   nextButtonPropsConfig = nothing,
   yearsNavigationContainerPropsConfig = nothing,
@@ -60,7 +58,6 @@ export const RangeYearsNavigationPanelWidget = ({
     highlightFocus: false,
     'data-panel-target-type': 'left',
     renderContent: () => locale?.localeText.backwardText,
-    ...prevButtonProps,
   } as const;
 
   const nextButtonPropsFinal = {
@@ -68,7 +65,6 @@ export const RangeYearsNavigationPanelWidget = ({
     highlightFocus: false,
     'data-panel-target-type': 'right',
     renderContent: () => locale?.localeText.forwardText,
-    ...nextButtonProps,
   } as const;
 
   return (

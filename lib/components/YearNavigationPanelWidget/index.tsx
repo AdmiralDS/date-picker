@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { DataAttributes } from 'styled-components';
 
 import { vars, textValues } from '@admiral-ds/web';
 import { IconPlacement, TooltipHoc } from '@admiral-ds/react-ui';
@@ -9,7 +9,13 @@ import { CALENDAR_WIDTH, ruLocale } from '#lib/calendarConstants';
 import { getCurrentDate } from '#lib/utils';
 import type { BasePanelWidgetProps } from '#lib/widgetInterfaces.ts';
 
-export type YearNavigationPanelWidgetProps = BasePanelWidgetProps;
+export interface YearNavigationPanelWidgetProps extends BasePanelWidgetProps {
+  /** Конфиг функция пропсов для контейнера с годами на навигационной панели. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  yearNavigationButtonPropsConfig?: (
+    props: React.ComponentProps<typeof TextWithTooltip>,
+  ) => Partial<React.ComponentProps<typeof TextWithTooltip> & DataAttributes>;
+}
 
 const YearNavigationPanelWrapper = styled.div`
   box-sizing: border-box;
@@ -41,10 +47,9 @@ export const YearNavigationPanelWidget = ({
   viewMode,
   date,
   locale = ruLocale,
-  prevButtonProps,
-  nextButtonProps,
   prevButtonPropsConfig = nothing,
   nextButtonPropsConfig = nothing,
+  yearNavigationButtonPropsConfig = nothing,
   ...props
 }: YearNavigationPanelWidgetProps) => {
   const dateInner = date?.locale(locale?.localeName) || getCurrentDate(locale?.localeName);
@@ -54,7 +59,6 @@ export const YearNavigationPanelWidget = ({
     highlightFocus: false,
     'data-panel-target-type': 'left',
     renderContent: () => locale?.localeText.backwardText,
-    ...prevButtonProps,
   } as const;
 
   const nextButtonPropsFinal = {
@@ -62,7 +66,12 @@ export const YearNavigationPanelWidget = ({
     highlightFocus: false,
     'data-panel-target-type': 'right',
     renderContent: () => locale?.localeText.forwardText,
-    ...nextButtonProps,
+  } as const;
+
+  const yearNavigationButtonPropsFinal = {
+    'data-panel-target-type': 'year',
+    renderContent: () => (viewMode === 'years' ? locale?.localeText.returnText : locale.localeText.selectYearText),
+    $isActive: viewMode === 'years',
   } as const;
 
   return (
@@ -71,9 +80,8 @@ export const YearNavigationPanelWidget = ({
         <ChevronLeftOutline />
       </IconWithTooltip>
       <TextWithTooltip
-        data-panel-target-type="year"
-        $isActive={viewMode === 'years'}
-        renderContent={() => (viewMode === 'years' ? locale?.localeText.returnText : locale.localeText.selectYearText)}
+        {...yearNavigationButtonPropsFinal}
+        {...yearNavigationButtonPropsConfig(yearNavigationButtonPropsFinal)}
       >
         {dateInner.year()}
       </TextWithTooltip>

@@ -39,27 +39,36 @@ const TextWrapper = styled.div<{ $isActive?: boolean }>`
 const IconWithTooltip = TooltipHoc(IconPlacement);
 const TextWithTooltip = TooltipHoc(TextWrapper);
 
+const nothing = () => ({});
+
 export const MonthNavigationPanelWidget = ({
   viewMode,
   date,
   locale = ruLocale,
-  prevButtonProps,
-  nextButtonProps,
+  prevButtonPropsConfig = nothing,
+  nextButtonPropsConfig = nothing,
   ...props
 }: MonthNavigationPanelWidgetProps) => {
   const dateInner = date?.locale(locale.localeName) || getCurrentDate(locale?.localeName || 'ru');
 
+  const prevButtonPropsFinal = {
+    dimension: 'lSmall',
+    highlightFocus: false,
+    'data-panel-target-type': 'left',
+    renderContent: () =>
+      viewMode === 'dates' ? locale?.localeText.previousMonthText : locale?.localeText.backwardText,
+  } as const;
+
+  const nextButtonPropsFinal = {
+    dimension: 'lSmall',
+    highlightFocus: false,
+    'data-panel-target-type': 'right',
+    renderContent: () => (viewMode === 'dates' ? locale?.localeText.nextMonthText : locale?.localeText.forwardText),
+  } as const;
+
   return (
     <MonthNavigationPanelWrapper {...props}>
-      <IconWithTooltip
-        dimension="lSmall"
-        highlightFocus={false}
-        data-panel-target-type="left"
-        renderContent={() =>
-          viewMode === 'dates' ? locale?.localeText.previousMonthText : locale?.localeText.backwardText
-        }
-        {...prevButtonProps}
-      >
+      <IconWithTooltip {...prevButtonPropsFinal} {...prevButtonPropsConfig(prevButtonPropsFinal)}>
         <ChevronLeftOutline />
       </IconWithTooltip>
       <MonthYearWrapper {...props}>
@@ -82,13 +91,7 @@ export const MonthNavigationPanelWidget = ({
           {dateInner.year()}
         </TextWithTooltip>
       </MonthYearWrapper>
-      <IconWithTooltip
-        dimension="lSmall"
-        highlightFocus={false}
-        data-panel-target-type="right"
-        renderContent={() => (viewMode === 'dates' ? locale?.localeText.nextMonthText : locale?.localeText.forwardText)}
-        {...nextButtonProps}
-      >
+      <IconWithTooltip {...nextButtonPropsFinal} {...nextButtonPropsConfig(nextButtonPropsFinal)}>
         <ChevronRightOutline />
       </IconWithTooltip>
     </MonthNavigationPanelWrapper>

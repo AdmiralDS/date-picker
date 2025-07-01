@@ -57,8 +57,8 @@ export type YearPickerProps = InputBoxProps & {
   ) => Partial<React.ComponentProps<typeof PopoverPanel> & DataAttributes>;
 
   /** Модель массива для рендера ячеек с годами, на выход должна отдавать массив по размеру равный yearsOnScreen,
-   * а также можно в добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
-  yearModel?: React.ComponentProps<typeof Calendar>['yearModel'];
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  yearsModel?: React.ComponentProps<typeof Calendar>['yearsModel'];
 
   /** Конфиг функция пропсов для контейнера с годами. На вход получает начальный набор пропсов, на
    * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
@@ -72,7 +72,10 @@ export type YearPickerProps = InputBoxProps & {
    * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
   nextButtonPropsConfig?: React.ComponentProps<typeof Calendar>['nextButtonPropsConfig'];
 
+  /** Конфиг функция пропсов для контейнера с годами на навигационной панели. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
   yearsNavigationContainerPropsConfig?: React.ComponentProps<typeof Calendar>['yearsNavigationContainerPropsConfig'];
+
   //** Количество ячеек в виджете с годами */
   yearsOnScreen?: number;
   //** Количество столбцов в виджете с годами */
@@ -89,7 +92,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
       iconButtonPropsConfig = nothing,
       inputPropsConfig = nothing,
       dropdownPropsConfig = nothing,
-      yearModel,
+      yearsModel,
       yearsWidgetContainerPropsConfig,
       yearsOnScreen = 20,
       yearsNavigationContainerPropsConfig,
@@ -239,7 +242,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
               activeDateValue={parce(tmpValue)}
               onActiveDateValueChange={handleActiveDateValueChange}
               locale={Calendarlocale}
-              yearModel={yearModel}
+              yearsModel={yearsModel}
               yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
               yearsOnScreen={yearsOnScreen}
               yearsColumns={yearsColumns}

@@ -4,12 +4,15 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
 import { getCurrentDate } from '#lib/utils';
-import { MonthsOfYearWidget } from '#lib/MonthsOfYearWidget';
+import { MonthsWidget } from '#lib/MonthsWidget';
 import type { SingleCalendarProps } from '#lib/calendarInterfaces.ts';
 import { MemoDefaultMonthCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
 
-export interface MonthCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface MonthCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {
+  monthsModel?: React.ComponentProps<typeof MonthsWidget>['monthsModel'];
+  monthsWidgetContainerPropsConfig?: React.ComponentProps<typeof MonthsWidget>['monthsWidgetContainerPropsConfig'];
+}
 
 export const MonthCalendar = ({
   selectedDateValue,
@@ -22,6 +25,8 @@ export const MonthCalendar = ({
   onActiveDateValueChange,
   cell,
   locale = ruLocale,
+  monthsModel,
+  monthsWidgetContainerPropsConfig,
   ...props
 }: MonthCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -78,7 +83,7 @@ export const MonthCalendar = ({
   //</editor-fold>
 
   return (
-    <MonthsOfYearWidget
+    <MonthsWidget
       {...props}
       date={dateInner}
       selected={selectedDateInner}
@@ -89,6 +94,8 @@ export const MonthCalendar = ({
       onMouseOver={handleMouseOver}
       onMouseDown={handleDateClick}
       cell={cell || MemoDefaultMonthCell}
+      monthsModel={monthsModel}
+      monthsWidgetContainerPropsConfig={monthsWidgetContainerPropsConfig}
     />
   );
 };

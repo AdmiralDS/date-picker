@@ -14,7 +14,17 @@ import {
 import { YEARS_ON_SCREEN } from '#lib/YearsWidget/constants.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
 
-export interface MonthPickerCalendarProps extends Omit<SingleCalendarProps, 'cell'>, PickerCalendarProps {}
+export interface MonthPickerCalendarProps extends Omit<SingleCalendarProps, 'cell'>, PickerCalendarProps {
+  yearNavigationButtonPropsConfig?: React.ComponentProps<
+    typeof YearNavigationPanelWidget
+  >['yearNavigationButtonPropsConfig'];
+  monthsModel?: React.ComponentProps<typeof MonthCalendarView>['monthsModel'];
+  monthsWidgetContainerPropsConfig?: React.ComponentProps<typeof MonthCalendarView>['monthsWidgetContainerPropsConfig'];
+  yearsModel?: React.ComponentProps<typeof YearCalendarView>['yearsModel'];
+  yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof YearCalendarView>['yearsWidgetContainerPropsConfig'];
+  yearsOnScreen?: number;
+  yearsColumns?: number;
+}
 
 export const MonthPickerCalendar = ({
   viewModeValue,
@@ -28,8 +38,15 @@ export const MonthPickerCalendar = ({
   onSelectedDateValueChange,
   cell,
   locale = ruLocale,
-  prevButtonProps,
-  nextButtonProps,
+  prevButtonPropsConfig,
+  nextButtonPropsConfig,
+  yearNavigationButtonPropsConfig,
+  monthsModel,
+  monthsWidgetContainerPropsConfig,
+  yearsWidgetContainerPropsConfig,
+  yearsModel,
+  yearsOnScreen,
+  yearsColumns,
   ...props
 }: MonthPickerCalendarProps) => {
   //<editor-fold desc="Calendar view mode">
@@ -102,8 +119,9 @@ export const MonthPickerCalendar = ({
         viewMode={viewModeInner}
         locale={locale}
         onMouseDown={handleYearNavigationPanelClick}
-        prevButtonProps={prevButtonProps}
-        nextButtonProps={nextButtonProps}
+        prevButtonPropsConfig={prevButtonPropsConfig}
+        nextButtonPropsConfig={nextButtonPropsConfig}
+        yearNavigationButtonPropsConfig={yearNavigationButtonPropsConfig}
       />
       <CalendarContainer>
         <MonthCalendarView
@@ -114,6 +132,8 @@ export const MonthPickerCalendar = ({
           onSelectedDateValueChange={handleMonthClick}
           locale={locale}
           $isVisible={viewModeInner === 'months'}
+          monthsModel={monthsModel}
+          monthsWidgetContainerPropsConfig={monthsWidgetContainerPropsConfig}
         />
         <YearCalendarView
           {...props}
@@ -123,6 +143,10 @@ export const MonthPickerCalendar = ({
           onSelectedDateValueChange={handleYearClick}
           locale={locale}
           $isVisible={viewModeInner === 'years'}
+          yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
+          yearsModel={yearsModel}
+          yearsOnScreen={yearsOnScreen}
+          yearsColumns={yearsColumns}
         />
       </CalendarContainer>
     </SinglePickerCalendarWrapper>

@@ -30,8 +30,6 @@ export interface BasePanelWidgetProps extends HTMLAttributes<HTMLDivElement> {
   /** Дата */
   date?: Dayjs;
   locale: CalendarLocaleProps;
-  prevButtonProps?: ArrowButtonProps;
-  nextButtonProps?: ArrowButtonProps;
   /** Конфиг функция пропсов для кнопки панели "Назад". На вход получает начальный набор пропсов, на
    * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
   prevButtonPropsConfig?: ArrowButtonPropsConfig;

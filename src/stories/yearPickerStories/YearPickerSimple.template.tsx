@@ -13,9 +13,10 @@ const defaultInputProps = {
   dataPlaceholder: 'гггг',
 };
 
-const yearsArray = Array.from(Array(20).keys());
+const YEARS_ON_SCREEN = 20;
 
-const yearModel = yearsArray.map((_, i) => {
+const yearsArray = new Array(YEARS_ON_SCREEN).fill({});
+const yearsModel = yearsArray.map((_, i) => {
   return { 'data-testid': `test-cell-${i}` };
 });
 
@@ -27,7 +28,8 @@ export const YearPickerSimpleTemplate = () => {
     <WrapperHorizontal>
       <WrapperVertical>
         <YearPicker
-          yearModel={yearModel}
+          yearsOnScreen={YEARS_ON_SCREEN}
+          yearsModel={yearsModel}
           iconButtonPropsConfig={(p) => ({ ...p, role: 'iconButton' })}
           prevButtonPropsConfig={(p) => ({ ...p, role: 'prevButtonNavigationPanel' })}
           nextButtonPropsConfig={(p) => ({ ...p, role: 'nextButtonNavigationPanel' })}

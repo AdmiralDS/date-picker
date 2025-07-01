@@ -14,6 +14,8 @@ const defaultInputProps = {
   value: '1',
 };
 
+const monthArray = new Array(9).fill({});
+
 export const MonthPickerSimpleTemplate = () => {
   const [inputValue, setInputValue] = useState(defaultInputProps.value);
   const maskedDateInputRef = useMaskito({ options: dateOptions });
@@ -21,6 +23,7 @@ export const MonthPickerSimpleTemplate = () => {
     <WrapperHorizontal>
       <WrapperVertical>
         <MonthPicker
+          monthsModel={monthArray}
           inputProps={{
             ...defaultInputProps,
             value: inputValue,

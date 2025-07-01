@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import { vars } from '@admiral-ds/web';
 import { getCurrentDate } from '#lib/utils';
 import { CALENDAR_HEIGHT, CALENDAR_WIDTH, ruLocale } from '#lib/calendarConstants';
-import { MonthsOfYearWidget } from '#lib/MonthsOfYearWidget';
+import { MonthsWidget } from '#lib/MonthsWidget';
 import type { YearNavigationPanelWidgetProps } from '#lib/YearNavigationPanelWidget';
 import { YearNavigationPanelWidget } from '#lib/YearNavigationPanelWidget';
 import { MemoDefaultMonthCell } from '#lib/DefaultCell';
@@ -83,7 +83,7 @@ export const YearNavigationPanelWidgetSimpleTemplate = ({
   return (
     <CalendarWrapper>
       <YearNavigationPanelWidget date={dateState} locale={locale} onClick={handleYearNavigationPanelClick} />
-      <MonthsOfYearWidget
+      <MonthsWidget
         {...props}
         date={dateState}
         selected={selectedDate}

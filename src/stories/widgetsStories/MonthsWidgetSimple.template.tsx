@@ -7,9 +7,7 @@ import dayjs from 'dayjs';
 import { textValues, vars } from '@admiral-ds/web';
 
 import { capitalizeFirstLetter, getCurrentDate } from '#lib/utils';
-import { MONTHS_OF_YEAR_WIDGET_WIDTH } from '#lib/MonthsOfYearWidget/constants';
-import type { MonthsOfYearWidgetProps } from '#lib/MonthsOfYearWidget';
-import { MonthsOfYearWidget } from '#lib/MonthsOfYearWidget';
+import { MonthsWidget } from '#lib/MonthsWidget';
 import { MemoDefaultMonthCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
 
@@ -19,7 +17,7 @@ const Wrapper = styled.div`
   align-items: center;
   align-content: space-between;
   padding: 10px;
-  width: ${MONTHS_OF_YEAR_WIDGET_WIDTH}px;
+  width: 252px;
   border: 1px ${vars.color.Neutral_Neutral90} solid;
 `;
 const MonthYear = styled.div`
@@ -27,7 +25,11 @@ const MonthYear = styled.div`
   ${textValues['Subtitle/Subtitle 2']}
 `;
 
-export const MonthsOfYearWidgetSimpleTemplate = ({ date, locale = ruLocale, ...props }: MonthsOfYearWidgetProps) => {
+export const MonthsWidgetSimpleTemplate = ({
+  date,
+  locale = ruLocale,
+  ...props
+}: React.ComponentProps<typeof MonthsWidget>) => {
   const localeInner = locale?.localeName || 'ru';
   const dateInner = date || getCurrentDate(locale?.localeName);
   const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(localeInner).add(1, 'day'));
@@ -70,7 +72,7 @@ export const MonthsOfYearWidgetSimpleTemplate = ({ date, locale = ruLocale, ...p
   return (
     <Wrapper>
       <MonthYear>Дата: {capitalizeFirstLetter(dateInner.format('D MMMM YYYY'))}</MonthYear>
-      <MonthsOfYearWidget
+      <MonthsWidget
         {...props}
         date={dateInner}
         selected={selectedDate}
