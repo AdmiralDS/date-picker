@@ -154,8 +154,7 @@ export const DateRangeCalendar = ({
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getDayNameCellState = (_: number): CellStateProps => {
+  const getDayNameCellState = (): CellStateProps => {
     const cellMixin = baseDayNameCellMixin;
     return { cellMixin };
   };
