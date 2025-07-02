@@ -28,22 +28,19 @@ export const YearPickerSimpleTemplate = () => {
     <WrapperHorizontal>
       <WrapperVertical>
         <YearPicker
-          yearsOnScreen={YEARS_ON_SCREEN}
-          yearsModel={yearsModel}
-          iconButtonPropsConfig={(p) => ({ ...p, role: 'iconButton' })}
-          prevButtonPropsConfig={(p) => ({ ...p, role: 'prevButtonNavigationPanel' })}
-          nextButtonPropsConfig={(p) => ({ ...p, role: 'nextButtonNavigationPanel' })}
           inputProps={{
             ...defaultInputProps,
             value: inputValue,
             onInput: (e) => setInputValue(e.currentTarget.value),
             ref: maskedDateInputRef,
           }}
-          inputPropsConfig={(props) => ({
-            ...props,
-            'data-testid': 'inputYear',
-          })}
-          yearsWidgetContainerPropsConfig={(props) => ({ ...props, 'data-testid': 'containerCells' })}
+          yearsOnScreen={YEARS_ON_SCREEN}
+          yearsModel={yearsModel}
+          iconButtonPropsConfig={(p) => ({ ...p, role: 'iconButton' })}
+          prevButtonPropsConfig={(p) => ({ ...p, role: 'prevButtonNavigationPanel' })}
+          nextButtonPropsConfig={(p) => ({ ...p, role: 'nextButtonNavigationPanel' })}
+          inputPropsConfig={(p) => ({ ...p, 'data-testid': 'inputYear' })}
+          yearsWidgetContainerPropsConfig={(p) => ({ ...p, 'data-testid': 'containerCells' })}
         />
       </WrapperVertical>
 
