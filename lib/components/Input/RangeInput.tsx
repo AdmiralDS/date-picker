@@ -7,6 +7,7 @@ import { DateRange } from 'lib/types';
 import { defaultDateFormatter, defaultDateParser } from '#lib/utils';
 import { SingleInput } from './SingleInput';
 import { DimensionInterface } from './types';
+import { RangeCalendarProps } from '#lib/calendarInterfaces';
 
 function dateRangeFromValue(
   values?: Array<string | undefined>,
@@ -45,6 +46,8 @@ export interface RangeInputProps extends DimensionInterface {
   onEndDateChanged?: (date: Dayjs) => void;
   onEndDateInputComplete?: (date: Dayjs) => void;
 
+  onActiveDateRangeEndValueChange?: (date: Dayjs | undefined) => void;
+
   onFocus?: React.FocusEventHandler<HTMLInputElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
 }
@@ -64,6 +67,7 @@ export const RangeInput = ({
   onStartDateInputComplete,
   onEndDateChanged,
   onEndDateInputComplete,
+  onActiveDateRangeEndValueChange,
   onFocus,
   onBlur,
 }: RangeInputProps) => {
@@ -89,6 +93,9 @@ export const RangeInput = ({
   //#endregion
 
   const [activeEnd, setActiveEnd] = useState<'start' | 'end' | 'none'>('start');
+  useEffect(() => {
+    console.log(activeEnd);
+  }, [activeEnd]);
 
   //#region "Обработчики событий focus и blur на инпутах"
   const handleBlurStart = (e: FocusEvent<HTMLInputElement, Element>) => {
@@ -109,13 +116,17 @@ export const RangeInput = ({
 
   const handleFocusStart = (e: FocusEvent<HTMLInputElement, Element>) => {
     onFocus?.(e);
+    onActiveDateRangeEndValueChange?.(parse(inputEndValue));
     setActiveEnd('start');
     inputPropsStart.onFocus?.(e);
+    console.log('handleFocusStart');
   };
   const handleFocusEnd = (e: FocusEvent<HTMLInputElement, Element>) => {
     onFocus?.(e);
+    onActiveDateRangeEndValueChange?.(parse(inputStartValue));
     setActiveEnd('end');
     inputPropsEnd.onFocus?.(e);
+    console.log('handleFocusEnd');
   };
   //#endregion
 
@@ -126,6 +137,7 @@ export const RangeInput = ({
       //handleRangeInputFinish();
       const value = e.currentTarget.value;
       const parsedValue = parse(value);
+      console.log('enter clicked');
       if (parsedValue?.isValid()) {
         onSelectedRangeChange?.(dateRangeFromValue([value, inputEndValue], parse));
         onStartDateInputComplete?.(parsedValue);
@@ -141,7 +153,7 @@ export const RangeInput = ({
       //handleRangeInputFinish();
       const value = e.currentTarget.value;
       const parsedValue = parse(value);
-
+      console.log('enter clicked');
       if (parsedValue?.isValid()) {
         onSelectedRangeChange?.(dateRangeFromValue([inputStartValue, value], parse));
         onEndDateInputComplete?.(parsedValue);
@@ -165,6 +177,7 @@ export const RangeInput = ({
   //#endregion
 
   const handleInputStart = (e: React.FormEvent<HTMLInputElement>) => {
+    console.log('handleInputStart');
     const { value, selectionStart } = e.currentTarget;
     setTmpValueStartDisplayed(false);
     const parsedValue = parse(value);

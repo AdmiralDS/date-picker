@@ -35,7 +35,7 @@ export interface DateRangePickerProps
   separator?: string;
 
   /** Проверка диапазона */
-  checkDateRange?: (dateRange: DateRange) => DateRange;
+  checkDateRange?: (dateRange: DateRange, rangeSalectedState?: RangeSalectedState) => DateRange;
 }
 
 enum RangeSalectedState {
@@ -44,8 +44,8 @@ enum RangeSalectedState {
   bothSelected = 2,
 }
 
-function checkDateRangeDefault(dateRange: DateRange) {
-  return sortDatesAsc(...dateRange, 'date');
+function checkDateRangeDefault(dateRange: DateRange, rangeSalectedState?: RangeSalectedState) {
+  return rangeSalectedState === RangeSalectedState.bothSelected ? sortDatesAsc(...dateRange, 'date') : dateRange;
 }
 
 /**
@@ -81,6 +81,11 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const endInputRef = useRef<HTMLInputElement>(null);
 
     const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
+    useEffect(() => {
+      if (isCalendarOpen) {
+        setRangeSelectedState(RangeSalectedState.initial);
+      }
+    }, [isCalendarOpen]);
 
     const [activeDate, setActiveDate] = useState<Dayjs | undefined>(undefined);
     const handleActiveDateValueChange = (date?: Dayjs) => {
@@ -101,7 +106,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       if (calendarViewMode === 'dates') {
         console.log(dateRange);
 
-        const checkedRange = checkDateRange(dateRange);
+        const checkedRange = checkDateRange(dateRange, rangeSelectedState);
         const start = checkedRange[0];
         const end = checkedRange[1];
 
@@ -131,6 +136,11 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       setCalendarViewMode(view);
     };
 
+    const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>(undefined);
+    const handleDateRangeActiveEndStateChange = (date: Dayjs | undefined) => {
+      setDateRangeActiveEndState(date);
+    };
+
     // const handleRangeInputBegin = () => {
     //   setCalendarOpen(true);
     // };
@@ -141,9 +151,15 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       setCalendarOpen(false);
     };
     const handleStartDateInputComplete = () => {
+      if (rangeSelectedState === RangeSalectedState.initial) {
+        console.log('focus end');
+      }
       handleRangeSalectedStateChange();
     };
     const handleEndDateInputComplete = () => {
+      if (rangeSelectedState === RangeSalectedState.initial) {
+        console.log('focus start');
+      }
       handleRangeSalectedStateChange();
     };
 
@@ -187,6 +203,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       onCancelInput: handleRangeInputCancel,
       onStartDateInputComplete: handleStartDateInputComplete,
       onEndDateInputComplete: handleEndDateInputComplete,
+      onActiveDateRangeEndValueChange: handleDateRangeActiveEndStateChange,
     };
 
     return (
@@ -202,6 +219,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               selectedDateRangeValue={selectedRange}
               onSelectedDateRangeValueChange={handleSelectedDateValueChange}
               onActiveDateValueChange={handleActiveDateValueChange}
+              activeDateRangeEndValue={dateRangeActiveEndState}
             />
           </PopoverPanel>
         )}

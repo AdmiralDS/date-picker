@@ -16,9 +16,7 @@ import { YEARS_ON_SCREEN } from '#lib/YearsWidget/constants.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { DateRange } from 'lib/types';
 
-export interface DateRangePickerCalendarProps
-  extends Omit<RangeCalendarProps, 'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'cell'>,
-    PickerCalendarProps {}
+export interface DateRangePickerCalendarProps extends Omit<RangeCalendarProps, 'cell'>, PickerCalendarProps {}
 
 export const DateRangePickerCalendar = ({
   viewModeValue,
@@ -30,6 +28,8 @@ export const DateRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
+  activeDateRangeEndValue,
+  defaultActiveDateRangeEndValue,
   onActiveDateRangeEndValueChange,
   cell,
   locale = ruLocale,
@@ -149,6 +149,8 @@ export const DateRangePickerCalendar = ({
           selectedDateRangeValue={selectedDateRangeInner}
           defaultSelectedDateRangeValue={defaultSelectedDateRangeValue}
           onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
+          activeDateRangeEndValue={activeDateRangeEndValue}
+          defaultActiveDateRangeEndValue={defaultActiveDateRangeEndValue}
           onActiveDateRangeEndValueChange={handleDateRangeActiveEndChange}
           locale={locale}
           $isVisible={viewModeInner === 'dates'}

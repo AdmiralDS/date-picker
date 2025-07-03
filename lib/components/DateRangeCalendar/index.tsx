@@ -116,6 +116,7 @@ export const DateRangeCalendar = ({
     if (!disabled) {
       let first: Dayjs | undefined = undefined;
       let second: Dayjs | undefined = undefined;
+
       if (!dateRangeActiveEndInner) {
         if (dateRangeFirstInner && !dateRangeSecondInner) {
           handleDateRangeSecondChange(date);
