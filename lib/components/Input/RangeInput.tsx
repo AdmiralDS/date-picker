@@ -7,6 +7,7 @@ import { DateRange } from 'lib/types';
 import { defaultDateFormatter, defaultDateParser } from '#lib/utils';
 import { SingleInput } from './SingleInput';
 import { DimensionInterface } from './types';
+import { ActiveEnd, InputsConfirmedState } from '#lib/calendarInterfaces';
 
 function dateRangeFromValue(
   values?: Array<string | undefined>,
@@ -45,6 +46,12 @@ export interface RangeInputProps extends DimensionInterface {
   onEndDateChanged?: (date: Dayjs) => void;
   onEndDateInputComplete?: (date: Dayjs) => void;
 
+  onActiveEndValueChange?: (end: ActiveEnd) => void;
+
+  inputsConfirmedValue?: InputsConfirmedState;
+  defaultInputsConfirmedValue?: InputsConfirmedState;
+  onInputsConfirmedValueChange?: (state: InputsConfirmedState) => void;
+
   onFocus?: React.FocusEventHandler<HTMLInputElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
 }
@@ -64,18 +71,39 @@ export const RangeInput = ({
   onStartDateInputComplete,
   onEndDateChanged,
   onEndDateInputComplete,
+  onActiveEndValueChange,
+  inputsConfirmedValue,
+  defaultInputsConfirmedValue,
+  onInputsConfirmedValueChange,
   onFocus,
   onBlur,
 }: RangeInputProps) => {
   const inputRefStart = useRef<HTMLInputElement>(null);
   const inputRefEnd = useRef<HTMLInputElement>(null);
 
-  const [inputsConfirmed, setInputsConfirmed] = useState(0);
+  const [inputsConfirmedState, setInputsConfirmedState] = useState<InputsConfirmedState>(
+    defaultInputsConfirmedValue || InputsConfirmedState.initial,
+  );
+  const inputsConfirmedInner = inputsConfirmedValue || inputsConfirmedState;
+  const handleInputsConfirmedValueChange = (state?: InputsConfirmedState) => {
+    const newState = state
+      ? state
+      : inputsConfirmedInner >= InputsConfirmedState.bothConfirmed
+        ? InputsConfirmedState.initial
+        : inputsConfirmedInner + 1;
+    setInputsConfirmedState(newState);
+    onInputsConfirmedValueChange?.(newState);
+  };
 
   const handleRangeInputFinish = () => {
     onRangeInputFinish?.();
-    setInputsConfirmed(0);
+    handleInputsConfirmedValueChange(InputsConfirmedState.initial);
   };
+  useEffect(() => {
+    if (inputsConfirmedInner === InputsConfirmedState.bothConfirmed) {
+      handleRangeInputFinish();
+    }
+  }, [inputsConfirmedInner]);
   //#region "Значения инпутов после клика или ручного ввода"
   const [inputStartValue, setInputStartValue] = useState<string | undefined>(inputPropsStart.value);
   const [inputEndValue, setInputEndValue] = useState<string | undefined>(inputPropsEnd.value);
@@ -88,7 +116,11 @@ export const RangeInput = ({
   const [isTmpValueEndDisplayed, setTmpValueEndDisplayed] = useState(false);
   //#endregion
 
-  const [activeEnd, setActiveEnd] = useState<'start' | 'end' | 'none'>('start');
+  const [activeEnd, setActiveEnd] = useState<ActiveEnd>('start');
+  const handleActiveEndValueChange = (end: ActiveEnd) => {
+    setActiveEnd(end);
+    onActiveEndValueChange?.(end);
+  };
 
   //#region "Обработчики событий focus и blur на инпутах"
   const handleBlurStart = (e: FocusEvent<HTMLInputElement, Element>) => {
@@ -109,12 +141,14 @@ export const RangeInput = ({
 
   const handleFocusStart = (e: FocusEvent<HTMLInputElement, Element>) => {
     onFocus?.(e);
-    setActiveEnd('start');
+    console.log('handleFocusStart');
+    handleActiveEndValueChange('start');
     inputPropsStart.onFocus?.(e);
   };
   const handleFocusEnd = (e: FocusEvent<HTMLInputElement, Element>) => {
     onFocus?.(e);
-    setActiveEnd('end');
+    console.log('handleFocusEnd');
+    handleActiveEndValueChange('end');
     inputPropsEnd.onFocus?.(e);
   };
   //#endregion
@@ -129,8 +163,10 @@ export const RangeInput = ({
       if (parsedValue?.isValid()) {
         onSelectedRangeChange?.(dateRangeFromValue([value, inputEndValue], parse));
         onStartDateInputComplete?.(parsedValue);
+        handleInputsConfirmedValueChange();
       }
     } else if (e.key === 'Escape') {
+      handleInputsConfirmedValueChange(0);
       onCancelInput();
     }
   };
@@ -145,8 +181,10 @@ export const RangeInput = ({
       if (parsedValue?.isValid()) {
         onSelectedRangeChange?.(dateRangeFromValue([inputStartValue, value], parse));
         onEndDateInputComplete?.(parsedValue);
+        handleInputsConfirmedValueChange();
       }
     } else if (e.key === 'Escape') {
+      handleInputsConfirmedValueChange(0);
       onCancelInput();
     }
   };
@@ -168,13 +206,20 @@ export const RangeInput = ({
     const { value, selectionStart } = e.currentTarget;
     setTmpValueStartDisplayed(false);
     const parsedValue = parse(value);
+    console.log('handleInputStart');
 
     if (parsedValue?.isValid()) {
       if (value !== inputStartValue) {
         setInputStartValue(value);
         onStartDateChanged?.(parsedValue);
       }
-      if (selectionStart === value.length && inputRefEnd.current) {
+      console.log('handleInputsConfirmedValueChange from handleInputStart');
+      handleInputsConfirmedValueChange();
+      if (
+        inputsConfirmedState < InputsConfirmedState.bothConfirmed &&
+        selectionStart === value.length &&
+        inputRefEnd.current
+      ) {
         inputRefEnd.current.focus();
         inputRefEnd.current.selectionStart = 0;
         inputRefEnd.current.selectionEnd = 0;
@@ -185,21 +230,46 @@ export const RangeInput = ({
   };
 
   const handleInputEnd = (e: React.FormEvent<HTMLInputElement>) => {
-    if (inputRefEnd.current) {
-      console.log('handleInputEnd');
+    const { value, selectionStart } = e.currentTarget;
+    setTmpValueEndDisplayed(false);
+    const parsedValue = parse(value);
+    console.log('handleInputEnd');
 
-      const { value } = inputRefEnd.current;
-      setTmpValueEndDisplayed(false);
+    if (parsedValue?.isValid()) {
       if (value !== inputEndValue) {
-        const parsedValue = parse(value);
-        if (parsedValue?.isValid()) {
-          setInputEndValue(value);
-          onEndDateChanged?.(parsedValue);
-        }
+        setInputEndValue(value);
+        onEndDateChanged?.(parsedValue);
+      }
+      console.log('handleInputsConfirmedValueChange from handleInputEnd');
+      handleInputsConfirmedValueChange();
+      if (
+        inputsConfirmedState < InputsConfirmedState.bothConfirmed &&
+        selectionStart === value.length &&
+        inputRefStart.current
+      ) {
+        inputRefStart.current.focus();
+        inputRefStart.current.selectionStart = 0;
+        inputRefStart.current.selectionEnd = 0;
       }
     }
 
     inputPropsEnd.onInput?.(e);
+
+    // if (inputRefEnd.current) {
+    //   console.log('handleInputEnd');
+
+    //   const { value } = inputRefEnd.current;
+    //   setTmpValueEndDisplayed(false);
+    //   if (value !== inputEndValue) {
+    //     const parsedValue = parse(value);
+    //     if (parsedValue?.isValid()) {
+    //       setInputEndValue(value);
+    //       onEndDateChanged?.(parsedValue);
+    //     }
+    //   }
+    // }
+
+    // inputPropsEnd.onInput?.(e);
   };
   //#endregion
 

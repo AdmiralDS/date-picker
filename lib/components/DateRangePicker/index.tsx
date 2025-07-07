@@ -10,7 +10,8 @@ import { InputBox } from '#lib/Input/InputBox';
 import { InputIconButton } from '#lib/InputIconButton';
 import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
 import { PopoverPanel } from '#lib/PopoverPanel';
-import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
+import { InputsConfirmedState } from '#lib/calendarInterfaces.js';
+import type { ActiveEnd, CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
 import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
 import { defaultDateFormatter, defaultDateParser, sortDatesAsc } from '#lib/utils';
@@ -38,12 +39,6 @@ export interface DateRangePickerProps
   checkDateRange?: (dateRange: DateRange) => DateRange;
 }
 
-enum RangeSalectedState {
-  initial = 0,
-  firstSelected = 1,
-  bothSelected = 2,
-}
-
 function checkDateRangeDefault(dateRange: DateRange) {
   return sortDatesAsc(...dateRange, 'date');
 }
@@ -66,13 +61,15 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     },
     refContainerProps,
   ) => {
+    console.log('date range picker');
+
     const [displayDate, setDisplayDate] = useState(dayjs());
-    const [rangeSelectedState, setRangeSelectedState] = useState<RangeSalectedState>(RangeSalectedState.initial);
-    const handleRangeSalectedStateChange = () => {
-      if (rangeSelectedState >= RangeSalectedState.firstSelected) {
+    const [inputsConfirmed, setInputsConfirmed] = useState<InputsConfirmedState>(InputsConfirmedState.initial);
+    const handleInputsConfirmedChange = () => {
+      if (inputsConfirmed >= InputsConfirmedState.firstConfirmed) {
         setCalendarOpen(false);
       } else {
-        setRangeSelectedState(rangeSelectedState + 1);
+        setInputsConfirmed(inputsConfirmed + 1);
       }
     };
 
@@ -88,6 +85,15 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         setActiveDate(date);
       }
     };
+
+    const [activeEnd, setActiveEnd] = useState<ActiveEnd>('start');
+
+    const handleActiveEndChange = (end: ActiveEnd) => {
+      setActiveEnd(end);
+    };
+    useEffect(() => {
+      console.log('DateRangePicker', activeEnd);
+    }, [activeEnd]);
 
     const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('dates');
 
@@ -118,13 +124,14 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         }
 
         setSelectedRange(checkedRange);
-        handleRangeSalectedStateChange();
+        handleInputsConfirmedChange();
         onSelectedRangeChange?.(checkedRange);
+        console.log('handleSelectedDateValueChange', checkedRange);
       }
     };
 
     useEffect(() => {
-      if (isCalendarOpen) setRangeSelectedState(RangeSalectedState.initial);
+      if (isCalendarOpen) setInputsConfirmed(InputsConfirmedState.initial);
     }, [isCalendarOpen]);
 
     const handleCalendarViewModeChange = (view: CalendarViewMode) => {
@@ -141,10 +148,10 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       setCalendarOpen(false);
     };
     const handleStartDateInputComplete = () => {
-      handleRangeSalectedStateChange();
+      handleInputsConfirmedChange();
     };
     const handleEndDateInputComplete = () => {
-      handleRangeSalectedStateChange();
+      handleInputsConfirmedChange();
     };
 
     // TODO смержить с оригинальными обработчиками из пропсов
@@ -187,7 +194,9 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       onCancelInput: handleRangeInputCancel,
       onStartDateInputComplete: handleStartDateInputComplete,
       onEndDateInputComplete: handleEndDateInputComplete,
+      onActiveEndValueChange: handleActiveEndChange,
     };
+    console.log(rangeInputProps.inputPropsStart, rangeInputProps.inputPropsEnd);
 
     return (
       <InputBox {...containerFinalProps} style={{ alignItems: 'center' }}>
@@ -202,6 +211,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               selectedDateRangeValue={selectedRange}
               onSelectedDateRangeValueChange={handleSelectedDateValueChange}
               onActiveDateValueChange={handleActiveDateValueChange}
+              activeEndValue={activeEnd}
             />
           </PopoverPanel>
         )}

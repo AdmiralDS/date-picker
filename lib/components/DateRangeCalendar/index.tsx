@@ -7,7 +7,7 @@ import { getCurrentDate } from '#lib/utils';
 import { DatesOfMonthWidget } from '#lib/DatesOfMonthWidget';
 import type { CellStateProps } from '#lib/DatesOfMonthWidget/interfaces';
 import { baseDayNameCellMixin } from '#lib/DefaultCell/mixins.tsx';
-import type { RangeCalendarProps } from '#lib/calendarInterfaces';
+import type { ActiveEnd, RangeCalendarProps } from '#lib/calendarInterfaces';
 import { MemoDefaultDateRangeCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { DateRange } from 'lib/types';
@@ -19,14 +19,15 @@ export const DateRangeCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
-  activeDateRangeEndValue,
-  defaultActiveDateRangeEndValue,
   onActiveDateRangeEndValueChange,
   dateAttributes,
   dateValue,
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
+  activeEndValue,
+  defaultActiveEndValue,
+  onActiveEndValueChange,
   cell,
   locale = ruLocale,
   ...props
@@ -80,25 +81,36 @@ export const DateRangeCalendar = ({
   //#endregion
 
   //#region "Active end of range"
+  const setInitialActiveEndState = () => {
+    if (defaultActiveEndValue) {
+      return defaultActiveEndValue;
+    }
+    return 'start';
+  };
+  const [activeEndState, setActiveEndState] = useState<ActiveEnd>(setInitialActiveEndState());
+  const activeEndInner = activeEndValue || activeEndState;
+
+  const handleActiveEndChange = (end?: ActiveEnd) => {
+    const newValue: ActiveEnd = end ? end : activeEndInner === 'start' ? 'end' : 'start';
+    setActiveEndState(newValue);
+    onActiveEndValueChange?.(newValue);
+  };
+
   const setInitialDateRangeActiveEndState = () => {
-    if (defaultActiveDateRangeEndValue) {
-      return defaultActiveDateRangeEndValue;
-    }
-    if (dateRangeFirstInner && dateRangeSecondInner) {
-      return dateRangeSecondInner;
-    }
-    if (dateRangeFirstInner && !dateRangeSecondInner) {
-      return dateRangeFirstInner;
-    }
-    if (!dateRangeFirstInner && dateRangeSecondInner) {
-      return dateRangeSecondInner;
+    if (activeEndInner) {
+      switch (activeEndInner) {
+        case 'start':
+        default:
+          return dateRangeFirstInner;
+        case 'end':
+          return dateRangeSecondInner;
+      }
     }
     return undefined;
   };
-  const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>(
+  const [dateRangeActiveEnd, setDateRangeActiveEndState] = useState<Dayjs | undefined>(
     setInitialDateRangeActiveEndState(),
   );
-  const dateRangeActiveEndInner = activeDateRangeEndValue || dateRangeActiveEndState;
 
   const handleDateRangeActiveEndChange = (date?: Dayjs) => {
     setDateRangeActiveEndState(date);
@@ -116,39 +128,55 @@ export const DateRangeCalendar = ({
     if (!disabled) {
       let first: Dayjs | undefined = undefined;
       let second: Dayjs | undefined = undefined;
-      if (!dateRangeActiveEndInner) {
-        if (dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeSecondChange(date);
-          first = dateRangeFirstInner;
-          second = date;
-        } else {
+      switch (activeEndInner) {
+        case 'start':
           handleDateRangeFirstChange(date);
           first = date;
           second = dateRangeSecondInner;
-        }
-      } else {
-        if (dateRangeFirstInner && dateRangeSecondInner) {
-          if (dateRangeActiveEndInner.isSame(dateRangeFirstInner, 'date')) {
-            handleDateRangeSecondChange(date);
-            first = dateRangeFirstInner;
-            second = date;
-          }
-          if (dateRangeActiveEndInner.isSame(dateRangeSecondInner, 'date')) {
-            handleDateRangeFirstChange(date);
-            first = date;
-            second = dateRangeSecondInner;
-          }
-        } else if (dateRangeFirstInner && !dateRangeSecondInner) {
+          break;
+        case 'end':
           handleDateRangeSecondChange(date);
           first = dateRangeFirstInner;
           second = date;
-        } else {
-          handleDateRangeFirstChange(date);
-          first = date;
-          second = dateRangeSecondInner;
-        }
+          break;
+        case 'none':
+        default:
+          break;
       }
+      // if (!dateRangeActiveEndInner) {
+      //   if (dateRangeFirstInner && !dateRangeSecondInner) {
+      //     handleDateRangeSecondChange(date);
+      //     first = dateRangeFirstInner;
+      //     second = date;
+      //   } else {
+      //     handleDateRangeFirstChange(date);
+      //     first = date;
+      //     second = dateRangeSecondInner;
+      //   }
+      // } else {
+      //   if (dateRangeFirstInner && dateRangeSecondInner) {
+      //     if (dateRangeActiveEndInner.isSame(dateRangeFirstInner, 'date')) {
+      //       handleDateRangeSecondChange(date);
+      //       first = dateRangeFirstInner;
+      //       second = date;
+      //     }
+      //     if (dateRangeActiveEndInner.isSame(dateRangeSecondInner, 'date')) {
+      //       handleDateRangeFirstChange(date);
+      //       first = date;
+      //       second = dateRangeSecondInner;
+      //     }
+      //   } else if (dateRangeFirstInner && !dateRangeSecondInner) {
+      //     handleDateRangeSecondChange(date);
+      //     first = dateRangeFirstInner;
+      //     second = date;
+      //   } else {
+      //     handleDateRangeFirstChange(date);
+      //     first = date;
+      //     second = dateRangeSecondInner;
+      //   }
+      // }
       const newSelectedDateRangeValue: DateRange = [first, second];
+      handleActiveEndChange();
       handleDateRangeActiveEndChange(date);
       onSelectedDateRangeValueChange?.(newSelectedDateRangeValue);
     }
@@ -165,7 +193,7 @@ export const DateRangeCalendar = ({
       date={dateInner}
       selected={[dateRangeFirstInner, dateRangeSecondInner]}
       active={activeDateInner}
-      activeRangeEnd={dateRangeActiveEndInner}
+      activeRangeEnd={dateRangeActiveEnd}
       dateAttributes={dateAttributes}
       locale={locale}
       dayNamesProps={{ dayNameCellState: getDayNameCellState }}
