@@ -89,9 +89,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const handleActiveEndChange = (end: ActiveEnd) => {
       setActiveEnd(end);
     };
-    useEffect(() => {
-      console.log('DateRangePicker', activeEnd);
-    }, [activeEnd]);
 
     const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('dates');
 
