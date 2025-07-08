@@ -210,9 +210,8 @@ export const RangeInput = ({
         setInputStartValue(value);
         onStartDateChanged?.(parsedValue);
       }
-      handleInputsConfirmedValueChange();
       if (
-        inputsConfirmedState < InputsConfirmedState.bothConfirmed &&
+        inputsConfirmedState < InputsConfirmedState.firstConfirmed &&
         selectionStart === value.length &&
         inputRefEnd.current
       ) {
@@ -220,6 +219,7 @@ export const RangeInput = ({
         inputRefEnd.current.selectionStart = 0;
         inputRefEnd.current.selectionEnd = 0;
       }
+      handleInputsConfirmedValueChange();
     }
 
     inputPropsStart.onInput?.(e);
@@ -235,9 +235,8 @@ export const RangeInput = ({
         setInputEndValue(value);
         onEndDateChanged?.(parsedValue);
       }
-      handleInputsConfirmedValueChange();
       if (
-        inputsConfirmedState < InputsConfirmedState.bothConfirmed &&
+        inputsConfirmedState < InputsConfirmedState.firstConfirmed &&
         selectionStart === value.length &&
         inputRefStart.current
       ) {
@@ -245,6 +244,7 @@ export const RangeInput = ({
         inputRefStart.current.selectionStart = 0;
         inputRefStart.current.selectionEnd = 0;
       }
+      handleInputsConfirmedValueChange();
     }
 
     inputPropsEnd.onInput?.(e);
