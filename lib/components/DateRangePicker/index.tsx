@@ -61,8 +61,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     },
     refContainerProps,
   ) => {
-    console.log('date range picker');
-
     const [displayDate, setDisplayDate] = useState(dayjs());
     const [inputsConfirmed, setInputsConfirmed] = useState<InputsConfirmedState>(InputsConfirmedState.initial);
     const handleInputsConfirmedChange = () => {
@@ -105,8 +103,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const [selectedRange, setSelectedRange] = useState<DateRange>([undefined, undefined]);
     const handleSelectedDateValueChange = (dateRange: DateRange) => {
       if (calendarViewMode === 'dates') {
-        console.log(dateRange);
-
         const checkedRange = checkDateRange(dateRange);
         const start = checkedRange[0];
         const end = checkedRange[1];
@@ -126,7 +122,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         setSelectedRange(checkedRange);
         handleInputsConfirmedChange();
         onSelectedRangeChange?.(checkedRange);
-        console.log('handleSelectedDateValueChange', checkedRange);
       }
     };
 
@@ -196,7 +191,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       onEndDateInputComplete: handleEndDateInputComplete,
       onActiveEndValueChange: handleActiveEndChange,
     };
-    console.log(rangeInputProps.inputPropsStart, rangeInputProps.inputPropsEnd);
 
     return (
       <InputBox {...containerFinalProps} style={{ alignItems: 'center' }}>
