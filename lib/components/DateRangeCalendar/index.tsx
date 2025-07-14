@@ -4,8 +4,8 @@ import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import { getCurrentDate } from '#lib/utils';
-import { DatesOfMonthWidget } from '#lib/DatesOfMonthWidget';
-import type { CellStateProps } from '#lib/DatesOfMonthWidget/interfaces';
+import { DatesWidget } from '#lib/DatesWidget';
+import type { CellStateProps } from '#lib/DatesWidget/interfaces';
 import { baseDayNameCellMixin } from '#lib/DefaultCell/mixins.tsx';
 import type { RangeCalendarProps } from '#lib/calendarInterfaces';
 import { MemoDefaultDateRangeCell } from '#lib/DefaultCell';
@@ -161,7 +161,7 @@ export const DateRangeCalendar = ({
   };
 
   return (
-    <DatesOfMonthWidget
+    <DatesWidget
       {...props}
       date={dateInner}
       selected={[dateRangeFirstInner, dateRangeSecondInner]}

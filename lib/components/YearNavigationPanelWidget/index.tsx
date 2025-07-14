@@ -10,7 +10,7 @@ import { getCurrentDate } from '#lib/utils';
 import type { BasePanelWidgetProps } from '#lib/widgetInterfaces.ts';
 
 export interface YearNavigationPanelWidgetProps extends BasePanelWidgetProps {
-  /** Конфиг функция пропсов для контейнера с годами на навигационной панели. На вход получает начальный набор пропсов, на
+  /** Конфиг функция пропсов для кнопки с годом на навигационной панели с выбором режима календаря. На вход получает начальный набор пропсов, на
    * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
   yearNavigationButtonPropsConfig?: (
     props: React.ComponentProps<typeof TextWithTooltip>,
@@ -54,21 +54,21 @@ export const YearNavigationPanelWidget = ({
 }: YearNavigationPanelWidgetProps) => {
   const dateInner = date?.locale(locale?.localeName) || getCurrentDate(locale?.localeName);
 
-  const prevButtonPropsFinal = {
+  const prevButtonProps = {
     dimension: 'lSmall',
     highlightFocus: false,
     'data-panel-target-type': 'left',
     renderContent: () => locale?.localeText.backwardText,
   } as const;
 
-  const nextButtonPropsFinal = {
+  const nextButtonProps = {
     dimension: 'lSmall',
     highlightFocus: false,
     'data-panel-target-type': 'right',
     renderContent: () => locale?.localeText.forwardText,
   } as const;
 
-  const yearNavigationButtonPropsFinal = {
+  const yearNavigationButtonProps = {
     'data-panel-target-type': 'year',
     renderContent: () => (viewMode === 'years' ? locale?.localeText.returnText : locale.localeText.selectYearText),
     $isActive: viewMode === 'years',
@@ -76,16 +76,13 @@ export const YearNavigationPanelWidget = ({
 
   return (
     <YearNavigationPanelWrapper {...props}>
-      <IconWithTooltip {...prevButtonPropsFinal} {...prevButtonPropsConfig(prevButtonPropsFinal)}>
+      <IconWithTooltip {...prevButtonProps} {...prevButtonPropsConfig(prevButtonProps)}>
         <ChevronLeftOutline />
       </IconWithTooltip>
-      <TextWithTooltip
-        {...yearNavigationButtonPropsFinal}
-        {...yearNavigationButtonPropsConfig(yearNavigationButtonPropsFinal)}
-      >
+      <TextWithTooltip {...yearNavigationButtonProps} {...yearNavigationButtonPropsConfig(yearNavigationButtonProps)}>
         {dateInner.year()}
       </TextWithTooltip>
-      <IconWithTooltip {...nextButtonPropsFinal} {...nextButtonPropsConfig(nextButtonPropsFinal)}>
+      <IconWithTooltip {...nextButtonProps} {...nextButtonPropsConfig(nextButtonProps)}>
         <ChevronRightOutline />
       </IconWithTooltip>
     </YearNavigationPanelWrapper>

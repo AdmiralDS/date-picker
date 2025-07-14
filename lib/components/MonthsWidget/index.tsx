@@ -8,6 +8,7 @@ import type { BaseWidgetProps } from '#lib/widgetInterfaces.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
 
 import {
+  arrayFormatter,
   capitalizeFirstLetter,
   dateIsInRange,
   dateIsInRangeSelecting,
@@ -53,7 +54,7 @@ export const createDefaultModel = <T extends object>() => {
   return monthsList as T[];
 };
 
-export function mapStateToProps<T extends object>(
+export function monthsMapStateToProps<T extends object>(
   model: T[],
   firstMonth: Dayjs,
   range: boolean,
@@ -63,19 +64,9 @@ export function mapStateToProps<T extends object>(
   locale?: CalendarLocaleProps,
   dateAttributes?: (currentDate: Dayjs) => DateAttributes,
 ) {
-  let finalModel = model;
+  const innerModel = arrayFormatter(12, model);
 
-  // Проверка на некорректную длину массива
-  if (model.length < 12) {
-    const length = 12 - model.length;
-
-    finalModel = model.concat(new Array(length).fill({}));
-  }
-  if (model.length > 12) {
-    finalModel = model.slice(0, 12);
-  }
-
-  return finalModel.map((additionalProps, index) => {
+  return innerModel.map((additionalProps, index) => {
     const date = firstMonth.add(index, 'month');
     const dateValue = date.toString();
     const { disabled, isHoliday, hidden } = getMonthAttributes(date, dateAttributes);
@@ -153,7 +144,7 @@ export const MonthsWidget = memo(
     //Определение пропсов для ячеек
     const cellProps = useMemo(
       () =>
-        mapStateToProps(
+        monthsMapStateToProps(
           innerMonthsModelList,
           firstMonth,
           range,

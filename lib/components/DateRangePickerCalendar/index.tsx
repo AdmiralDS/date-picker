@@ -33,8 +33,8 @@ export const DateRangePickerCalendar = ({
   onActiveDateRangeEndValueChange,
   cell,
   locale = ruLocale,
-  prevButtonProps,
-  nextButtonProps,
+  prevButtonPropsConfig,
+  nextButtonPropsConfig,
   ...props
 }: DateRangePickerCalendarProps) => {
   //<editor-fold desc="Calendar view mode">
@@ -138,8 +138,8 @@ export const DateRangePickerCalendar = ({
         viewMode={viewModeInner}
         locale={locale}
         onMouseDown={handleMonthNavigationPanelClick}
-        prevButtonProps={prevButtonProps}
-        nextButtonProps={nextButtonProps}
+        prevButtonPropsConfig={prevButtonPropsConfig}
+        nextButtonPropsConfig={nextButtonPropsConfig}
       />
       <CalendarContainer>
         <DateRangeCalendarView

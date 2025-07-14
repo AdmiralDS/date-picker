@@ -19,8 +19,6 @@ export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   range?: boolean;
 }
 
-export type ArrowButtonProps = IconPlacementProps;
-
 export type ArrowButtonPropsConfig = (
   props: IconPlacementProps & TooltipHocProps & DataAttributes,
 ) => Partial<IconPlacementProps & TooltipHocProps & DataAttributes>;

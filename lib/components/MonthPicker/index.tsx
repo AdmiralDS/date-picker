@@ -65,7 +65,7 @@ export type MonthPickerProps = InputBoxProps & {
    * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
   nextButtonPropsConfig?: React.ComponentProps<typeof Calendar>['nextButtonPropsConfig'];
 
-  /** Конфиг функция пропсов для кнопки панели с выбором режима календаря. На вход получает начальный набор пропсов, на
+  /** Конфиг функция пропсов для кнопки с годом на навигационной панели с выбором режима календаря. На вход получает начальный набор пропсов, на
    * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
   yearNavigationButtonPropsConfig?: React.ComponentProps<typeof Calendar>['yearNavigationButtonPropsConfig'];
 

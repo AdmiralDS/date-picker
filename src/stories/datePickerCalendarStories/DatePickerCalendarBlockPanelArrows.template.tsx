@@ -8,7 +8,7 @@ import type { CalendarViewMode, DateAttributes } from '@admiral-ds/date-picker';
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
-import { YEARS_ON_SCREEN } from '#lib/YearsWidget/constants.ts';
+const YEARS_ON_SCREEN = 20;
 
 const minDate = dayjs().startOf('year');
 const maxDate = dayjs().add(10, 'year').endOf('year');
@@ -101,9 +101,10 @@ export const DatePickerCalendarBlockPanelArrowsTemplate = () => {
         defaultDateValue={dayjs()}
         onDateValueChange={handleViewDateChange}
         onViewModeChange={handleViewModeChange}
-        prevButtonProps={{ disabled: prevArrowDisabled }}
-        nextButtonProps={{ disabled: nextArrowDisabled }}
+        prevButtonPropsConfig={(p) => ({ ...p, disabled: prevArrowDisabled })}
+        nextButtonPropsConfig={(p) => ({ ...p, disabled: nextArrowDisabled })}
         dateAttributes={dateAttrs}
+        yearsOnScreen={YEARS_ON_SCREEN}
       />
       <WrapperVertical>
         <T font="Subtitle/Subtitle 2" as="div">

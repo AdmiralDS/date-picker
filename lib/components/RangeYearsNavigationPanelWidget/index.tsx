@@ -53,14 +53,14 @@ export const RangeYearsNavigationPanelWidget = ({
   const dateInner = date?.locale(locale?.localeName) || getCurrentDate(locale?.localeName);
   const { start, end } = yearsRange(dateInner, yearsOnScreen);
 
-  const prevButtonPropsFinal = {
+  const prevButtonProps = {
     dimension: 'lSmall',
     highlightFocus: false,
     'data-panel-target-type': 'left',
     renderContent: () => locale?.localeText.backwardText,
   } as const;
 
-  const nextButtonPropsFinal = {
+  const nextButtonProps = {
     dimension: 'lSmall',
     highlightFocus: false,
     'data-panel-target-type': 'right',
@@ -69,11 +69,11 @@ export const RangeYearsNavigationPanelWidget = ({
 
   return (
     <RangeYearsNavigationPanelWrapper {...props}>
-      <IconWithTooltip {...prevButtonPropsFinal} {...prevButtonPropsConfig(prevButtonPropsFinal)}>
+      <IconWithTooltip {...prevButtonProps} {...prevButtonPropsConfig(prevButtonProps)}>
         <ChevronLeftOutline />
       </IconWithTooltip>
       <YearsWrapper {...yearsNavigationContainerPropsConfig({})}>{`${start}–${end}`}</YearsWrapper>
-      <IconWithTooltip {...nextButtonPropsFinal} {...nextButtonPropsConfig(nextButtonPropsFinal)}>
+      <IconWithTooltip {...nextButtonProps} {...nextButtonPropsConfig(nextButtonProps)}>
         <ChevronRightOutline />
       </IconWithTooltip>
     </RangeYearsNavigationPanelWrapper>

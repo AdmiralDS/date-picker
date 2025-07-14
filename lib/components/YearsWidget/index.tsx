@@ -3,6 +3,7 @@ import styled, { DataAttributes } from 'styled-components';
 import dayjs, { Dayjs } from 'dayjs';
 
 import {
+  arrayFormatter,
   dateIsInRange,
   dateIsInRangeSelecting,
   dateIsRangeEnd,
@@ -50,7 +51,7 @@ export const createDefaultModel = <T extends object>(yearsOnScreen: number) => {
   return yearsList as T[];
 };
 
-export function mapStateToProps<T extends object>(
+export function yearsMapStateToProps<T extends object>(
   model: T[],
   firstYear: Dayjs,
   range: boolean,
@@ -61,18 +62,9 @@ export function mapStateToProps<T extends object>(
   activeRangeEnd?: Dayjs,
   dateAttributes?: (currentDate: Dayjs) => DateAttributes,
 ) {
-  let finalModel = model;
-  // Проверка на некорректную длину массива
-  if (model.length < yearsOnScreen) {
-    const length = yearsOnScreen - model.length;
+  const innerModel = arrayFormatter(yearsOnScreen, model);
 
-    finalModel = model.concat(new Array(length).fill({}));
-  }
-  if (model.length > yearsOnScreen) {
-    finalModel = model.slice(0, yearsOnScreen);
-  }
-
-  return finalModel.map((additionalProps, index) => {
+  return innerModel.map((additionalProps, index) => {
     const date = firstYear.add(index, 'year');
     const dateValue = date.toString();
     const { disabled, isHoliday, hidden } = getYearAttributes(date, dateAttributes);
@@ -155,7 +147,7 @@ export const YearsWidget = memo(
     //Определение пропсов для ячеек
     const cellProps = useMemo(
       () =>
-        mapStateToProps(
+        yearsMapStateToProps(
           innerYearsModelList,
           firstYear,
           range,

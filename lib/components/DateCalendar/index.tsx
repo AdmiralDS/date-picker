@@ -4,14 +4,30 @@ import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import { getCurrentDate } from '#lib/utils';
-import { DatesOfMonthWidget } from '#lib/DatesOfMonthWidget';
-import type { CellStateProps } from '#lib/DatesOfMonthWidget/interfaces';
+import { DatesWidget } from '#lib/DatesWidget';
+import type { CellStateProps } from '#lib/DatesWidget/interfaces';
 import { baseDayNameCellMixin } from '#lib/DefaultCell/mixins.tsx';
 import type { SingleCalendarProps } from '#lib/calendarInterfaces';
 import { MemoDefaultDateCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
 
-export interface DateCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface DateCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {
+  /** Конфиг функция пропсов для контейнера с днями. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  datesWidgetContainerPropsConfig?: React.ComponentProps<typeof DatesWidget>['datesWidgetContainerPropsConfig'];
+
+  /** Модель массива для рендера ячеек с днями, на выход должна отдавать массив по размеру равный 42,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  datesModel?: React.ComponentProps<typeof DatesWidget>['datesModel'];
+
+  /** Конфиг функция пропсов для контейнера с названиями дня в неделе. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  daysWidgetContainerPropsConfig?: React.ComponentProps<typeof DatesWidget>['daysWidgetContainerPropsConfig'];
+
+  /** Модель массива для рендера ячеек с названиями дня в неделе, на выход должна отдавать массив по размеру равный 7,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  daysModel?: React.ComponentProps<typeof DatesWidget>['daysModel'];
+}
 
 export const DateCalendar = ({
   dateAttributes,
@@ -24,6 +40,10 @@ export const DateCalendar = ({
   onActiveDateValueChange,
   cell,
   locale = ruLocale,
+  datesWidgetContainerPropsConfig,
+  datesModel,
+  daysWidgetContainerPropsConfig,
+  daysModel,
   ...props
 }: DateCalendarProps) => {
   //<editor-fold desc="Date shown on calendar">
@@ -91,7 +111,7 @@ export const DateCalendar = ({
   };
 
   return (
-    <DatesOfMonthWidget
+    <DatesWidget
       {...props}
       dayNamesProps={{ dayNameCellState: getDayNameCellState }}
       date={dateInner}
@@ -104,6 +124,10 @@ export const DateCalendar = ({
       onMouseOver={handleMouseOver}
       onMouseDown={handleDateClick}
       cell={cell || MemoDefaultDateCell}
+      datesWidgetContainerPropsConfig={datesWidgetContainerPropsConfig}
+      datesModel={datesModel}
+      daysWidgetContainerPropsConfig={daysWidgetContainerPropsConfig}
+      daysModel={daysModel}
     />
   );
 };

@@ -11,7 +11,6 @@ import {
   MonthCalendarView,
   YearCalendarView,
 } from '#lib/calendarStyle.ts';
-import { YEARS_ON_SCREEN } from '#lib/YearsWidget/constants.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
 
 export interface MonthPickerCalendarProps extends Omit<SingleCalendarProps, 'cell'>, PickerCalendarProps {
@@ -45,7 +44,7 @@ export const MonthPickerCalendar = ({
   monthsWidgetContainerPropsConfig,
   yearsWidgetContainerPropsConfig,
   yearsModel,
-  yearsOnScreen,
+  yearsOnScreen = 20,
   yearsColumns,
   ...props
 }: MonthPickerCalendarProps) => {
@@ -96,14 +95,14 @@ export const MonthPickerCalendar = ({
         if (viewModeInner === 'months') {
           handleDateChange(dateInner.subtract(1, 'year'));
         } else {
-          handleDateChange(dateInner.subtract(YEARS_ON_SCREEN, 'year'));
+          handleDateChange(dateInner.subtract(yearsOnScreen, 'year'));
         }
         break;
       case 'right':
         if (viewModeInner === 'months') {
           handleDateChange(dateInner.add(1, 'year'));
         } else {
-          handleDateChange(dateInner.add(YEARS_ON_SCREEN, 'year'));
+          handleDateChange(dateInner.add(yearsOnScreen, 'year'));
         }
         break;
       case 'year':
