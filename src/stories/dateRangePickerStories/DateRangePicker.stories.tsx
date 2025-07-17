@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { DateRangePicker } from '@admiral-ds/date-picker';
-import { DateRangePickerSimpleTemplate } from './DateRangePickerSimple.template.tsx';
+import { DateRangePickerSimpleTemplate } from './DateRangePickerSimple.template';
 import DateRangePickerSimpleTemplateRaw from './DateRangePickerSimple.template.tsx?raw';
 
 export default {
-  title: 'Admiral-2.1/Date Picker/DateRangePicker',
+  title: 'Admiral-2.1/Range Picker/Picker/DateRangePicker',
   component: DateRangePicker,
   parameters: {
     docs: {

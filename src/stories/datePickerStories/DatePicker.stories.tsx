@@ -6,7 +6,7 @@ import { DatePickerChangeLocaleTemplate } from './DatePickerChangeLocale.templat
 import DatePickerChangeLocaleTemplateRaw from './DatePickerChangeLocale.template.tsx?raw';
 
 export default {
-  title: 'Admiral-2.1/Date Picker/DatePicker',
+  title: 'Admiral-2.1/Date Picker/Picker/DatePicker',
   component: DatePicker,
   parameters: {
     docs: {
