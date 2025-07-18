@@ -51,7 +51,7 @@ export const MonthPickerSimple: StoryObj<typeof MonthPicker> = {
     const yearButtonNavigationPanelNode = document.querySelector('[role = yearButtonNavigationPanel]') as HTMLElement;
     const currentYearNavigationPanel = Number(yearButtonNavigationPanelNode.innerText);
 
-    //если рандомный год находится в диапазоне +-4 от текущего года на навигационной панели, то поиск года происходит в режиме отображения месяцев,
+    //Если рандомный год находится в диапазоне +-4 от текущего года на навигационной панели, то поиск года происходит в режиме отображения месяцев,
     //иначе включается режим отображения диапазона лет и поиск происходит там
     if (currentYearNavigationPanel - 5 < randomYear && randomYear < currentYearNavigationPanel + 5) {
       const findYear = async (find: number) => {
@@ -101,7 +101,7 @@ export const MonthPickerSimple: StoryObj<typeof MonthPicker> = {
       await userEvent.click(canvas.getByTestId(`month-cell-${randomMonth - 1}`));
     }
 
-    const inputNode = document.querySelector('[data-testid = inputYear]') as HTMLElement;
+    const inputNode = document.querySelector('[data-testid = input]') as HTMLElement;
 
     await expect(inputNode).toHaveFocus();
     await expect(inputNode).toHaveValue(`${String(randomMonth).padStart(2, '0')}.${randomYear}`);
