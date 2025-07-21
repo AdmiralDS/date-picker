@@ -16,6 +16,7 @@ import type { DateRange } from 'lib/types';
 import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
 import { defaultMonthFormatter, defaultMonthParser, sortDatesAsc } from '#lib/utils';
 import { DimensionInterface } from '#lib/Input/types';
+import { MONTH_INPUT_WIDTH_S, MONTH_INPUT_WIDTH_M_XL } from '#lib/Input/constatnts';
 
 const Calendar = styled(MonthRangePickerCalendar)`
   border: none;
@@ -24,7 +25,7 @@ const Calendar = styled(MonthRangePickerCalendar)`
 
 export interface MonthRangePickerProps
   extends RangeInputProps,
-    DimensionInterface,
+    Omit<DimensionInterface, 'width'>,
     Omit<InputBoxProps, 'onBlur' | 'onFocus' | '$dimension'> {
   /** Функция для конвертации значение календаря в строку инпута */
   format?: (date?: Dayjs) => string;
@@ -172,7 +173,7 @@ export const MonthRangePicker = forwardRef<HTMLDivElement, MonthRangePickerProps
         : endInputRef;
 
     const rangeInputProps: RangeInputProps = {
-      dimension: dimension,
+      width: dimension === 's' ? MONTH_INPUT_WIDTH_S : MONTH_INPUT_WIDTH_M_XL,
 
       inputPropsStart: { ...inputPropsStart, ref: startRef },
       inputPropsEnd: { ...inputPropsEnd, ref: endRef },

@@ -16,6 +16,7 @@ import type { DateRange } from 'lib/types';
 import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
 import { defaultDateFormatter, defaultDateParser, sortDatesAsc } from '#lib/utils';
 import { DimensionInterface } from '#lib/Input/types';
+import { DATE_INPUT_WIDTH_S, DATE_INPUT_WIDTH_M_XL } from '#lib/Input/constatnts';
 
 const Calendar = styled(DateRangePickerCalendar)`
   border: none;
@@ -24,7 +25,7 @@ const Calendar = styled(DateRangePickerCalendar)`
 
 export interface DateRangePickerProps
   extends RangeInputProps,
-    DimensionInterface,
+    Omit<DimensionInterface, 'width'>,
     Omit<InputBoxProps, 'onBlur' | 'onFocus' | '$dimension'> {
   /** Функция для конвертации значение календаря в строку инпута */
   format?: (date?: Dayjs) => string;
@@ -173,6 +174,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
     const rangeInputProps: RangeInputProps = {
       dimension: dimension,
+      width: dimension === 's' ? DATE_INPUT_WIDTH_S : DATE_INPUT_WIDTH_M_XL,
 
       inputPropsStart: { ...inputPropsStart, ref: startRef },
       inputPropsEnd: { ...inputPropsEnd, ref: endRef },
