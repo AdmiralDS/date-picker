@@ -7,7 +7,7 @@ import { DateRange } from 'lib/types';
 import { defaultDateFormatter, defaultDateParser } from '#lib/utils';
 import { SingleInput } from './SingleInput';
 import { DimensionInterface } from './types';
-import { ActiveEnd, InputsConfirmedState } from '#lib/calendarInterfaces';
+import { type ActiveEnd, InputsConfirmedState } from '#lib/calendarInterfaces';
 
 function dateRangeFromValue(
   values?: Array<string | undefined>,
@@ -29,28 +29,104 @@ export interface RangeInputProps extends DimensionInterface {
   inputPropsStart: ComponentProps<typeof SingleInput>;
   /** Пропсы внутреннего инпута */
   inputPropsEnd: ComponentProps<typeof SingleInput>;
-
-  onRangeInputFinish?: () => void;
+  /** Символ, используемый в качестве разделителя */
   separator?: string;
+  /** Текущее значение активной, но невыбранной даты. */
   activeDate?: Dayjs;
-  onSelectedRangeChange?: (range: DateRange) => void;
+  /**
+   * Текущий статус подтверждения значений в полях ввода диапазона.
+   * Возможные состояния:
+   * - `0` (Initial) — ни одно поле не подтверждено (начальное состояние);
+   * - `1` (FirstConfirmed) — подтверждено только первое поле (начало диапазона);
+   * - `2` (BothConfirmed) — подтверждены оба поля (диапазон полностью валиден).
+   *
+   * @default 0
+   */
+  inputsConfirmation?: InputsConfirmedState;
+  /**
+   * Начальный статус подтверждения полей ввода при монтировании компонента.
+   * Используется, если `inputsConfirmation` не передан (неконтролируемый режим).
+   *
+   * Возможные значения:
+   * - `0` (Initial) — ни одно поле не подтверждено (значение по умолчанию);
+   * - `1` (FirstConfirmed) — подтверждено только первое поле (начало диапазона);
+   * - `2` (BothConfirmed) — подтверждены оба поля (диапазон полностью валиден).
+   *
+   * @default 0
+   */
+  defaultInputsConfirmation?: InputsConfirmedState;
   /** Функция для конвертации значение календаря в строку инпута */
   format?: (date?: Dayjs) => string;
   /** Функция для конвертации строки инпута в значение календаря */
   parse?: (date?: string) => Dayjs | undefined;
-
+  /**
+   * Вызывается при любом изменении выбранного диапазона дат.
+   * Срабатывает при вводе валидных значений
+   *
+   * @param {DateRange} range - Текущий выбранный диапазон [начало, конец].
+   */
+  onSelectedRangeChange?: (range: DateRange) => void;
+  /**
+   * Вызывается после завершения ввода диапазона (подтверждение).
+   * Срабатывает при нажатии "Enter",
+   *
+   * @param {DateRange} range - Финальный диапазон [начало, конец].
+   */
+  onRangeInputFinish?: (range: DateRange) => void;
+  /**
+   * Вызывается при отмене выбора (например, нажатие "Отмена" или ESC).
+   */
   onCancelInput?: () => void;
-
+  /**
+   * Вызывается при любом изменении начальной даты.
+   * Срабатывает в реальном времени при:
+   * - ручном вводе в поле,
+   * - выборе даты в календаре,
+   * - программном изменении значения.
+   *
+   * @param {Dayjs} date - Новое значение начальной даты (может быть невалидным).
+   */
   onStartDateChanged?: (date: Dayjs) => void;
+  /**
+   * Вызывается при завершении ввода начальной даты.
+   * Срабатывает при:
+   * - потере фокуса с поля ввода (если дата валидна),
+   * - явном подтверждении (например, Enter).
+   *
+   * @param {Dayjs} date - Валидная начальная дата.
+   */
   onStartDateInputComplete?: (date: Dayjs) => void;
+  /**
+   * Вызывается при любом изменении конечной даты.
+   * Аналогичен `onStartDateChanged`, но для конечной даты.
+   *
+   * @param {Dayjs} date - Новое значение конечной даты.
+   */
   onEndDateChanged?: (date: Dayjs) => void;
+  /**
+   * Вызывается при завершении ввода конечной даты.
+   * Аналогичен `onStartDateInputComplete`, но для конечной даты.
+   *
+   * @param {Dayjs} date - Валидная конечная дата.
+   */
   onEndDateInputComplete?: (date: Dayjs) => void;
-
+  /**
+   * Вызывается при изменении активного края диапазона (начало/конец).
+   *
+   * @param {ActiveEnd} end - Какой край диапазона сейчас активен.
+   *
+   * Возможные значения:
+   * - 'start' - редактируется начальная дата,
+   * - 'end' - редактируется конечная дата,
+   * - 'none' - ни один (диапазон заблокирован или неактивен).
+   */
   onActiveEndValueChange?: (end: ActiveEnd) => void;
 
-  inputsConfirmedValue?: InputsConfirmedState;
-  defaultInputsConfirmedValue?: InputsConfirmedState;
-  onInputsConfirmedValueChange?: (state: InputsConfirmedState) => void;
+  /**
+   * Callback, вызываемый при изменении статуса подтверждения полей.
+   * @param {number} newStatus — новый статус (0, 1 или 2).
+   */
+  onInputsConfirmationChange?: (newStatus: InputsConfirmedState) => void;
 
   onFocus?: React.FocusEventHandler<HTMLInputElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
@@ -72,38 +148,45 @@ export const RangeInput = ({
   onEndDateChanged,
   onEndDateInputComplete,
   onActiveEndValueChange,
-  inputsConfirmedValue,
-  defaultInputsConfirmedValue,
-  onInputsConfirmedValueChange,
   onFocus,
   onBlur,
+  inputsConfirmation,
+  defaultInputsConfirmation,
+  onInputsConfirmationChange,
 }: RangeInputProps) => {
   const inputRefStart = useRef<HTMLInputElement>(null);
   const inputRefEnd = useRef<HTMLInputElement>(null);
 
   const [inputsConfirmedState, setInputsConfirmedState] = useState<InputsConfirmedState>(
-    defaultInputsConfirmedValue || InputsConfirmedState.initial,
+    defaultInputsConfirmation || InputsConfirmedState.initial,
   );
-  const inputsConfirmedInner = inputsConfirmedValue || inputsConfirmedState;
-  const handleInputsConfirmedValueChange = (state?: InputsConfirmedState) => {
-    const newState = state
-      ? state
-      : inputsConfirmedInner >= InputsConfirmedState.bothConfirmed
+  const derivedConfirmationStatus = inputsConfirmation || inputsConfirmedState;
+  console.log(derivedConfirmationStatus);
+
+  const handleConfirmInput = (state: InputsConfirmedState) => {
+    setInputsConfirmedState(state);
+    onInputsConfirmationChange?.(state);
+  };
+
+  const incInputsConfirmStatus = () => {
+    const newState =
+      derivedConfirmationStatus >= InputsConfirmedState.bothConfirmed
         ? InputsConfirmedState.initial
-        : inputsConfirmedInner + 1;
-    setInputsConfirmedState(newState);
-    onInputsConfirmedValueChange?.(newState);
+        : derivedConfirmationStatus + 1;
+
+    handleConfirmInput(newState);
   };
 
   const handleRangeInputFinish = () => {
-    onRangeInputFinish?.();
-    handleInputsConfirmedValueChange(InputsConfirmedState.initial);
+    onRangeInputFinish?.(dateRangeFromValue([inputStartValue, inputEndValue], parse));
+    handleConfirmInput(InputsConfirmedState.initial);
   };
   useEffect(() => {
-    if (inputsConfirmedInner === InputsConfirmedState.bothConfirmed) {
+    if (derivedConfirmationStatus === InputsConfirmedState.bothConfirmed) {
       handleRangeInputFinish();
     }
-  }, [inputsConfirmedInner]);
+  }, [derivedConfirmationStatus]);
+
   //#region "Значения инпутов после клика или ручного ввода"
   const [inputStartValue, setInputStartValue] = useState<string | undefined>(inputPropsStart.value);
   const [inputEndValue, setInputEndValue] = useState<string | undefined>(inputPropsEnd.value);
@@ -140,11 +223,17 @@ export const RangeInput = ({
   };
 
   const handleFocusStart = (e: FocusEvent<HTMLInputElement, Element>) => {
+    if (e.relatedTarget !== inputRefEnd.current) {
+      setInputsConfirmedState(InputsConfirmedState.initial);
+    }
     onFocus?.(e);
     handleActiveEndValueChange('start');
     inputPropsStart.onFocus?.(e);
   };
   const handleFocusEnd = (e: FocusEvent<HTMLInputElement, Element>) => {
+    if (e.relatedTarget !== inputRefStart.current) {
+      setInputsConfirmedState(InputsConfirmedState.initial);
+    }
     onFocus?.(e);
     handleActiveEndValueChange('end');
     inputPropsEnd.onFocus?.(e);
@@ -161,10 +250,16 @@ export const RangeInput = ({
       if (parsedValue?.isValid()) {
         onSelectedRangeChange?.(dateRangeFromValue([value, inputEndValue], parse));
         onStartDateInputComplete?.(parsedValue);
-        handleInputsConfirmedValueChange();
+
+        if (derivedConfirmationStatus < InputsConfirmedState.firstConfirmed && inputRefEnd.current) {
+          inputRefEnd.current.focus();
+          inputRefEnd.current.selectionStart = 0;
+          inputRefEnd.current.selectionEnd = 0;
+        }
+        incInputsConfirmStatus();
       }
     } else if (e.key === 'Escape') {
-      handleInputsConfirmedValueChange(0);
+      handleConfirmInput(InputsConfirmedState.initial);
       onCancelInput();
     }
   };
@@ -179,10 +274,16 @@ export const RangeInput = ({
       if (parsedValue?.isValid()) {
         onSelectedRangeChange?.(dateRangeFromValue([inputStartValue, value], parse));
         onEndDateInputComplete?.(parsedValue);
-        handleInputsConfirmedValueChange();
+
+        if (derivedConfirmationStatus < InputsConfirmedState.firstConfirmed && inputRefStart.current) {
+          inputRefStart.current.focus();
+          inputRefStart.current.selectionStart = 0;
+          inputRefStart.current.selectionEnd = 0;
+        }
+        incInputsConfirmStatus();
       }
     } else if (e.key === 'Escape') {
-      handleInputsConfirmedValueChange(0);
+      handleConfirmInput(InputsConfirmedState.initial);
       onCancelInput();
     }
   };
@@ -200,6 +301,15 @@ export const RangeInput = ({
   }, [activeDate]);
   //#endregion
 
+  const conditionalSwitchInput = (value: string, selectionStart: number | null, nextInput: HTMLInputElement | null) => {
+    if (inputsConfirmedState < InputsConfirmedState.firstConfirmed && selectionStart === value.length && nextInput) {
+      nextInput.focus();
+      nextInput.selectionStart = 0;
+      nextInput.selectionEnd = 0;
+      if (derivedConfirmationStatus < InputsConfirmedState.firstConfirmed) incInputsConfirmStatus();
+    }
+  };
+
   const handleInputStart = (e: React.FormEvent<HTMLInputElement>) => {
     const { value, selectionStart } = e.currentTarget;
     setTmpValueStartDisplayed(false);
@@ -210,16 +320,8 @@ export const RangeInput = ({
         setInputStartValue(value);
         onStartDateChanged?.(parsedValue);
       }
-      if (
-        inputsConfirmedState < InputsConfirmedState.firstConfirmed &&
-        selectionStart === value.length &&
-        inputRefEnd.current
-      ) {
-        inputRefEnd.current.focus();
-        inputRefEnd.current.selectionStart = 0;
-        inputRefEnd.current.selectionEnd = 0;
-      }
-      handleInputsConfirmedValueChange();
+
+      conditionalSwitchInput(value, selectionStart, inputRefEnd.current);
     }
 
     inputPropsStart.onInput?.(e);
@@ -235,16 +337,7 @@ export const RangeInput = ({
         setInputEndValue(value);
         onEndDateChanged?.(parsedValue);
       }
-      if (
-        inputsConfirmedState < InputsConfirmedState.firstConfirmed &&
-        selectionStart === value.length &&
-        inputRefStart.current
-      ) {
-        inputRefStart.current.focus();
-        inputRefStart.current.selectionStart = 0;
-        inputRefStart.current.selectionEnd = 0;
-      }
-      handleInputsConfirmedValueChange();
+      conditionalSwitchInput(value, selectionStart, inputRefStart.current);
     }
 
     inputPropsEnd.onInput?.(e);
