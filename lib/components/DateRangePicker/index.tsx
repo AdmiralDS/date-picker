@@ -162,6 +162,10 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       setCalendarOpen(false);
     };
 
+    const handleRangeInputFinish = () => {
+      setCalendarOpen(false);
+    };
+
     const startRef =
       inputPropsStart.ref !== undefined
         ? refSetter(startInputRef, inputPropsStart.ref as Ref<HTMLInputElement>)
@@ -189,6 +193,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       onStartDateInputComplete: handleStartDateInputComplete,
       onEndDateInputComplete: handleEndDateInputComplete,
       onActiveEndValueChange: handleActiveEndChange,
+      onRangeInputFinish: handleRangeInputFinish,
     };
 
     return (
