@@ -91,7 +91,8 @@ export const YearRangePicker = forwardRef<HTMLDivElement, YearRangePickerProps>(
       setActiveEnd(end);
     };
 
-    const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('years');
+    //const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('years');
+    const calendarViewMode: CalendarViewMode = 'years';
 
     const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
