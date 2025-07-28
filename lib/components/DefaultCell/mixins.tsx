@@ -2,7 +2,7 @@ import { css } from 'styled-components';
 import { vars, textValues } from '@admiral-ds/web';
 import { CELL_PADDING } from '#lib/DefaultCell/constants.ts';
 
-//<editor-fold desc="Base cell mixins">
+//#region "Base cell mixins"
 const baseCellMixin = css`
   padding: ${CELL_PADDING};
   ${textValues['Body/Body 2 Long']}
@@ -50,9 +50,9 @@ const rangeCellMixin = css`
   background-color: transparent;
   border-color: transparent;
 `;
-//</editor-fold>
+//#endregion
 
-//<editor-fold desc="Date cell mixins">
+//#region "Date cell mixins"
 const baseDateMixin = css`
   ${baseCellMixin};
   border-radius: 50%;
@@ -164,16 +164,16 @@ export const rangeCurrentHolidayDateCellMixin = css<{ $isActive?: boolean }>`
   ${rangeCurrentDateCellMixin};
   color: ${vars.color.Error_Error60Main};
 `;
-//</editor-fold>
+//#endregion
 
-//<editor-fold desc="Day name cell mixins">
+//#region "Day name cell mixins"
 export const baseDayNameCellMixin = css`
   ${baseCellMixin};
   cursor: default;
 `;
-//</editor-fold>
+//#endregion
 
-//<editor-fold desc="Month cell mixins">
+//#region "Month cell mixins"
 const baseMonthMixin = css`
   ${baseCellMixin};
   border-radius: 18px;
@@ -252,9 +252,9 @@ export const monthCellMixin = css<{
          border-color: ${vars.color.Special_ElevatedBG};`
       : ''}
 `;
-//</editor-fold>
+//#endregion
 
-//<editor-fold desc="Year cell mixins">
+//#region "Year cell mixins"
 const baseYearMixin = css`
   ${baseCellMixin};
   border-radius: 18px;
@@ -300,4 +300,4 @@ export const rangeCurrentYearCellMixin = css<{ $isActive?: boolean }>`
 
   ${activeRangeCellMixin};
 `;
-//</editor-fold>
+//#endregion

@@ -32,7 +32,7 @@ export const YearRangePickerCalendar = ({
   yearsOnScreen = 20,
   ...props
 }: YearRangePickerCalendarProps) => {
-  //<editor-fold desc="Date shown on calendar">
+  //#region "Date shown on calendar"
   const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale?.localeName));
   const dateInner = dateValue || dateState;
 
@@ -40,9 +40,9 @@ export const YearRangePickerCalendar = ({
     setDateState(date);
     onDateValueChange?.(date);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Selected range">
+  //#region "Selected range"
   const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
 
@@ -50,7 +50,7 @@ export const YearRangePickerCalendar = ({
     setSelectedDateRangeState(dateRange);
     onSelectedDateRangeValueChange?.(dateRange);
   };
-  //</editor-fold>
+  //#endregion
 
   const handleRangeYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
     e.preventDefault();

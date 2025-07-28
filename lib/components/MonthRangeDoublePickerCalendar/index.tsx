@@ -42,7 +42,7 @@ export const MonthRangeDoublePickerCalendar = ({
   nextButtonProps,
   ...props
 }: MonthRangeDoublePickerCalendarProps) => {
-  //<editor-fold desc="Calendar view mode">
+  //#region "Calendar view mode"
   const [viewModeLeftState, setViewModeLeftState] = useState<CalendarViewMode>(defaultViewModeValue || 'months');
   const viewModeLeftInner = viewModeValue || viewModeLeftState;
 
@@ -58,9 +58,9 @@ export const MonthRangeDoublePickerCalendar = ({
     setViewModeRightState(mode);
     onViewModeChange?.(mode);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Date shown on calendar">
+  //#region "Date shown on calendar"
   const [dateLeftState, setDateLeftState] = useState(defaultDateRangeValue?.[0] || getCurrentDate(locale?.localeName));
   const dateLeftInner = dateRangeValue?.[0] || dateLeftState;
 
@@ -87,9 +87,9 @@ export const MonthRangeDoublePickerCalendar = ({
       handleDateLeftChange(dateRightInner.subtract(1, 'year'));
     }
   }, [dateRightInner]);
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Hovered date">
+  //#region "Hovered date"
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
@@ -97,9 +97,9 @@ export const MonthRangeDoublePickerCalendar = ({
     setActiveDateState(date);
     onActiveDateValueChange?.(date);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Selected range">
+  //#region "Selected range"
   const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
 
@@ -107,15 +107,15 @@ export const MonthRangeDoublePickerCalendar = ({
     setSelectedDateRangeState(dateRange);
     onSelectedDateRangeValueChange?.(dateRange);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Active end of range">
+  //#region "Active end of range"
   const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>();
 
   const handleDateRangeActiveEndChange = (date?: Dayjs) => {
     setDateRangeActiveEndState(date);
   };
-  //</editor-fold>
+  //#endregion
 
   const handleLeftYearClick = (date: Dayjs) => {
     const newDate = dateLeftInner.year(date.year());

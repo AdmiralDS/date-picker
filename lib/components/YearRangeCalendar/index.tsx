@@ -33,11 +33,11 @@ export const YearRangeCalendar = ({
   yearsWidgetContainerPropsConfig,
   ...props
 }: YearRangeCalendarProps) => {
-  //<editor-fold desc="Date shown on calendar">
+  //#region "Date shown on calendar"
   const dateInner = dateValue || getCurrentDate();
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Hovered date">
+  //#region "Hovered date"
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
@@ -61,27 +61,27 @@ export const YearRangeCalendar = ({
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
     handleActiveDateChange(undefined);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="First date of range">
+  //#region "First date of range"
   const [dateRangeFirstState, setDateRangeFirstState] = useState(defaultSelectedDateRangeValue?.[0]);
   const dateRangeFirstInner = selectedDateRangeValue?.[0] || dateRangeFirstState;
 
   const handleDateRangeFirstChange = (date?: Dayjs) => {
     setDateRangeFirstState(date);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Second date of range">
+  //#region "Second date of range"
   const [dateRangeSecondState, setDateRangeSecondState] = useState(defaultSelectedDateRangeValue?.[1]);
   const dateRangeSecondInner = selectedDateRangeValue?.[1] || dateRangeSecondState;
 
   const handleDateRangeSecondChange = (date?: Dayjs) => {
     setDateRangeSecondState(date);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Active end of range">
+  //#region "Active end of range"
   const setInitialDateRangeActiveEndState = () => {
     if (defaultActiveDateRangeEndValue) {
       return defaultActiveDateRangeEndValue;
@@ -106,7 +106,7 @@ export const YearRangeCalendar = ({
     setDateRangeActiveEndState(date);
     onActiveDateRangeEndValueChange?.(date);
   };
-  //</editor-fold>
+  //#endregion
 
   const handleDateClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const targetDataAttributes = (e.target as HTMLDivElement).dataset;
