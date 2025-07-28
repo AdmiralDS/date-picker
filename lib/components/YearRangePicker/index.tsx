@@ -151,6 +151,10 @@ export const YearRangePicker = forwardRef<HTMLDivElement, YearRangePickerProps>(
       setCalendarOpen(false);
     };
 
+    const handleRangeInputFinish = () => {
+      setCalendarOpen(false);
+    };
+
     const startRef =
       inputPropsStart.ref !== undefined
         ? refSetter(startInputRef, inputPropsStart.ref as Ref<HTMLInputElement>)
@@ -178,6 +182,7 @@ export const YearRangePicker = forwardRef<HTMLDivElement, YearRangePickerProps>(
       onStartDateInputComplete: handleStartDateInputComplete,
       onEndDateInputComplete: handleEndDateInputComplete,
       onActiveEndValueChange: handleActiveEndChange,
+      onRangeInputFinish: handleRangeInputFinish,
     };
 
     return (

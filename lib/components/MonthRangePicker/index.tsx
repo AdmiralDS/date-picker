@@ -155,6 +155,10 @@ export const MonthRangePicker = forwardRef<HTMLDivElement, MonthRangePickerProps
       setCalendarOpen(false);
     };
 
+    const handleRangeInputFinish = () => {
+      setCalendarOpen(false);
+    };
+
     const startRef =
       inputPropsStart.ref !== undefined
         ? refSetter(startInputRef, inputPropsStart.ref as Ref<HTMLInputElement>)
@@ -181,6 +185,7 @@ export const MonthRangePicker = forwardRef<HTMLDivElement, MonthRangePickerProps
       onStartDateInputComplete: handleStartDateInputComplete,
       onEndDateInputComplete: handleEndDateInputComplete,
       onActiveEndValueChange: handleActiveEndChange,
+      onRangeInputFinish: handleRangeInputFinish,
     };
 
     return (
