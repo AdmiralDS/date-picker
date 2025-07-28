@@ -170,6 +170,7 @@ export const MonthRangePicker = forwardRef<HTMLDivElement, MonthRangePickerProps
         : endInputRef;
 
     const rangeInputProps: RangeInputProps = {
+      dimension: dimension,
       width: dimension === 's' ? MONTH_INPUT_WIDTH_S : MONTH_INPUT_WIDTH_M_XL,
 
       inputPropsStart: { ...inputPropsStart, ref: startRef },
