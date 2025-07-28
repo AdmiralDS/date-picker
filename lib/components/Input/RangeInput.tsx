@@ -134,6 +134,7 @@ export interface RangeInputProps extends DimensionInterface {
 
 export const RangeInput = ({
   dimension = 'm',
+  width,
   inputPropsStart,
   inputPropsEnd,
   onRangeInputFinish,
@@ -358,6 +359,7 @@ export const RangeInput = ({
     ...inputPropsStart,
     ref: refStart,
     dimension: dimension,
+    width: width,
     onBlur: handleBlurStart,
     onFocus: handleFocusStart,
     onKeyDown: handleInputStartKeyDown,
@@ -368,6 +370,7 @@ export const RangeInput = ({
     ...inputPropsEnd,
     ref: refEnd,
     dimension: dimension,
+    width: width,
     onBlur: handleBlurEnd,
     onFocus: handleFocusEnd,
     onKeyDown: handleInputEndKeyDown,

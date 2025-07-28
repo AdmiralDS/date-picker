@@ -143,38 +143,7 @@ export const DateRangeCalendar = ({
         default:
           break;
       }
-      // if (!dateRangeActiveEndInner) {
-      //   if (dateRangeFirstInner && !dateRangeSecondInner) {
-      //     handleDateRangeSecondChange(date);
-      //     first = dateRangeFirstInner;
-      //     second = date;
-      //   } else {
-      //     handleDateRangeFirstChange(date);
-      //     first = date;
-      //     second = dateRangeSecondInner;
-      //   }
-      // } else {
-      //   if (dateRangeFirstInner && dateRangeSecondInner) {
-      //     if (dateRangeActiveEndInner.isSame(dateRangeFirstInner, 'date')) {
-      //       handleDateRangeSecondChange(date);
-      //       first = dateRangeFirstInner;
-      //       second = date;
-      //     }
-      //     if (dateRangeActiveEndInner.isSame(dateRangeSecondInner, 'date')) {
-      //       handleDateRangeFirstChange(date);
-      //       first = date;
-      //       second = dateRangeSecondInner;
-      //     }
-      //   } else if (dateRangeFirstInner && !dateRangeSecondInner) {
-      //     handleDateRangeSecondChange(date);
-      //     first = dateRangeFirstInner;
-      //     second = date;
-      //   } else {
-      //     handleDateRangeFirstChange(date);
-      //     first = date;
-      //     second = dateRangeSecondInner;
-      //   }
-      // }
+
       const newSelectedDateRangeValue: DateRange = [first, second];
       handleActiveEndChange();
       handleDateRangeActiveEndChange(date);

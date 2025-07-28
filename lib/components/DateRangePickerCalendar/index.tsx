@@ -42,7 +42,7 @@ export const DateRangePickerCalendar = ({
   nextButtonProps,
   ...props
 }: DateRangePickerCalendarProps) => {
-  //<editor-fold desc="Calendar view mode">
+  //#region "Calendar view mode"
   const [viewModeState, setViewModeState] = useState<CalendarViewMode>(defaultViewModeValue || 'dates');
   const viewModeInner = viewModeValue || viewModeState;
 
@@ -50,9 +50,9 @@ export const DateRangePickerCalendar = ({
     setViewModeState(mode);
     onViewModeChange?.(mode);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Date shown on calendar">
+  //#region "Date shown on calendar"
   const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale?.localeName));
   const dateInner = dateValue || dateState;
 
@@ -60,9 +60,9 @@ export const DateRangePickerCalendar = ({
     setDateState(date);
     onDateValueChange?.(date);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Selected range">
+  //#region "Selected range"
   const [selectedDateRangeState, setSelectedDateRangeState] = useState<DateRange>(
     defaultSelectedDateRangeValue ?? [undefined, undefined],
   );
@@ -72,9 +72,9 @@ export const DateRangePickerCalendar = ({
     setSelectedDateRangeState(dateRange);
     onSelectedDateRangeValueChange?.(dateRange);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Active end of range">
+  //#region "Active end of range"
   const setInitialActiveEndState = () => {
     if (defaultActiveEndValue) {
       return defaultActiveEndValue;
@@ -89,7 +89,7 @@ export const DateRangePickerCalendar = ({
     setActiveEndState(newValue);
     onActiveEndValueChange?.(newValue);
   };
-  //</editor-fold>
+  //#endregion
 
   const handleMonthClick = (date: Dayjs) => {
     const newDate = dateInner.month(date.month());

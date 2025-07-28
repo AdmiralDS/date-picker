@@ -26,11 +26,11 @@ export const DateCalendar = ({
   locale = ruLocale,
   ...props
 }: DateCalendarProps) => {
-  //<editor-fold desc="Date shown on calendar">
+  //#region "Date shown on calendar"
   const dateInner = dateValue || getCurrentDate(locale?.localeName);
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Hovered date">
+  //#region "Hovered date"
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
@@ -59,9 +59,9 @@ export const DateCalendar = ({
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (_) => {
     handleActiveDateChange(undefined);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Selected date">
+  //#region "Selected date"
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
   const selectedDateInner = selectedDateValue || selectedDateState;
 
@@ -82,7 +82,7 @@ export const DateCalendar = ({
       handleSelectedDateChange(date);
     }
   };
-  //</editor-fold>
+  //#endregion
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getDayNameCellState = (_: number): CellStateProps => {

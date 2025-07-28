@@ -24,11 +24,11 @@ export const MonthCalendar = ({
   locale = ruLocale,
   ...props
 }: MonthCalendarProps) => {
-  //<editor-fold desc="Date shown on calendar">
+  //#region "Date shown on calendar"
   const dateInner = dateValue || getCurrentDate(locale?.localeName);
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Hovered date">
+  //#region "Hovered date"
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
@@ -52,9 +52,9 @@ export const MonthCalendar = ({
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
     handleActiveDateChange(undefined);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Selected date">
+  //#region "Selected date"
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
   const selectedDateInner = selectedDateValue || selectedDateState;
 
@@ -75,7 +75,7 @@ export const MonthCalendar = ({
       handleSelectedDateChange(date);
     }
   };
-  //</editor-fold>
+  //#endregion
 
   return (
     <MonthsOfYearWidget

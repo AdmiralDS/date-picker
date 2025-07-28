@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { changeInputData, refSetter } from '@admiral-ds/react-ui';
-import { DateRangePickerCalendar } from '#lib/DateRangePickerCalendar';
+import { MonthRangePickerCalendar } from '#lib/MonthRangePickerCalendar';
 import type { InputBoxProps } from '#lib/Input/InputBox';
 import { InputBox } from '#lib/Input/InputBox';
 import { InputIconButton } from '#lib/InputIconButton';
@@ -14,16 +14,16 @@ import { InputsConfirmedState } from '#lib/calendarInterfaces.js';
 import type { ActiveEnd, CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
 import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
-import { defaultDateFormatter, defaultDateParser, sortDatesAsc } from '#lib/utils';
+import { defaultMonthFormatter, defaultMonthParser, sortDatesAsc } from '#lib/utils';
 import { DimensionInterface } from '#lib/Input/types';
-import { DATE_INPUT_WIDTH_S, DATE_INPUT_WIDTH_M_XL } from '#lib/Input/constatnts';
+import { MONTH_INPUT_WIDTH_S, MONTH_INPUT_WIDTH_M_XL } from '#lib/Input/constatnts';
 
-const Calendar = styled(DateRangePickerCalendar)`
+const Calendar = styled(MonthRangePickerCalendar)`
   border: none;
   box-shadow: none;
 `;
 
-export interface DateRangePickerProps
+export interface MonthRangePickerProps
   extends RangeInputProps,
     Omit<DimensionInterface, 'width'>,
     Omit<InputBoxProps, 'onBlur' | 'onFocus' | '$dimension'> {
@@ -45,9 +45,9 @@ function checkDateRangeDefault(dateRange: DateRange) {
 }
 
 /**
- * Компонент DateRangePicker
+ * Компонент MonthRangePicker
  */
-export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
+export const MonthRangePicker = forwardRef<HTMLDivElement, MonthRangePickerProps>(
   (
     {
       dimension = 'm',
@@ -55,8 +55,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       inputPropsEnd = {},
       separator = '\u2014',
       checkDateRange = checkDateRangeDefault,
-      format = defaultDateFormatter,
-      parse = defaultDateParser,
+      format = defaultMonthFormatter,
+      parse = defaultMonthParser,
       onSelectedRangeChange,
       ...containerProps
     },
@@ -80,7 +80,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
     const [activeDate, setActiveDate] = useState<Dayjs | undefined>(undefined);
     const handleActiveDateValueChange = (date?: Dayjs) => {
-      if (calendarViewMode === 'dates') {
+      if (calendarViewMode === 'months') {
         setActiveDate(date);
       }
     };
@@ -91,7 +91,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       setActiveEnd(end);
     };
 
-    const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('dates');
+    const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('months');
 
     const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
@@ -100,7 +100,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
     const [selectedRange, setSelectedRange] = useState<DateRange>([undefined, undefined]);
     const handleSelectedDateValueChange = (dateRange: DateRange) => {
-      if (calendarViewMode === 'dates') {
+      if (calendarViewMode === 'months') {
         const checkedRange = checkDateRange(dateRange);
         const start = checkedRange[0];
         const end = checkedRange[1];
@@ -171,7 +171,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
     const rangeInputProps: RangeInputProps = {
       dimension: dimension,
-      width: dimension === 's' ? DATE_INPUT_WIDTH_S : DATE_INPUT_WIDTH_M_XL,
+      width: dimension === 's' ? MONTH_INPUT_WIDTH_S : MONTH_INPUT_WIDTH_M_XL,
 
       inputPropsStart: { ...inputPropsStart, ref: startRef },
       inputPropsEnd: { ...inputPropsEnd, ref: endRef },
@@ -210,4 +210,4 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     );
   },
 );
-DateRangePicker.displayName = 'DateRangePicker';
+MonthRangePicker.displayName = 'MonthRangePicker';
