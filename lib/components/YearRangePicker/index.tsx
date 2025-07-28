@@ -127,12 +127,6 @@ export const YearRangePicker = forwardRef<HTMLDivElement, YearRangePickerProps>(
       if (isCalendarOpen) setInputsConfirmed(InputsConfirmedState.initial);
     }, [isCalendarOpen]);
 
-    // const handleRangeInputBegin = () => {
-    //   setCalendarOpen(true);
-    // };
-    // const handleRangeInputFinish = () => {
-    //   setCalendarOpen(false);
-    // };
     const handleRangeInputCancel = () => {
       setCalendarOpen(false);
     };
@@ -143,7 +137,6 @@ export const YearRangePicker = forwardRef<HTMLDivElement, YearRangePickerProps>(
       handleInputsConfirmedChange();
     };
 
-    // TODO смержить с оригинальными обработчиками из пропсов
     const containerFinalProps: ComponentProps<typeof InputBox> = {
       ...containerProps,
       $dimension: dimension,
