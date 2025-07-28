@@ -19,7 +19,6 @@ export const YearRangeCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
-  defaultActiveDateRangeEndValue,
   onActiveDateRangeEndValueChange,
   dateAttributes,
   dateValue,
