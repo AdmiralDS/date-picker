@@ -13,9 +13,10 @@ const defaultInputProps = {
   dataPlaceholder: 'гггг',
 };
 
-const yearsArray = Array.from(Array(20).keys());
+const YEARS_ON_SCREEN = 20;
 
-const yearModel = yearsArray.map((_, i) => {
+const yearsArray = new Array(YEARS_ON_SCREEN).fill({});
+const yearsModel = yearsArray.map((_, i) => {
   return { 'data-testid': `test-cell-${i}` };
 });
 
@@ -27,21 +28,19 @@ export const YearPickerSimpleTemplate = () => {
     <WrapperHorizontal>
       <WrapperVertical>
         <YearPicker
-          yearModel={yearModel}
-          iconButtonPropsConfig={(p) => ({ ...p, role: 'iconButton' })}
-          prevButtonPropsConfig={(p) => ({ ...p, role: 'prevButtonNavigationPanel' })}
-          nextButtonPropsConfig={(p) => ({ ...p, role: 'nextButtonNavigationPanel' })}
           inputProps={{
             ...defaultInputProps,
             value: inputValue,
             onInput: (e) => setInputValue(e.currentTarget.value),
             ref: maskedDateInputRef,
           }}
-          inputPropsConfig={(props) => ({
-            ...props,
-            'data-testid': 'inputYear',
-          })}
-          yearsWidgetContainerPropsConfig={(props) => ({ ...props, 'data-testid': 'containerCells' })}
+          yearsOnScreen={YEARS_ON_SCREEN}
+          yearsModel={yearsModel}
+          iconButtonPropsConfig={(p) => ({ ...p, role: 'iconButton' })}
+          prevButtonPropsConfig={(p) => ({ ...p, role: 'prevButtonNavigationPanel' })}
+          nextButtonPropsConfig={(p) => ({ ...p, role: 'nextButtonNavigationPanel' })}
+          inputPropsConfig={(p) => ({ ...p, 'data-testid': 'inputYear' })}
+          yearsWidgetContainerPropsConfig={(p) => ({ ...p, 'data-testid': 'containerCells' })}
         />
       </WrapperVertical>
 

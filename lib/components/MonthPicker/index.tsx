@@ -1,6 +1,6 @@
 import type { ComponentProps, FocusEvent, KeyboardEventHandler, MouseEventHandler, Ref } from 'react';
 import { forwardRef, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { DataAttributes } from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { refSetter, changeInputData } from '@admiral-ds/react-ui';
@@ -24,6 +24,8 @@ const Calendar = styled(MonthPickerCalendar)`
 const defaultFormatter = (date: Dayjs) => date.format('MM.YYYY');
 const defaultParcer = (date?: string) => dayjs(date, 'MM.YYYY');
 
+const nothing = () => {};
+
 export type MonthPickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
   inputProps?: InputLineProps;
@@ -36,6 +38,57 @@ export type MonthPickerProps = InputBoxProps & {
 
   /** Изменение локали выпадающего календаря */
   Calendarlocale?: CalendarLocaleProps;
+
+  /** Конфиг функция пропсов для input. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  inputPropsConfig?: (
+    props: React.ComponentProps<typeof InputLine>,
+  ) => Partial<React.ComponentProps<typeof InputLine> & DataAttributes>;
+
+  /** Конфиг функция пропсов для кнопки. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  iconButtonPropsConfig?: (
+    props: React.ComponentProps<typeof InputIconButton>,
+  ) => Partial<React.ComponentProps<typeof InputIconButton> & DataAttributes>;
+
+  /** Конфиг функция пропсов для dropdown. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  dropdownPropsConfig?: (
+    props: React.ComponentProps<typeof PopoverPanel>,
+  ) => Partial<React.ComponentProps<typeof PopoverPanel> & DataAttributes>;
+
+  /** Конфиг функция пропсов для кнопки панели "Назад". На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  prevButtonPropsConfig?: React.ComponentProps<typeof Calendar>['prevButtonPropsConfig'];
+
+  /** Конфиг функция пропсов для кнопки панели "Вперед". На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  nextButtonPropsConfig?: React.ComponentProps<typeof Calendar>['nextButtonPropsConfig'];
+
+  /** Конфиг функция пропсов для кнопки с годом на навигационной панели с выбором режима календаря. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  yearNavigationButtonPropsConfig?: React.ComponentProps<typeof Calendar>['yearNavigationButtonPropsConfig'];
+
+  /** Модель массива для рендера ячеек с месяцами, на выход должна отдавать массив по размеру равный 12,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  monthsModel?: React.ComponentProps<typeof Calendar>['monthsModel'];
+
+  /** Конфиг функция пропсов для контейнера с месяцами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  monthsWidgetContainerPropsConfig?: React.ComponentProps<typeof Calendar>['monthsWidgetContainerPropsConfig'];
+
+  /** Модель массива для рендера ячеек с годами, на выход должна отдавать массив по размеру равный yearsOnScreen,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  yearsModel?: React.ComponentProps<typeof Calendar>['yearsModel'];
+
+  /** Конфиг функция пропсов для контейнера с годами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof Calendar>['yearsWidgetContainerPropsConfig'];
+
+  //** Количество ячеек в виджете с годами */
+  yearsOnScreen?: number;
+  //** Количество столбцов в виджете с годами */
+  yearsColumns?: number;
 };
 
 /**
@@ -43,7 +96,25 @@ export type MonthPickerProps = InputBoxProps & {
  */
 export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
   (
-    { inputProps = {}, format = defaultFormatter, parce = defaultParcer, Calendarlocale = ruLocale, ...containerProps },
+    {
+      inputProps = {},
+      format = defaultFormatter,
+      parce = defaultParcer,
+      Calendarlocale = ruLocale,
+      inputPropsConfig = nothing,
+      iconButtonPropsConfig = nothing,
+      dropdownPropsConfig = nothing,
+      prevButtonPropsConfig,
+      nextButtonPropsConfig,
+      yearNavigationButtonPropsConfig,
+      monthsModel,
+      monthsWidgetContainerPropsConfig,
+      yearsWidgetContainerPropsConfig,
+      yearsModel,
+      yearsOnScreen,
+      yearsColumns,
+      ...containerProps
+    },
     refContainerProps,
   ) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
@@ -122,12 +193,6 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
         }
       }
     };
-    // TODO смержить с оригинальными обработчиками из пропсов
-    const containerFinalProps: ComponentProps<typeof InputBox> = {
-      ...containerProps,
-      ref: refSetter(inputBoxRef, refContainerProps),
-      onMouseDown: handleInputBoxMouseDown,
-    };
 
     useEffect(() => {
       if (isCalendarOpen && inputRef.current) {
@@ -147,13 +212,6 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
     }, [inputValue]);
 
     const ref = inputProps.ref !== undefined ? refSetter(inputRef, inputProps.ref as Ref<HTMLInputElement>) : inputRef;
-    const inputFinalProps: ComponentProps<typeof InputLine> = {
-      ...inputProps,
-      ref,
-      onBlur: handleBlur,
-      onFocus: handleFocus,
-      tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
-    };
 
     const date = parce(inputValue);
 
@@ -168,12 +226,39 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
       inputProps.onInput?.(e);
     };
 
+    // TODO смержить с оригинальными обработчиками из пропсов
+    const containerFinalProps: ComponentProps<typeof InputBox> = {
+      ...containerProps,
+      ref: refSetter(inputBoxRef, refContainerProps),
+      onMouseDown: handleInputBoxMouseDown,
+    };
+
+    const inputFinalProps: ComponentProps<typeof InputLine> = {
+      ...inputProps,
+      ref,
+      onBlur: handleBlur,
+      onFocus: handleFocus,
+      tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
+      onKeyDown: handleInputKeyDown,
+      onInput: handleInput,
+    };
+
+    const iconButtonFinalProps: ComponentProps<typeof InputIconButton> = {
+      icon: CalendarOutline,
+      onMouseDown: handleInputIconButtonMouseDown,
+    };
+
+    const dropdownFinalProps: ComponentProps<typeof PopoverPanel> = {
+      targetElement: inputBoxRef.current,
+      alignSelf: 'auto',
+    };
+
     return (
       <InputBox {...containerFinalProps}>
-        <InputLine {...inputFinalProps} onKeyDown={handleInputKeyDown} onInput={handleInput} />
-        <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
+        <InputLine {...inputFinalProps} {...inputPropsConfig(inputFinalProps)} />
+        <InputIconButton {...iconButtonFinalProps} {...iconButtonPropsConfig(iconButtonFinalProps)} />
         {isCalendarOpen && (
-          <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto">
+          <PopoverPanel {...dropdownFinalProps} {...dropdownPropsConfig(dropdownFinalProps)}>
             <Calendar
               onViewModeChange={handleCalendarViewModeChange}
               dateValue={displayDate}
@@ -183,6 +268,15 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
               activeDateValue={parce(tmpValue)}
               onActiveDateValueChange={handleActiveDateValueChange}
               locale={Calendarlocale}
+              prevButtonPropsConfig={prevButtonPropsConfig}
+              nextButtonPropsConfig={nextButtonPropsConfig}
+              yearNavigationButtonPropsConfig={yearNavigationButtonPropsConfig}
+              monthsModel={monthsModel}
+              monthsWidgetContainerPropsConfig={monthsWidgetContainerPropsConfig}
+              yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
+              yearsModel={yearsModel}
+              yearsOnScreen={yearsOnScreen}
+              yearsColumns={yearsColumns}
             />
           </PopoverPanel>
         )}

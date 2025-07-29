@@ -239,3 +239,18 @@ export const getSelectedDate = (selected?: Dayjs | DateRange) => {
 export const getSelectedDateRange = (selected?: Dayjs | DateRange) => {
   return isDayjs(selected) ? undefined : selected;
 };
+
+export const arrayFormatter = <T>(numberFormatter: number, array: T[]) => {
+  let innerArray = array;
+  // Проверка на некорректную длину массива
+  if (array.length < numberFormatter) {
+    const additionalLength = numberFormatter - array.length;
+
+    innerArray = array.concat(new Array(additionalLength).fill({}));
+  }
+  if (array.length > numberFormatter) {
+    innerArray = array.slice(0, numberFormatter);
+  }
+
+  return innerArray;
+};

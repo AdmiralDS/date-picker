@@ -3,6 +3,7 @@ import styled, { DataAttributes } from 'styled-components';
 import dayjs, { Dayjs } from 'dayjs';
 
 import {
+  arrayFormatter,
   dateIsInRange,
   dateIsInRangeSelecting,
   dateIsRangeEnd,
@@ -26,7 +27,7 @@ import { DateRange } from 'lib/types';
 export interface YearsWidgetProps<T extends object> extends BaseWidgetProps {
   yearsOnScreen?: number;
   yearsColumns?: number;
-  yearModel?: T[];
+  yearsModel?: T[];
   yearsWidgetContainerPropsConfig?: (
     props: React.ComponentProps<typeof YearsWidgetContainer>,
   ) => Partial<React.ComponentProps<typeof YearsWidgetContainer> & DataAttributes>;
@@ -50,24 +51,26 @@ export const createDefaultModel = <T extends object>(yearsOnScreen: number) => {
   return yearsList as T[];
 };
 
-export function mapStateToProps<T extends object>(
+export function yearsMapStateToProps<T extends object>(
   model: T[],
   firstYear: Dayjs,
   range: boolean,
   yearsColumns: number,
+  yearsOnScreen: number,
   active?: Dayjs,
   selected?: Dayjs | DateRange,
   activeRangeEnd?: Dayjs,
   dateAttributes?: (currentDate: Dayjs) => DateAttributes,
 ) {
-  return model.map((additionalProps, index) => {
+  const innerModel = arrayFormatter(yearsOnScreen, model);
+
+  return innerModel.map((additionalProps, index) => {
     const date = firstYear.add(index, 'year');
     const dateValue = date.toString();
     const { disabled, isHoliday, hidden } = getYearAttributes(date, dateAttributes);
     const isCurrent = date.isSame(getCurrentDate(), 'year');
     const isActive = active ? date.isSame(active, 'year') : false;
     const cellContent = date.year();
-    const selectedDate = getSelectedDate(selected);
 
     if (range) {
       const selectedDateRange = getSelectedDateRange(selected);
@@ -101,6 +104,7 @@ export function mapStateToProps<T extends object>(
         ...additionalProps,
       };
     }
+    const selectedDate = getSelectedDate(selected);
 
     return {
       dateValue,
@@ -128,13 +132,13 @@ export const YearsWidget = memo(
     range = false,
     yearsColumns = 4,
     yearsOnScreen = 20,
-    yearModel,
+    yearsModel,
     yearsWidgetContainerPropsConfig = () => ({}),
     ...containerProps
   }: YearsWidgetProps<T>) => {
-    const innerYearModelList = useMemo(
-      () => yearModel ?? createDefaultModel(yearsOnScreen),
-      [yearModel, yearsOnScreen],
+    const innerYearsModelList = useMemo(
+      () => yearsModel ?? createDefaultModel(yearsOnScreen),
+      [yearsModel, yearsOnScreen],
     );
 
     const { start } = yearsRange(date, yearsOnScreen);
@@ -143,17 +147,28 @@ export const YearsWidget = memo(
     //Определение пропсов для ячеек
     const cellProps = useMemo(
       () =>
-        mapStateToProps(
-          innerYearModelList,
+        yearsMapStateToProps(
+          innerYearsModelList,
           firstYear,
           range,
           yearsColumns,
+          yearsOnScreen,
           active,
           selected,
           activeRangeEnd,
           dateAttributes,
         ),
-      [innerYearModelList, firstYear, active, selected, range, activeRangeEnd, yearsColumns, dateAttributes],
+      [
+        innerYearsModelList,
+        firstYear,
+        range,
+        yearsColumns,
+        yearsOnScreen,
+        active,
+        selected,
+        activeRangeEnd,
+        dateAttributes,
+      ],
     );
 
     const cells = cellProps.map((props) => createElement(cell, { ...props, key: props.dateValue }));

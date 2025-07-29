@@ -1,16 +1,16 @@
 import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
-import styled from 'styled-components';
-import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
+import styled from 'styled-components';
 
-import { textValues, vars } from '@admiral-ds/web';
+import { vars, textValues } from '@admiral-ds/web';
 
 import { capitalizeFirstLetter, getCurrentDate } from '#lib/utils';
-import { MONTHS_OF_YEAR_WIDGET_WIDTH } from '#lib/MonthsOfYearWidget/constants';
-import type { MonthsOfYearWidgetProps } from '#lib/MonthsOfYearWidget';
-import { MonthsOfYearWidget } from '#lib/MonthsOfYearWidget';
-import { MemoDefaultMonthCell } from '#lib/DefaultCell';
+import { DatesWidget, type DatesWidgetProps } from '#lib/DatesWidget';
+import type { CellStateProps } from '#lib/DatesWidget/interfaces';
+import { baseDayNameCellMixin } from '#lib/DefaultCell/mixins.tsx';
+import { MemoDefaultDateCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
 
 const Wrapper = styled.div`
@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   align-items: center;
   align-content: space-between;
   padding: 10px;
-  width: ${MONTHS_OF_YEAR_WIDGET_WIDTH}px;
+  width: 252px;
   border: 1px ${vars.color.Neutral_Neutral90} solid;
 `;
 const MonthYear = styled.div`
@@ -27,17 +27,17 @@ const MonthYear = styled.div`
   ${textValues['Subtitle/Subtitle 2']}
 `;
 
-export const MonthsOfYearWidgetSimpleTemplate = ({ date, locale = ruLocale, ...props }: MonthsOfYearWidgetProps) => {
+export const DatesWidgetSimpleTemplate = ({ date, locale = ruLocale, ...props }: DatesWidgetProps) => {
   const localeInner = locale?.localeName || 'ru';
-  const dateInner = date || getCurrentDate(locale?.localeName);
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs().locale(localeInner).add(1, 'day'));
+  const dateInner = date || getCurrentDate(localeInner);
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(getCurrentDate(localeInner).add(1, 'day'));
 
   const handleDateClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const targetDataAttributes = (e.target as HTMLDivElement).dataset;
-    if (targetDataAttributes['cellType'] !== 'monthCell') {
+    if (targetDataAttributes['cellType'] !== 'dateCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName || 'ru');
+    const date = dayjs(targetDataAttributes['value']).locale(localeInner);
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       setSelectedDate(date);
@@ -52,10 +52,11 @@ export const MonthsOfYearWidgetSimpleTemplate = ({ date, locale = ruLocale, ...p
 
   const handleMouseOver: MouseEventHandler<HTMLDivElement> = (e) => {
     const targetDataAttributes = (e.target as HTMLDivElement).dataset;
-    if (targetDataAttributes['cellType'] !== 'monthCell') {
+    if (targetDataAttributes['cellType'] !== 'dateCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName || 'ru');
+    const date = dayjs(targetDataAttributes['value']).locale(localeInner);
+    console.log(`hiddenCell-${targetDataAttributes['hiddenCell']}`);
     const disabled = targetDataAttributes['disabled'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled && !date.isSame(activeDateInner)) {
       handleActiveDateChange(date);
@@ -67,19 +68,26 @@ export const MonthsOfYearWidgetSimpleTemplate = ({ date, locale = ruLocale, ...p
     handleActiveDateChange(undefined);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const getDayNameCellState = (_: number): CellStateProps => {
+    const cellMixin = baseDayNameCellMixin;
+    return { cellMixin };
+  };
+
   return (
     <Wrapper>
       <MonthYear>Дата: {capitalizeFirstLetter(dateInner.format('D MMMM YYYY'))}</MonthYear>
-      <MonthsOfYearWidget
+      <DatesWidget
         {...props}
         date={dateInner}
         selected={selectedDate}
         active={activeDateInner}
         locale={locale}
-        cell={MemoDefaultMonthCell}
+        cell={MemoDefaultDateCell}
+        onMouseLeave={handleMouseLeave}
         onMouseOver={handleMouseOver}
         onClick={handleDateClick}
-        onMouseLeave={handleMouseLeave}
+        dayNamesProps={{ dayNameCellState: getDayNameCellState }}
       />
     </Wrapper>
   );

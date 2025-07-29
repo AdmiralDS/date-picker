@@ -12,7 +12,7 @@ export interface YearPickerCalendarProps
   extends Omit<SingleCalendarProps, 'cell'>,
     Omit<PickerCalendarProps, 'viewModeValue' | 'defaultViewModeValue' | 'onViewModeChange'> {
   calendarLocale?: CalendarLocaleProps;
-  yearModel?: React.ComponentProps<typeof YearCalendarView>['yearModel'];
+  yearsModel?: React.ComponentProps<typeof YearCalendarView>['yearsModel'];
   yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof YearCalendarView>['yearsWidgetContainerPropsConfig'];
   yearsNavigationContainerPropsConfig?: React.ComponentProps<
     typeof RangeYearsNavigationPanelWidget
@@ -32,7 +32,7 @@ export const YearPickerCalendar = ({
   locale = ruLocale,
   prevButtonPropsConfig,
   nextButtonPropsConfig,
-  yearModel,
+  yearsModel,
   yearsWidgetContainerPropsConfig,
   yearsOnScreen = 20,
   yearsColumns,
@@ -97,7 +97,7 @@ export const YearPickerCalendar = ({
           onSelectedDateValueChange={handleYearClick}
           locale={locale}
           $isVisible={true}
-          yearModel={yearModel}
+          yearsModel={yearsModel}
           yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
           yearsOnScreen={yearsOnScreen}
           yearsColumns={yearsColumns}
