@@ -13,7 +13,6 @@ import {
   MonthCalendarView,
   YearCalendarView,
 } from '#lib/calendarStyle.ts';
-import { YEARS_ON_SCREEN } from '#lib/YearsWidget/constants.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { DateRange } from 'lib/types';
 
@@ -22,7 +21,52 @@ export interface DateRangeDoublePickerCalendarProps
       RangeDoubleCalendarProps,
       'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'cell'
     >,
-    PickerCalendarProps {}
+    PickerCalendarProps {
+  /** Конфиг функция пропсов для кнопки с месяцем на навигационной панели с выбором режима календаря. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  monthNavigationButtonPropsConfig?: React.ComponentProps<
+    typeof MonthNavigationPanelWidget
+  >['monthNavigationButtonPropsConfig'];
+  /** Конфиг функция пропсов для кнопки с годом на навигационной панели с выбором режима календаря. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  yearNavigationButtonPropsConfig?: React.ComponentProps<
+    typeof MonthNavigationPanelWidget
+  >['yearNavigationButtonPropsConfig'];
+
+  /** Конфиг функция пропсов для контейнера с днями. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  datesWidgetContainerPropsConfig?: React.ComponentProps<
+    typeof DateRangeCalendarView
+  >['datesWidgetContainerPropsConfig'];
+  /** Модель массива для рендера ячеек с днями, на выход должна отдавать массив по размеру равный 42,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  datesModel?: React.ComponentProps<typeof DateRangeCalendarView>['datesModel'];
+
+  /** Конфиг функция пропсов для контейнера с названиями дня в неделе. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  daysWidgetContainerPropsConfig?: React.ComponentProps<typeof DateRangeCalendarView>['daysWidgetContainerPropsConfig'];
+  /** Модель массива для рендера ячеек с названиями дня в неделе, на выход должна отдавать массив по размеру равный 7,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  daysModel?: React.ComponentProps<typeof DateRangeCalendarView>['daysModel'];
+
+  /** Модель массива для рендера ячеек с месяцами, на выход должна отдавать массив по размеру равный 12,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  monthsModel?: React.ComponentProps<typeof MonthCalendarView>['monthsModel'];
+  /** Конфиг функция пропсов для контейнера с месяцами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  monthsWidgetContainerPropsConfig?: React.ComponentProps<typeof MonthCalendarView>['monthsWidgetContainerPropsConfig'];
+
+  /** Конфиг функция пропсов для контейнера с годами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof YearCalendarView>['yearsWidgetContainerPropsConfig'];
+  /** Модель массива для рендера ячеек с годами, на выход должна отдавать массив по размеру равный yearsOnScreen,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  yearsModel?: React.ComponentProps<typeof YearCalendarView>['yearsModel'];
+  //** Количество ячеек в виджете с годами */
+  yearsOnScreen?: number;
+  //** Количество столбцов в виджете с годами */
+  yearsColumns?: number;
+}
 
 export const DateRangeDoublePickerCalendar = ({
   viewModeValue,
@@ -41,6 +85,18 @@ export const DateRangeDoublePickerCalendar = ({
   nextButtonPropsConfig,
   cell,
   locale = ruLocale,
+  datesWidgetContainerPropsConfig,
+  datesModel,
+  daysWidgetContainerPropsConfig,
+  daysModel,
+  monthsModel,
+  monthsWidgetContainerPropsConfig,
+  yearsWidgetContainerPropsConfig,
+  yearsModel,
+  yearsOnScreen = 20,
+  yearsColumns,
+  monthNavigationButtonPropsConfig,
+  yearNavigationButtonPropsConfig,
   ...props
 }: DateRangeDoublePickerCalendarProps) => {
   //<editor-fold desc="Calendar view mode">
@@ -153,7 +209,7 @@ export const DateRangeDoublePickerCalendar = ({
         } else if (viewModeLeftInner === 'months') {
           handleDateLeftChange(dateLeftInner.subtract(1, 'year'));
         } else {
-          handleDateLeftChange(dateLeftInner.subtract(YEARS_ON_SCREEN, 'year'));
+          handleDateLeftChange(dateLeftInner.subtract(yearsOnScreen, 'year'));
         }
         break;
       case 'right':
@@ -162,7 +218,7 @@ export const DateRangeDoublePickerCalendar = ({
         } else if (viewModeLeftInner === 'months') {
           handleDateLeftChange(dateLeftInner.add(1, 'year'));
         } else {
-          handleDateLeftChange(dateLeftInner.add(YEARS_ON_SCREEN, 'year'));
+          handleDateLeftChange(dateLeftInner.add(yearsOnScreen, 'year'));
         }
         break;
       case 'month':
@@ -183,7 +239,7 @@ export const DateRangeDoublePickerCalendar = ({
         } else if (viewModeRightInner === 'months') {
           handleDateRightChange(dateRightInner.subtract(1, 'year'));
         } else {
-          handleDateRightChange(dateRightInner.subtract(YEARS_ON_SCREEN, 'year'));
+          handleDateRightChange(dateRightInner.subtract(yearsOnScreen, 'year'));
         }
         break;
       case 'right':
@@ -192,7 +248,7 @@ export const DateRangeDoublePickerCalendar = ({
         } else if (viewModeRightInner === 'months') {
           handleDateRightChange(dateRightInner.add(1, 'year'));
         } else {
-          handleDateRightChange(dateRightInner.add(YEARS_ON_SCREEN, 'year'));
+          handleDateRightChange(dateRightInner.add(yearsOnScreen, 'year'));
         }
         break;
       case 'month':
@@ -225,6 +281,8 @@ export const DateRangeDoublePickerCalendar = ({
           onMouseDown={handleLeftMonthNavigationPanelClick}
           prevButtonPropsConfig={prevButtonPropsConfig}
           nextButtonPropsConfig={nextButtonPropsConfig}
+          monthNavigationButtonPropsConfig={monthNavigationButtonPropsConfig}
+          yearNavigationButtonPropsConfig={yearNavigationButtonPropsConfig}
         />
         <CalendarContainer>
           <DateRangeCalendarView
@@ -240,6 +298,10 @@ export const DateRangeDoublePickerCalendar = ({
             onActiveDateValueChange={handleActiveDateChange}
             locale={locale}
             $isVisible={viewModeLeftInner === 'dates'}
+            datesWidgetContainerPropsConfig={datesWidgetContainerPropsConfig}
+            datesModel={datesModel}
+            daysWidgetContainerPropsConfig={daysWidgetContainerPropsConfig}
+            daysModel={daysModel}
           />
           <MonthCalendarView
             {...props}
@@ -249,6 +311,8 @@ export const DateRangeDoublePickerCalendar = ({
             onSelectedDateValueChange={handleLeftMonthClick}
             locale={locale}
             $isVisible={viewModeLeftInner === 'months'}
+            monthsModel={monthsModel}
+            monthsWidgetContainerPropsConfig={monthsWidgetContainerPropsConfig}
           />
           <YearCalendarView
             {...props}
@@ -258,6 +322,10 @@ export const DateRangeDoublePickerCalendar = ({
             onSelectedDateValueChange={handleLeftYearClick}
             locale={locale}
             $isVisible={viewModeLeftInner === 'years'}
+            yearsModel={yearsModel}
+            yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
+            yearsOnScreen={yearsOnScreen}
+            yearsColumns={yearsColumns}
           />
         </CalendarContainer>
       </SingleContainer>
@@ -302,6 +370,7 @@ export const DateRangeDoublePickerCalendar = ({
             onSelectedDateValueChange={handleRightYearClick}
             locale={locale}
             $isVisible={viewModeRightInner === 'years'}
+            yearsOnScreen={yearsOnScreen}
           />
         </CalendarContainer>
       </SingleContainer>

@@ -22,7 +22,7 @@ const Calendar = styled(YearPickerCalendar)`
 `;
 
 const defaultFormatter = (date: Dayjs) => date.format('YYYY');
-const defaultParcer = (date?: string) => dayjs(date, 'YYYY');
+const defaultParser = (date?: string) => dayjs(date, 'YYYY');
 const nothing = () => {};
 
 export type YearPickerProps = InputBoxProps & {
@@ -33,7 +33,7 @@ export type YearPickerProps = InputBoxProps & {
   format?: (date: Dayjs) => string;
 
   /** Функция для конвертации строки инпута в значение календаря */
-  parce?: (date?: string) => Dayjs;
+  parse?: (date?: string) => Dayjs;
 
   /** Изменение локали выпадающего календаря */
   Calendarlocale?: CalendarLocaleProps;
@@ -87,7 +87,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
     {
       inputProps = {},
       format = defaultFormatter,
-      parce = defaultParcer,
+      parse = defaultParser,
       Calendarlocale = ruLocale,
       iconButtonPropsConfig = nothing,
       inputPropsConfig = nothing,
@@ -190,7 +190,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
     }, [isCalendarOpen]);
 
     useEffect(() => {
-      const date = parce(inputValue);
+      const date = parse(inputValue);
 
       if (date.isValid()) {
         setDisplayDate(date);
@@ -200,7 +200,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
     }, [inputValue]);
 
     const ref = inputProps.ref !== undefined ? refSetter(inputRef, inputProps.ref as Ref<HTMLInputElement>) : inputRef;
-    const date = parce(inputValue);
+    const date = parse(inputValue);
 
     const inputFinalProps: ComponentProps<typeof InputLine> = {
       ...inputProps,
@@ -239,7 +239,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
               onDateValueChange={(month) => setDisplayDate(month)}
               selectedDateValue={date}
               onSelectedDateValueChange={handleSelectedDateValueChange}
-              activeDateValue={parce(tmpValue)}
+              activeDateValue={parse(tmpValue)}
               onActiveDateValueChange={handleActiveDateValueChange}
               locale={Calendarlocale}
               yearsModel={yearsModel}
