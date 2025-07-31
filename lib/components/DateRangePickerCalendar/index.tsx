@@ -2,7 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import type { RangeCalendarProps, PickerCalendarProps, CalendarViewMode } from '#lib/calendarInterfaces.ts';
+import type { RangeCalendarProps, PickerCalendarProps, CalendarViewMode, ActiveEnd } from '#lib/calendarInterfaces.ts';
 import { getCurrentDate } from '#lib/utils.ts';
 import { MonthNavigationPanelWidget } from '#lib/MonthNavigationPanelWidget';
 import {
@@ -16,7 +16,10 @@ import { ruLocale } from '#lib/calendarConstants.ts';
 import type { DateRange } from 'lib/types';
 
 export interface DateRangePickerCalendarProps
-  extends Omit<RangeCalendarProps, 'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'cell'>,
+  extends Omit<
+      RangeCalendarProps,
+      'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'cell'
+    >,
     PickerCalendarProps {
   /** Конфиг функция пропсов для кнопки с месяцем на навигационной панели с выбором режима календаря. На вход получает начальный набор пропсов, на
    * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
@@ -74,7 +77,9 @@ export const DateRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
-  onActiveDateRangeEndValueChange,
+  activeEndValue,
+  defaultActiveEndValue,
+  onActiveEndValueChange,
   cell,
   locale = ruLocale,
   prevButtonPropsConfig,
@@ -93,7 +98,7 @@ export const DateRangePickerCalendar = ({
   yearNavigationButtonPropsConfig,
   ...props
 }: DateRangePickerCalendarProps) => {
-  //<editor-fold desc="Calendar view mode">
+  //#region "Calendar view mode"
   const [viewModeState, setViewModeState] = useState<CalendarViewMode>(defaultViewModeValue || 'dates');
   const viewModeInner = viewModeValue || viewModeState;
 
@@ -101,9 +106,9 @@ export const DateRangePickerCalendar = ({
     setViewModeState(mode);
     onViewModeChange?.(mode);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Date shown on calendar">
+  //#region "Date shown on calendar"
   const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale?.localeName));
   const dateInner = dateValue || dateState;
 
@@ -111,9 +116,9 @@ export const DateRangePickerCalendar = ({
     setDateState(date);
     onDateValueChange?.(date);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Selected range">
+  //#region "Selected range"
   const [selectedDateRangeState, setSelectedDateRangeState] = useState<DateRange>(
     defaultSelectedDateRangeValue ?? [undefined, undefined],
   );
@@ -123,16 +128,24 @@ export const DateRangePickerCalendar = ({
     setSelectedDateRangeState(dateRange);
     onSelectedDateRangeValueChange?.(dateRange);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Active end of range">
-  const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>();
-
-  const handleDateRangeActiveEndChange = (date?: Dayjs) => {
-    setDateRangeActiveEndState(date);
-    onActiveDateRangeEndValueChange?.(date);
+  //#region "Active end of range"
+  const setInitialActiveEndState = () => {
+    if (defaultActiveEndValue) {
+      return defaultActiveEndValue;
+    }
+    return 'start';
   };
-  //</editor-fold>
+  const [activeEndState, setActiveEndState] = useState<ActiveEnd>(setInitialActiveEndState());
+  const activeEndInner = activeEndValue || activeEndState;
+
+  const handleActiveEndChange = (end?: ActiveEnd) => {
+    const newValue: ActiveEnd = end ? end : activeEndInner === 'start' ? 'end' : 'start';
+    setActiveEndState(newValue);
+    onActiveEndValueChange?.(newValue);
+  };
+  //#endregion
 
   const handleMonthClick = (date: Dayjs) => {
     const newDate = dateInner.month(date.month());
@@ -177,11 +190,11 @@ export const DateRangePickerCalendar = ({
   };
 
   const getSelectedRangeEnd = () => {
-    if (!dateRangeActiveEndState || !selectedDateRangeInner) return undefined;
-    if (selectedDateRangeInner[0] && dateRangeActiveEndState.isSame(selectedDateRangeInner[0], 'date')) {
+    if (activeEndInner === 'none' || !selectedDateRangeInner) return undefined;
+    if (selectedDateRangeInner[0] && activeEndInner === 'start') {
       return selectedDateRangeInner[1];
     }
-    if (selectedDateRangeInner[1] && dateRangeActiveEndState.isSame(selectedDateRangeInner[1], 'date')) {
+    if (selectedDateRangeInner[1] && activeEndInner === 'end') {
       return selectedDateRangeInner[0];
     }
   };
@@ -207,7 +220,9 @@ export const DateRangePickerCalendar = ({
           selectedDateRangeValue={selectedDateRangeInner}
           defaultSelectedDateRangeValue={defaultSelectedDateRangeValue}
           onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
-          onActiveDateRangeEndValueChange={handleDateRangeActiveEndChange}
+          activeEndValue={activeEndInner}
+          defaultActiveEndValue={defaultActiveEndValue}
+          onActiveEndValueChange={handleActiveEndChange}
           locale={locale}
           $isVisible={viewModeInner === 'dates'}
           datesWidgetContainerPropsConfig={datesWidgetContainerPropsConfig}

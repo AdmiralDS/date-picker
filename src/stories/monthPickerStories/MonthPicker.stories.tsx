@@ -10,7 +10,7 @@ import MonthPickerSimpleTemplateRaw from './MonthPickerSimple.template.tsx?raw';
 import MonthPickerChangeLocaleTemplateRaw from './MonthPickerChangeLocale.template.tsx?raw';
 
 export default {
-  title: 'Admiral-2.1/Date Picker/MonthPicker',
+  title: 'Admiral-2.1/Date Picker/Picker/MonthPicker',
   component: MonthPicker,
   parameters: {
     docs: {

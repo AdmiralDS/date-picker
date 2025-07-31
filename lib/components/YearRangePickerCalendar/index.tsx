@@ -2,7 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import type { PickerCalendarProps, RangeCalendarProps } from '#lib/calendarInterfaces.ts';
+import type { ActiveEnd, PickerCalendarProps, RangeCalendarProps } from '#lib/calendarInterfaces.ts';
 import { getCurrentDate } from '#lib/utils.ts';
 import { RangeYearsNavigationPanelWidget } from '#lib/RangeYearsNavigationPanelWidget';
 import { CalendarContainer, SinglePickerCalendarWrapper, YearRangeCalendarView } from '#lib/calendarStyle.ts';
@@ -44,6 +44,9 @@ export const YearRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
+  activeEndValue,
+  defaultActiveEndValue,
+  onActiveEndValueChange,
   cell,
   locale = ruLocale,
   prevButtonPropsConfig,
@@ -55,7 +58,7 @@ export const YearRangePickerCalendar = ({
   yearsNavigationContainerPropsConfig,
   ...props
 }: YearRangePickerCalendarProps) => {
-  //<editor-fold desc="Date shown on calendar">
+  //#region "Date shown on calendar"
   const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale?.localeName));
   const dateInner = dateValue || dateState;
 
@@ -63,9 +66,9 @@ export const YearRangePickerCalendar = ({
     setDateState(date);
     onDateValueChange?.(date);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Selected range">
+  //#region "Selected range"
   const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
 
@@ -73,7 +76,24 @@ export const YearRangePickerCalendar = ({
     setSelectedDateRangeState(dateRange);
     onSelectedDateRangeValueChange?.(dateRange);
   };
-  //</editor-fold>
+  //#endregion
+
+  //#region "Active end of range"
+  const setInitialActiveEndState = () => {
+    if (defaultActiveEndValue) {
+      return defaultActiveEndValue;
+    }
+    return 'start';
+  };
+  const [activeEndState, setActiveEndState] = useState<ActiveEnd>(setInitialActiveEndState());
+  const activeEndInner = activeEndValue || activeEndState;
+
+  const handleActiveEndChange = (end?: ActiveEnd) => {
+    const newValue: ActiveEnd = end ? end : activeEndInner === 'start' ? 'end' : 'start';
+    setActiveEndState(newValue);
+    onActiveEndValueChange?.(newValue);
+  };
+  //#endregion
 
   const handleRangeYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
@@ -107,6 +127,9 @@ export const YearRangePickerCalendar = ({
           dateValue={dateInner}
           selectedDateRangeValue={selectedDateRangeInner}
           onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
+          activeEndValue={activeEndInner}
+          defaultActiveEndValue={defaultActiveEndValue}
+          onActiveEndValueChange={handleActiveEndChange}
           locale={locale}
           $isVisible={true}
           yearsOnScreen={yearsOnScreen}

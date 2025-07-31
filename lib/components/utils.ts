@@ -104,9 +104,11 @@ export const yearsRange = (date: Dayjs, yearCount: number) => {
   return { start, end };
 };
 
-export const sortDatesAsc = (date1: Dayjs, date2: Dayjs, unit: dayjs.OpUnitType | undefined) => {
-  const dateFirst = date1.isBefore(date2, unit) ? date1 : date2;
-  const dateSecond = dateFirst.isSame(date1, unit) ? date2 : date1;
+export const sortDatesAsc = (date1?: Dayjs, date2?: Dayjs, unit?: dayjs.OpUnitType): DateRange => {
+  if (!date1 || !date2) {
+    return [date1, date2];
+  }
+  const [dateFirst, dateSecond] = date1.isBefore(date2, unit) ? [date1, date2] : [date2, date1];
   return [dateFirst, dateSecond];
 };
 
@@ -239,6 +241,14 @@ export const getSelectedDate = (selected?: Dayjs | DateRange) => {
 export const getSelectedDateRange = (selected?: Dayjs | DateRange) => {
   return isDayjs(selected) ? undefined : selected;
 };
+
+export const defaultDateParser = (date?: string) => dayjs(date, 'DD.MM.YYYY');
+export const defaultMonthParser = (date?: string) => dayjs(date, 'MM.YYYY');
+export const defaultYearParser = (date?: string) => dayjs(date, 'YYYY');
+
+export const defaultDateFormatter = (date?: Dayjs) => (date ? date.format('DD.MM.YYYY') : '');
+export const defaultMonthFormatter = (date?: Dayjs) => (date ? date.format('MM.YYYY') : '');
+export const defaultYearFormatter = (date?: Dayjs) => (date ? date.format('YYYY') : '');
 
 export const arrayFormatter = <T>(numberFormatter: number, array: T[]) => {
   let innerArray = array;

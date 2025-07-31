@@ -39,7 +39,7 @@ export const YearPickerCalendar = ({
   yearsNavigationContainerPropsConfig,
   ...props
 }: YearPickerCalendarProps) => {
-  //<editor-fold desc="Date shown on calendar">
+  //#region "Date shown on calendar"
   const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale?.localeName));
   const dateInner = dateValue || dateState;
 
@@ -47,9 +47,9 @@ export const YearPickerCalendar = ({
     setDateState(date);
     onDateValueChange?.(date);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Selected date">
+  //#region "Selected date"
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
   const selectedDateInner = selectedDateValue || selectedDateState;
 
@@ -57,7 +57,7 @@ export const YearPickerCalendar = ({
     setSelectedDateState(date);
     onSelectedDateValueChange?.(date);
   };
-  //</editor-fold>
+  //#endregion
 
   const handleYearClick = (date: Dayjs) => {
     handleSelectedDateChange(date);

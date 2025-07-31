@@ -19,7 +19,7 @@ const config: StorybookConfig = {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       // Filter out third-party props from node_modules except typings.
-      propFilter: (prop) => (prop.parent ? !/node_modules\/(?!@types)/.test(prop.parent.fileName) : true),
+      propFilter: (prop) => (prop.parent ? !/node_modules\/?@types/.test(prop.parent.fileName) : true),
     },
   },
 };

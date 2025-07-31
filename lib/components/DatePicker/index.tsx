@@ -233,6 +233,15 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
     }, [inputValue]);
 
+    const ref = inputProps.ref !== undefined ? refSetter(inputRef, inputProps.ref as Ref<HTMLInputElement>) : inputRef;
+    const inputFinalProps: ComponentProps<typeof InputLine> = {
+      ...inputProps,
+      ref,
+      onBlur: handleBlur,
+      onFocus: handleFocus,
+      tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
+    };
+
     const date = parse(inputValue);
 
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {

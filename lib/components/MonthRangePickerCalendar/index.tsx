@@ -2,7 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import type { RangeCalendarProps, PickerCalendarProps, CalendarViewMode } from '#lib/calendarInterfaces.ts';
+import type { RangeCalendarProps, PickerCalendarProps, CalendarViewMode, ActiveEnd } from '#lib/calendarInterfaces.ts';
 import { getCurrentDate } from '#lib/utils.ts';
 import { YearNavigationPanelWidget } from '#lib/YearNavigationPanelWidget';
 import {
@@ -60,6 +60,9 @@ export const MonthRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
+  activeEndValue,
+  defaultActiveEndValue,
+  onActiveEndValueChange,
   cell,
   locale = ruLocale,
   prevButtonPropsConfig,
@@ -73,7 +76,7 @@ export const MonthRangePickerCalendar = ({
   yearsColumns,
   ...props
 }: MonthRangePickerCalendarProps) => {
-  //<editor-fold desc="Calendar view mode">
+  //#region "Calendar view mode"
   const [viewModeState, setViewModeState] = useState<CalendarViewMode>(defaultViewModeValue || 'months');
   const viewModeInner = viewModeValue || viewModeState;
 
@@ -81,9 +84,9 @@ export const MonthRangePickerCalendar = ({
     setViewModeState(mode);
     onViewModeChange?.(mode);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Date shown on calendar">
+  //#region "Date shown on calendar"
   const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale?.localeName));
   const dateInner = dateValue || dateState;
 
@@ -91,25 +94,36 @@ export const MonthRangePickerCalendar = ({
     setDateState(date);
     onDateValueChange?.(date);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Selected range">
-  const [selectedDateRangeState, setSelectedDateRangeState] = useState(defaultSelectedDateRangeValue);
+  //#region "Selected range"
+  const [selectedDateRangeState, setSelectedDateRangeState] = useState<DateRange>(
+    defaultSelectedDateRangeValue ?? [undefined, undefined],
+  );
   const selectedDateRangeInner = selectedDateRangeValue || selectedDateRangeState;
 
   const handleSelectedDateRangeChange = (dateRange: DateRange) => {
     setSelectedDateRangeState(dateRange);
     onSelectedDateRangeValueChange?.(dateRange);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Active end of range">
-  const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>();
-
-  const handleDateRangeActiveEndChange = (date?: Dayjs) => {
-    setDateRangeActiveEndState(date);
+  //#region "Active end of range"
+  const setInitialActiveEndState = () => {
+    if (defaultActiveEndValue) {
+      return defaultActiveEndValue;
+    }
+    return 'start';
   };
-  //</editor-fold>
+  const [activeEndState, setActiveEndState] = useState<ActiveEnd>(setInitialActiveEndState());
+  const activeEndInner = activeEndValue || activeEndState;
+
+  const handleActiveEndChange = (end?: ActiveEnd) => {
+    const newValue: ActiveEnd = end ? end : activeEndInner === 'start' ? 'end' : 'start';
+    setActiveEndState(newValue);
+    onActiveEndValueChange?.(newValue);
+  };
+  //#endregion
 
   const handleYearClick = (date: Dayjs) => {
     const newDate = dateInner.year(date.year());
@@ -142,11 +156,11 @@ export const MonthRangePickerCalendar = ({
   };
 
   const getSelectedRangeEnd = () => {
-    if (!dateRangeActiveEndState || !selectedDateRangeInner) return undefined;
-    if (selectedDateRangeInner[0] && dateRangeActiveEndState.isSame(selectedDateRangeInner[0], 'month')) {
+    if (activeEndInner === 'none' || !selectedDateRangeInner) return undefined;
+    if (selectedDateRangeInner[0] && activeEndInner === 'start') {
       return selectedDateRangeInner[1];
     }
-    if (selectedDateRangeInner[1] && dateRangeActiveEndState.isSame(selectedDateRangeInner[1], 'month')) {
+    if (selectedDateRangeInner[1] && activeEndInner === 'end') {
       return selectedDateRangeInner[0];
     }
   };
@@ -171,7 +185,9 @@ export const MonthRangePickerCalendar = ({
           selectedDateRangeValue={selectedDateRangeInner}
           defaultSelectedDateRangeValue={defaultSelectedDateRangeValue}
           onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
-          onActiveDateRangeEndValueChange={handleDateRangeActiveEndChange}
+          activeEndValue={activeEndInner}
+          defaultActiveEndValue={defaultActiveEndValue}
+          onActiveEndValueChange={handleActiveEndChange}
           locale={locale}
           $isVisible={viewModeInner === 'months'}
           monthsModel={monthsModel}

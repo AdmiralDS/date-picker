@@ -65,7 +65,7 @@ export const MonthPickerCalendar = ({
   yearsColumns,
   ...props
 }: MonthPickerCalendarProps) => {
-  //<editor-fold desc="Calendar view mode">
+  //#region "Calendar view mode"
   const [viewModeState, setViewModeState] = useState<CalendarViewMode>(defaultViewModeValue || 'months');
   const viewModeInner = viewModeValue || viewModeState;
 
@@ -73,9 +73,9 @@ export const MonthPickerCalendar = ({
     setViewModeState(mode);
     onViewModeChange?.(mode);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Date shown on calendar">
+  //#region "Date shown on calendar"
   const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale?.localeName));
   const dateInner = dateValue || dateState;
 
@@ -83,9 +83,9 @@ export const MonthPickerCalendar = ({
     setDateState(date);
     onDateValueChange?.(date);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Selected date">
+  //#region "Selected date"
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
   const selectedDateInner = selectedDateValue || selectedDateState;
 
@@ -93,7 +93,7 @@ export const MonthPickerCalendar = ({
     setSelectedDateState(date);
     onSelectedDateValueChange?.(date);
   };
-  //</editor-fold>
+  //#endregion
 
   const handleMonthClick = (date: Dayjs) => {
     handleSelectedDateChange(date);

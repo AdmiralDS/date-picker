@@ -3,6 +3,11 @@ import { forwardRef, useEffect, useRef } from 'react';
 import { refSetter } from '@admiral-ds/react-ui';
 import { vars } from '@admiral-ds/web';
 
+export type SizeProps = {
+  /** Размеры компонента */
+  'data-size'?: 's' | 'm' | 'xl';
+};
+
 export const StyledInputLine = styled.input<{ $isTmpValue?: boolean }>`
   border: none;
   outline: none;
@@ -14,6 +19,11 @@ export const StyledInputLine = styled.input<{ $isTmpValue?: boolean }>`
   box-shadow: none;
   text-overflow: ellipsis;
   padding: 0;
+  box-sizing: border-box;
+  width: 84px;
+  &[data-size='s'] {
+    width: 74px;
+  }
 
   color: ${(p) => (p.$isTmpValue ? vars.color.Neutral_Neutral30 : vars.color.Neutral_Neutral90)};
   ::placeholder {
@@ -48,11 +58,12 @@ const MaskBox = styled.div`
   right: 0;
 `;
 
-export type InputLineProps = JSX.IntrinsicElements['input'] & {
-  dataPlaceholder?: string;
-  tmpValue?: string;
-  value?: string;
-};
+export type InputLineProps = JSX.IntrinsicElements['input'] &
+  SizeProps & {
+    dataPlaceholder?: string;
+    tmpValue?: string;
+    value?: string;
+  };
 
 export const InputLine = forwardRef<HTMLInputElement, InputLineProps>((props, ref) => {
   const { className, dataPlaceholder, tmpValue, ...inputProps } = props;
