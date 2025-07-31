@@ -33,11 +33,11 @@ export const YearCalendar = ({
   yearsColumns,
   ...props
 }: YearCalendarProps) => {
-  //<editor-fold desc="Date shown on calendar">
+  //#region "Date shown on calendar"
   const dateInner = dateValue || getCurrentDate();
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Hovered date">
+  //#region "Hovered date"
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
@@ -61,9 +61,9 @@ export const YearCalendar = ({
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
     handleActiveDateChange(undefined);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Selected date">
+  //#region "Selected date"
   const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
   const selectedDateInner = selectedDateValue || selectedDateState;
 
@@ -84,7 +84,7 @@ export const YearCalendar = ({
       handleSelectedDateChange(date);
     }
   };
-  //</editor-fold>
+  //#endregion
 
   return (
     <YearsWidget

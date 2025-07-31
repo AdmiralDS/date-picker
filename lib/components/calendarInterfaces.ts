@@ -10,6 +10,13 @@ export type CalendarViewMode = 'dates' | 'months' | 'years';
 
 export type Timestamp = number;
 export type RangeTimestamp = readonly [Timestamp, Timestamp];
+export type ActiveEnd = 'start' | 'end' | 'none';
+
+export enum InputsConfirmedState {
+  initial = 0,
+  firstConfirmed = 1,
+  bothConfirmed = 2,
+}
 
 export interface CalendarLocaleProps {
   /** Название локали */
@@ -92,6 +99,13 @@ export interface RangeCalendarProps extends CalendarProps {
   defaultActiveDateRangeEndValue?: Dayjs;
   /** Коллбэк на изменение значения активного конца диапазона дат */
   onActiveDateRangeEndValueChange?: (date: Dayjs | undefined) => void;
+
+  /** Значение активного конца диапазона дат */
+  activeEndValue?: ActiveEnd;
+  /** Значение активного конца диапазона дат по умолчанию */
+  defaultActiveEndValue?: ActiveEnd;
+  /** Коллбэк на изменение значения активного конца диапазона дат */
+  onActiveEndValueChange?: (end: ActiveEnd) => void;
 }
 
 export interface RangeDoubleCalendarProps

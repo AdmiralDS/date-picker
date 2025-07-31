@@ -13,7 +13,7 @@ import { DatePickerCalendarBlockPanelArrowsTemplate } from '#src/stories/datePic
 import DatePickerCalendarBlockPanelArrowsTemplateRaw from './DatePickerCalendarBlockPanelArrows.template.tsx?raw';
 
 export default {
-  title: 'Admiral-2.1/Date Picker/DatePickerCalendar',
+  title: 'Admiral-2.1/Date Picker/Picker Calendar/DatePickerCalendar',
   component: DatePickerCalendar,
   parameters: {
     docs: {

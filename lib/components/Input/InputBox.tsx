@@ -1,15 +1,47 @@
-import type { ComponentProps } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { vars, textValues } from '@admiral-ds/web';
+import { InputDimension } from './types';
 
-export type SizeProps = {
-  /** Размеры компонента */
-  'data-size'?: 's' | 'm' | 'xl';
-};
+const sSizeMixin = css`
+  padding-inline-start: 12px;
+  padding-inline-end: 12px;
+  height: 32px;
+  & * {
+    line-height: 32px;
+    ${textValues['Body/Body 2 Long']}
+  }
+`;
+const mSizeMixin = css`
+  height: 40px;
+  & * {
+    line-height: 40px;
+  }
+`;
+const xlSizeMixin = css`
+  height: 56px;
+  & * {
+    line-height: 56px;
+  }
+`;
 
-export type InputBoxProps = ComponentProps<'div'> & SizeProps;
+function getSizeMixin(dimension: InputDimension) {
+  switch (dimension) {
+    case 'xl':
+      return xlSizeMixin;
+    case 's':
+      return sSizeMixin;
+    case 'm':
+    default:
+      return mSizeMixin;
+  }
+}
 
-export const FocusBox = styled.div`
+export interface InputBoxProps extends React.InputHTMLAttributes<HTMLDivElement> {
+  /** Делает высоту компонента больше или меньше обычной */
+  $dimension: InputDimension;
+}
+
+export const FocusBox = styled.div<{ $dimension: InputDimension }>`
   cursor: text;
   display: inline-flex;
   overflow: hidden;
@@ -17,30 +49,14 @@ export const FocusBox = styled.div`
   flex-direction: row;
   align-items: stretch;
 
-  height: 40px;
   padding: 0;
   padding-inline-start: 16px;
   padding-inline-end: 16px;
 
   & * {
     ${textValues['Body/Body 1 Long']}
-    line-height: 40px;
   }
-  &[data-size='xl'] {
-    height: 56px;
-    & * {
-      line-height: 56px;
-    }
-  }
-  &[data-size='s'] {
-    height: 32px;
-    padding-inline-start: 12px;
-    padding-inline-end: 12px;
-    & * {
-      ${textValues['Body/Body 2 Long']}
-      line-height: 32px;
-    }
-  }
+  ${(p) => getSizeMixin(p.$dimension)}
 
   box-sizing: border-box;
   border-radius: 4px;

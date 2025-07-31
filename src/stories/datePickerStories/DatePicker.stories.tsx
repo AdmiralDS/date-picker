@@ -12,7 +12,7 @@ import DatePickerTestsTemplateRaw from './DatePickerTests.template.tsx?raw';
 import { pickDateTest } from './DataPickerTests.tsx';
 
 export default {
-  title: 'Admiral-2.1/Date Picker/DatePicker',
+  title: 'Admiral-2.1/Date Picker/Picker/DatePicker',
   component: DatePicker,
   parameters: {
     docs: {

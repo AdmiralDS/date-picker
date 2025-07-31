@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { changeInputData, refSetter } from '@admiral-ds/react-ui';
-import { DateRangePickerCalendar } from '#lib/DateRangePickerCalendar';
+import { YearRangePickerCalendar } from '#lib/YearRangePickerCalendar';
 import type { InputBoxProps } from '#lib/Input/InputBox';
 import { InputBox } from '#lib/Input/InputBox';
 import { InputIconButton } from '#lib/InputIconButton';
@@ -14,16 +14,16 @@ import { InputsConfirmedState } from '#lib/calendarInterfaces.js';
 import type { ActiveEnd, CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
 import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
-import { defaultDateFormatter, defaultDateParser, sortDatesAsc } from '#lib/utils';
+import { defaultYearFormatter, defaultYearParser, sortDatesAsc } from '#lib/utils';
 import { DimensionInterface } from '#lib/Input/types';
-import { DATE_INPUT_WIDTH_S, DATE_INPUT_WIDTH_M_XL } from '#lib/Input/constatnts';
+import { YEAR_INPUT_WIDTH_M_XL, YEAR_INPUT_WIDTH_S } from '#lib/Input/constatnts';
 
-const Calendar = styled(DateRangePickerCalendar)`
+const Calendar = styled(YearRangePickerCalendar)`
   border: none;
   box-shadow: none;
 `;
 
-export interface DateRangePickerProps
+export interface YearRangePickerProps
   extends RangeInputProps,
     Omit<DimensionInterface, 'width'>,
     Omit<InputBoxProps, 'onBlur' | 'onFocus' | '$dimension'> {
@@ -45,9 +45,9 @@ function checkDateRangeDefault(dateRange: DateRange) {
 }
 
 /**
- * Компонент DateRangePicker
+ * Компонент YearRangePicker
  */
-export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
+export const YearRangePicker = forwardRef<HTMLDivElement, YearRangePickerProps>(
   (
     {
       dimension = 'm',
@@ -55,8 +55,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       inputPropsEnd = {},
       separator = '\u2014',
       checkDateRange = checkDateRangeDefault,
-      format = defaultDateFormatter,
-      parse = defaultDateParser,
+      format = defaultYearFormatter,
+      parse = defaultYearParser,
       onSelectedRangeChange,
       ...containerProps
     },
@@ -80,7 +80,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
     const [activeDate, setActiveDate] = useState<Dayjs | undefined>(undefined);
     const handleActiveDateValueChange = (date?: Dayjs) => {
-      if (calendarViewMode === 'dates') {
+      if (calendarViewMode === 'years') {
         setActiveDate(date);
       }
     };
@@ -91,7 +91,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       setActiveEnd(end);
     };
 
-    const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('dates');
+    //const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('years');
+    const calendarViewMode: CalendarViewMode = 'years';
 
     const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
@@ -100,7 +101,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
     const [selectedRange, setSelectedRange] = useState<DateRange>([undefined, undefined]);
     const handleSelectedDateValueChange = (dateRange: DateRange) => {
-      if (calendarViewMode === 'dates') {
+      if (calendarViewMode === 'years') {
         const checkedRange = checkDateRange(dateRange);
         const start = checkedRange[0];
         const end = checkedRange[1];
@@ -126,10 +127,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     useEffect(() => {
       if (isCalendarOpen) setInputsConfirmed(InputsConfirmedState.initial);
     }, [isCalendarOpen]);
-
-    const handleCalendarViewModeChange = (view: CalendarViewMode) => {
-      setCalendarViewMode(view);
-    };
 
     const handleRangeInputCancel = () => {
       setCalendarOpen(false);
@@ -171,7 +168,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
     const rangeInputProps: RangeInputProps = {
       dimension: dimension,
-      width: dimension === 's' ? DATE_INPUT_WIDTH_S : DATE_INPUT_WIDTH_M_XL,
+      width: dimension === 's' ? YEAR_INPUT_WIDTH_S : YEAR_INPUT_WIDTH_M_XL,
 
       inputPropsStart: { ...inputPropsStart, ref: startRef },
       inputPropsEnd: { ...inputPropsEnd, ref: endRef },
@@ -196,7 +193,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         {isCalendarOpen && (
           <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto" onMouseDown={(e) => e.preventDefault()}>
             <Calendar
-              onViewModeChange={handleCalendarViewModeChange}
               dateValue={displayDate}
               onDateValueChange={(day) => setDisplayDate(day)}
               selectedDateRangeValue={selectedRange}
@@ -210,4 +206,4 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     );
   },
 );
-DateRangePicker.displayName = 'DateRangePicker';
+YearRangePicker.displayName = 'YearRangePicker';

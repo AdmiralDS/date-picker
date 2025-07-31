@@ -23,7 +23,7 @@ const Calendar = styled(DatePickerCalendar)`
 
 const nothing = () => {};
 const defaultFormatter = (date: Dayjs) => date.format('DD.MM.YYYY');
-const defaultParcer = (date?: string) => dayjs(date, 'DD.MM.YYYY');
+const defaultParser = (date?: string) => dayjs(date, 'DD.MM.YYYY');
 
 export type DatePickerProps = InputBoxProps & {
   /** Пропсы внутреннего инпута */
@@ -33,7 +33,7 @@ export type DatePickerProps = InputBoxProps & {
   format?: (date: Dayjs) => string;
 
   /** Функция для конвертации строки инпута в значение календаря */
-  parce?: (date?: string) => Dayjs;
+  parse?: (date?: string) => Dayjs;
 
   /** Изменение локали выпадающего календаря */
   Calendarlocale?: CalendarLocaleProps;
@@ -225,7 +225,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     }, [isCalendarOpen]);
 
     useEffect(() => {
-      const date = parce(inputValue);
+      const date = parse(inputValue);
       if (date.isValid()) {
         setDisplayDate(date);
       } else if (!inputValue) {
@@ -233,7 +233,17 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
     }, [inputValue]);
 
-    const date = parce(inputValue);
+    const ref = inputProps.ref !== undefined ? refSetter(inputRef, inputProps.ref as Ref<HTMLInputElement>) : inputRef;
+    const inputFinalProps: ComponentProps<typeof InputLine> = {
+      ...inputProps,
+      ref,
+      onBlur: handleBlur,
+      onFocus: handleFocus,
+      tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
+    };
+
+    const date = parse(inputValue);
+
 
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
       const value = e.currentTarget.value;
@@ -286,7 +296,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
               onDateValueChange={(day) => setDisplayDate(day)}
               selectedDateValue={date}
               onSelectedDateValueChange={handleSelectedDateValueChange}
-              activeDateValue={parce(tmpValue)}
+              activeDateValue={parse(tmpValue)}
               onActiveDateValueChange={handleActiveDateValueChange}
               locale={Calendarlocale}
               prevButtonPropsConfig={prevButtonPropsConfig}

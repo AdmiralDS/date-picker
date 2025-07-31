@@ -4,7 +4,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
 import { getCurrentDate } from '#lib/utils';
-import type { RangeCalendarProps } from '#lib/calendarInterfaces';
+import type { ActiveEnd, RangeCalendarProps } from '#lib/calendarInterfaces';
 import { YearsWidget } from '#lib/YearsWidget';
 import { MemoDefaultYearRangeCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
@@ -19,25 +19,26 @@ export const YearRangeCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
-  activeDateRangeEndValue,
-  defaultActiveDateRangeEndValue,
   onActiveDateRangeEndValueChange,
   dateAttributes,
   dateValue,
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  locale = ruLocale,
+  activeEndValue,
+  defaultActiveEndValue,
+  onActiveEndValueChange,
   cell,
+  locale = ruLocale,
   yearsOnScreen,
   yearsWidgetContainerPropsConfig,
   ...props
 }: YearRangeCalendarProps) => {
-  //<editor-fold desc="Date shown on calendar">
+  //#region "Date shown on calendar"
   const dateInner = dateValue || getCurrentDate();
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Hovered date">
+  //#region "Hovered date"
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
@@ -61,96 +62,92 @@ export const YearRangeCalendar = ({
   const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
     handleActiveDateChange(undefined);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="First date of range">
+  //#region "First date of range"
   const [dateRangeFirstState, setDateRangeFirstState] = useState(defaultSelectedDateRangeValue?.[0]);
   const dateRangeFirstInner = selectedDateRangeValue?.[0] || dateRangeFirstState;
 
   const handleDateRangeFirstChange = (date?: Dayjs) => {
     setDateRangeFirstState(date);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Second date of range">
+  //#region "Second date of range"
   const [dateRangeSecondState, setDateRangeSecondState] = useState(defaultSelectedDateRangeValue?.[1]);
   const dateRangeSecondInner = selectedDateRangeValue?.[1] || dateRangeSecondState;
 
   const handleDateRangeSecondChange = (date?: Dayjs) => {
     setDateRangeSecondState(date);
   };
-  //</editor-fold>
+  //#endregion
 
-  //<editor-fold desc="Active end of range">
+  //#region "Active end of range"
+  const setInitialActiveEndState = () => {
+    if (defaultActiveEndValue) {
+      return defaultActiveEndValue;
+    }
+    return 'start';
+  };
+  const [activeEndState, setActiveEndState] = useState<ActiveEnd>(setInitialActiveEndState());
+  const activeEndInner = activeEndValue || activeEndState;
+
+  const handleActiveEndChange = (end?: ActiveEnd) => {
+    const newValue: ActiveEnd = end ? end : activeEndInner === 'start' ? 'end' : 'start';
+    setActiveEndState(newValue);
+    onActiveEndValueChange?.(newValue);
+  };
+
   const setInitialDateRangeActiveEndState = () => {
-    if (defaultActiveDateRangeEndValue) {
-      return defaultActiveDateRangeEndValue;
-    }
-    if (dateRangeFirstInner && dateRangeSecondInner) {
-      return dateRangeSecondInner;
-    }
-    if (dateRangeFirstInner && !dateRangeSecondInner) {
-      return dateRangeFirstInner;
-    }
-    if (!dateRangeFirstInner && dateRangeSecondInner) {
-      return dateRangeSecondInner;
+    if (activeEndInner) {
+      switch (activeEndInner) {
+        case 'start':
+        default:
+          return dateRangeFirstInner;
+        case 'end':
+          return dateRangeSecondInner;
+      }
     }
     return undefined;
   };
-  const [dateRangeActiveEndState, setDateRangeActiveEndState] = useState<Dayjs | undefined>(
+  const [dateRangeActiveEnd, setDateRangeActiveEndState] = useState<Dayjs | undefined>(
     setInitialDateRangeActiveEndState(),
   );
-  const dateRangeActiveEndInner = activeDateRangeEndValue || dateRangeActiveEndState;
 
   const handleDateRangeActiveEndChange = (date?: Dayjs) => {
     setDateRangeActiveEndState(date);
     onActiveDateRangeEndValueChange?.(date);
   };
-  //</editor-fold>
+  //#endregion
 
   const handleDateClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const targetDataAttributes = (e.target as HTMLDivElement).dataset;
     if (targetDataAttributes['cellType'] !== 'yearCell') {
       return;
     }
-    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName || 'ru');
+    const date = dayjs(targetDataAttributes['value']).locale(locale?.localeName);
     const disabled = targetDataAttributes['disabledCell'] === 'true' || targetDataAttributes['hiddenCell'] === 'true';
     if (!disabled) {
       let first: Dayjs | undefined = undefined;
       let second: Dayjs | undefined = undefined;
-      if (!dateRangeActiveEndInner) {
-        if (dateRangeFirstInner && !dateRangeSecondInner) {
-          handleDateRangeSecondChange(date);
-          first = dateRangeFirstInner;
-          second = date;
-        } else {
+      switch (activeEndInner) {
+        case 'start':
           handleDateRangeFirstChange(date);
           first = date;
           second = dateRangeSecondInner;
-        }
-      } else {
-        if (dateRangeFirstInner && dateRangeSecondInner) {
-          if (dateRangeActiveEndInner.isSame(dateRangeFirstInner, 'year')) {
-            handleDateRangeSecondChange(date);
-            first = dateRangeFirstInner;
-            second = date;
-          }
-          if (dateRangeActiveEndInner.isSame(dateRangeSecondInner, 'year')) {
-            handleDateRangeFirstChange(date);
-            first = date;
-            second = dateRangeSecondInner;
-          }
-        } else if (dateRangeFirstInner && !dateRangeSecondInner) {
+          break;
+        case 'end':
           handleDateRangeSecondChange(date);
           first = dateRangeFirstInner;
           second = date;
-        } else {
-          handleDateRangeFirstChange(date);
-          first = date;
-          second = dateRangeSecondInner;
-        }
+          break;
+        case 'none':
+        default:
+          break;
       }
+
       const newSelectedDateRangeValue: DateRange = [first, second];
+      handleActiveEndChange();
       handleDateRangeActiveEndChange(date);
       onSelectedDateRangeValueChange?.(newSelectedDateRangeValue);
     }
@@ -162,7 +159,7 @@ export const YearRangeCalendar = ({
       date={dateInner}
       selected={[dateRangeFirstInner, dateRangeSecondInner]}
       active={activeDateInner}
-      activeRangeEnd={dateRangeActiveEndInner}
+      activeRangeEnd={dateRangeActiveEnd}
       dateAttributes={dateAttributes}
       locale={locale}
       onMouseLeave={handleMouseLeave}

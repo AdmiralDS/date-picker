@@ -8,7 +8,7 @@ import { userEvent, within, expect } from '@storybook/test';
 import dayjs from 'dayjs';
 
 export default {
-  title: 'Admiral-2.1/Date Picker/YearPicker',
+  title: 'Admiral-2.1/Date Picker/Picker/YearPicker',
   component: YearPicker,
   parameters: {
     docs: {

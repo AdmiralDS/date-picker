@@ -1,37 +1,51 @@
 import { T } from '@admiral-ds/react-ui';
 import { DateRangePicker } from '@admiral-ds/date-picker';
-import { maskitoDateRangeOptionsGenerator } from '@maskito/kit';
+import { maskitoDateOptionsGenerator } from '@maskito/kit';
 import { useMaskito } from '@maskito/react';
 
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 
-const defaultInputProps = {
-  placeholder: 'Введите интервал дат',
-  dataPlaceholder: 'дд.мм.гггг – дд.мм.гггг',
-  value: '11.',
+const defaultInputStartProps = {
+  placeholder: 'дд.мм.гггг',
+  dataPlaceholder: 'дд.мм.гггг',
+  value: '',
+};
+const defaultInputEndProps = {
+  placeholder: 'дд.мм.гггг',
+  dataPlaceholder: 'дд.мм.гггг',
+  value: '',
 };
 
 export const DateRangePickerSimpleTemplate = () => {
-  const [inputValue, setInputValue] = useState(defaultInputProps.value);
-  const dateOptions = useMemo(() => maskitoDateRangeOptionsGenerator({ mode: 'dd/mm/yyyy', rangeSeparator: '-' }), []);
-  const maskedDateInputRef = useMaskito({ options: dateOptions });
+  const [inputStartValue, setInputStartValue] = useState(defaultInputStartProps.value);
+  const [inputEndValue, setInputEndValue] = useState(defaultInputEndProps.value);
+  const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
+  const maskedDateInputStartRef = useMaskito({ options: dateOptions });
+  const maskedDateInputEndRef = useMaskito({ options: dateOptions });
+
   return (
     <WrapperHorizontal>
       <WrapperVertical>
         <DateRangePicker
-          inputProps={{
-            ...defaultInputProps,
-            value: inputValue,
-            onInput: (e) => setInputValue(e.currentTarget.value),
-            ref: maskedDateInputRef,
+          inputPropsStart={{
+            ...defaultInputStartProps,
+            value: inputStartValue,
+            onInput: (e) => setInputStartValue(e.currentTarget.value),
+            ref: maskedDateInputStartRef,
+          }}
+          inputPropsEnd={{
+            ...defaultInputEndProps,
+            value: inputEndValue,
+            onInput: (e) => setInputEndValue(e.currentTarget.value),
+            ref: maskedDateInputEndRef,
           }}
         />
       </WrapperVertical>
 
       <WrapperVertical>
         <T font="Subtitle/Subtitle 2" as="div">
-          Выбор даты
+          Выбор диапазона дат
         </T>
         <T font="Body/Body 2 Long" as="div">
           Высота календаря постоянна и состоит из шести рядов чисел. Текущий месяц начинается с первого ряда и, если его
@@ -40,6 +54,7 @@ export const DateRangePickerSimpleTemplate = () => {
           <br />
           Текущая дата выделяется обводкой в виде черного кружка. Ховер на дате подсвечивается обводкой синего цвета.
           Выбранная дата отмечается синим кружком.
+          <br />
           <br />
           При ховере на месяце, годе, стрелках вправо/влево появляются тултипы с подсказками.
           <br />
