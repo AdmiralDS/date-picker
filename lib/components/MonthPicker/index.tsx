@@ -99,7 +99,7 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
     {
       inputProps = {},
       format = defaultFormatter,
-      parce = defaultParcer,
+      parse = defaultParser,
       Calendarlocale = ruLocale,
       inputPropsConfig = nothing,
       iconButtonPropsConfig = nothing,

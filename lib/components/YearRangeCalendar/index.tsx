@@ -11,8 +11,18 @@ import { ruLocale } from '#lib/calendarConstants.ts';
 import type { DateRange } from 'lib/types';
 
 export interface YearRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {
-  yearsOnScreen?: number;
+  /** Конфиг функция пропсов для контейнера с годами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
   yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof YearsWidget>['yearsWidgetContainerPropsConfig'];
+
+  /** Модель массива для рендера ячеек с годами, на выход должна отдавать массив по размеру равный yearsOnScreen,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  yearsModel?: React.ComponentProps<typeof YearsWidget>['yearsModel'];
+
+  //** Количество ячеек в виджете с годами */
+  yearsOnScreen?: number;
+  //** Количество столбцов в виджете с годами */
+  yearsColumns?: number;
 }
 
 export const YearRangeCalendar = ({
@@ -31,6 +41,8 @@ export const YearRangeCalendar = ({
   cell,
   locale = ruLocale,
   yearsOnScreen,
+  yearsColumns,
+  yearsModel,
   yearsWidgetContainerPropsConfig,
   ...props
 }: YearRangeCalendarProps) => {
@@ -169,6 +181,8 @@ export const YearRangeCalendar = ({
       range={true}
       yearsOnScreen={yearsOnScreen}
       yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
+      yearsColumns={yearsColumns}
+      yearsModel={yearsModel}
     />
   );
 };

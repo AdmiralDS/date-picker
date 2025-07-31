@@ -1,6 +1,6 @@
 import type { ComponentProps, MouseEventHandler, Ref } from 'react';
 import { forwardRef, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { type DataAttributes } from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { changeInputData, refSetter } from '@admiral-ds/react-ui';
@@ -11,7 +11,7 @@ import { InputIconButton } from '#lib/InputIconButton';
 import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
 import { PopoverPanel } from '#lib/PopoverPanel';
 import { InputsConfirmedState } from '#lib/calendarInterfaces.js';
-import type { ActiveEnd, CalendarViewMode } from '#lib/calendarInterfaces.js';
+import type { ActiveEnd, CalendarLocaleProps, CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
 import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
 import { defaultDateFormatter, defaultDateParser, sortDatesAsc } from '#lib/utils';
@@ -27,14 +27,81 @@ export interface DateRangePickerProps
   extends RangeInputProps,
     Omit<DimensionInterface, 'width'>,
     Omit<InputBoxProps, 'onBlur' | 'onFocus' | '$dimension'> {
-  /** Функция для конвертации значение календаря в строку инпута */
-  format?: (date?: Dayjs) => string;
 
-  /** Функция для конвертации строки инпута в значение календаря */
-  parse?: (date?: string) => Dayjs | undefined;
+  /** Изменение локали выпадающего календаря */
+  Calendarlocale?: CalendarLocaleProps;
 
-  /** Разделитель между инпутами */
-  separator?: string;
+  /** Конфиг функция пропсов для input. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  // TODO: переделать на RangeInput    
+  inputPropsConfig?: (
+    props: React.ComponentProps<typeof InputLine>,
+  ) => Partial<React.ComponentProps<typeof InputLine> & DataAttributes>;
+
+  /** Конфиг функция пропсов для кнопки. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  iconButtonPropsConfig?: (
+    props: React.ComponentProps<typeof InputIconButton>,
+  ) => Partial<React.ComponentProps<typeof InputIconButton> & DataAttributes>;
+
+  /** Конфиг функция пропсов для dropdown. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  dropdownPropsConfig?: (
+    props: React.ComponentProps<typeof PopoverPanel>,
+  ) => Partial<React.ComponentProps<typeof PopoverPanel> & DataAttributes>;
+
+  /** Модель массива для рендера ячеек с днями, на выход должна отдавать массив по размеру равный 42,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  datesModel?: React.ComponentProps<typeof Calendar>['datesModel'];
+
+  /** Конфиг функция пропсов для контейнера с днями. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  datesWidgetContainerPropsConfig?: React.ComponentProps<typeof Calendar>['datesWidgetContainerPropsConfig'];
+
+  /** Модель массива для рендера ячеек с названиями дня в неделе, на выход должна отдавать массив по размеру равный 7,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  daysModel?: React.ComponentProps<typeof Calendar>['daysModel'];
+
+  /** Конфиг функция пропсов для контейнера с названиями дня в неделе. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  daysWidgetContainerPropsConfig?: React.ComponentProps<typeof Calendar>['daysWidgetContainerPropsConfig'];
+
+  /** Модель массива для рендера ячеек с месяцами, на выход должна отдавать массив по размеру равный 12,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  monthsModel?: React.ComponentProps<typeof Calendar>['monthsModel'];
+
+  /** Конфиг функция пропсов для контейнера с месяцами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  monthsWidgetContainerPropsConfig?: React.ComponentProps<typeof Calendar>['monthsWidgetContainerPropsConfig'];
+
+  /** Конфиг функция пропсов для контейнера с годами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof Calendar>['yearsWidgetContainerPropsConfig'];
+
+  /** Модель массива для рендера ячеек с годами, на выход должна отдавать массив по размеру равный yearsOnScreen,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  yearsModel?: React.ComponentProps<typeof Calendar>['yearsModel'];
+
+  //** Количество ячеек в виджете с годами */
+  yearsOnScreen?: number;
+  //** Количество столбцов в виджете с годами */
+  yearsColumns?: number;
+
+  /** Конфиг функция пропсов для кнопки с месяцем на навигационной панели с выбором режима календаря. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  monthNavigationButtonPropsConfig?: React.ComponentProps<typeof Calendar>['monthNavigationButtonPropsConfig'];
+
+  /** Конфиг функция пропсов для кнопки с годом на навигационной панели с выбором режима календаря. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  yearNavigationButtonPropsConfig?: React.ComponentProps<typeof Calendar>['yearNavigationButtonPropsConfig'];
+
+  /** Конфиг функция пропсов для кнопки панели "Назад". На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  prevButtonPropsConfig?: React.ComponentProps<typeof Calendar>['prevButtonPropsConfig'];
+
+  /** Конфиг функция пропсов для кнопки панели "Вперед". На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  nextButtonPropsConfig?: React.ComponentProps<typeof Calendar>['nextButtonPropsConfig'];
 
   /** Проверка диапазона */
   checkDateRange?: (dateRange: DateRange) => DateRange;
@@ -43,6 +110,8 @@ export interface DateRangePickerProps
 function checkDateRangeDefault(dateRange: DateRange) {
   return sortDatesAsc(...dateRange, 'date');
 }
+
+const nothing = () => {};
 
 /**
  * Компонент DateRangePicker
@@ -58,6 +127,24 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       format = defaultDateFormatter,
       parse = defaultDateParser,
       onSelectedRangeChange,
+      Calendarlocale,
+      datesWidgetContainerPropsConfig,
+      datesModel,
+      daysWidgetContainerPropsConfig,
+      daysModel,
+      monthsModel,
+      monthsWidgetContainerPropsConfig,
+      yearsWidgetContainerPropsConfig,
+      yearsModel,
+      yearsOnScreen,
+      yearsColumns,
+      prevButtonPropsConfig,
+      nextButtonPropsConfig,
+      monthNavigationButtonPropsConfig,
+      yearNavigationButtonPropsConfig,
+      inputPropsConfig = nothing,
+      iconButtonPropsConfig = nothing,
+      dropdownPropsConfig = nothing,
       ...containerProps
     },
     refContainerProps,
@@ -159,6 +246,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       setCalendarOpen(false);
     };
 
+
     const startRef =
       inputPropsStart.ref !== undefined
         ? refSetter(startInputRef, inputPropsStart.ref as Ref<HTMLInputElement>)
@@ -188,13 +276,24 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       onActiveEndValueChange: handleActiveEndChange,
       onRangeInputFinish: handleRangeInputFinish,
     };
+        
+    const iconButtonFinalProps: ComponentProps<typeof InputIconButton> = {
+      icon: CalendarOutline,
+      onMouseDown: handleInputIconButtonMouseDown,
+    };
+        
+    const dropdownFinalProps: ComponentProps<typeof PopoverPanel> = {
+      targetElement: inputBoxRef.current,
+      alignSelf: 'auto',
+      onMouseDown: (e) => e.preventDefault(),
+    }
 
     return (
       <InputBox {...containerFinalProps} style={{ alignItems: 'center' }}>
         <RangeInput {...rangeInputProps} />
-        <InputIconButton icon={CalendarOutline} onMouseDown={handleInputIconButtonMouseDown} />
+        <InputIconButton {...iconButtonFinalProps} {...iconButtonPropsConfig(iconButtonFinalProps)} />
         {isCalendarOpen && (
-          <PopoverPanel targetElement={inputBoxRef.current} alignSelf="auto" onMouseDown={(e) => e.preventDefault()}>
+          <PopoverPanel {...dropdownFinalProps} {...dropdownPropsConfig(dropdownFinalProps)}>
             <Calendar
               onViewModeChange={handleCalendarViewModeChange}
               dateValue={displayDate}
@@ -202,6 +301,21 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               selectedDateRangeValue={selectedRange}
               onSelectedDateRangeValueChange={handleSelectedDateValueChange}
               onActiveDateValueChange={handleActiveDateValueChange}
+              locale={Calendarlocale}
+              prevButtonPropsConfig={prevButtonPropsConfig}
+              nextButtonPropsConfig={nextButtonPropsConfig}
+              monthNavigationButtonPropsConfig={monthNavigationButtonPropsConfig}
+              yearNavigationButtonPropsConfig={yearNavigationButtonPropsConfig}
+              datesWidgetContainerPropsConfig={datesWidgetContainerPropsConfig}
+              datesModel={datesModel}
+              daysWidgetContainerPropsConfig={daysWidgetContainerPropsConfig}
+              daysModel={daysModel}
+              monthsModel={monthsModel}
+              monthsWidgetContainerPropsConfig={monthsWidgetContainerPropsConfig}
+              yearsModel={yearsModel}
+              yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
+              yearsOnScreen={yearsOnScreen}
+              yearsColumns={yearsColumns}
               activeEndValue={activeEnd}
             />
           </PopoverPanel>

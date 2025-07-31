@@ -14,14 +14,31 @@ import {
 import { ruLocale } from '#lib/calendarConstants.ts';
 
 export interface MonthPickerCalendarProps extends Omit<SingleCalendarProps, 'cell'>, PickerCalendarProps {
+  /** Конфиг функция пропсов для кнопки с годом на навигационной панели с выбором режима календаря. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
   yearNavigationButtonPropsConfig?: React.ComponentProps<
     typeof YearNavigationPanelWidget
   >['yearNavigationButtonPropsConfig'];
+
+  /** Модель массива для рендера ячеек с месяцами, на выход должна отдавать массив по размеру равный 12,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
   monthsModel?: React.ComponentProps<typeof MonthCalendarView>['monthsModel'];
+
+  /** Конфиг функция пропсов для контейнера с месяцами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
   monthsWidgetContainerPropsConfig?: React.ComponentProps<typeof MonthCalendarView>['monthsWidgetContainerPropsConfig'];
-  yearsModel?: React.ComponentProps<typeof YearCalendarView>['yearsModel'];
+
+  /** Конфиг функция пропсов для контейнера с годами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
   yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof YearCalendarView>['yearsWidgetContainerPropsConfig'];
+
+  /** Модель массива для рендера ячеек с годами, на выход должна отдавать массив по размеру равный yearsOnScreen,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  yearsModel?: React.ComponentProps<typeof YearCalendarView>['yearsModel'];
+
+  //** Количество ячеек в виджете с годами */
   yearsOnScreen?: number;
+  //** Количество столбцов в виджете с годами */
   yearsColumns?: number;
 }
 

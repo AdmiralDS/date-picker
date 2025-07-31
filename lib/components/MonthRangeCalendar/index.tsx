@@ -10,8 +10,15 @@ import { MemoDefaultMonthRangeCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { DateRange } from 'lib/types';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface MonthRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface MonthRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {
+  /** Модель массива для рендера ячеек с месяцами, на выход должна отдавать массив по размеру равный 12,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  monthsModel?: React.ComponentProps<typeof MonthsWidget>['monthsModel'];
+
+  /** Конфиг функция пропсов для контейнера с месяцами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  monthsWidgetContainerPropsConfig?: React.ComponentProps<typeof MonthsWidget>['monthsWidgetContainerPropsConfig'];
+}
 
 export const MonthRangeCalendar = ({
   selectedDateRangeValue,
@@ -27,6 +34,8 @@ export const MonthRangeCalendar = ({
   defaultActiveEndValue,
   onActiveEndValueChange,
   cell,
+  monthsModel,
+  monthsWidgetContainerPropsConfig,
   locale = ruLocale,
   ...props
 }: MonthRangeCalendarProps) => {
@@ -164,6 +173,8 @@ export const MonthRangeCalendar = ({
       onClick={handleDateClick}
       cell={cell || MemoDefaultMonthRangeCell}
       range={true}
+      monthsModel={monthsModel}
+      monthsWidgetContainerPropsConfig={monthsWidgetContainerPropsConfig}
     />
   );
 };

@@ -118,7 +118,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     {
       inputProps = {},
       format = defaultFormatter,
-      parce = defaultParcer,
+      parse = defaultParser,
       Calendarlocale = ruLocale,
       datesWidgetContainerPropsConfig,
       datesModel,
@@ -243,7 +243,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     };
 
     const date = parse(inputValue);
-
 
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
       const value = e.currentTarget.value;

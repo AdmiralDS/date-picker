@@ -12,8 +12,23 @@ import { MemoDefaultDateRangeCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { DateRange } from 'lib/types';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface DateRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {}
+export interface DateRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {
+  /** Конфиг функция пропсов для контейнера с днями. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  datesWidgetContainerPropsConfig?: React.ComponentProps<typeof DatesWidget>['datesWidgetContainerPropsConfig'];
+
+  /** Модель массива для рендера ячеек с днями, на выход должна отдавать массив по размеру равный 42,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  datesModel?: React.ComponentProps<typeof DatesWidget>['datesModel'];
+
+  /** Конфиг функция пропсов для контейнера с названиями дня в неделе. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  daysWidgetContainerPropsConfig?: React.ComponentProps<typeof DatesWidget>['daysWidgetContainerPropsConfig'];
+
+  /** Модель массива для рендера ячеек с названиями дня в неделе, на выход должна отдавать массив по размеру равный 7,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  daysModel?: React.ComponentProps<typeof DatesWidget>['daysModel'];
+}
 
 export const DateRangeCalendar = ({
   selectedDateRangeValue,
@@ -30,6 +45,10 @@ export const DateRangeCalendar = ({
   onActiveEndValueChange,
   cell,
   locale = ruLocale,
+  datesWidgetContainerPropsConfig,
+  datesModel,
+  daysWidgetContainerPropsConfig,
+  daysModel,
   ...props
 }: DateRangeCalendarProps) => {
   //#region "Date shown on calendar"
@@ -171,6 +190,10 @@ export const DateRangeCalendar = ({
       onClick={handleDateClick}
       cell={cell || MemoDefaultDateRangeCell}
       range={true}
+      datesWidgetContainerPropsConfig={datesWidgetContainerPropsConfig}
+      datesModel={datesModel}
+      daysWidgetContainerPropsConfig={daysWidgetContainerPropsConfig}
+      daysModel={daysModel}
     />
   );
 };
