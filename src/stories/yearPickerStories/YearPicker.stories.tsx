@@ -45,14 +45,15 @@ export const YearPickerSimple: StoryObj<typeof YearPicker> = {
 
     const length = containerCells.childNodes.length;
     const date = containerCells.firstElementChild?.getAttribute('data-value');
-    const innerYear = dayjs(date).year();
+    const firstRangeYear = dayjs(date).year();
 
     const findYear = async (find: number) => {
       if (randomYear >= find && randomYear <= find + length - 1) {
         for (const [i, elem] of containerCells.childNodes.entries()) {
-          const value = Number((elem.childNodes[2] as HTMLElement).innerText);
+          const value = (elem as HTMLElement).getAttribute('data-value');
+          const foundYear = dayjs(value).year();
 
-          if (value === randomYear) await userEvent.click(canvas.getByTestId(`test-cell-${i}`));
+          if (foundYear === randomYear) await userEvent.click(canvas.getByTestId(`test-cell-${i}`));
         }
       } else {
         if (randomYear < find) {
@@ -65,7 +66,7 @@ export const YearPickerSimple: StoryObj<typeof YearPicker> = {
       }
     };
 
-    await findYear(innerYear);
+    await findYear(firstRangeYear);
 
     await expect(inputNode).toHaveFocus();
     await expect(inputNode).toHaveValue(`${randomYear}`);

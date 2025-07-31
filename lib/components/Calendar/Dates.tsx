@@ -1,7 +1,6 @@
 import type { FunctionComponent, HTMLAttributes } from 'react';
 import { createElement, useMemo } from 'react';
 import styled from 'styled-components';
-import { DATES_ON_SCREEN, DATES_WRAPPER_HEIGHT } from '#lib/DatesOfMonthWidget/constants';
 import { MemoDefaultDateCell } from '#lib/DefaultCell';
 import type { DateAttributes } from '#lib/DefaultCell';
 import type { DateCellProps, RangeTimestamp, Timestamp } from '#lib/calendarInterfaces';
@@ -15,12 +14,14 @@ import {
 } from 'lib/dateTimestampUtils';
 import { defaultTimestampFormatter } from './defaultTimestampFormatter';
 
+const DATES_ON_SCREEN = 42;
+
 const DatesWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   align-content: space-between;
-  height: ${DATES_WRAPPER_HEIGHT}px;
+  height: 236px;
 `;
 
 export function generateCalendarDataCellList(

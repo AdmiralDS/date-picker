@@ -21,7 +21,13 @@ export interface MonthRangeDoublePickerCalendarProps
       RangeDoubleCalendarProps,
       'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'cell'
     >,
-    PickerCalendarProps {}
+    PickerCalendarProps {
+  /** Конфиг функция пропсов для кнопки панели с выбором режима календаря. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  yearNavigationButtonPropsConfig?: React.ComponentProps<
+    typeof YearNavigationPanelWidget
+  >['yearNavigationButtonPropsConfig'];
+}
 
 export const MonthRangeDoublePickerCalendar = ({
   viewModeValue,
@@ -38,8 +44,9 @@ export const MonthRangeDoublePickerCalendar = ({
   onActiveDateValueChange,
   cell,
   locale = ruLocale,
-  prevButtonProps,
-  nextButtonProps,
+  prevButtonPropsConfig,
+  nextButtonPropsConfig,
+  yearNavigationButtonPropsConfig,
   ...props
 }: MonthRangeDoublePickerCalendarProps) => {
   //#region "Calendar view mode"
@@ -194,8 +201,9 @@ export const MonthRangeDoublePickerCalendar = ({
           viewMode={viewModeLeftInner}
           locale={locale}
           onMouseDown={handleLeftYearNavigationPanelClick}
-          prevButtonProps={prevButtonProps}
-          nextButtonProps={nextButtonProps}
+          prevButtonPropsConfig={prevButtonPropsConfig}
+          nextButtonPropsConfig={nextButtonPropsConfig}
+          yearNavigationButtonPropsConfig={yearNavigationButtonPropsConfig}
         />
         <CalendarContainer>
           <MonthRangeCalendarView
@@ -229,8 +237,9 @@ export const MonthRangeDoublePickerCalendar = ({
           viewMode={viewModeRightInner}
           locale={locale}
           onMouseDown={handleRightYearNavigationPanelClick}
-          prevButtonProps={prevButtonProps}
-          nextButtonProps={nextButtonProps}
+          prevButtonPropsConfig={prevButtonPropsConfig}
+          nextButtonPropsConfig={nextButtonPropsConfig}
+          yearNavigationButtonPropsConfig={yearNavigationButtonPropsConfig}
         />
         <CalendarContainer>
           <MonthRangeCalendarView

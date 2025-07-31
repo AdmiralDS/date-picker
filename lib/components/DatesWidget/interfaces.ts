@@ -1,8 +1,6 @@
 import type { HTMLAttributes } from 'react';
 import type { RuleSet } from 'styled-components';
 
-import type { BaseWidgetProps } from '#lib/widgetInterfaces.ts';
-
 export interface CellStateProps {
   selected?: boolean;
   disabled?: boolean;
@@ -15,15 +13,5 @@ export interface CellStateProps {
 }
 
 export interface DayNameCellProps extends HTMLAttributes<HTMLDivElement> {
-  dayNameCellState: (dayNumber: number) => CellStateProps;
-}
-
-export interface DatesOfMonthWidgetProps extends BaseWidgetProps {
-  dayNamesProps: DayNameCellProps;
-}
-export interface DatesProps extends BaseWidgetProps {}
-
-export interface DaysProps {
-  locale: string;
   dayNameCellState: (dayNumber: number) => CellStateProps;
 }

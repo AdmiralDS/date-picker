@@ -11,7 +11,7 @@ import { ruLocale } from '#lib/calendarConstants.ts';
 
 export interface YearCalendarProps extends Omit<SingleCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {
   yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof YearsWidget>['yearsWidgetContainerPropsConfig'];
-  yearModel?: React.ComponentProps<typeof YearsWidget>['yearModel'];
+  yearsModel?: React.ComponentProps<typeof YearsWidget>['yearsModel'];
   yearsOnScreen?: number;
   yearsColumns?: number;
 }
@@ -28,7 +28,7 @@ export const YearCalendar = ({
   cell,
   locale = ruLocale,
   yearsWidgetContainerPropsConfig,
-  yearModel,
+  yearsModel,
   yearsOnScreen,
   yearsColumns,
   ...props
@@ -98,7 +98,7 @@ export const YearCalendar = ({
       onMouseOver={handleMouseOver}
       onMouseDown={handleDateClick}
       cell={cell || MemoDefaultYearCell}
-      yearModel={yearModel}
+      yearsModel={yearsModel}
       yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
       yearsOnScreen={yearsOnScreen}
       yearsColumns={yearsColumns}

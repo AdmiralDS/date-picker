@@ -12,10 +12,52 @@ import {
   MonthCalendarView,
   YearCalendarView,
 } from '#lib/calendarStyle.ts';
-import { YEARS_ON_SCREEN } from '#lib/YearsWidget/constants.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
 
-export interface DatePickerCalendarProps extends Omit<SingleCalendarProps, 'cell'>, PickerCalendarProps {}
+export interface DatePickerCalendarProps extends Omit<SingleCalendarProps, 'cell'>, PickerCalendarProps {
+  /** Конфиг функция пропсов для кнопки с месяцем на навигационной панели с выбором режима календаря. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  monthNavigationButtonPropsConfig?: React.ComponentProps<
+    typeof MonthNavigationPanelWidget
+  >['monthNavigationButtonPropsConfig'];
+  /** Конфиг функция пропсов для кнопки с годом на навигационной панели с выбором режима календаря. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  yearNavigationButtonPropsConfig?: React.ComponentProps<
+    typeof MonthNavigationPanelWidget
+  >['yearNavigationButtonPropsConfig'];
+
+  /** Конфиг функция пропсов для контейнера с днями. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  datesWidgetContainerPropsConfig?: React.ComponentProps<typeof DateCalendarView>['datesWidgetContainerPropsConfig'];
+  /** Модель массива для рендера ячеек с днями, на выход должна отдавать массив по размеру равный 42,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  datesModel?: React.ComponentProps<typeof DateCalendarView>['datesModel'];
+
+  /** Конфиг функция пропсов для контейнера с названиями дня в неделе. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  daysWidgetContainerPropsConfig?: React.ComponentProps<typeof DateCalendarView>['daysWidgetContainerPropsConfig'];
+  /** Модель массива для рендера ячеек с названиями дня в неделе, на выход должна отдавать массив по размеру равный 7,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  daysModel?: React.ComponentProps<typeof DateCalendarView>['daysModel'];
+
+  /** Модель массива для рендера ячеек с месяцами, на выход должна отдавать массив по размеру равный 12,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  monthsModel?: React.ComponentProps<typeof MonthCalendarView>['monthsModel'];
+  /** Конфиг функция пропсов для контейнера с месяцами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  monthsWidgetContainerPropsConfig?: React.ComponentProps<typeof MonthCalendarView>['monthsWidgetContainerPropsConfig'];
+
+  /** Конфиг функция пропсов для контейнера с годами. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof YearCalendarView>['yearsWidgetContainerPropsConfig'];
+  /** Модель массива для рендера ячеек с годами, на выход должна отдавать массив по размеру равный yearsOnScreen,
+   * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
+  yearsModel?: React.ComponentProps<typeof YearCalendarView>['yearsModel'];
+  //** Количество ячеек в виджете с годами */
+  yearsOnScreen?: number;
+  //** Количество столбцов в виджете с годами */
+  yearsColumns?: number;
+}
 
 export const DatePickerCalendar = ({
   viewModeValue,
@@ -29,10 +71,22 @@ export const DatePickerCalendar = ({
   onSelectedDateValueChange,
   cell,
   locale = ruLocale,
-  prevButtonProps,
-  nextButtonProps,
+  prevButtonPropsConfig,
+  nextButtonPropsConfig,
   className,
   style,
+  datesWidgetContainerPropsConfig,
+  datesModel,
+  daysWidgetContainerPropsConfig,
+  daysModel,
+  monthsModel,
+  monthsWidgetContainerPropsConfig,
+  yearsWidgetContainerPropsConfig,
+  yearsModel,
+  yearsOnScreen = 20,
+  yearsColumns,
+  monthNavigationButtonPropsConfig,
+  yearNavigationButtonPropsConfig,
   ...props
 }: DatePickerCalendarProps) => {
   //#region "Calendar view mode"
@@ -89,7 +143,7 @@ export const DatePickerCalendar = ({
         } else if (viewModeInner === 'months') {
           handleDateChange(dateInner.subtract(1, 'year'));
         } else {
-          handleDateChange(dateInner.subtract(YEARS_ON_SCREEN, 'year'));
+          handleDateChange(dateInner.subtract(yearsOnScreen, 'year'));
         }
         break;
       case 'right':
@@ -98,7 +152,7 @@ export const DatePickerCalendar = ({
         } else if (viewModeInner === 'months') {
           handleDateChange(dateInner.add(1, 'year'));
         } else {
-          handleDateChange(dateInner.add(YEARS_ON_SCREEN, 'year'));
+          handleDateChange(dateInner.add(yearsOnScreen, 'year'));
         }
         break;
       case 'month':
@@ -117,8 +171,10 @@ export const DatePickerCalendar = ({
         viewMode={viewModeInner}
         locale={locale}
         onMouseDown={handleMonthNavigationPanelClick}
-        prevButtonProps={prevButtonProps}
-        nextButtonProps={nextButtonProps}
+        prevButtonPropsConfig={prevButtonPropsConfig}
+        nextButtonPropsConfig={nextButtonPropsConfig}
+        monthNavigationButtonPropsConfig={monthNavigationButtonPropsConfig}
+        yearNavigationButtonPropsConfig={yearNavigationButtonPropsConfig}
       />
       <CalendarContainer>
         <DateCalendarView
@@ -129,6 +185,10 @@ export const DatePickerCalendar = ({
           onSelectedDateValueChange={handleDateClick}
           locale={locale}
           $isVisible={viewModeInner === 'dates'}
+          datesWidgetContainerPropsConfig={datesWidgetContainerPropsConfig}
+          datesModel={datesModel}
+          daysWidgetContainerPropsConfig={daysWidgetContainerPropsConfig}
+          daysModel={daysModel}
         />
         <MonthCalendarView
           {...props}
@@ -138,6 +198,8 @@ export const DatePickerCalendar = ({
           onSelectedDateValueChange={handleMonthClick}
           locale={locale}
           $isVisible={viewModeInner === 'months'}
+          monthsModel={monthsModel}
+          monthsWidgetContainerPropsConfig={monthsWidgetContainerPropsConfig}
         />
         <YearCalendarView
           {...props}
@@ -147,6 +209,10 @@ export const DatePickerCalendar = ({
           onSelectedDateValueChange={handleYearClick}
           locale={locale}
           $isVisible={viewModeInner === 'years'}
+          yearsModel={yearsModel}
+          yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
+          yearsOnScreen={yearsOnScreen}
+          yearsColumns={yearsColumns}
         />
       </CalendarContainer>
     </SinglePickerCalendarWrapper>

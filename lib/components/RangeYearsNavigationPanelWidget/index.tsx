@@ -15,6 +15,7 @@ export interface RangeYearsNavigationPanelWidgetProps extends BasePanelWidgetPro
   yearsNavigationContainerPropsConfig?: (
     props: React.ComponentProps<typeof YearsWrapper>,
   ) => Partial<React.ComponentProps<typeof YearsWrapper> & DataAttributes>;
+  //** Количество ячеек в виджете с годами */
   yearsOnScreen?: number;
 }
 
@@ -43,9 +44,6 @@ export const RangeYearsNavigationPanelWidget = ({
   viewMode,
   date,
   locale = ruLocale,
-  //todo удалить при дальнейшем рефакторинге month date
-  prevButtonProps,
-  nextButtonProps,
   prevButtonPropsConfig = nothing,
   nextButtonPropsConfig = nothing,
   yearsNavigationContainerPropsConfig = nothing,
@@ -55,29 +53,27 @@ export const RangeYearsNavigationPanelWidget = ({
   const dateInner = date?.locale(locale?.localeName) || getCurrentDate(locale?.localeName);
   const { start, end } = yearsRange(dateInner, yearsOnScreen);
 
-  const prevButtonPropsFinal = {
+  const prevButtonProps = {
     dimension: 'lSmall',
     highlightFocus: false,
     'data-panel-target-type': 'left',
     renderContent: () => locale?.localeText.backwardText,
-    ...prevButtonProps,
   } as const;
 
-  const nextButtonPropsFinal = {
+  const nextButtonProps = {
     dimension: 'lSmall',
     highlightFocus: false,
     'data-panel-target-type': 'right',
     renderContent: () => locale?.localeText.forwardText,
-    ...nextButtonProps,
   } as const;
 
   return (
     <RangeYearsNavigationPanelWrapper {...props}>
-      <IconWithTooltip {...prevButtonPropsFinal} {...prevButtonPropsConfig(prevButtonPropsFinal)}>
+      <IconWithTooltip {...prevButtonProps} {...prevButtonPropsConfig(prevButtonProps)}>
         <ChevronLeftOutline />
       </IconWithTooltip>
       <YearsWrapper {...yearsNavigationContainerPropsConfig({})}>{`${start}–${end}`}</YearsWrapper>
-      <IconWithTooltip {...nextButtonPropsFinal} {...nextButtonPropsConfig(nextButtonPropsFinal)}>
+      <IconWithTooltip {...nextButtonProps} {...nextButtonPropsConfig(nextButtonProps)}>
         <ChevronRightOutline />
       </IconWithTooltip>
     </RangeYearsNavigationPanelWrapper>

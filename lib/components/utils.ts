@@ -249,3 +249,18 @@ export const defaultYearParser = (date?: string) => dayjs(date, 'YYYY');
 export const defaultDateFormatter = (date?: Dayjs) => (date ? date.format('DD.MM.YYYY') : '');
 export const defaultMonthFormatter = (date?: Dayjs) => (date ? date.format('MM.YYYY') : '');
 export const defaultYearFormatter = (date?: Dayjs) => (date ? date.format('YYYY') : '');
+
+export const arrayFormatter = <T>(numberFormatter: number, array: T[]) => {
+  let innerArray = array;
+  // Проверка на некорректную длину массива
+  if (array.length < numberFormatter) {
+    const additionalLength = numberFormatter - array.length;
+
+    innerArray = array.concat(new Array(additionalLength).fill({}));
+  }
+  if (array.length > numberFormatter) {
+    innerArray = array.slice(0, numberFormatter);
+  }
+
+  return innerArray;
+};

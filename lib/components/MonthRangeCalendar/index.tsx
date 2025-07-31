@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 
 import { getCurrentDate } from '#lib/utils';
 import type { ActiveEnd, RangeCalendarProps } from '#lib/calendarInterfaces';
-import { MonthsOfYearWidget } from '#lib/MonthsOfYearWidget';
+import { MonthsWidget } from '#lib/MonthsWidget';
 import { MemoDefaultMonthRangeCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { DateRange } from 'lib/types';
@@ -151,7 +151,7 @@ export const MonthRangeCalendar = ({
   };
 
   return (
-    <MonthsOfYearWidget
+    <MonthsWidget
       {...props}
       date={dateInner}
       selected={[dateRangeFirstInner, dateRangeSecondInner]}

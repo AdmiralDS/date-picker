@@ -20,7 +20,13 @@ export interface MonthRangePickerCalendarProps
       RangeCalendarProps,
       'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'cell'
     >,
-    PickerCalendarProps {}
+    PickerCalendarProps {
+  /** Конфиг функция пропсов для кнопки панели с выбором режима календаря. На вход получает начальный набор пропсов, на
+   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
+  yearNavigationButtonPropsConfig?: React.ComponentProps<
+    typeof YearNavigationPanelWidget
+  >['yearNavigationButtonPropsConfig'];
+}
 
 export const MonthRangePickerCalendar = ({
   viewModeValue,
@@ -37,8 +43,8 @@ export const MonthRangePickerCalendar = ({
   onActiveEndValueChange,
   cell,
   locale = ruLocale,
-  prevButtonProps,
-  nextButtonProps,
+  prevButtonPropsConfig,
+  nextButtonPropsConfig,
   ...props
 }: MonthRangePickerCalendarProps) => {
   //#region "Calendar view mode"
@@ -138,8 +144,8 @@ export const MonthRangePickerCalendar = ({
         viewMode={viewModeInner}
         locale={locale}
         onMouseDown={handleYearNavigationPanelClick}
-        prevButtonProps={prevButtonProps}
-        nextButtonProps={nextButtonProps}
+        prevButtonPropsConfig={prevButtonPropsConfig}
+        nextButtonPropsConfig={nextButtonPropsConfig}
       />
       <CalendarContainer>
         <MonthRangeCalendarView

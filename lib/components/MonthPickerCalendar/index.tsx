@@ -11,10 +11,19 @@ import {
   MonthCalendarView,
   YearCalendarView,
 } from '#lib/calendarStyle.ts';
-import { YEARS_ON_SCREEN } from '#lib/YearsWidget/constants.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
 
-export interface MonthPickerCalendarProps extends Omit<SingleCalendarProps, 'cell'>, PickerCalendarProps {}
+export interface MonthPickerCalendarProps extends Omit<SingleCalendarProps, 'cell'>, PickerCalendarProps {
+  yearNavigationButtonPropsConfig?: React.ComponentProps<
+    typeof YearNavigationPanelWidget
+  >['yearNavigationButtonPropsConfig'];
+  monthsModel?: React.ComponentProps<typeof MonthCalendarView>['monthsModel'];
+  monthsWidgetContainerPropsConfig?: React.ComponentProps<typeof MonthCalendarView>['monthsWidgetContainerPropsConfig'];
+  yearsModel?: React.ComponentProps<typeof YearCalendarView>['yearsModel'];
+  yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof YearCalendarView>['yearsWidgetContainerPropsConfig'];
+  yearsOnScreen?: number;
+  yearsColumns?: number;
+}
 
 export const MonthPickerCalendar = ({
   viewModeValue,
@@ -28,8 +37,15 @@ export const MonthPickerCalendar = ({
   onSelectedDateValueChange,
   cell,
   locale = ruLocale,
-  prevButtonProps,
-  nextButtonProps,
+  prevButtonPropsConfig,
+  nextButtonPropsConfig,
+  yearNavigationButtonPropsConfig,
+  monthsModel,
+  monthsWidgetContainerPropsConfig,
+  yearsWidgetContainerPropsConfig,
+  yearsModel,
+  yearsOnScreen = 20,
+  yearsColumns,
   ...props
 }: MonthPickerCalendarProps) => {
   //#region "Calendar view mode"
@@ -79,14 +95,14 @@ export const MonthPickerCalendar = ({
         if (viewModeInner === 'months') {
           handleDateChange(dateInner.subtract(1, 'year'));
         } else {
-          handleDateChange(dateInner.subtract(YEARS_ON_SCREEN, 'year'));
+          handleDateChange(dateInner.subtract(yearsOnScreen, 'year'));
         }
         break;
       case 'right':
         if (viewModeInner === 'months') {
           handleDateChange(dateInner.add(1, 'year'));
         } else {
-          handleDateChange(dateInner.add(YEARS_ON_SCREEN, 'year'));
+          handleDateChange(dateInner.add(yearsOnScreen, 'year'));
         }
         break;
       case 'year':
@@ -102,8 +118,9 @@ export const MonthPickerCalendar = ({
         viewMode={viewModeInner}
         locale={locale}
         onMouseDown={handleYearNavigationPanelClick}
-        prevButtonProps={prevButtonProps}
-        nextButtonProps={nextButtonProps}
+        prevButtonPropsConfig={prevButtonPropsConfig}
+        nextButtonPropsConfig={nextButtonPropsConfig}
+        yearNavigationButtonPropsConfig={yearNavigationButtonPropsConfig}
       />
       <CalendarContainer>
         <MonthCalendarView
@@ -114,6 +131,8 @@ export const MonthPickerCalendar = ({
           onSelectedDateValueChange={handleMonthClick}
           locale={locale}
           $isVisible={viewModeInner === 'months'}
+          monthsModel={monthsModel}
+          monthsWidgetContainerPropsConfig={monthsWidgetContainerPropsConfig}
         />
         <YearCalendarView
           {...props}
@@ -123,6 +142,10 @@ export const MonthPickerCalendar = ({
           onSelectedDateValueChange={handleYearClick}
           locale={locale}
           $isVisible={viewModeInner === 'years'}
+          yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
+          yearsModel={yearsModel}
+          yearsOnScreen={yearsOnScreen}
+          yearsColumns={yearsColumns}
         />
       </CalendarContainer>
     </SinglePickerCalendarWrapper>
