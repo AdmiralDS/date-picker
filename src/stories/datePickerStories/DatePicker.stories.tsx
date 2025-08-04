@@ -9,7 +9,7 @@ import DatePickerSimpleTemplateRaw from './DatePickerSimple.template.tsx?raw';
 import DatePickerChangeLocaleTemplateRaw from './DatePickerChangeLocale.template.tsx?raw';
 import DatePickerTestsTemplateRaw from './DatePickerTests.template.tsx?raw';
 
-import { pickDateTest } from './DataPickerTests.tsx';
+import { pickDateFirstTest, pickDateSecondTest, pickDateThirdTest } from './DatePickerTests.tsx';
 
 export default {
   title: 'Admiral-2.1/Date Picker/Picker/DatePicker',
@@ -24,7 +24,7 @@ export default {
   argTypes: {},
 } as Meta<typeof DatePicker>;
 
-export const DatePickerCalendarSimple: StoryObj<typeof DatePicker> = {
+export const DatePickerSimple: StoryObj<typeof DatePicker> = {
   // обязательно для правильной работы хуков внутри темплейта
   render: () => <DatePickerSimpleTemplate />,
   parameters: {
@@ -57,7 +57,7 @@ export const DatePickerChangeLocale: StoryObj<typeof DatePicker> = {
   name: 'Смена локализации',
 };
 
-export const DatePickerCalendarTests: StoryObj<typeof DatePicker> = {
+export const DatePickerTests: StoryObj<typeof DatePicker> = {
   // обязательно для правильной работы хуков внутри темплейта
   render: () => <DatePickerTestsTemplate />,
   parameters: {
@@ -74,8 +74,16 @@ export const DatePickerCalendarTests: StoryObj<typeof DatePicker> = {
       value: '11.',
     },
   },
-  play: async ({ canvasElement }) => {
-    await pickDateTest(canvasElement);
+  play: async ({ canvasElement, step }) => {
+    await step('First Test', async () => {
+      await pickDateFirstTest(canvasElement);
+    });
+    await step('Second Test', async () => {
+      await pickDateSecondTest(canvasElement);
+    });
+    await step('Third Test', async () => {
+      await pickDateThirdTest(canvasElement);
+    });
   },
   name: 'Тесты',
 };

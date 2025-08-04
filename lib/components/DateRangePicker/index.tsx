@@ -14,7 +14,7 @@ import { InputsConfirmedState } from '#lib/calendarInterfaces.js';
 import type { ActiveEnd, CalendarLocaleProps, CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
 import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
-import { defaultDateFormatter, defaultDateParser, sortDatesAsc } from '#lib/utils';
+import { defaultDateFormatter, sortDatesAsc } from '#lib/utils';
 import { DimensionInterface } from '#lib/Input/types';
 import { DATE_INPUT_WIDTH_S, DATE_INPUT_WIDTH_M_XL } from '#lib/Input/constatnts';
 
@@ -27,16 +27,8 @@ export interface DateRangePickerProps
   extends RangeInputProps,
     Omit<DimensionInterface, 'width'>,
     Omit<InputBoxProps, 'onBlur' | 'onFocus' | '$dimension'> {
-
   /** Изменение локали выпадающего календаря */
   Calendarlocale?: CalendarLocaleProps;
-
-  /** Конфиг функция пропсов для input. На вход получает начальный набор пропсов, на
-   * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
-  // TODO: переделать на RangeInput    
-  inputPropsConfig?: (
-    props: React.ComponentProps<typeof InputLine>,
-  ) => Partial<React.ComponentProps<typeof InputLine> & DataAttributes>;
 
   /** Конфиг функция пропсов для кнопки. На вход получает начальный набор пропсов, на
    * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
@@ -124,8 +116,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       inputPropsEnd = {},
       separator = '\u2014',
       checkDateRange = checkDateRangeDefault,
-      format = defaultDateFormatter,
-      parse = defaultDateParser,
       onSelectedRangeChange,
       Calendarlocale,
       datesWidgetContainerPropsConfig,
@@ -140,9 +130,9 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       yearsColumns,
       prevButtonPropsConfig,
       nextButtonPropsConfig,
+      format = defaultDateFormatter,
       monthNavigationButtonPropsConfig,
       yearNavigationButtonPropsConfig,
-      inputPropsConfig = nothing,
       iconButtonPropsConfig = nothing,
       dropdownPropsConfig = nothing,
       ...containerProps
@@ -246,7 +236,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       setCalendarOpen(false);
     };
 
-
     const startRef =
       inputPropsStart.ref !== undefined
         ? refSetter(startInputRef, inputPropsStart.ref as Ref<HTMLInputElement>)
@@ -266,8 +255,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       separator: separator,
       activeDate: activeDate,
       onSelectedRangeChange: handleSelectedDateValueChange,
-      format: format,
-      parse: parse,
       onFocus: handleInputFocus,
       onBlur: handleInputBlur,
       onCancelInput: handleRangeInputCancel,
@@ -276,17 +263,17 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       onActiveEndValueChange: handleActiveEndChange,
       onRangeInputFinish: handleRangeInputFinish,
     };
-        
+
     const iconButtonFinalProps: ComponentProps<typeof InputIconButton> = {
       icon: CalendarOutline,
       onMouseDown: handleInputIconButtonMouseDown,
     };
-        
+
     const dropdownFinalProps: ComponentProps<typeof PopoverPanel> = {
       targetElement: inputBoxRef.current,
       alignSelf: 'auto',
       onMouseDown: (e) => e.preventDefault(),
-    }
+    };
 
     return (
       <InputBox {...containerFinalProps} style={{ alignItems: 'center' }}>

@@ -142,7 +142,7 @@ export const RangeInput = ({
   activeDate,
   onSelectedRangeChange,
   format = defaultDateFormatter,
-  parse: parse = defaultDateParser,
+  parse = defaultDateParser,
   onCancelInput = DefaultCancelHandler,
   onStartDateChanged,
   onStartDateInputComplete,
@@ -162,7 +162,6 @@ export const RangeInput = ({
     defaultInputsConfirmation || InputsConfirmedState.initial,
   );
   const derivedConfirmationStatus = inputsConfirmation || inputsConfirmedState;
-  console.log(derivedConfirmationStatus);
 
   const handleConfirmInput = (state: InputsConfirmedState) => {
     setInputsConfirmedState(state);
@@ -189,8 +188,9 @@ export const RangeInput = ({
   }, [derivedConfirmationStatus]);
 
   //#region "Значения инпутов после клика или ручного ввода"
-  const [inputStartValue, setInputStartValue] = useState<string | undefined>(inputPropsStart.value);
-  const [inputEndValue, setInputEndValue] = useState<string | undefined>(inputPropsEnd.value);
+  //todo пересмотреть тип
+  const [inputStartValue, setInputStartValue] = useState(inputPropsStart.value as string | undefined);
+  const [inputEndValue, setInputEndValue] = useState(inputPropsEnd.value as string | undefined);
   //#endregion
 
   //#region "Значения инпутов после изменения активной даты в календаре (hovered date)"

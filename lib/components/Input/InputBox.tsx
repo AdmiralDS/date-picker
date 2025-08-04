@@ -24,7 +24,7 @@ const xlSizeMixin = css`
   }
 `;
 
-function getSizeMixin(dimension: InputDimension) {
+function getSizeMixin(dimension?: InputDimension) {
   switch (dimension) {
     case 'xl':
       return xlSizeMixin;
@@ -38,10 +38,10 @@ function getSizeMixin(dimension: InputDimension) {
 
 export interface InputBoxProps extends React.InputHTMLAttributes<HTMLDivElement> {
   /** Делает высоту компонента больше или меньше обычной */
-  $dimension: InputDimension;
+  $dimension?: InputDimension;
 }
 
-export const FocusBox = styled.div<{ $dimension: InputDimension }>`
+export const FocusBox = styled.div<{ $dimension?: InputDimension }>`
   cursor: text;
   display: inline-flex;
   overflow: hidden;
