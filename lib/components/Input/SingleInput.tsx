@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { type DataAttributes } from 'styled-components';
 import { forwardRef } from 'react';
 import { InputLine, InputLineProps } from '@admiral-ds/react-ui';
 import { DimensionInterface, InputDimension } from './types';
@@ -21,7 +21,7 @@ const Wrapper = styled.div<{ $dimension: InputDimension; $width?: string | numbe
   width: ${(p) => getInputWidth(p.$dimension, p.$width)};
 `;
 
-export interface SingleInputProps extends InputLineProps, DimensionInterface {}
+export interface SingleInputProps extends InputLineProps, DimensionInterface, DataAttributes {}
 
 export const SingleInput = forwardRef<HTMLInputElement, SingleInputProps>(
   ({ dimension = 'm', width, ...props }, ref) => {
