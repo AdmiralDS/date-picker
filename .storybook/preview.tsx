@@ -82,15 +82,29 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (renderStory) => {
+    (renderStory, context) => {
       const [{ CSSCustomProps }] = useGlobals();
-      const refDropdown = useRef(null);
+
+      const refDropdown = useRef<HTMLDivElement | null>(null);
+
+      useEffect(() => {
+        const iframeDoc = document;
+        const portalRoot = iframeDoc.createElement('div');
+        portalRoot.id = context.id;
+        iframeDoc.body.appendChild(portalRoot);
+        refDropdown.current = portalRoot;
+
+        return () => {
+          // Очистка при размонтировании
+          iframeDoc.body.removeChild(portalRoot);
+        };
+      }, []);
+
       return (
         <ThemeWrapper CSSCustomProps={CSSCustomProps as boolean}>
           <GlobalStyles />
           <DropdownProvider rootRef={refDropdown}>
-            <StoryContainer>{renderStory()}</StoryContainer>
-            <div ref={refDropdown} />
+            <StoryContainer id={'story-container'}>{renderStory()}</StoryContainer>
           </DropdownProvider>
         </ThemeWrapper>
       );
