@@ -270,6 +270,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     };
 
     const dropdownFinalProps: ComponentProps<typeof PopoverPanel> = {
+      className: 'popover-panel',
       targetElement: inputBoxRef.current,
       alignSelf: 'auto',
     };

@@ -9,7 +9,7 @@ import DatePickerSimpleTemplateRaw from './DatePickerSimple.template.tsx?raw';
 import DatePickerChangeLocaleTemplateRaw from './DatePickerChangeLocale.template.tsx?raw';
 import DatePickerTestsTemplateRaw from './DatePickerTests.template.tsx?raw';
 
-import { pickDateFirstTest, pickDateSecondTest, pickDateThirdTest } from './DatePickerTests.tsx';
+import { pickDateFirstTest, pickDateSecondTest, pickDateThirdTest } from './DatePicker.tests.ts';
 
 export default {
   title: 'Admiral-2.1/Date Picker/Picker/DatePicker',
@@ -74,15 +74,15 @@ export const DatePickerTests: StoryObj<typeof DatePicker> = {
       value: '11.',
     },
   },
-  play: async ({ canvasElement, step }) => {
+  play: async ({ canvasElement, id, step }) => {
     await step('First Test', async () => {
-      await pickDateFirstTest(canvasElement);
+      await pickDateFirstTest(canvasElement, id);
     });
     await step('Second Test', async () => {
-      await pickDateSecondTest(canvasElement);
+      await pickDateSecondTest(canvasElement, id);
     });
     await step('Third Test', async () => {
-      await pickDateThirdTest(canvasElement);
+      await pickDateThirdTest(canvasElement, id);
     });
   },
   name: 'Тесты',

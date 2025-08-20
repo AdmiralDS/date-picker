@@ -10,6 +10,18 @@
       "name": "Launch Chrome against localhost",
       "url": "http://localhost:5173",
       "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Storybook Debug",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run storybook", // Or 'yarn storybook' if using Yarn
+      "internalConsoleOptions": "openOnFirstSessionStart",
+      "serverReadyAction": {
+        "pattern": "Local:.+(https?://[^:]+:[0-9]+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome" // Or "debugWithEdge", "debugWithFirefox"
+      }
     }
   ]
 }
