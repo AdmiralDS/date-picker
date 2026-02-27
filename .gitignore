@@ -1,9 +1,23 @@
-node_modules
-dist
-package-lock.json
-admiral-ds-date-picker-*.tgz
-.idea
 .swc
-bun.lock
-storybook-static
 
+node_modules
+.DS_Store
+docs
+dist
+dist-ssr
+*.local
+*.log
+.idea
+storybook-static
+.npmrc
+admiral-ds-date-picker-*.tgz
+tsconfig.tsbuildinfo
+bun.lockb
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+.env
