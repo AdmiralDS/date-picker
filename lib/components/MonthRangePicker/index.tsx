@@ -24,9 +24,7 @@ const Calendar = styled(MonthRangePickerCalendar)`
 `;
 
 export interface MonthRangePickerProps
-  extends RangeInputProps,
-    Omit<DimensionInterface, 'width'>,
-    Omit<InputBoxProps, 'onBlur' | 'onFocus' | '$dimension'> {
+  extends RangeInputProps, Omit<DimensionInterface, 'width'>, Omit<InputBoxProps, 'onBlur' | 'onFocus' | '$dimension'> {
   /** Функция для конвертации значение календаря в строку инпута */
   format?: (date?: Dayjs) => string;
 

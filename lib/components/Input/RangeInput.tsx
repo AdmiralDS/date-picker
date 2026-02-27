@@ -189,8 +189,8 @@ export const RangeInput = ({
 
   //#region "Значения инпутов после клика или ручного ввода"
   //todo пересмотреть тип
-  const [inputStartValue, setInputStartValue] = useState(inputPropsStart.value as string | undefined);
-  const [inputEndValue, setInputEndValue] = useState(inputPropsEnd.value as string | undefined);
+  const [inputStartValue, setInputStartValue] = useState(inputPropsStart.value);
+  const [inputEndValue, setInputEndValue] = useState(inputPropsEnd.value);
   //#endregion
 
   //#region "Значения инпутов после изменения активной даты в календаре (hovered date)"
