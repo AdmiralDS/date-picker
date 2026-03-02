@@ -24,9 +24,7 @@ const Calendar = styled(DateRangePickerCalendar)`
 `;
 
 export interface DateRangePickerProps
-  extends RangeInputProps,
-    Omit<DimensionInterface, 'width'>,
-    Omit<InputBoxProps, 'onBlur' | 'onFocus' | '$dimension'> {
+  extends RangeInputProps, Omit<DimensionInterface, 'width'>, Omit<InputBoxProps, 'onBlur' | 'onFocus' | '$dimension'> {
   /** Изменение локали выпадающего календаря */
   Calendarlocale?: CalendarLocaleProps;
 

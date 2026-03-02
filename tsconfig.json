@@ -30,9 +30,7 @@
       "/*": ["./public/*"]
     },
     "types": ["vitest/globals", "vite-plugin-svgr/client", "vite/client", "@testing-library/jest-dom"],
-    "plugins": [{"name": "typescript-plugin-css-modules"}]
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
   "include": ["src", "lib", "public", "./.vitest/*", "./.storybook/*", "*.ts", "eslint.config.js"]
 }
-
-

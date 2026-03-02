@@ -15,7 +15,8 @@ import { ruLocale } from '#lib/calendarConstants.ts';
 import type { DateRange } from 'lib/types';
 
 export interface YearRangeDoublePickerCalendarProps
-  extends Omit<
+  extends
+    Omit<
       RangeDoubleCalendarProps,
       'activeDateRangeEndValue' | 'defaultActiveDateRangeEndValue' | 'onActiveDateRangeEndValueChange' | 'cell'
     >,

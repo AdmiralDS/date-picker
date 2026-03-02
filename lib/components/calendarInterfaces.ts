@@ -108,8 +108,10 @@ export interface RangeCalendarProps extends CalendarProps {
   onActiveEndValueChange?: (end: ActiveEnd) => void;
 }
 
-export interface RangeDoubleCalendarProps
-  extends Omit<RangeCalendarProps, 'dateValue' | 'defaultDateValue' | 'onDateValueChange'> {
+export interface RangeDoubleCalendarProps extends Omit<
+  RangeCalendarProps,
+  'dateValue' | 'defaultDateValue' | 'onDateValueChange'
+> {
   /** Выбранное значение диапазона дат */
   dateRangeValue?: [Dayjs, Dayjs];
   /** Выбранное значение диапазона дат по умолчанию */

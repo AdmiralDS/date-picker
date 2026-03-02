@@ -9,7 +9,8 @@ import { ruLocale } from '#lib/calendarConstants.ts';
 import { RangeYearsNavigationPanelWidget } from '#lib/RangeYearsNavigationPanelWidget';
 
 export interface YearPickerCalendarProps
-  extends Omit<SingleCalendarProps, 'cell'>,
+  extends
+    Omit<SingleCalendarProps, 'cell'>,
     Omit<PickerCalendarProps, 'viewModeValue' | 'defaultViewModeValue' | 'onViewModeChange'> {
   calendarLocale?: CalendarLocaleProps;
   yearsModel?: React.ComponentProps<typeof YearCalendarView>['yearsModel'];
