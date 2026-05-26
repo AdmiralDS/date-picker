@@ -16,18 +16,18 @@ import type { DateRange } from 'lib/types';
 import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
 import { defaultDateFormatter, defaultDateParser } from '#lib/utils';
 
-function dateRangeFromValue(
-  values?: Array<string | undefined>,
-  parse: (date?: string) => Dayjs | undefined = defaultDateParser,
-): DateRange {
-  const [start, end] = values
-    ? values.map((item) => {
-        const parsedItem = parse(item);
-        return parsedItem?.isValid() ? parsedItem : undefined;
-      })
-    : [undefined, undefined];
-  return start && end && start.isAfter(end) ? ([end, start] as const) : ([start, end] as const);
-}
+// function dateRangeFromValue(
+//   values?: Array<string | undefined>,
+//   parse: (date?: string) => Dayjs | undefined = defaultDateParser,
+// ): DateRange {
+//   const [start, end] = values
+//     ? values.map((item) => {
+//         const parsedItem = parse(item);
+//         return parsedItem?.isValid() ? parsedItem : undefined;
+//       })
+//     : [undefined, undefined];
+//   return start && end && start.isAfter(end) ? ([end, start] as const) : ([start, end] as const);
+// }
 
 const Calendar = styled(DateRangePickerCalendar)`
   border: none;
@@ -73,7 +73,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const [displayDate, setDisplayDate] = useState(dayjs());
     const [rangeSelectedState, setRangeSelectedState] = useState<RangeSalectedState>(RangeSalectedState.initial);
 
-    const inputBoxRef = useRef(null);
+    const inputBoxRef = useRef<HTMLDivElement>(null);
     const startInputRef = useRef<HTMLInputElement>(null);
     const endInputRef = useRef<HTMLInputElement>(null);
 
@@ -91,15 +91,25 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
       setCalendarOpen((isOpen) => !isOpen);
+      startInputRef.current!.focus();
     };
 
     const [selectedRange, setSelectedRange] = useState<DateRange>([undefined, undefined]);
     const handleSelectedDateValueChange = (dateRange: DateRange) => {
-      if (calendarViewMode === 'dates') {
-        // console.log(dateRange);
+      const secondSelection =
+        inputBoxRef.current!.querySelector(':focus') === endInputRef.current &&
+        rangeSelectedState === RangeSalectedState.initial;
 
-        const start = dateRange[0];
-        const end = dateRange[1];
+      if (calendarViewMode === 'dates') {
+        let start = dateRange[0];
+        let end = dateRange[1];
+
+        if (secondSelection) {
+          (dateRange as unknown as (Dayjs | undefined)[]).reverse();
+
+          start = selectedRange[0] || dateRange[0];
+          end = selectedRange[1] === dateRange[1] ? selectedRange[1] : dateRange[1];
+        }
 
         if (start && start.isValid() && !start.isSame(selectedRange[0])) {
           const formattedStart = format(start);
@@ -114,16 +124,26 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         }
 
         setSelectedRange(dateRange);
-        if (rangeSelectedState >= RangeSalectedState.firstSelected) {
-          setCalendarOpen(false);
-        } else {
+        if (secondSelection) {
           setRangeSelectedState(rangeSelectedState + 1);
+          startInputRef.current!.focus();
+        } else {
+          if (rangeSelectedState >= RangeSalectedState.firstSelected) {
+            setCalendarOpen(false);
+            inputBoxRef.current!.blur();
+            startInputRef.current!.blur();
+            endInputRef.current!.blur();
+          } else {
+            setRangeSelectedState(rangeSelectedState + 1);
+          }
         }
       }
     };
 
     useEffect(() => {
-      if (isCalendarOpen) setRangeSelectedState(RangeSalectedState.initial);
+      if (isCalendarOpen) {
+        setRangeSelectedState(RangeSalectedState.initial);
+      }
     }, [isCalendarOpen]);
 
     useEffect(() => {
@@ -160,6 +180,11 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     };
 
     const handleInputBlur = () => {
+      // const startDate = parse(inputPropsStart.value);
+      // const endDate = parse(inputPropsEnd.value);
+      // console.log('🚀 ~ startDate:', startDate > endDate);
+
+      // if (startDate > endDate) setSelectedRange([endDate, startDate]);
       setCalendarOpen(false);
     };
 
