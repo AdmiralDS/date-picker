@@ -13,9 +13,9 @@ import { PopoverPanel } from '#lib/PopoverPanel';
 import { InputsConfirmedState } from '#lib/calendarInterfaces.js';
 import type { ActiveEnd, CalendarLocaleProps, CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
-import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
-import { defaultDateFormatter, sortDatesAsc } from '#lib/utils';
-import { DimensionInterface } from '#lib/Input/types';
+import { RangeInput, type RangeInputProps } from '#lib/Input/RangeInput';
+import { defaultDateFormatter } from '#lib/utils';
+import type { DimensionInterface } from '#lib/Input/types';
 import { DATE_INPUT_WIDTH_S, DATE_INPUT_WIDTH_M_XL } from '#lib/Input/constatnts';
 
 const Calendar = styled(DateRangePickerCalendar)`
@@ -97,10 +97,6 @@ export interface DateRangePickerProps
   checkDateRange?: (dateRange: DateRange) => DateRange;
 }
 
-function checkDateRangeDefault(dateRange: DateRange) {
-  return sortDatesAsc(...dateRange, 'date');
-}
-
 const nothing = () => {};
 
 /**
@@ -113,7 +109,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       inputPropsStart = {},
       inputPropsEnd = {},
       separator = '\u2014',
-      checkDateRange = checkDateRangeDefault,
       onSelectedRangeChange,
       Calendarlocale,
       datesWidgetContainerPropsConfig,
@@ -139,15 +134,22 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
   ) => {
     const [displayDate, setDisplayDate] = useState(dayjs());
     const [inputsConfirmed, setInputsConfirmed] = useState<InputsConfirmedState>(InputsConfirmedState.initial);
+
     const handleInputsConfirmedChange = () => {
       if (inputsConfirmed >= InputsConfirmedState.firstConfirmed) {
         setCalendarOpen(false);
+
+        if (inputBoxRef.current && startInputRef.current && endInputRef.current) {
+          inputBoxRef.current.blur();
+          startInputRef.current.blur();
+          endInputRef.current.blur();
+        }
       } else {
         setInputsConfirmed(inputsConfirmed + 1);
       }
     };
 
-    const inputBoxRef = useRef(null);
+    const inputBoxRef = useRef<HTMLDivElement>(null);
     const startInputRef = useRef<HTMLInputElement>(null);
     const endInputRef = useRef<HTMLInputElement>(null);
 
@@ -170,15 +172,19 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
     const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
-      setCalendarOpen((isOpen) => !isOpen);
+      setCalendarOpen((prevState) => {
+        if (!prevState && startInputRef.current) {
+          startInputRef.current.focus();
+        }
+        return !prevState;
+      });
     };
 
     const [selectedRange, setSelectedRange] = useState<DateRange>([undefined, undefined]);
     const handleSelectedDateValueChange = (dateRange: DateRange) => {
       if (calendarViewMode === 'dates') {
-        const checkedRange = checkDateRange(dateRange);
-        const start = checkedRange[0];
-        const end = checkedRange[1];
+        const start = dateRange[0];
+        const end = dateRange[1];
 
         if (start && start.isValid() && !start.isSame(selectedRange[0])) {
           const formattedStart = format(start);
@@ -192,9 +198,9 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
           if (endInputRef.current) changeInputData(endInputRef.current, { value: formattedEnd });
         }
 
-        setSelectedRange(checkedRange);
+        setSelectedRange(dateRange);
         handleInputsConfirmedChange();
-        onSelectedRangeChange?.(checkedRange);
+        onSelectedRangeChange?.(dateRange);
       }
     };
 
