@@ -1,5 +1,5 @@
 import type { ComponentProps, MouseEventHandler, Ref } from 'react';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import styled, { type DataAttributes } from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
@@ -135,15 +135,18 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const [displayDate, setDisplayDate] = useState(dayjs());
     const [inputsConfirmed, setInputsConfirmed] = useState<InputsConfirmedState>(InputsConfirmedState.initial);
 
+    const closePicker = () => {
+      setCalendarOpen(false);
+      if (inputBoxRef.current && startInputRef.current && endInputRef.current) {
+        inputBoxRef.current.blur();
+        startInputRef.current.blur();
+        endInputRef.current.blur();
+      }
+    };
+
     const handleInputsConfirmedChange = () => {
       if (inputsConfirmed >= InputsConfirmedState.firstConfirmed) {
-        setCalendarOpen(false);
-
-        if (inputBoxRef.current && startInputRef.current && endInputRef.current) {
-          inputBoxRef.current.blur();
-          startInputRef.current.blur();
-          endInputRef.current.blur();
-        }
+        closePicker();
       } else {
         setInputsConfirmed(inputsConfirmed + 1);
       }
@@ -170,7 +173,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
     const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('dates');
 
-    const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
+    const handleInputIconButtonMouseDown: MouseEventHandler<Element> = useCallback((e) => {
       e.preventDefault();
       setCalendarOpen((prevState) => {
         if (!prevState && startInputRef.current) {
@@ -178,7 +181,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         }
         return !prevState;
       });
-    };
+    }, []);
 
     const [selectedRange, setSelectedRange] = useState<DateRange>([undefined, undefined]);
     const handleSelectedDateValueChange = (dateRange: DateRange) => {
@@ -186,16 +189,29 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         const start = dateRange[0];
         const end = dateRange[1];
 
+        const startInputNode = startInputRef.current;
+        const endInputNode = endInputRef.current;
+
         if (start && start.isValid() && !start.isSame(selectedRange[0])) {
           const formattedStart = format(start);
 
-          if (startInputRef.current) changeInputData(startInputRef.current, { value: formattedStart });
+          if (startInputNode) changeInputData(startInputNode, { value: formattedStart });
         }
 
         if (end && end.isValid() && !end.isSame(selectedRange[1])) {
           const formattedEnd = format(end);
 
-          if (endInputRef.current) changeInputData(endInputRef.current, { value: formattedEnd });
+          if (endInputNode) changeInputData(endInputNode, { value: formattedEnd });
+        }
+
+        //переключение на 1 инпут, если начинаем выбирать со 2
+        if (inputsConfirmed === InputsConfirmedState.initial) {
+          if (activeEnd === 'start') {
+            if (endInputNode) endInputNode.focus();
+          }
+          if (activeEnd === 'end') {
+            if (startInputNode) startInputNode.focus();
+          }
         }
 
         setSelectedRange(dateRange);
@@ -213,7 +229,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     };
 
     const handleRangeInputCancel = () => {
-      setCalendarOpen(false);
+      closePicker();
     };
     const handleStartDateInputComplete = () => {
       handleInputsConfirmedChange();
@@ -233,11 +249,11 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     };
 
     const handleInputBlur = () => {
-      setCalendarOpen(false);
+      closePicker();
     };
 
     const handleRangeInputFinish = () => {
-      setCalendarOpen(false);
+      closePicker();
     };
 
     const startRef =
