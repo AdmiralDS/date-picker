@@ -2,10 +2,12 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { DateRangePicker } from '@admiral-ds/date-picker';
 
 import { DateRangePickerSimpleTemplate } from './DateRangePickerSimple.template';
+import { DateRangePickerWithValidationTemplate } from './DateRangePickerWithValidation.template';
 import { DateRangePickerTestsTemplate } from './DateRangePickerTests.template';
 
 import DateRangePickerSimpleTemplateRaw from './DateRangePickerSimple.template.tsx?raw';
 import DateRangePickerTestsTemplateRaw from './DateRangePickerTests.template.tsx?raw';
+import DateRangePickerWithValidationTemplateRaw from './DateRangePickerWithValidation.template.tsx?raw';
 
 import { pickRangeDateFirstTest, pickRangeDateSecondTest, pickRangeDateThirdTest } from './DateRangePickerTests';
 
@@ -36,6 +38,19 @@ export const DatePickerSimple: Story = {
     },
   },
   name: 'Выбор даты',
+};
+
+export const DateRangePickerWithValidation: Story = {
+  // обязательно для правильной работы хуков внутри темплейта
+  render: () => <DateRangePickerWithValidationTemplate />,
+  parameters: {
+    docs: {
+      source: {
+        code: DateRangePickerWithValidationTemplateRaw,
+      },
+    },
+  },
+  name: 'Пример с валидацией в хронологическом порядке',
 };
 
 export const DateRangePickerTests: StoryObj<typeof DateRangePicker> = {
