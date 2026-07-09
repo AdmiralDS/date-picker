@@ -1,17 +1,14 @@
 import type { MouseEventHandler } from 'react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
 import type { CalendarViewMode, SingleCalendarProps, PickerCalendarProps } from '#lib/calendarInterfaces.ts';
 import { getCurrentDate } from '#lib/utils.ts';
 import { YearNavigationPanelWidget } from '#lib/YearNavigationPanelWidget';
-import {
-  CalendarContainer,
-  SinglePickerCalendarWrapper,
-  MonthCalendarView,
-  YearCalendarView,
-} from '#lib/calendarStyle.ts';
+import { CalendarContainer, SinglePickerCalendarWrapper } from '#lib/calendarStyle.ts';
 import { ruLocale } from '#lib/calendarConstants.ts';
+import { MonthCalendar } from '#lib/MonthCalendar';
+import { YearCalendar } from '#lib/YearCalendar';
 
 export interface MonthPickerCalendarProps extends Omit<SingleCalendarProps, 'cell'>, PickerCalendarProps {
   /** Конфиг функция пропсов для кнопки с годом на навигационной панели с выбором режима календаря. На вход получает начальный набор пропсов, на
@@ -22,19 +19,19 @@ export interface MonthPickerCalendarProps extends Omit<SingleCalendarProps, 'cel
 
   /** Модель массива для рендера ячеек с месяцами, на выход должна отдавать массив по размеру равный 12,
    * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
-  monthsModel?: React.ComponentProps<typeof MonthCalendarView>['monthsModel'];
+  monthsModel?: React.ComponentProps<typeof MonthCalendar>['monthsModel'];
 
   /** Конфиг функция пропсов для контейнера с месяцами. На вход получает начальный набор пропсов, на
    * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
-  monthsWidgetContainerPropsConfig?: React.ComponentProps<typeof MonthCalendarView>['monthsWidgetContainerPropsConfig'];
+  monthsWidgetContainerPropsConfig?: React.ComponentProps<typeof MonthCalendar>['monthsWidgetContainerPropsConfig'];
 
   /** Конфиг функция пропсов для контейнера с годами. На вход получает начальный набор пропсов, на
    * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
-  yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof YearCalendarView>['yearsWidgetContainerPropsConfig'];
+  yearsWidgetContainerPropsConfig?: React.ComponentProps<typeof YearCalendar>['yearsWidgetContainerPropsConfig'];
 
   /** Модель массива для рендера ячеек с годами, на выход должна отдавать массив по размеру равный yearsOnScreen,
    * а также можно добавить объект с пропсами в элементы массива, которые будут внедряться в ячейки после оригинальных пропсов  */
-  yearsModel?: React.ComponentProps<typeof YearCalendarView>['yearsModel'];
+  yearsModel?: React.ComponentProps<typeof YearCalendar>['yearsModel'];
 
   //** Количество ячеек в виджете с годами */
   yearsOnScreen?: number;
@@ -104,29 +101,32 @@ export const MonthPickerCalendar = ({
     handleViewModeChange('months');
   };
 
-  const handleYearNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
-    e.preventDefault();
-    const targetType = (e.target as HTMLElement).dataset.panelTargetType;
-    switch (targetType) {
-      case 'left':
-        if (viewModeInner === 'months') {
-          handleDateChange(dateInner.subtract(1, 'year'));
-        } else {
-          handleDateChange(dateInner.subtract(yearsOnScreen, 'year'));
-        }
-        break;
-      case 'right':
-        if (viewModeInner === 'months') {
-          handleDateChange(dateInner.add(1, 'year'));
-        } else {
-          handleDateChange(dateInner.add(yearsOnScreen, 'year'));
-        }
-        break;
-      case 'year':
-        handleViewModeChange(viewModeInner === 'years' ? 'months' : 'years');
-        break;
-    }
-  };
+  const handleYearNavigationPanelClick: MouseEventHandler<HTMLElement> = useCallback(
+    (e) => {
+      e.preventDefault();
+      const targetType = (e.target as HTMLElement).dataset.panelTargetType;
+      switch (targetType) {
+        case 'left':
+          if (viewModeInner === 'months') {
+            handleDateChange(dateInner.subtract(1, 'year'));
+          } else {
+            handleDateChange(dateInner.subtract(yearsOnScreen, 'year'));
+          }
+          break;
+        case 'right':
+          if (viewModeInner === 'months') {
+            handleDateChange(dateInner.add(1, 'year'));
+          } else {
+            handleDateChange(dateInner.add(yearsOnScreen, 'year'));
+          }
+          break;
+        case 'year':
+          handleViewModeChange(viewModeInner === 'years' ? 'months' : 'years');
+          break;
+      }
+    },
+    [dateInner, viewModeInner, yearsOnScreen],
+  );
 
   return (
     <SinglePickerCalendarWrapper>
@@ -140,30 +140,32 @@ export const MonthPickerCalendar = ({
         yearNavigationButtonPropsConfig={yearNavigationButtonPropsConfig}
       />
       <CalendarContainer>
-        <MonthCalendarView
-          {...props}
-          cell={cell?.monthCell}
-          dateValue={dateInner}
-          selectedDateValue={selectedDateInner}
-          onSelectedDateValueChange={handleMonthClick}
-          locale={locale}
-          $isVisible={viewModeInner === 'months'}
-          monthsModel={monthsModel}
-          monthsWidgetContainerPropsConfig={monthsWidgetContainerPropsConfig}
-        />
-        <YearCalendarView
-          {...props}
-          cell={cell?.yearCell}
-          dateValue={dateInner}
-          selectedDateValue={selectedDateInner}
-          onSelectedDateValueChange={handleYearClick}
-          locale={locale}
-          $isVisible={viewModeInner === 'years'}
-          yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
-          yearsModel={yearsModel}
-          yearsOnScreen={yearsOnScreen}
-          yearsColumns={yearsColumns}
-        />
+        {viewModeInner === 'months' && (
+          <MonthCalendar
+            {...props}
+            cell={cell?.monthCell}
+            dateValue={dateInner}
+            selectedDateValue={selectedDateInner}
+            onSelectedDateValueChange={handleMonthClick}
+            locale={locale}
+            monthsModel={monthsModel}
+            monthsWidgetContainerPropsConfig={monthsWidgetContainerPropsConfig}
+          />
+        )}
+        {viewModeInner === 'years' && (
+          <YearCalendar
+            {...props}
+            cell={cell?.yearCell}
+            dateValue={dateInner}
+            selectedDateValue={selectedDateInner}
+            onSelectedDateValueChange={handleYearClick}
+            locale={locale}
+            yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
+            yearsModel={yearsModel}
+            yearsOnScreen={yearsOnScreen}
+            yearsColumns={yearsColumns}
+          />
+        )}
       </CalendarContainer>
     </SinglePickerCalendarWrapper>
   );

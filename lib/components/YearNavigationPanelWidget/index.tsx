@@ -1,4 +1,4 @@
-import styled, { DataAttributes } from 'styled-components';
+import styled, { type DataAttributes } from 'styled-components';
 
 import { vars, textValues } from '@admiral-ds/web';
 import { IconPlacement, TooltipHoc } from '@admiral-ds/react-ui';
@@ -8,6 +8,7 @@ import ChevronRightOutline from '@admiral-ds/icons/build/system/ChevronRightOutl
 import { CALENDAR_WIDTH, ruLocale } from '#lib/calendarConstants';
 import { getCurrentDate } from '#lib/utils';
 import type { BasePanelWidgetProps } from '#lib/widgetInterfaces.ts';
+import { memo } from 'react';
 
 export interface YearNavigationPanelWidgetProps extends BasePanelWidgetProps {
   /** Конфиг функция пропсов для кнопки с годом на навигационной панели с выбором режима календаря. На вход получает начальный набор пропсов, на
@@ -43,48 +44,50 @@ const TextWithTooltip = TooltipHoc(TextWrapper);
 
 const nothing = () => ({});
 
-export const YearNavigationPanelWidget = ({
-  viewMode,
-  date,
-  locale = ruLocale,
-  prevButtonPropsConfig = nothing,
-  nextButtonPropsConfig = nothing,
-  yearNavigationButtonPropsConfig = nothing,
-  ...props
-}: YearNavigationPanelWidgetProps) => {
-  const dateInner = date?.locale(locale?.localeName) || getCurrentDate(locale?.localeName);
+export const YearNavigationPanelWidget = memo(
+  ({
+    viewMode,
+    date,
+    locale = ruLocale,
+    prevButtonPropsConfig = nothing,
+    nextButtonPropsConfig = nothing,
+    yearNavigationButtonPropsConfig = nothing,
+    ...props
+  }: YearNavigationPanelWidgetProps) => {
+    const dateInner = date?.locale(locale?.localeName) || getCurrentDate(locale?.localeName);
 
-  const prevButtonProps = {
-    dimension: 'lSmall',
-    highlightFocus: false,
-    'data-panel-target-type': 'left',
-    renderContent: () => locale?.localeText.backwardText,
-  } as const;
+    const prevButtonProps = {
+      dimension: 'lSmall',
+      highlightFocus: false,
+      'data-panel-target-type': 'left',
+      renderContent: () => locale?.localeText.backwardText,
+    } as const;
 
-  const nextButtonProps = {
-    dimension: 'lSmall',
-    highlightFocus: false,
-    'data-panel-target-type': 'right',
-    renderContent: () => locale?.localeText.forwardText,
-  } as const;
+    const nextButtonProps = {
+      dimension: 'lSmall',
+      highlightFocus: false,
+      'data-panel-target-type': 'right',
+      renderContent: () => locale?.localeText.forwardText,
+    } as const;
 
-  const yearNavigationButtonProps = {
-    'data-panel-target-type': 'year',
-    renderContent: () => (viewMode === 'years' ? locale?.localeText.returnText : locale.localeText.selectYearText),
-    $isActive: viewMode === 'years',
-  } as const;
+    const yearNavigationButtonProps = {
+      'data-panel-target-type': 'year',
+      renderContent: () => (viewMode === 'years' ? locale?.localeText.returnText : locale.localeText.selectYearText),
+      $isActive: viewMode === 'years',
+    } as const;
 
-  return (
-    <YearNavigationPanelWrapper {...props}>
-      <IconWithTooltip {...prevButtonProps} {...prevButtonPropsConfig(prevButtonProps)}>
-        <ChevronLeftOutline />
-      </IconWithTooltip>
-      <TextWithTooltip {...yearNavigationButtonProps} {...yearNavigationButtonPropsConfig(yearNavigationButtonProps)}>
-        {dateInner.year()}
-      </TextWithTooltip>
-      <IconWithTooltip {...nextButtonProps} {...nextButtonPropsConfig(nextButtonProps)}>
-        <ChevronRightOutline />
-      </IconWithTooltip>
-    </YearNavigationPanelWrapper>
-  );
-};
+    return (
+      <YearNavigationPanelWrapper {...props}>
+        <IconWithTooltip {...prevButtonProps} {...prevButtonPropsConfig(prevButtonProps)}>
+          <ChevronLeftOutline />
+        </IconWithTooltip>
+        <TextWithTooltip {...yearNavigationButtonProps} {...yearNavigationButtonPropsConfig(yearNavigationButtonProps)}>
+          {dateInner.year()}
+        </TextWithTooltip>
+        <IconWithTooltip {...nextButtonProps} {...nextButtonPropsConfig(nextButtonProps)}>
+          <ChevronRightOutline />
+        </IconWithTooltip>
+      </YearNavigationPanelWrapper>
+    );
+  },
+);
