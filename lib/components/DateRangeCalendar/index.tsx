@@ -100,13 +100,7 @@ export const DateRangeCalendar = ({
   //#endregion
 
   //#region "Active end of range"
-  const setInitialActiveEndState = () => {
-    if (defaultActiveEndValue) {
-      return defaultActiveEndValue;
-    }
-    return 'start';
-  };
-  const [activeEndState, setActiveEndState] = useState<ActiveEnd>(setInitialActiveEndState());
+  const [activeEndState, setActiveEndState] = useState<ActiveEnd>(defaultActiveEndValue || 'start');
   const activeEndInner = activeEndValue || activeEndState;
 
   const handleActiveEndChange = (end?: ActiveEnd) => {
