@@ -1,20 +1,17 @@
 import type { ComponentProps, FocusEvent, KeyboardEventHandler, MouseEventHandler, Ref } from 'react';
 import { forwardRef, useEffect, useRef, useState, useCallback } from 'react';
-import styled, { DataAttributes } from 'styled-components';
+import styled, { type DataAttributes } from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import { refSetter, changeInputData } from '@admiral-ds/react-ui';
-import { YearPickerCalendar } from '#lib/YearPickerCalendar';
-import type { InputBoxProps } from '#lib/Input/InputBox';
-import { InputBox } from '#lib/Input/InputBox';
-import type { InputLineProps } from '#lib/Input/InputLine';
-import { InputLine } from '#lib/Input/InputLine';
-import { InputIconButton } from '#lib/InputIconButton';
+
+import { refSetter, changeInputData, InputLine, InputBox } from '@admiral-ds/react-ui';
 import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
+
+import { YearPickerCalendar } from '#lib/YearPickerCalendar';
+import { InputIconButton } from '#lib/InputIconButton';
 import { PopoverPanel } from '#lib/PopoverPanel';
-import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
+import type { CalendarViewMode, CalendarLocaleProps } from '#lib/calendarInterfaces.js';
 import { ruLocale } from '#lib/calendarConstants.ts';
-import type { CalendarLocaleProps } from '#lib/calendarInterfaces.js';
 
 const Calendar = styled(YearPickerCalendar)`
   border: none;
@@ -25,9 +22,9 @@ const defaultFormatter = (date: Dayjs) => date.format('YYYY');
 const defaultParser = (date?: string) => dayjs(date, 'YYYY');
 const nothing = () => {};
 
-export type YearPickerProps = InputBoxProps & {
+export type YearPickerProps = ComponentProps<typeof InputBox> & {
   /** Пропсы внутреннего инпута */
-  inputProps?: InputLineProps;
+  inputProps?: ComponentProps<typeof InputLine>;
 
   /** Функция для конвертации значение календаря в строку инпута */
   format?: (date: Dayjs) => string;
@@ -105,13 +102,13 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
   ) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
     const [displayDate, setDisplayDate] = useState(dayjs());
-    const [tmpValue, setTmpValue] = useState<string | undefined>();
-    const [isTmpValueDisplayed, setTmpValueDisplayed] = useState(false);
+    const [tmpValue, setTmpValue] = useState<string | undefined>(undefined);
     const [isFocused, setIsFocused] = useState(false);
-    const inputBoxRef = useRef(null);
-    const inputRef = useRef<HTMLInputElement>(null);
     const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
     const [calendarViewMode] = useState<CalendarViewMode>('years');
+
+    const inputBoxRef = useRef(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
@@ -127,7 +124,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
           changeInputData(inputRef.current, { value: formattedValue });
         }
         setInputValue(formattedValue);
-        setTmpValueDisplayed(false);
+        setTmpValue(undefined);
         setCalendarOpen(false);
       }
     };
@@ -135,9 +132,6 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
     const handleActiveDateValueChange = useCallback(
       (date?: Dayjs) => {
         setTmpValue(date ? format(date) : undefined);
-        if (calendarViewMode === 'years') {
-          setTmpValueDisplayed(!!date);
-        }
       },
       [format],
     );
@@ -145,7 +139,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
     const handleBlur = (e: FocusEvent<HTMLInputElement, Element>) => {
       setCalendarOpen(false);
       setIsFocused(false);
-      setTmpValueDisplayed(false);
+      setTmpValue(undefined);
       inputProps.onBlur?.(e);
     };
 
@@ -162,24 +156,33 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
       }
     };
 
-    const handleInputKeyDown: KeyboardEventHandler<Element> = (e) => {
-      if (e.key === 'Enter' && isCalendarOpen) {
+    const handleInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+      const parsedValue = parse(e.currentTarget.value);
+
+      if (e.key === 'Enter' && isCalendarOpen && parsedValue.isValid()) {
         e.preventDefault();
         setCalendarOpen(false);
-        if (isTmpValueDisplayed && tmpValue) {
+
+        if (tmpValue) {
+          changeInputData(e.currentTarget, { value: tmpValue });
           setInputValue(tmpValue);
-          setTmpValueDisplayed(false);
+          setTmpValue(undefined);
         }
+
+        e.currentTarget.blur();
+      } else {
+        if (tmpValue) setTmpValue(undefined);
       }
+
+      inputProps.onKeyDown?.(e);
     };
+
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
       const value = e.currentTarget.value;
 
-      setTmpValueDisplayed(false);
-      if (value !== inputValue) {
-        setInputValue(value);
-        setCalendarOpen(true);
-      }
+      if (value !== inputValue) setInputValue(value);
+      if (!isCalendarOpen) setCalendarOpen(true);
+
       inputProps.onInput?.(e);
     };
 
@@ -207,7 +210,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>(
       ref,
       onBlur: handleBlur,
       onFocus: handleFocus,
-      tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
+      tmpValue: calendarViewMode === 'years' ? tmpValue : undefined,
       onKeyDown: handleInputKeyDown,
       onInput: handleInput,
     };

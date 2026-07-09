@@ -1,5 +1,4 @@
-import type { MouseEventHandler } from 'react';
-import { useState } from 'react';
+import { memo, type MouseEventHandler, useCallback, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
 import type { PickerCalendarProps, SingleCalendarProps, CalendarLocaleProps } from '#lib/calendarInterfaces.ts';
@@ -22,88 +21,93 @@ export interface YearPickerCalendarProps
   yearsColumns?: number;
 }
 
-export const YearPickerCalendar = ({
-  dateValue,
-  defaultDateValue,
-  onDateValueChange,
-  selectedDateValue,
-  defaultSelectedDateValue,
-  onSelectedDateValueChange,
-  cell,
-  locale = ruLocale,
-  prevButtonPropsConfig,
-  nextButtonPropsConfig,
-  yearsModel,
-  yearsWidgetContainerPropsConfig,
-  yearsOnScreen = 20,
-  yearsColumns,
-  yearsNavigationContainerPropsConfig,
-  ...props
-}: YearPickerCalendarProps) => {
-  //#region "Date shown on calendar"
-  const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale?.localeName));
-  const dateInner = dateValue || dateState;
+export const YearPickerCalendar = memo(
+  ({
+    dateValue,
+    defaultDateValue,
+    onDateValueChange,
+    selectedDateValue,
+    defaultSelectedDateValue,
+    onSelectedDateValueChange,
+    cell,
+    locale = ruLocale,
+    prevButtonPropsConfig,
+    nextButtonPropsConfig,
+    yearsModel,
+    yearsWidgetContainerPropsConfig,
+    yearsOnScreen = 20,
+    yearsColumns,
+    yearsNavigationContainerPropsConfig,
+    ...props
+  }: YearPickerCalendarProps) => {
+    //#region "Date shown on calendar"
+    const [dateState, setDateState] = useState(defaultDateValue || getCurrentDate(locale?.localeName));
+    const dateInner = dateValue || dateState;
 
-  const handleDateChange = (date: Dayjs) => {
-    setDateState(date);
-    onDateValueChange?.(date);
-  };
-  //#endregion
+    const handleDateChange = (date: Dayjs) => {
+      setDateState(date);
+      onDateValueChange?.(date);
+    };
+    //#endregion
 
-  //#region "Selected date"
-  const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
-  const selectedDateInner = selectedDateValue || selectedDateState;
+    //#region "Selected date"
+    const [selectedDateState, setSelectedDateState] = useState<Dayjs | undefined>(defaultSelectedDateValue);
+    const selectedDateInner = selectedDateValue || selectedDateState;
 
-  const handleSelectedDateChange = (date: Dayjs) => {
-    setSelectedDateState(date);
-    onSelectedDateValueChange?.(date);
-  };
-  //#endregion
+    const handleSelectedDateChange = (date: Dayjs) => {
+      setSelectedDateState(date);
+      onSelectedDateValueChange?.(date);
+    };
+    //#endregion
 
-  const handleYearClick = (date: Dayjs) => {
-    handleSelectedDateChange(date);
-  };
+    const handleYearClick = (date: Dayjs) => {
+      handleSelectedDateChange(date);
+    };
 
-  const handleRangeYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = (e) => {
-    e.preventDefault();
-    const targetType = (e.target as HTMLElement).dataset.panelTargetType;
-    switch (targetType) {
-      case 'left':
-        handleDateChange(dateInner.subtract(yearsOnScreen, 'year'));
-        break;
-      case 'right':
-        handleDateChange(dateInner.add(yearsOnScreen, 'year'));
-        break;
-    }
-  };
+    const handleRangeYearsNavigationPanelClick: MouseEventHandler<HTMLElement> = useCallback(
+      (e) => {
+        e.preventDefault();
+        const targetType = (e.target as HTMLElement).dataset.panelTargetType;
+        switch (targetType) {
+          case 'left':
+            handleDateChange(dateInner.subtract(yearsOnScreen, 'year'));
+            break;
+          case 'right':
+            handleDateChange(dateInner.add(yearsOnScreen, 'year'));
+            break;
+        }
+      },
+      [dateInner, yearsOnScreen],
+    );
 
-  return (
-    <SinglePickerCalendarWrapper>
-      <RangeYearsNavigationPanelWidget
-        date={dateInner}
-        viewMode={'years'}
-        locale={locale}
-        onMouseDown={handleRangeYearsNavigationPanelClick}
-        prevButtonPropsConfig={prevButtonPropsConfig}
-        nextButtonPropsConfig={nextButtonPropsConfig}
-        yearsNavigationContainerPropsConfig={yearsNavigationContainerPropsConfig}
-        yearsOnScreen={yearsOnScreen}
-      />
-      <CalendarContainer>
-        <YearCalendarView
-          {...props}
-          cell={cell?.yearCell}
-          dateValue={dateInner}
-          selectedDateValue={selectedDateInner}
-          onSelectedDateValueChange={handleYearClick}
+    return (
+      <SinglePickerCalendarWrapper>
+        <RangeYearsNavigationPanelWidget
+          date={dateInner}
+          viewMode={'years'}
           locale={locale}
-          $isVisible={true}
-          yearsModel={yearsModel}
-          yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
+          onMouseDown={handleRangeYearsNavigationPanelClick}
+          prevButtonPropsConfig={prevButtonPropsConfig}
+          nextButtonPropsConfig={nextButtonPropsConfig}
+          yearsNavigationContainerPropsConfig={yearsNavigationContainerPropsConfig}
           yearsOnScreen={yearsOnScreen}
-          yearsColumns={yearsColumns}
         />
-      </CalendarContainer>
-    </SinglePickerCalendarWrapper>
-  );
-};
+        <CalendarContainer>
+          <YearCalendarView
+            {...props}
+            cell={cell?.yearCell}
+            dateValue={dateInner}
+            selectedDateValue={selectedDateInner}
+            onSelectedDateValueChange={handleYearClick}
+            locale={locale}
+            $isVisible={true}
+            yearsModel={yearsModel}
+            yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
+            yearsOnScreen={yearsOnScreen}
+            yearsColumns={yearsColumns}
+          />
+        </CalendarContainer>
+      </SinglePickerCalendarWrapper>
+    );
+  },
+);
