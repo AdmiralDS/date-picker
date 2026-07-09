@@ -1,4 +1,4 @@
-import { createElement } from 'react';
+import { createElement, memo } from 'react';
 import type { DataAttributes, RuleSet } from 'styled-components';
 import styled from 'styled-components';
 
@@ -51,25 +51,27 @@ export function daysMapStateToProps<T extends object>(
   });
 }
 
-export const Days = <T extends object>({
-  locale,
-  dayNameCellState,
-  daysModel,
-  daysWidgetContainerPropsConfig = () => ({}),
-  ...containerProps
-}: DaysProps<T>) => {
-  const cellProps = daysMapStateToProps(locale, dayNameCellState, daysModel);
+export const Days = memo(
+  <T extends object>({
+    locale,
+    dayNameCellState,
+    daysModel,
+    daysWidgetContainerPropsConfig = () => ({}),
+    ...containerProps
+  }: DaysProps<T>) => {
+    const cellProps = daysMapStateToProps(locale, dayNameCellState, daysModel);
 
-  const cells = cellProps.map((cellProps) => createElement(DayNameCell, cellProps));
+    const cells = cellProps.map((cellProps) => createElement(DayNameCell, cellProps));
 
-  const daysContainerProps = {
-    'data-container-type': 'daysContainer',
-    ...containerProps,
-  };
+    const daysContainerProps = {
+      'data-container-type': 'daysContainer',
+      ...containerProps,
+    };
 
-  return (
-    <DaysContainer {...daysContainerProps} {...daysWidgetContainerPropsConfig(daysContainerProps)}>
-      {cells}
-    </DaysContainer>
-  );
-};
+    return (
+      <DaysContainer {...daysContainerProps} {...daysWidgetContainerPropsConfig(daysContainerProps)}>
+        {cells}
+      </DaysContainer>
+    );
+  },
+);

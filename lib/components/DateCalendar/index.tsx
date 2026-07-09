@@ -1,11 +1,10 @@
 import type { MouseEventHandler } from 'react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import { getCurrentDate } from '#lib/utils';
 import { DatesWidget } from '#lib/DatesWidget';
-import type { CellStateProps } from '#lib/DatesWidget/interfaces';
 import { baseDayNameCellMixin } from '#lib/DefaultCell/mixins.tsx';
 import type { SingleCalendarProps } from '#lib/calendarInterfaces';
 import { MemoDefaultDateCell } from '#lib/DefaultCell';
@@ -54,13 +53,9 @@ export const DateCalendar = ({
   const [activeDateState, setActiveDateState] = useState<Dayjs | undefined>(defaultActiveDateValue);
   const activeDateInner = activeDateValue || activeDateState;
 
-  const [shouldHandleMouseOver, setShouldHandleMouseOver] = useState(false);
-
   const handleActiveDateChange = (date?: Dayjs) => {
     setActiveDateState(date);
-    if (shouldHandleMouseOver) {
-      onActiveDateValueChange?.(date);
-    }
+    onActiveDateValueChange?.(date);
   };
 
   const handleMouseOver: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -75,8 +70,7 @@ export const DateCalendar = ({
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = (_) => {
+  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
     handleActiveDateChange(undefined);
   };
   //#endregion
@@ -104,11 +98,10 @@ export const DateCalendar = ({
   };
   //#endregion
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getDayNameCellState = (_: number): CellStateProps => {
+  const getDayNameCellState = useCallback(() => {
     const cellMixin = baseDayNameCellMixin;
     return { cellMixin };
-  };
+  }, [baseDayNameCellMixin]);
 
   return (
     <DatesWidget
@@ -119,7 +112,6 @@ export const DateCalendar = ({
       active={activeDateInner}
       dateAttributes={dateAttributes}
       locale={locale}
-      onMouseEnter={() => setShouldHandleMouseOver(true)}
       onMouseLeave={handleMouseLeave}
       onMouseOver={handleMouseOver}
       onMouseDown={handleDateClick}
