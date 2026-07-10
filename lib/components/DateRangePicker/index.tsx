@@ -1,5 +1,5 @@
-import type { ComponentProps, MouseEventHandler, Ref } from 'react';
-import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import type { ComponentProps, FormEvent, MouseEventHandler, Ref } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import styled, { type DataAttributes } from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
@@ -14,7 +14,7 @@ import { InputsConfirmedState } from '#lib/calendarInterfaces.js';
 import type { ActiveEnd, CalendarLocaleProps, CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
 import { RangeInput, type RangeInputProps } from '#lib/Input/RangeInput';
-import { defaultDateFormatter } from '#lib/utils';
+import { defaultDateFormatter, defaultDateParser } from '#lib/utils';
 import type { DimensionInterface } from '#lib/Input/types';
 import { DATE_INPUT_WIDTH_S, DATE_INPUT_WIDTH_M_XL } from '#lib/Input/constatnts';
 
@@ -128,6 +128,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       yearNavigationButtonPropsConfig,
       iconButtonPropsConfig = nothing,
       dropdownPropsConfig = nothing,
+      parse = defaultDateParser,
       ...containerProps
     },
     refContainerProps,
@@ -173,7 +174,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
     const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('dates');
 
-    const handleInputIconButtonMouseDown: MouseEventHandler<Element> = useCallback((e) => {
+    const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
       setCalendarOpen((prevState) => {
         if (!prevState && startInputRef.current) {
@@ -181,8 +182,9 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         }
         return !prevState;
       });
-    }, []);
+    };
 
+    //#region "Выбор значения в календаре"
     const [selectedRange, setSelectedRange] = useState<DateRange>([undefined, undefined]);
     const handleSelectedDateValueChange = (dateRange: DateRange) => {
       if (calendarViewMode === 'dates') {
@@ -219,10 +221,33 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         onSelectedRangeChange?.(dateRange);
       }
     };
+    //#endregion
 
+    //#region "События при открытии календаря"
     useEffect(() => {
-      if (isCalendarOpen) setInputsConfirmed(InputsConfirmedState.initial);
+      if (isCalendarOpen) {
+        const startValue = parse(inputPropsStart.value);
+        const endValue = parse(inputPropsEnd.value);
+
+        if (
+          startValue &&
+          startValue.isValid() &&
+          endValue &&
+          endValue.isValid() &&
+          (startValue.month() !== endValue.month() || startValue.year() !== endValue.year())
+        ) {
+          if (inputBoxRef.current?.querySelector(':focus') === endInputRef.current) {
+            setDisplayDate(endValue);
+          }
+          if (inputBoxRef.current?.querySelector(':focus') === startInputRef.current) {
+            setDisplayDate(startValue);
+          }
+        }
+
+        setInputsConfirmed(InputsConfirmedState.initial);
+      }
     }, [isCalendarOpen]);
+    //#endregion
 
     const handleCalendarViewModeChange = (view: CalendarViewMode) => {
       setCalendarViewMode(view);
@@ -238,12 +263,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       handleInputsConfirmedChange();
     };
 
-    const containerFinalProps: ComponentProps<typeof InputBox> = {
-      ...containerProps,
-      $dimension: dimension,
-      ref: refSetter(inputBoxRef, refContainerProps),
-    };
-
     const handleInputFocus = () => {
       setCalendarOpen(true);
     };
@@ -255,6 +274,27 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const handleRangeInputFinish = () => {
       closePicker();
     };
+
+    //#region "Синхронизация значения input с календарём"
+    const handleChangeStartCalendarValue = (e: FormEvent<HTMLInputElement>) => {
+      const startValue = parse(e.currentTarget.value);
+
+      if (startValue && startValue.isValid()) {
+        setSelectedRange((prevState) => [startValue, prevState[1]]);
+        setDisplayDate(startValue);
+      }
+
+      inputPropsStart.onInput?.(e);
+    };
+
+    const handleChangeEndCalendarValue = (e: FormEvent<HTMLInputElement>) => {
+      const endValue = parse(e.currentTarget.value);
+
+      if (endValue && endValue.isValid()) setSelectedRange((prevState) => [prevState[0], endValue]);
+
+      inputPropsEnd.onInput?.(e);
+    };
+    //#endregion
 
     const startRef =
       inputPropsStart.ref !== undefined
@@ -270,8 +310,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       dimension: dimension,
       width: dimension === 's' ? DATE_INPUT_WIDTH_S : DATE_INPUT_WIDTH_M_XL,
 
-      inputPropsStart: { ...inputPropsStart, ref: startRef },
-      inputPropsEnd: { ...inputPropsEnd, ref: endRef },
+      inputPropsStart: { ...inputPropsStart, onInput: handleChangeStartCalendarValue, ref: startRef },
+      inputPropsEnd: { ...inputPropsEnd, onInput: handleChangeEndCalendarValue, ref: endRef },
       separator: separator,
       activeDate: activeDate,
       onSelectedRangeChange: handleSelectedDateValueChange,
@@ -282,6 +322,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       onEndDateInputComplete: handleEndDateInputComplete,
       onActiveEndValueChange: handleActiveEndChange,
       onRangeInputFinish: handleRangeInputFinish,
+      parse,
+      format,
     };
 
     const iconButtonFinalProps: ComponentProps<typeof InputIconButton> = {
@@ -293,6 +335,12 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       targetElement: inputBoxRef.current,
       alignSelf: 'auto',
       onMouseDown: (e) => e.preventDefault(),
+    };
+
+    const containerFinalProps: ComponentProps<typeof InputBox> = {
+      ...containerProps,
+      $dimension: dimension,
+      ref: refSetter(inputBoxRef, refContainerProps),
     };
 
     return (
