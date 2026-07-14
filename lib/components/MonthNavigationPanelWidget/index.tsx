@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import styled, { type DataAttributes } from 'styled-components';
 
 import { IconPlacement, TooltipHoc } from '@admiral-ds/react-ui';
@@ -53,64 +54,69 @@ const TextWithTooltip = TooltipHoc(TextWrapper);
 
 const nothing = () => ({});
 
-export const MonthNavigationPanelWidget = ({
-  viewMode,
-  date,
-  locale = ruLocale,
-  prevButtonPropsConfig = nothing,
-  nextButtonPropsConfig = nothing,
-  monthNavigationButtonPropsConfig = nothing,
-  yearNavigationButtonPropsConfig = nothing,
-  ...props
-}: MonthNavigationPanelWidgetProps) => {
-  const dateInner = date?.locale(locale.localeName) || getCurrentDate(locale?.localeName || 'ru');
+export const MonthNavigationPanelWidget = memo(
+  ({
+    viewMode,
+    date,
+    locale = ruLocale,
+    prevButtonPropsConfig = nothing,
+    nextButtonPropsConfig = nothing,
+    monthNavigationButtonPropsConfig = nothing,
+    yearNavigationButtonPropsConfig = nothing,
+    ...props
+  }: MonthNavigationPanelWidgetProps) => {
+    const dateInner = date?.locale(locale.localeName) || getCurrentDate(locale?.localeName || 'ru');
 
-  const prevButtonProps = {
-    dimension: 'lSmall',
-    highlightFocus: false,
-    'data-panel-target-type': 'left',
-    renderContent: () =>
-      viewMode === 'dates' ? locale?.localeText.previousMonthText : locale?.localeText.backwardText,
-  } as const;
+    const prevButtonProps = {
+      dimension: 'lSmall',
+      highlightFocus: false,
+      'data-panel-target-type': 'left',
+      renderContent: () =>
+        viewMode === 'dates' ? locale?.localeText.previousMonthText : locale?.localeText.backwardText,
+    } as const;
 
-  const nextButtonProps = {
-    dimension: 'lSmall',
-    highlightFocus: false,
-    'data-panel-target-type': 'right',
-    renderContent: () => (viewMode === 'dates' ? locale?.localeText.nextMonthText : locale?.localeText.forwardText),
-  } as const;
+    const nextButtonProps = {
+      dimension: 'lSmall',
+      highlightFocus: false,
+      'data-panel-target-type': 'right',
+      renderContent: () => (viewMode === 'dates' ? locale?.localeText.nextMonthText : locale?.localeText.forwardText),
+    } as const;
 
-  const monthNavigationButtonProps = {
-    'data-panel-target-type': 'month',
-    $isActive: viewMode === 'months',
-    renderContent: () => (viewMode === 'months' ? locale?.localeText.returnText : locale.localeText.selectMonthText),
-  } as const;
+    const monthNavigationButtonProps = {
+      'data-panel-target-type': 'month',
+      $isActive: viewMode === 'months',
+      renderContent: () => (viewMode === 'months' ? locale?.localeText.returnText : locale.localeText.selectMonthText),
+    } as const;
 
-  const yearNavigationButtonProps = {
-    'data-panel-target-type': 'year',
-    renderContent: () => (viewMode === 'years' ? locale?.localeText.returnText : locale.localeText.selectYearText),
-    $isActive: viewMode === 'years',
-  } as const;
+    const yearNavigationButtonProps = {
+      'data-panel-target-type': 'year',
+      renderContent: () => (viewMode === 'years' ? locale?.localeText.returnText : locale.localeText.selectYearText),
+      $isActive: viewMode === 'years',
+    } as const;
 
-  return (
-    <MonthNavigationPanelWrapper {...props}>
-      <IconWithTooltip {...prevButtonProps} {...prevButtonPropsConfig(prevButtonProps)}>
-        <ChevronLeftOutline />
-      </IconWithTooltip>
-      <MonthYearWrapper {...props}>
-        <TextWithTooltip
-          {...monthNavigationButtonProps}
-          {...monthNavigationButtonPropsConfig(monthNavigationButtonProps)}
-        >
-          {capitalizeFirstLetter(dateInner.format('MMMM'))}
-        </TextWithTooltip>
-        <TextWithTooltip {...yearNavigationButtonProps} {...yearNavigationButtonPropsConfig(yearNavigationButtonProps)}>
-          {dateInner.year()}
-        </TextWithTooltip>
-      </MonthYearWrapper>
-      <IconWithTooltip {...nextButtonProps} {...nextButtonPropsConfig(nextButtonProps)}>
-        <ChevronRightOutline />
-      </IconWithTooltip>
-    </MonthNavigationPanelWrapper>
-  );
-};
+    return (
+      <MonthNavigationPanelWrapper {...props}>
+        <IconWithTooltip {...prevButtonProps} {...prevButtonPropsConfig(prevButtonProps)}>
+          <ChevronLeftOutline />
+        </IconWithTooltip>
+        <MonthYearWrapper {...props}>
+          <TextWithTooltip
+            {...monthNavigationButtonProps}
+            {...monthNavigationButtonPropsConfig(monthNavigationButtonProps)}
+          >
+            {capitalizeFirstLetter(dateInner.format('MMMM'))}
+          </TextWithTooltip>
+          <TextWithTooltip
+            {...yearNavigationButtonProps}
+            {...yearNavigationButtonPropsConfig(yearNavigationButtonProps)}
+          >
+            {dateInner.year()}
+          </TextWithTooltip>
+        </MonthYearWrapper>
+        <IconWithTooltip {...nextButtonProps} {...nextButtonPropsConfig(nextButtonProps)}>
+          <ChevronRightOutline />
+        </IconWithTooltip>
+      </MonthNavigationPanelWrapper>
+    );
+  },
+);

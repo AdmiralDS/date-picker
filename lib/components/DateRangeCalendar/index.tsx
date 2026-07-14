@@ -1,11 +1,9 @@
-import type { MouseEventHandler } from 'react';
-import { useState } from 'react';
+import { useCallback, useState, type MouseEventHandler } from 'react';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
 import { getCurrentDate } from '#lib/utils';
 import { DatesWidget } from '#lib/DatesWidget';
-import type { CellStateProps } from '#lib/DatesWidget/interfaces';
 import { baseDayNameCellMixin } from '#lib/DefaultCell/mixins.tsx';
 import type { ActiveEnd, RangeCalendarProps } from '#lib/calendarInterfaces';
 import { MemoDefaultDateRangeCell } from '#lib/DefaultCell';
@@ -164,10 +162,10 @@ export const DateRangeCalendar = ({
     }
   };
 
-  const getDayNameCellState = (): CellStateProps => {
+  const getDayNameCellState = useCallback(() => {
     const cellMixin = baseDayNameCellMixin;
     return { cellMixin };
-  };
+  }, [baseDayNameCellMixin]);
 
   return (
     <DatesWidget
