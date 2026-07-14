@@ -40,8 +40,10 @@ const findDates = async (
   }
 };
 
-export const pickRangeDateFirstTest = async (canvasElement: HTMLElement) => {
+export const pickRangeDateFirstTest = async (canvasElement: HTMLElement, portalContainerId: string) => {
   const canvas = within(canvasElement);
+  const portalElement = document.getElementById(portalContainerId);
+  const portal = portalElement ? within(portalElement) : canvas;
 
   const year = new Date().getFullYear();
   const randomMonth = getRandomFromRange(0, 11);
@@ -63,10 +65,10 @@ export const pickRangeDateFirstTest = async (canvasElement: HTMLElement) => {
       return;
     } else {
       if (randomMonth < find) {
-        await userEvent.click(canvas.getByRole('prevButtonNavigationPanel'));
+        await userEvent.click(portal.getByRole('prevButtonNavigationPanel'));
         await findMonth(find - 1);
       } else {
-        await userEvent.click(canvas.getByRole('nextButtonNavigationPanel'));
+        await userEvent.click(portal.getByRole('nextButtonNavigationPanel'));
         await findMonth(find + 1);
       }
     }
@@ -74,7 +76,7 @@ export const pickRangeDateFirstTest = async (canvasElement: HTMLElement) => {
 
   await findMonth(currentIndexMonthNavigationPanel);
 
-  await findDates(canvasElement, year, randomMonth, randomStartDate, randomEndDate);
+  await findDates(portalElement ?? canvasElement, year, randomMonth, randomStartDate, randomEndDate);
 
   const inputStartNode = document.querySelector('[data-testid = inputStart]') as HTMLElement;
   const inputEndNode = document.querySelector('[data-testid = inputEnd]') as HTMLElement;
@@ -87,12 +89,10 @@ export const pickRangeDateFirstTest = async (canvasElement: HTMLElement) => {
   );
 };
 
-export const pickRangeDateSecondTest = async (canvasElement: HTMLElement) => {
+export const pickRangeDateSecondTest = async (canvasElement: HTMLElement, portalContainerId: string) => {
   const canvas = within(canvasElement);
-
-  //сброс значений
-  // await userEvent.type(canvas.getByTestId('inputStart'), ' ');
-  // await userEvent.type(canvas.getByTestId('inputEnd'), ' ');
+  const portalElement = document.getElementById(portalContainerId);
+  const portal = portalElement ? within(portalElement) : canvas;
 
   const nowYear = new Date().getFullYear();
   const randomYear = getRandomFromRange(nowYear - 4, nowYear + 4);
@@ -109,22 +109,22 @@ export const pickRangeDateSecondTest = async (canvasElement: HTMLElement) => {
 
   const findYear = async (find: number) => {
     if (randomYear === find) {
-      await userEvent.click(canvas.getByTestId(`month-cell-${randomMonth}`));
+      await userEvent.click(portal.getByTestId(`month-cell-${randomMonth}`));
     } else {
       if (randomYear < find) {
-        await userEvent.click(canvas.getByRole('prevButtonNavigationPanel'));
+        await userEvent.click(portal.getByRole('prevButtonNavigationPanel'));
         await findYear(find - 1);
       } else {
-        await userEvent.click(canvas.getByRole('nextButtonNavigationPanel'));
+        await userEvent.click(portal.getByRole('nextButtonNavigationPanel'));
         await findYear(find + 1);
       }
     }
   };
 
-  await userEvent.click(canvas.getByRole('monthButtonNavigationPanel'));
+  await userEvent.click(portal.getByRole('monthButtonNavigationPanel'));
   await findYear(currentYearNavigationPanel);
 
-  await findDates(canvasElement, randomYear, randomMonth, randomStartDate, randomEndDate);
+  await findDates(portalElement ?? canvasElement, randomYear, randomMonth, randomStartDate, randomEndDate);
 
   const inputStartNode = document.querySelector('[data-testid = inputStart]') as HTMLElement;
   const inputEndNode = document.querySelector('[data-testid = inputEnd]') as HTMLElement;
@@ -137,12 +137,10 @@ export const pickRangeDateSecondTest = async (canvasElement: HTMLElement) => {
   );
 };
 
-export const pickRangeDateThirdTest = async (canvasElement: HTMLElement) => {
+export const pickRangeDateThirdTest = async (canvasElement: HTMLElement, portalContainerId: string) => {
   const canvas = within(canvasElement);
-
-  //сброс значений
-  // await userEvent.type(canvas.getByTestId('inputStart'), ' ');
-  // await userEvent.type(canvas.getByTestId('inputEnd'), ' ');
+  const portalElement = document.getElementById(portalContainerId);
+  const portal = portalElement ? within(portalElement) : canvas;
 
   const randomYear = getRandomFromRange(2000, 2080);
   const randomMonth = getRandomFromRange(0, 11);
@@ -153,7 +151,7 @@ export const pickRangeDateThirdTest = async (canvasElement: HTMLElement) => {
 
   await userEvent.click(canvas.getByRole('iconButton'));
 
-  await userEvent.click(canvas.getByRole('yearButtonNavigationPanel'));
+  await userEvent.click(portal.getByRole('yearButtonNavigationPanel'));
 
   const containerYearCells = document.querySelector('[data-testid = containerYearCells]') as HTMLElement;
   const length = containerYearCells.childNodes.length;
@@ -166,14 +164,14 @@ export const pickRangeDateThirdTest = async (canvasElement: HTMLElement) => {
         const value = (elem as HTMLElement).getAttribute('data-value');
         const foundYear = dayjs(value).year();
 
-        if (foundYear === randomYear) await userEvent.click(canvas.getByTestId(`year-cell-${i}`));
+        if (foundYear === randomYear) await userEvent.click(portal.getByTestId(`year-cell-${i}`));
       }
     } else {
       if (randomYear < find) {
-        await userEvent.click(canvas.getByRole('prevButtonNavigationPanel'));
+        await userEvent.click(portal.getByRole('prevButtonNavigationPanel'));
         await findRangeYear(find - length);
       } else {
-        await userEvent.click(canvas.getByRole('nextButtonNavigationPanel'));
+        await userEvent.click(portal.getByRole('nextButtonNavigationPanel'));
         await findRangeYear(find + length);
       }
     }
@@ -181,9 +179,9 @@ export const pickRangeDateThirdTest = async (canvasElement: HTMLElement) => {
 
   await findRangeYear(firstRangeYear);
 
-  await userEvent.click(canvas.getByTestId(`month-cell-${randomMonth}`));
+  await userEvent.click(portal.getByTestId(`month-cell-${randomMonth}`));
 
-  await findDates(canvasElement, randomYear, randomMonth, randomStartDate, randomEndDate);
+  await findDates(portalElement ?? canvasElement, randomYear, randomMonth, randomStartDate, randomEndDate);
 
   const inputStartNode = document.querySelector('[data-testid = inputStart]') as HTMLElement;
   const inputEndNode = document.querySelector('[data-testid = inputEnd]') as HTMLElement;
