@@ -136,15 +136,18 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const [displayDate, setDisplayDate] = useState(dayjs());
     const [inputsConfirmed, setInputsConfirmed] = useState<InputsConfirmedState>(InputsConfirmedState.initial);
 
+    const closePicker = () => {
+      setCalendarOpen(false);
+      if (inputBoxRef.current && startInputRef.current && endInputRef.current) {
+        inputBoxRef.current.blur();
+        startInputRef.current.blur();
+        endInputRef.current.blur();
+      }
+    };
+
     const handleInputsConfirmedChange = () => {
       if (inputsConfirmed >= InputsConfirmedState.firstConfirmed) {
-        setCalendarOpen(false);
-
-        if (inputBoxRef.current && startInputRef.current && endInputRef.current) {
-          inputBoxRef.current.blur();
-          startInputRef.current.blur();
-          endInputRef.current.blur();
-        }
+        closePicker();
       } else {
         setInputsConfirmed(inputsConfirmed + 1);
       }
@@ -188,16 +191,29 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         const start = dateRange[0];
         const end = dateRange[1];
 
+        const startInputNode = startInputRef.current;
+        const endInputNode = endInputRef.current;
+
         if (start && start.isValid() && !start.isSame(selectedRange[0])) {
           const formattedStart = format(start);
 
-          if (startInputRef.current) changeInputData(startInputRef.current, { value: formattedStart });
+          if (startInputNode) changeInputData(startInputNode, { value: formattedStart });
         }
 
         if (end && end.isValid() && !end.isSame(selectedRange[1])) {
           const formattedEnd = format(end);
 
-          if (endInputRef.current) changeInputData(endInputRef.current, { value: formattedEnd });
+          if (endInputNode) changeInputData(endInputNode, { value: formattedEnd });
+        }
+
+        //переключение на 1 инпут, если начинаем выбирать со 2
+        if (inputsConfirmed === InputsConfirmedState.initial) {
+          if (activeEnd === 'start') {
+            if (endInputNode) endInputNode.focus();
+          }
+          if (activeEnd === 'end') {
+            if (startInputNode) startInputNode.focus();
+          }
         }
 
         setSelectedRange(dateRange);
@@ -220,10 +236,10 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
           endValue.isValid() &&
           (startValue.month() !== endValue.month() || startValue.year() !== endValue.year())
         ) {
-          if (inputBoxRef.current!.querySelector(':focus') === endInputRef.current) {
+          if (inputBoxRef.current?.querySelector(':focus') === endInputRef.current) {
             setDisplayDate(endValue);
           }
-          if (inputBoxRef.current!.querySelector(':focus') === startInputRef.current) {
+          if (inputBoxRef.current?.querySelector(':focus') === startInputRef.current) {
             setDisplayDate(startValue);
           }
         }
@@ -238,7 +254,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     };
 
     const handleRangeInputCancel = () => {
-      setCalendarOpen(false);
+      closePicker();
     };
     const handleStartDateInputComplete = () => {
       handleInputsConfirmedChange();
@@ -252,11 +268,11 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     };
 
     const handleInputBlur = () => {
-      setCalendarOpen(false);
+      closePicker();
     };
 
     const handleRangeInputFinish = () => {
-      setCalendarOpen(false);
+      closePicker();
     };
 
     //#region "Синхронизация значения input с календарём"
