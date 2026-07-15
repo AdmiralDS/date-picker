@@ -3,18 +3,15 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import styled, { type DataAttributes } from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import { refSetter, changeInputData } from '@admiral-ds/react-ui';
-import { DatePickerCalendar } from '#lib/DatePickerCalendar';
-import type { InputBoxProps } from '#lib/Input/InputBox';
-import { InputBox } from '#lib/Input/InputBox';
-import type { InputLineProps } from '#lib/Input/InputLine';
-import { InputLine } from '#lib/Input/InputLine';
-import { InputIconButton } from '#lib/InputIconButton';
+
+import { refSetter, changeInputData, InputLine, InputBox } from '@admiral-ds/react-ui';
 import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
+
+import { DatePickerCalendar } from '#lib/DatePickerCalendar';
+import { InputIconButton } from '#lib/InputIconButton';
 import { PopoverPanel } from '#lib/PopoverPanel';
-import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
+import type { CalendarViewMode, CalendarLocaleProps } from '#lib/calendarInterfaces.js';
 import { ruLocale } from '#lib/calendarConstants.ts';
-import type { CalendarLocaleProps } from '#lib/calendarInterfaces.js';
 
 const Calendar = styled(DatePickerCalendar)`
   border: none;
@@ -25,9 +22,9 @@ const nothing = () => {};
 const defaultFormatter = (date: Dayjs) => date.format('DD.MM.YYYY');
 const defaultParser = (date?: string) => dayjs(date, 'DD.MM.YYYY');
 
-export type DatePickerProps = InputBoxProps & {
+export type DatePickerProps = ComponentProps<typeof InputBox> & {
   /** Пропсы внутреннего инпута */
-  inputProps?: InputLineProps;
+  inputProps?: ComponentProps<typeof InputLine>;
 
   /** Функция для конвертации значение календаря в строку инпута */
   format?: (date: Dayjs) => string;
@@ -143,8 +140,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
   ) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
     const [displayDate, setDisplayDate] = useState(dayjs());
-    const [tmpValue, setTmpValue] = useState<string | undefined>();
-    const [isTmpValueDisplayed, setTmpValueDisplayed] = useState(false);
+    const [tmpValue, setTmpValue] = useState<string | undefined>(undefined);
     const [isFocused, setIsFocused] = useState(false);
     const inputBoxRef = useRef(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -165,30 +161,26 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           changeInputData(inputRef.current, { value: formattedValue });
         }
         setInputValue(formattedValue);
-        setTmpValueDisplayed(false);
+        setTmpValue(undefined);
         setCalendarOpen(false);
       }
     };
 
     const handleActiveDateValueChange = (date?: Dayjs) => {
       setTmpValue(date ? format(date) : undefined);
-      if (calendarViewMode === 'dates') {
-        setTmpValueDisplayed(!!date);
-      }
     };
 
     const handleCalendarViewModeChange = (view: CalendarViewMode) => {
       setCalendarViewMode(view);
       if (view !== 'dates') {
         setTmpValue(undefined);
-        setTmpValueDisplayed(false);
       }
     };
 
     const handleBlur = (e: FocusEvent<HTMLInputElement, Element>) => {
       setCalendarOpen(false);
       setIsFocused(false);
-      setTmpValueDisplayed(false);
+      setTmpValue(undefined);
       inputProps.onBlur?.(e);
     };
 
@@ -200,20 +192,28 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
     const handleInputBoxMouseDown: MouseEventHandler<Element> = (e) => {
       if (e.target === e.currentTarget) e.preventDefault();
-      if (!isFocused) {
-        inputRef.current?.focus();
-      }
+      if (!isFocused) inputRef.current?.focus();
     };
 
-    const handleInputKeyDown: KeyboardEventHandler<Element> = (e) => {
-      if (e.key === 'Enter' && isCalendarOpen) {
+    const handleInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+      const parsedValue = parse(e.currentTarget.value);
+
+      if (e.key === 'Enter' && isCalendarOpen && parsedValue.isValid()) {
         e.preventDefault();
         setCalendarOpen(false);
-        if (isTmpValueDisplayed && tmpValue) {
+
+        if (tmpValue) {
           setInputValue(tmpValue);
-          setTmpValueDisplayed(false);
+          setTmpValue(undefined);
+          changeInputData(e.currentTarget, { value: tmpValue });
         }
+
+        e.currentTarget.blur();
+      } else {
+        if (tmpValue) setTmpValue(undefined);
       }
+
+      inputProps.onKeyDown?.(e);
     };
 
     useEffect(() => {
@@ -238,11 +238,9 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
       const value = e.currentTarget.value;
 
-      setTmpValueDisplayed(false);
-      if (value !== inputValue) {
-        setInputValue(value);
-        setCalendarOpen(true);
-      }
+      if (value !== inputValue) setInputValue(value);
+      if (!isCalendarOpen) setCalendarOpen(true);
+
       inputProps.onInput?.(e);
     };
 
@@ -257,9 +255,9 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const inputFinalProps: ComponentProps<typeof InputLine> = {
       ...inputProps,
       ref,
+      tmpValue: calendarViewMode === 'dates' ? tmpValue : undefined,
       onBlur: handleBlur,
       onFocus: handleFocus,
-      tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
       onKeyDown: handleInputKeyDown,
       onInput: handleInput,
     };
