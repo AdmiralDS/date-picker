@@ -1,20 +1,16 @@
 import type { ComponentProps, FocusEvent, KeyboardEventHandler, MouseEventHandler, Ref } from 'react';
 import { forwardRef, useEffect, useRef, useState } from 'react';
-import styled, { DataAttributes } from 'styled-components';
-import type { Dayjs } from 'dayjs';
-import dayjs from 'dayjs';
-import { refSetter, changeInputData } from '@admiral-ds/react-ui';
-import { MonthPickerCalendar } from '#lib/MonthPickerCalendar';
-import type { InputBoxProps } from '#lib/Input/InputBox';
-import { InputBox } from '#lib/Input/InputBox';
-import type { InputLineProps } from '#lib/Input/InputLine';
-import { InputLine } from '#lib/Input/InputLine';
-import { InputIconButton } from '#lib/InputIconButton';
+import styled, { type DataAttributes } from 'styled-components';
+import dayjs, { type Dayjs } from 'dayjs';
+
+import { refSetter, changeInputData, InputBox, InputLine } from '@admiral-ds/react-ui';
 import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
+
+import { MonthPickerCalendar } from '#lib/MonthPickerCalendar';
+import { InputIconButton } from '#lib/InputIconButton';
 import { PopoverPanel } from '#lib/PopoverPanel';
-import type { CalendarViewMode } from '#lib/calendarInterfaces.js';
+import type { CalendarViewMode, CalendarLocaleProps } from '#lib/calendarInterfaces.js';
 import { ruLocale } from '#lib/calendarConstants.ts';
-import type { CalendarLocaleProps } from '#lib/calendarInterfaces.js';
 
 const Calendar = styled(MonthPickerCalendar)`
   border: none;
@@ -26,9 +22,9 @@ const defaultParser = (date?: string) => dayjs(date, 'MM.YYYY');
 
 const nothing = () => {};
 
-export type MonthPickerProps = InputBoxProps & {
+export type MonthPickerProps = React.ComponentProps<typeof InputBox> & {
   /** Пропсы внутреннего инпута */
-  inputProps?: InputLineProps;
+  inputProps?: React.ComponentProps<typeof InputLine>;
 
   /** Функция для конвертации значение календаря в строку инпута */
   format?: (date: Dayjs) => string;
@@ -119,13 +115,13 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
   ) => {
     const [inputValue, setInputValue] = useState<string | undefined>(inputProps.value);
     const [displayDate, setDisplayDate] = useState(dayjs());
-    const [tmpValue, setTmpValue] = useState<string | undefined>();
-    const [isTmpValueDisplayed, setTmpValueDisplayed] = useState(false);
+    const [tmpValue, setTmpValue] = useState<string | undefined>(undefined);
     const [isFocused, setIsFocused] = useState(false);
-    const inputBoxRef = useRef(null);
-    const inputRef = useRef<HTMLInputElement>(null);
     const [isCalendarOpen, setCalendarOpen] = useState<boolean>(false);
     const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('months');
+
+    const inputBoxRef = useRef(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleInputIconButtonMouseDown: MouseEventHandler<Element> = (e) => {
       e.preventDefault();
@@ -135,22 +131,21 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
     };
 
     const handleSelectedDateValueChange = (date: Dayjs) => {
-      if (calendarViewMode === 'months') {
+      const inputNode = inputRef.current;
+
+      if (calendarViewMode === 'months' && inputNode) {
         const formattedValue = format(date);
-        if (inputRef.current) {
-          changeInputData(inputRef.current, { value: formattedValue });
-        }
+
+        changeInputData(inputNode, { value: formattedValue });
         setInputValue(formattedValue);
-        setTmpValueDisplayed(false);
+        setTmpValue(undefined);
         setCalendarOpen(false);
+        inputNode.blur();
       }
     };
 
     const handleActiveDateValueChange = (date?: Dayjs) => {
       setTmpValue(date ? format(date) : undefined);
-      if (calendarViewMode === 'months') {
-        setTmpValueDisplayed(!!date);
-      }
     };
 
     const handleCalendarViewModeChange = (view: CalendarViewMode) => {
@@ -158,7 +153,6 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
         setCalendarViewMode(view);
         if (view !== 'months') {
           setTmpValue(undefined);
-          setTmpValueDisplayed(false);
         }
       }
     };
@@ -166,7 +160,7 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
     const handleBlur = (e: FocusEvent<HTMLInputElement, Element>) => {
       setCalendarOpen(false);
       setIsFocused(false);
-      setTmpValueDisplayed(false);
+      setTmpValue(undefined);
       inputProps.onBlur?.(e);
     };
 
@@ -183,22 +177,32 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
       }
     };
 
-    const handleInputKeyDown: KeyboardEventHandler<Element> = (e) => {
-      if (e.key === 'Enter' && isCalendarOpen) {
+    const handleInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+      const parsedValue = parse(e.currentTarget.value);
+
+      if (e.key === 'Enter' && isCalendarOpen && parsedValue.isValid()) {
         e.preventDefault();
-        setCalendarOpen(false);
-        if (isTmpValueDisplayed && tmpValue) {
+
+        if (tmpValue) {
+          changeInputData(e.currentTarget, { value: tmpValue });
           setInputValue(tmpValue);
-          setTmpValueDisplayed(false);
+          setTmpValue(undefined);
         }
+
+        setCalendarOpen(false);
+        e.currentTarget.blur();
+      } else {
+        if (tmpValue) setTmpValue(undefined);
       }
+
+      inputProps.onKeyDown?.(e);
     };
 
     useEffect(() => {
-      if (isCalendarOpen && inputRef.current) {
-        const node = inputRef.current;
-        const { value } = node;
-        setInputValue(value);
+      const inputNode = inputRef.current;
+
+      if (isCalendarOpen && inputNode) {
+        setInputValue(inputNode.value);
       }
     }, [isCalendarOpen]);
 
@@ -218,11 +222,9 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
       const value = e.currentTarget.value;
 
-      setTmpValueDisplayed(false);
-      if (value !== inputValue) {
-        setInputValue(value);
-        setCalendarOpen(true);
-      }
+      if (!isCalendarOpen) setCalendarOpen(true);
+      if (value !== inputValue) setInputValue(value);
+
       inputProps.onInput?.(e);
     };
 
@@ -238,7 +240,7 @@ export const MonthPicker = forwardRef<HTMLDivElement, MonthPickerProps>(
       ref,
       onBlur: handleBlur,
       onFocus: handleFocus,
-      tmpValue: isTmpValueDisplayed ? tmpValue : undefined,
+      tmpValue: calendarViewMode === 'months' ? tmpValue : undefined,
       onKeyDown: handleInputKeyDown,
       onInput: handleInput,
     };
