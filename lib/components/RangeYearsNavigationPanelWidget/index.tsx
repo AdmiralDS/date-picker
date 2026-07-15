@@ -1,4 +1,5 @@
-import styled, { DataAttributes } from 'styled-components';
+import { memo } from 'react';
+import styled, { type DataAttributes } from 'styled-components';
 
 import { vars, textValues } from '@admiral-ds/web';
 import { IconPlacement, TooltipHoc } from '@admiral-ds/react-ui';
@@ -39,43 +40,44 @@ const IconWithTooltip = TooltipHoc(IconPlacement);
 
 const nothing = () => ({});
 
-export const RangeYearsNavigationPanelWidget = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  viewMode,
-  date,
-  locale = ruLocale,
-  prevButtonPropsConfig = nothing,
-  nextButtonPropsConfig = nothing,
-  yearsNavigationContainerPropsConfig = nothing,
-  yearsOnScreen = 20,
-  ...props
-}: RangeYearsNavigationPanelWidgetProps) => {
-  const dateInner = date?.locale(locale?.localeName) || getCurrentDate(locale?.localeName);
-  const { start, end } = yearsRange(dateInner, yearsOnScreen);
+export const RangeYearsNavigationPanelWidget = memo(
+  ({
+    viewMode,
+    date,
+    locale = ruLocale,
+    prevButtonPropsConfig = nothing,
+    nextButtonPropsConfig = nothing,
+    yearsNavigationContainerPropsConfig = nothing,
+    yearsOnScreen = 20,
+    ...props
+  }: RangeYearsNavigationPanelWidgetProps) => {
+    const dateInner = date?.locale(locale?.localeName) || getCurrentDate(locale?.localeName);
+    const { start, end } = yearsRange(dateInner, yearsOnScreen);
 
-  const prevButtonProps = {
-    dimension: 'lSmall',
-    highlightFocus: false,
-    'data-panel-target-type': 'left',
-    renderContent: () => locale?.localeText.backwardText,
-  } as const;
+    const prevButtonProps = {
+      dimension: 'lSmall',
+      highlightFocus: false,
+      'data-panel-target-type': 'left',
+      renderContent: () => locale?.localeText.backwardText,
+    } as const;
 
-  const nextButtonProps = {
-    dimension: 'lSmall',
-    highlightFocus: false,
-    'data-panel-target-type': 'right',
-    renderContent: () => locale?.localeText.forwardText,
-  } as const;
+    const nextButtonProps = {
+      dimension: 'lSmall',
+      highlightFocus: false,
+      'data-panel-target-type': 'right',
+      renderContent: () => locale?.localeText.forwardText,
+    } as const;
 
-  return (
-    <RangeYearsNavigationPanelWrapper {...props}>
-      <IconWithTooltip {...prevButtonProps} {...prevButtonPropsConfig(prevButtonProps)}>
-        <ChevronLeftOutline />
-      </IconWithTooltip>
-      <YearsWrapper {...yearsNavigationContainerPropsConfig({})}>{`${start}–${end}`}</YearsWrapper>
-      <IconWithTooltip {...nextButtonProps} {...nextButtonPropsConfig(nextButtonProps)}>
-        <ChevronRightOutline />
-      </IconWithTooltip>
-    </RangeYearsNavigationPanelWrapper>
-  );
-};
+    return (
+      <RangeYearsNavigationPanelWrapper {...props}>
+        <IconWithTooltip {...prevButtonProps} {...prevButtonPropsConfig(prevButtonProps)}>
+          <ChevronLeftOutline />
+        </IconWithTooltip>
+        <YearsWrapper {...yearsNavigationContainerPropsConfig({})}>{`${start}–${end}`}</YearsWrapper>
+        <IconWithTooltip {...nextButtonProps} {...nextButtonPropsConfig(nextButtonProps)}>
+          <ChevronRightOutline />
+        </IconWithTooltip>
+      </RangeYearsNavigationPanelWrapper>
+    );
+  },
+);
