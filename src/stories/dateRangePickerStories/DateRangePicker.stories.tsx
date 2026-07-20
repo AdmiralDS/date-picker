@@ -63,15 +63,15 @@ export const DateRangePickerTests: StoryObj<typeof DateRangePicker> = {
       },
     },
   },
-  play: async ({ canvasElement, step }) => {
+  play: async ({ canvasElement, id, step }) => {
     await step('First Test', async () => {
-      await pickRangeDateFirstTest(canvasElement);
+      await pickRangeDateFirstTest(canvasElement, id);
     });
     await step('Second Test', async () => {
-      await pickRangeDateSecondTest(canvasElement);
+      await pickRangeDateSecondTest(canvasElement, id);
     });
     await step('Third Test', async () => {
-      await pickRangeDateThirdTest(canvasElement);
+      await pickRangeDateThirdTest(canvasElement, id);
     });
   },
   name: 'Тесты',
