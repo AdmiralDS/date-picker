@@ -1,11 +1,12 @@
-import { T } from '@admiral-ds/react-ui';
-import { DateRangePicker } from '@admiral-ds/date-picker';
+import { useRef, useState, type FormEvent } from 'react';
+import dayjs, { type Dayjs } from 'dayjs';
 import { maskitoDateOptionsGenerator } from '@maskito/kit';
 import { useMaskito } from '@maskito/react';
 
+import { T } from '@admiral-ds/react-ui';
+import { DateRangePicker } from '@admiral-ds/date-picker';
+
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
-import { useRef, useState, type FormEvent } from 'react';
-import dayjs, { type Dayjs } from 'dayjs';
 
 const defaultInputStartProps = {
   placeholder: 'дд.мм.гггг',

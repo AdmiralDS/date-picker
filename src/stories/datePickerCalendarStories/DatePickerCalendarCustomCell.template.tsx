@@ -6,6 +6,8 @@ import { css } from 'styled-components';
 import { T } from '@admiral-ds/react-ui';
 import type { DateAttributes, DefaultCellProps } from '@admiral-ds/date-picker';
 import { DatePickerCalendar, DefaultCell } from '@admiral-ds/date-picker';
+import { vars } from '@admiral-ds/web';
+
 import {
   baseDateCellMixin,
   currentDateCellMixin,
@@ -20,7 +22,6 @@ import {
 import { DATE_CELL_HEIGHT, DATE_CELL_WIDTH } from '#lib/DefaultCell/constants.ts';
 
 import { WrapperHorizontal } from '#src/stories/common.tsx';
-import { vars } from '@admiral-ds/web';
 
 const outsideMonthDateCellMixin = css<{ $isActive?: boolean }>`
   ${baseDateCellMixin};
