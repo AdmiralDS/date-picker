@@ -67,7 +67,6 @@ const CustomDateCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) =>
     isHoliday,
     props.isActive,
   );
-  console.log('render DateCell');
 
   return (
     <DefaultCell
