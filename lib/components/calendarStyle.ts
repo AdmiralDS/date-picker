@@ -57,6 +57,7 @@ export const CalendarContainer = styled.div`
   }
 `;
 
+//todo удалить
 export const DateRangeCalendarView = styled(DateRangeCalendar)<{ $isVisible: boolean }>`
   visibility: ${(p) => (p.$isVisible ? 'visible' : 'hidden')};
 `;

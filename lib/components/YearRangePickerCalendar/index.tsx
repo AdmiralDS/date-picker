@@ -2,7 +2,7 @@ import type { MouseEventHandler } from 'react';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
-import type { ActiveEnd, PickerCalendarProps, RangeCalendarProps } from '#lib/calendarInterfaces.ts';
+import type { ActiveInputType, PickerCalendarProps, RangeCalendarProps } from '#lib/calendarInterfaces.ts';
 import { getCurrentDate } from '#lib/utils.ts';
 import { RangeYearsNavigationPanelWidget } from '#lib/RangeYearsNavigationPanelWidget';
 import { CalendarContainer, SinglePickerCalendarWrapper, YearRangeCalendarView } from '#lib/calendarStyle.ts';
@@ -45,9 +45,9 @@ export const YearRangePickerCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
-  activeEndValue,
-  defaultActiveEndValue,
-  onActiveEndValueChange,
+  activeInput,
+  defaultActiveInput,
+  onActiveInputChange,
   cell,
   locale = ruLocale,
   prevButtonPropsConfig,
@@ -80,19 +80,17 @@ export const YearRangePickerCalendar = ({
   //#endregion
 
   //#region "Active end of range"
-  const setInitialActiveEndState = () => {
-    if (defaultActiveEndValue) {
-      return defaultActiveEndValue;
-    }
-    return 'start';
-  };
-  const [activeEndState, setActiveEndState] = useState<ActiveEnd>(setInitialActiveEndState());
-  const activeEndInner = activeEndValue || activeEndState;
+  const [activeInputState, setActiveInputState] = useState<ActiveInputType>(defaultActiveInput || 'start');
+  const activeInputInner = activeInput || activeInputState;
 
-  const handleActiveEndChange = (end?: ActiveEnd) => {
-    const newValue: ActiveEnd = end ? end : activeEndInner === 'start' ? 'end' : 'start';
-    setActiveEndState(newValue);
-    onActiveEndValueChange?.(newValue);
+  const handleActiveInputChange = (activeInputProp?: ActiveInputType) => {
+    const newValue: ActiveInputType = activeInputProp
+      ? activeInputProp
+      : activeInputInner === 'start'
+        ? 'end'
+        : 'start';
+    setActiveInputState(newValue);
+    onActiveInputChange?.(newValue);
   };
   //#endregion
 
@@ -128,9 +126,9 @@ export const YearRangePickerCalendar = ({
           dateValue={dateInner}
           selectedDateRangeValue={selectedDateRangeInner}
           onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
-          activeEndValue={activeEndInner}
-          defaultActiveEndValue={defaultActiveEndValue}
-          onActiveEndValueChange={handleActiveEndChange}
+          activeInput={activeInputInner}
+          defaultActiveInput={defaultActiveInput}
+          onActiveInputChange={handleActiveInputChange}
           locale={locale}
           $isVisible={true}
           yearsOnScreen={yearsOnScreen}

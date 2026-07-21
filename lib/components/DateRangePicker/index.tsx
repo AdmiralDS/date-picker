@@ -11,7 +11,7 @@ import { InputIconButton } from '#lib/InputIconButton';
 import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
 import { PopoverPanel } from '#lib/PopoverPanel';
 import { InputsConfirmedState } from '#lib/calendarInterfaces.js';
-import type { ActiveEnd, CalendarLocaleProps, CalendarViewMode } from '#lib/calendarInterfaces.js';
+import type { ActiveInputType, CalendarLocaleProps, CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
 import { RangeInput, type RangeInputProps } from '#lib/Input/RangeInput';
 import { defaultDateFormatter, defaultDateParser } from '#lib/utils';
@@ -166,10 +166,10 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       }
     };
 
-    const [activeEnd, setActiveEnd] = useState<ActiveEnd>('start');
+    const [activeInput, setActiveInput] = useState<ActiveInputType>('start');
 
-    const handleActiveEndChange = (end: ActiveEnd) => {
-      setActiveEnd(end);
+    const handleActiveInputChange = (activeInputProp: ActiveInputType) => {
+      setActiveInput(activeInputProp);
     };
 
     const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('dates');
@@ -208,10 +208,10 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
         //переключение на 1 инпут, если начинаем выбирать со 2
         if (inputsConfirmed === InputsConfirmedState.initial) {
-          if (activeEnd === 'start') {
+          if (activeInput === 'start') {
             if (endInputNode) endInputNode.focus();
           }
-          if (activeEnd === 'end') {
+          if (activeInput === 'end') {
             if (startInputNode) startInputNode.focus();
           }
         }
@@ -320,7 +320,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       onCancelInput: handleRangeInputCancel,
       onStartDateInputComplete: handleStartDateInputComplete,
       onEndDateInputComplete: handleEndDateInputComplete,
-      onActiveEndValueChange: handleActiveEndChange,
+      onActiveInputChange: handleActiveInputChange,
       onRangeInputFinish: handleRangeInputFinish,
       parse,
       format,
@@ -371,7 +371,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
               yearsWidgetContainerPropsConfig={yearsWidgetContainerPropsConfig}
               yearsOnScreen={yearsOnScreen}
               yearsColumns={yearsColumns}
-              activeEndValue={activeEnd}
+              activeInput={activeInput}
             />
           </PopoverPanel>
         )}
