@@ -1,15 +1,17 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
 import { DatePickerCalendar } from '@admiral-ds/date-picker';
+
 import { DatePickerCalendarSimpleTemplate } from './DatePickerCalendarSimple.template.tsx';
-import DatePickerCalendarSimpleTemplateRaw from './DatePickerCalendarSimple.template.tsx?raw';
 import { DatePickerCalendarWithHolidaysTemplate } from './DatePickerCalendarWithHolidays.template';
-import DatePickerCalendarWithHolidaysTemplateRaw from './DatePickerCalendarWithHolidays.template.tsx?raw';
 import { DatePickerCalendarChangeLocaleTemplate } from './DatePickerCalendarChangeLocale.template';
-import DatePickerCalendarChangeLocaleTemplateRaw from './DatePickerCalendarChangeLocale.template.tsx?raw';
 import { DatePickerCalendarCustomCellTemplate } from './DatePickerCalendarCustomCell.template';
+import { DatePickerCalendarBlockPanelArrowsTemplate } from './DatePickerCalendarBlockPanelArrows.template.tsx';
+
+import DatePickerCalendarSimpleTemplateRaw from './DatePickerCalendarSimple.template.tsx?raw';
+import DatePickerCalendarWithHolidaysTemplateRaw from './DatePickerCalendarWithHolidays.template.tsx?raw';
+import DatePickerCalendarChangeLocaleTemplateRaw from './DatePickerCalendarChangeLocale.template.tsx?raw';
 import DatePickerCalendarCustomCellTemplateRaw from './DatePickerCalendarCustomCell.template.tsx?raw';
-import { DatePickerCalendarBlockPanelArrowsTemplate } from '#src/stories/datePickerCalendarStories/DatePickerCalendarBlockPanelArrows.template.tsx';
 import DatePickerCalendarBlockPanelArrowsTemplateRaw from './DatePickerCalendarBlockPanelArrows.template.tsx?raw';
 
 export default {

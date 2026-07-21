@@ -1,10 +1,12 @@
 import { useMemo, type ComponentPropsWithoutRef } from 'react';
 import styled from 'styled-components';
+
 import { weekdayNameList } from '@admiral-ds/date-picker';
+import { vars } from '@admiral-ds/web';
+
 import type { CalendarDataCell } from '#lib/Calendar/Dates';
 import { generateCalendarDataCellList } from '#lib/Calendar/Dates';
 import { defaultTimestampFormatter } from '#lib/Calendar/defaultTimestampFormatter';
-import { vars } from '@admiral-ds/web';
 
 const StoryComponentWrapper = styled.div`
   display: inline-flex;

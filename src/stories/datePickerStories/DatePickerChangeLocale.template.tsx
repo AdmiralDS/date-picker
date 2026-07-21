@@ -1,11 +1,13 @@
-import { T, Select, Option } from '@admiral-ds/react-ui';
-import { DatePicker, enLocale, ruLocale } from '@admiral-ds/date-picker';
-import { maskitoDateOptionsGenerator } from '@maskito/kit';
-import { useMaskito } from '@maskito/react';
-import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 import { useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
+import { maskitoDateOptionsGenerator } from '@maskito/kit';
+import { useMaskito } from '@maskito/react';
+
+import { T, Select, Option } from '@admiral-ds/react-ui';
+import { DatePicker, enLocale, ruLocale } from '@admiral-ds/date-picker';
+
+import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 
 const defaultInputProps = {
   placeholder: 'Введите дату',
