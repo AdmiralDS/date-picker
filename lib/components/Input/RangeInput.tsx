@@ -1,13 +1,15 @@
 import type { ComponentProps, FocusEvent, KeyboardEventHandler, Ref } from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { Dayjs } from 'dayjs';
+import type { Dayjs } from 'dayjs';
+
 import { changeInputData, refSetter } from '@admiral-ds/react-ui';
-import { InputSeparatorProps, InputSeparator } from './InputSeparator';
-import { DateRange } from 'lib/types';
+
+import { type InputSeparatorProps, InputSeparator } from './InputSeparator';
+import type { DateRange } from 'lib/types';
 import { defaultDateFormatter, defaultDateParser } from '#lib/utils';
 import { SingleInput } from './SingleInput';
-import { DimensionInterface } from './types';
-import { type ActiveEnd, InputsConfirmedState } from '#lib/calendarInterfaces';
+import type { DimensionInterface } from './types';
+import { type ActiveInputType, InputsConfirmedState } from '#lib/calendarInterfaces';
 
 const DefaultCancelHandler = () => undefined;
 
@@ -76,16 +78,16 @@ export interface RangeInputProps extends DimensionInterface {
    */
   onEndDateInputComplete?: (date: Dayjs) => void;
   /**
-   * Вызывается при изменении активного края диапазона (начало/конец).
+   * Вызывается при изменении активного iput (начальный/конечный).
    *
-   * @param {ActiveEnd} end - Какой край диапазона сейчас активен.
+   * @param {ActiveInputType} activeInput - Какой край диапазона сейчас активен.
    *
    * Возможные значения:
    * - 'start' - редактируется начальная дата,
    * - 'end' - редактируется конечная дата,
    * - 'none' - ни один (диапазон заблокирован или неактивен).
    */
-  onActiveEndValueChange?: (end: ActiveEnd) => void;
+  onActiveInputChange?: (activeInputProp: ActiveInputType) => void;
 
   /**
    * Callback, вызываемый при изменении статуса подтверждения полей.
@@ -113,7 +115,7 @@ export const RangeInput = ({
   onStartDateInputComplete,
   onEndDateChanged,
   onEndDateInputComplete,
-  onActiveEndValueChange,
+  onActiveInputChange,
   onFocus,
   onBlur,
   onInputsConfirmationChange,
@@ -131,10 +133,10 @@ export const RangeInput = ({
   const [tmpValueEnd, setTmpValueEnd] = useState<string | undefined>(undefined);
   //#endregion
 
-  const [activeEnd, setActiveEnd] = useState<ActiveEnd>('start');
-  const handleActiveEndValueChange = (end: ActiveEnd) => {
-    setActiveEnd(end);
-    onActiveEndValueChange?.(end);
+  const [activeInput, setActiveInput] = useState<ActiveInputType>('start');
+  const handleActiveInputChange = (activeInputProp: ActiveInputType) => {
+    setActiveInput(activeInputProp);
+    onActiveInputChange?.(activeInputProp);
   };
 
   //#region "Обработчики событий focus и blur на инпутах"
@@ -158,7 +160,7 @@ export const RangeInput = ({
       onInputsConfirmationChange?.(InputsConfirmedState.initial);
     }
     onFocus?.(e);
-    handleActiveEndValueChange('start');
+    handleActiveInputChange('start');
     inputPropsStart.onFocus?.(e);
   };
   const handleFocusEnd = (e: FocusEvent<HTMLInputElement, Element>) => {
@@ -166,7 +168,7 @@ export const RangeInput = ({
       onInputsConfirmationChange?.(InputsConfirmedState.initial);
     }
     onFocus?.(e);
-    handleActiveEndValueChange('end');
+    handleActiveInputChange('end');
     inputPropsEnd.onFocus?.(e);
   };
   //#endregion
@@ -302,10 +304,10 @@ export const RangeInput = ({
 
   //#region "Отслеживаем изменение ховера на календаре"
   useEffect(() => {
-    if (activeEnd === 'start') {
+    if (activeInput === 'start') {
       setTmpValueStart(activeDate ? format(activeDate) : undefined);
     }
-    if (activeEnd === 'end') {
+    if (activeInput === 'end') {
       setTmpValueEnd(activeDate ? format(activeDate) : undefined);
     }
   }, [activeDate]);

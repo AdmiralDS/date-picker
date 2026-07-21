@@ -5,12 +5,19 @@ import type { Dayjs } from 'dayjs';
 import { getCurrentDate } from '#lib/utils';
 import { DatesWidget } from '#lib/DatesWidget';
 import { baseDayNameCellMixin } from '#lib/DefaultCell/mixins.tsx';
-import type { ActiveEnd, RangeCalendarProps } from '#lib/calendarInterfaces';
+import type { ActiveInputType, RangeCalendarProps } from '#lib/calendarInterfaces';
 import { MemoDefaultDateRangeCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
 import type { DateRange } from 'lib/types';
 
-export interface DateRangeCalendarProps extends Omit<RangeCalendarProps, 'defaultDateValue' | 'onDateValueChange'> {
+export interface DateRangeCalendarProps extends Omit<
+  RangeCalendarProps,
+  | 'activeDateRangeEndValue'
+  | 'defaultActiveDateRangeEndValue'
+  | 'onActiveDateRangeEndValueChange'
+  | 'defaultDateValue'
+  | 'onDateValueChange'
+> {
   /** Конфиг функция пропсов для контейнера с днями. На вход получает начальный набор пропсов, на
    * выход должна отдавать объект с пропсами, которые будут внедряться после оригинальных пропсов. */
   datesWidgetContainerPropsConfig?: React.ComponentProps<typeof DatesWidget>['datesWidgetContainerPropsConfig'];
@@ -32,15 +39,14 @@ export const DateRangeCalendar = ({
   selectedDateRangeValue,
   defaultSelectedDateRangeValue,
   onSelectedDateRangeValueChange,
-  onActiveDateRangeEndValueChange,
   dateAttributes,
   dateValue,
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  activeEndValue,
-  defaultActiveEndValue,
-  onActiveEndValueChange,
+  activeInput,
+  defaultActiveInput,
+  onActiveInputChange,
   cell,
   locale = ruLocale,
   datesWidgetContainerPropsConfig,
@@ -98,18 +104,22 @@ export const DateRangeCalendar = ({
   //#endregion
 
   //#region "Active end of range"
-  const [activeEndState, setActiveEndState] = useState<ActiveEnd>(defaultActiveEndValue || 'start');
-  const activeEndInner = activeEndValue || activeEndState;
+  const [activeInputState, setActiveInputState] = useState<ActiveInputType>(defaultActiveInput || 'start');
+  const activeInputInner = activeInput || activeInputState;
 
-  const handleActiveEndChange = (end?: ActiveEnd) => {
-    const newValue: ActiveEnd = end ? end : activeEndInner === 'start' ? 'end' : 'start';
-    setActiveEndState(newValue);
-    onActiveEndValueChange?.(newValue);
+  const handleActiveInputChange = (activeInputProp?: ActiveInputType) => {
+    const newValue: ActiveInputType = activeInputProp
+      ? activeInputProp
+      : activeInputInner === 'start'
+        ? 'end'
+        : 'start';
+    setActiveInputState(newValue);
+    onActiveInputChange?.(newValue);
   };
 
   const setInitialDateRangeActiveEndState = () => {
-    if (activeEndInner) {
-      switch (activeEndInner) {
+    if (activeInputInner) {
+      switch (activeInputInner) {
         case 'start':
         default:
           return dateRangeFirstInner;
@@ -125,7 +135,6 @@ export const DateRangeCalendar = ({
 
   const handleDateRangeActiveEndChange = (date?: Dayjs) => {
     setDateRangeActiveEndState(date);
-    onActiveDateRangeEndValueChange?.(date);
   };
   //#endregion
 
@@ -139,7 +148,7 @@ export const DateRangeCalendar = ({
     if (!disabled) {
       let first: Dayjs | undefined = undefined;
       let second: Dayjs | undefined = undefined;
-      switch (activeEndInner) {
+      switch (activeInputInner) {
         case 'start':
           handleDateRangeFirstChange(date);
           first = date;
@@ -156,7 +165,7 @@ export const DateRangeCalendar = ({
       }
 
       const newSelectedDateRangeValue: DateRange = [first, second];
-      handleActiveEndChange();
+      handleActiveInputChange();
       handleDateRangeActiveEndChange(date);
       onSelectedDateRangeValueChange?.(newSelectedDateRangeValue);
     }

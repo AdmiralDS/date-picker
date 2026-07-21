@@ -3,19 +3,22 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
+
 import { changeInputData, refSetter } from '@admiral-ds/react-ui';
+import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
+
 import { MonthRangePickerCalendar } from '#lib/MonthRangePickerCalendar';
 import type { InputBoxProps } from '#lib/Input/InputBox';
 import { InputBox } from '#lib/Input/InputBox';
 import { InputIconButton } from '#lib/InputIconButton';
-import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
 import { PopoverPanel } from '#lib/PopoverPanel';
 import { InputsConfirmedState } from '#lib/calendarInterfaces.js';
-import type { ActiveEnd, CalendarViewMode } from '#lib/calendarInterfaces.js';
+import type { ActiveInputType, CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
-import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
+import { RangeInput, type RangeInputProps } from '#lib/Input/RangeInput';
+import type { DimensionInterface } from '#lib/Input/types';
+
 import { defaultMonthFormatter, defaultMonthParser, sortDatesAsc } from '#lib/utils';
-import { DimensionInterface } from '#lib/Input/types';
 import { MONTH_INPUT_WIDTH_S, MONTH_INPUT_WIDTH_M_XL } from '#lib/Input/constatnts';
 
 const Calendar = styled(MonthRangePickerCalendar)`
@@ -83,10 +86,10 @@ export const MonthRangePicker = forwardRef<HTMLDivElement, MonthRangePickerProps
       }
     };
 
-    const [activeEnd, setActiveEnd] = useState<ActiveEnd>('start');
+    const [activeInput, setActiveInput] = useState<ActiveInputType>('start');
 
-    const handleActiveEndChange = (end: ActiveEnd) => {
-      setActiveEnd(end);
+    const handleActiveInputChange = (activeInputProp: ActiveInputType) => {
+      setActiveInput(activeInputProp);
     };
 
     const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('months');
@@ -183,7 +186,7 @@ export const MonthRangePicker = forwardRef<HTMLDivElement, MonthRangePickerProps
       onCancelInput: handleRangeInputCancel,
       onStartDateInputComplete: handleStartDateInputComplete,
       onEndDateInputComplete: handleEndDateInputComplete,
-      onActiveEndValueChange: handleActiveEndChange,
+      onActiveInputChange: handleActiveInputChange,
       onRangeInputFinish: handleRangeInputFinish,
     };
 
@@ -200,7 +203,7 @@ export const MonthRangePicker = forwardRef<HTMLDivElement, MonthRangePickerProps
               selectedDateRangeValue={selectedRange}
               onSelectedDateRangeValueChange={handleSelectedDateValueChange}
               onActiveDateValueChange={handleActiveDateValueChange}
-              activeEndValue={activeEnd}
+              activeInput={activeInput}
             />
           </PopoverPanel>
         )}
