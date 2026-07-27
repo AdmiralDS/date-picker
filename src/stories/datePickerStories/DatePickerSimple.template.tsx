@@ -1,10 +1,11 @@
-import { T } from '@admiral-ds/react-ui';
-import { DatePicker } from '@admiral-ds/date-picker';
+import { useState } from 'react';
 import { maskitoDateOptionsGenerator } from '@maskito/kit';
 import { useMaskito } from '@maskito/react';
 
+import { T } from '@admiral-ds/react-ui';
+import { DatePicker } from '@admiral-ds/date-picker';
+
 import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
-import { useState } from 'react';
 
 const dateOptions = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy' });
 

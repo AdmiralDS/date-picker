@@ -1,7 +1,7 @@
 import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
-import dayjs from 'dayjs';
+import dayjs, { extend } from 'dayjs';
 import minMax from 'dayjs/plugin/minMax';
 
 import { T } from '@admiral-ds/react-ui';
@@ -12,7 +12,7 @@ import { WrapperHorizontal, WrapperVertical } from '#src/stories/common.tsx';
 import { dateIsInRange, dateIsSelected } from '#lib/utils.ts';
 import type { DateRange } from 'lib/types';
 
-dayjs.extend(minMax);
+extend(minMax);
 
 const getUnitType = (mode: CalendarViewMode) => {
   switch (mode) {
@@ -57,11 +57,6 @@ export const DateRangePickerCalendarBlockEarlierDatesTemplate = () => {
     setViewDate(date);
   };
 
-  const [activeDateRangeEnd, setActiveDateRangeEnd] = useState<Dayjs | undefined>();
-  const handleActiveDateRangeEndChange = (date?: Dayjs) => {
-    setActiveDateRangeEnd(date);
-  };
-
   const [selectedDateRange, setSelectedDateRange] = useState<DateRange | undefined>();
   const handleSelectedDateRangeChange = (dateRange: DateRange) => {
     setSelectedDateRange(dateRange);
@@ -71,7 +66,7 @@ export const DateRangePickerCalendarBlockEarlierDatesTemplate = () => {
   useEffect(() => {
     const prevDate = getPrevDate(viewDate, viewMode);
     const unit = getUnitType(viewMode);
-    const minDate = getMinDate(activeDateRangeEnd, selectedDateRange?.[0], selectedDateRange?.[1]);
+    const minDate = getMinDate(selectedDateRange?.[0], selectedDateRange?.[1]);
     if (minDate && prevDate.isBefore(minDate, unit)) {
       setPrevArrowDisabled(true);
     } else {
@@ -79,10 +74,10 @@ export const DateRangePickerCalendarBlockEarlierDatesTemplate = () => {
         setPrevArrowDisabled(false);
       }
     }
-  }, [viewDate, viewMode, activeDateRangeEnd]);
+  }, [viewDate, viewMode, selectedDateRange]);
 
   const dateAttrs = (date: Dayjs) => {
-    if (activeDateRangeEnd && date.isBefore(activeDateRangeEnd, 'date')) {
+    if (selectedDateRange?.[1] && date.isBefore(selectedDateRange?.[1], 'date')) {
       if (!dateIsInRange('date', date, selectedDateRange) && !dateIsSelected('date', date, selectedDateRange)) {
         return { disabled: true };
       }
@@ -99,7 +94,6 @@ export const DateRangePickerCalendarBlockEarlierDatesTemplate = () => {
     <WrapperHorizontal>
       <DateRangePickerCalendar
         onClick={handleClick}
-        onActiveDateRangeEndValueChange={handleActiveDateRangeEndChange}
         dateAttributes={dateAttrs}
         onSelectedDateRangeValueChange={handleSelectedDateRangeChange}
         defaultViewModeValue={'dates'}
