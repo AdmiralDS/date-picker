@@ -179,6 +179,7 @@ export const pickRangeDateThirdTest = async (canvasElement: HTMLElement, portalC
 
   await findRangeYear(firstRangeYear);
 
+  await userEvent.click(portal.getByRole('monthButtonNavigationPanel'));
   await userEvent.click(portal.getByTestId(`month-cell-${randomMonth}`));
 
   await findDates(portalElement ?? canvasElement, randomYear, randomMonth, randomStartDate, randomEndDate);

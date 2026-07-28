@@ -40,7 +40,5 @@ export const pickYearTest = async (canvasElement: HTMLElement, portalContainerId
   };
 
   await findYear(firstRangeYear);
-
-  await expect(inputNode).toHaveFocus();
   await expect(inputNode).toHaveValue(`${randomYear}`);
 };

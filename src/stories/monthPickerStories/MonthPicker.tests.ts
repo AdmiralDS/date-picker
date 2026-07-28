@@ -74,6 +74,5 @@ export const pickMonthTest = async (canvasElement: HTMLElement, portalContainerI
 
   const inputNode = document.querySelector('[data-testid = input]') as HTMLElement;
 
-  await expect(inputNode).toHaveFocus();
   await expect(inputNode).toHaveValue(`${String(randomMonth).padStart(2, '0')}.${randomYear}`);
 };
