@@ -10,7 +10,7 @@ export type CalendarViewMode = 'dates' | 'months' | 'years';
 
 export type Timestamp = number;
 export type RangeTimestamp = readonly [Timestamp, Timestamp];
-export type ActiveEnd = 'start' | 'end' | 'none';
+export type ActiveInputType = 'start' | 'end' | 'none';
 
 export enum InputsConfirmedState {
   initial = 0,
@@ -93,6 +93,7 @@ export interface RangeCalendarProps extends CalendarProps {
   /** Коллбэк на изменение выбранного диапазона дат */
   onSelectedDateRangeValueChange?: (dateRange: DateRange) => void;
 
+  //todo удалить 3 типа
   /** Значение активного конца диапазона дат */
   activeDateRangeEndValue?: Dayjs;
   /** Значение активного конца диапазона дат по умолчанию */
@@ -100,12 +101,12 @@ export interface RangeCalendarProps extends CalendarProps {
   /** Коллбэк на изменение значения активного конца диапазона дат */
   onActiveDateRangeEndValueChange?: (date: Dayjs | undefined) => void;
 
-  /** Значение активного конца диапазона дат */
-  activeEndValue?: ActiveEnd;
-  /** Значение активного конца диапазона дат по умолчанию */
-  defaultActiveEndValue?: ActiveEnd;
-  /** Коллбэк на изменение значения активного конца диапазона дат */
-  onActiveEndValueChange?: (end: ActiveEnd) => void;
+  /** Значение активного input */
+  activeInput?: ActiveInputType;
+  /** Значение активного input по умолчанию */
+  defaultActiveInput?: ActiveInputType;
+  /** Коллбэк на изменение значения активного input */
+  onActiveInputChange?: (activeInputProp: ActiveInputType) => void;
 }
 
 export interface RangeDoubleCalendarProps extends Omit<

@@ -4,7 +4,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
 import { getCurrentDate } from '#lib/utils';
-import type { ActiveEnd, RangeCalendarProps } from '#lib/calendarInterfaces';
+import type { ActiveInputType, RangeCalendarProps } from '#lib/calendarInterfaces';
 import { YearsWidget } from '#lib/YearsWidget';
 import { MemoDefaultYearRangeCell } from '#lib/DefaultCell';
 import { ruLocale } from '#lib/calendarConstants.ts';
@@ -35,9 +35,9 @@ export const YearRangeCalendar = ({
   activeDateValue,
   defaultActiveDateValue,
   onActiveDateValueChange,
-  activeEndValue,
-  defaultActiveEndValue,
-  onActiveEndValueChange,
+  activeInput,
+  defaultActiveInput,
+  onActiveInputChange,
   cell,
   locale = ruLocale,
   yearsOnScreen,
@@ -95,24 +95,22 @@ export const YearRangeCalendar = ({
   //#endregion
 
   //#region "Active end of range"
-  const setInitialActiveEndState = () => {
-    if (defaultActiveEndValue) {
-      return defaultActiveEndValue;
-    }
-    return 'start';
-  };
-  const [activeEndState, setActiveEndState] = useState<ActiveEnd>(setInitialActiveEndState());
-  const activeEndInner = activeEndValue || activeEndState;
+  const [activeInputState, setActiveInputState] = useState<ActiveInputType>(defaultActiveInput || 'start');
+  const activeInputInner = activeInput || activeInputState;
 
-  const handleActiveEndChange = (end?: ActiveEnd) => {
-    const newValue: ActiveEnd = end ? end : activeEndInner === 'start' ? 'end' : 'start';
-    setActiveEndState(newValue);
-    onActiveEndValueChange?.(newValue);
+  const handleActiveInputChange = (activeInputProp?: ActiveInputType) => {
+    const newValue: ActiveInputType = activeInputProp
+      ? activeInputProp
+      : activeInputInner === 'start'
+        ? 'end'
+        : 'start';
+    setActiveInputState(newValue);
+    onActiveInputChange?.(newValue);
   };
 
   const setInitialDateRangeActiveEndState = () => {
-    if (activeEndInner) {
-      switch (activeEndInner) {
+    if (activeInputInner) {
+      switch (activeInputInner) {
         case 'start':
         default:
           return dateRangeFirstInner;
@@ -142,7 +140,7 @@ export const YearRangeCalendar = ({
     if (!disabled) {
       let first: Dayjs | undefined = undefined;
       let second: Dayjs | undefined = undefined;
-      switch (activeEndInner) {
+      switch (activeInputInner) {
         case 'start':
           handleDateRangeFirstChange(date);
           first = date;
@@ -159,7 +157,7 @@ export const YearRangeCalendar = ({
       }
 
       const newSelectedDateRangeValue: DateRange = [first, second];
-      handleActiveEndChange();
+      handleActiveInputChange();
       handleDateRangeActiveEndChange(date);
       onSelectedDateRangeValueChange?.(newSelectedDateRangeValue);
     }

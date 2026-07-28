@@ -3,19 +3,22 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
+
 import { changeInputData, refSetter } from '@admiral-ds/react-ui';
+import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
+
 import { YearRangePickerCalendar } from '#lib/YearRangePickerCalendar';
 import type { InputBoxProps } from '#lib/Input/InputBox';
 import { InputBox } from '#lib/Input/InputBox';
 import { InputIconButton } from '#lib/InputIconButton';
-import CalendarOutline from '@admiral-ds/icons/build/system/CalendarOutline.svg?react';
 import { PopoverPanel } from '#lib/PopoverPanel';
 import { InputsConfirmedState } from '#lib/calendarInterfaces.js';
-import type { ActiveEnd, CalendarViewMode } from '#lib/calendarInterfaces.js';
+import type { ActiveInputType, CalendarViewMode } from '#lib/calendarInterfaces.js';
 import type { DateRange } from 'lib/types';
-import { RangeInput, RangeInputProps } from '#lib/Input/RangeInput';
+import { RangeInput, type RangeInputProps } from '#lib/Input/RangeInput';
+import type { DimensionInterface } from '#lib/Input/types';
+
 import { defaultYearFormatter, defaultYearParser, sortDatesAsc } from '#lib/utils';
-import { DimensionInterface } from '#lib/Input/types';
 import { YEAR_INPUT_WIDTH_M_XL, YEAR_INPUT_WIDTH_S } from '#lib/Input/constatnts';
 
 const Calendar = styled(YearRangePickerCalendar)`
@@ -83,10 +86,10 @@ export const YearRangePicker = forwardRef<HTMLDivElement, YearRangePickerProps>(
       }
     };
 
-    const [activeEnd, setActiveEnd] = useState<ActiveEnd>('start');
+    const [activeInputState, setActiveInputState] = useState<ActiveInputType>('start');
 
-    const handleActiveEndChange = (end: ActiveEnd) => {
-      setActiveEnd(end);
+    const handleActiveInputChange = (activeInputProp: ActiveInputType) => {
+      setActiveInputState(activeInputProp);
     };
 
     //const [calendarViewMode, setCalendarViewMode] = useState<CalendarViewMode>('years');
@@ -180,7 +183,7 @@ export const YearRangePicker = forwardRef<HTMLDivElement, YearRangePickerProps>(
       onCancelInput: handleRangeInputCancel,
       onStartDateInputComplete: handleStartDateInputComplete,
       onEndDateInputComplete: handleEndDateInputComplete,
-      onActiveEndValueChange: handleActiveEndChange,
+      onActiveInputChange: handleActiveInputChange,
       onRangeInputFinish: handleRangeInputFinish,
     };
 
@@ -196,7 +199,7 @@ export const YearRangePicker = forwardRef<HTMLDivElement, YearRangePickerProps>(
               selectedDateRangeValue={selectedRange}
               onSelectedDateRangeValueChange={handleSelectedDateValueChange}
               onActiveDateValueChange={handleActiveDateValueChange}
-              activeEndValue={activeEnd}
+              activeInput={activeInputState}
             />
           </PopoverPanel>
         )}
