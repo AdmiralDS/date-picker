@@ -1,7 +1,11 @@
+import { readFileSync } from 'node:fs';
 import { configs } from 'typescript-eslint';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import importPlugin from 'eslint-plugin-import';
+
+const releaseScope = JSON.parse(readFileSync(new URL('./config/release-scope.json', import.meta.url), 'utf8'));
+const excludedComponents = releaseScope.excludedComponents.map((componentName) => `lib/components/${componentName}/**`);
 
 // Временный блок для мягкого перехода.
 // Для новых проектов: все правила из этого блока должны быть выставлены в `error`.
@@ -27,6 +31,7 @@ const STORYBOOK_SOFT_OVERRIDES = {
 };
 
 export default defineConfig([
+  globalIgnores(['src/disabledStories/**', ...excludedComponents]),
   ...configs.strict,
   importPlugin.flatConfigs.recommended,
   {
@@ -79,6 +84,8 @@ export default defineConfig([
       'storybook-static/**',
       'build/**',
       'coverage/**',
+      'src/disabledStories/**',
+      ...excludedComponents,
       '.mock/**',
       '.test/**',
       '.storybook/**',
