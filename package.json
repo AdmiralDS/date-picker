@@ -9,16 +9,19 @@
   },
   "scripts": {
     "prepare": "npm run build:lib",
+    "clean": "node scripts/clean.mjs",
     "dev": "vite",
     "test": "vitest run",
+    "typecheck": "tsc --noEmit",
     "lint": "prettier --check . && eslint src lib .storybook",
     "preview": "vite preview",
     "preview:storybook": "vite preview --outDir docs/current",
     "storybook": "storybook dev -p 6006",
     "test:storybook": "test-storybook",
+    "test:package": "node scripts/verify-package.mjs",
     "build:app": "tsc -b && vite build",
     "build:storybook": "storybook build --disable-telemetry --output-dir docs/current",
-    "build:lib": "vite -c vite.build.config.ts build",
+    "build:lib": "npm run typecheck && npm run clean && vite -c vite.build.config.ts build",
     "lint:fix": "prettier --write . && eslint src lib .storybook --fix"
   },
   "devDependencies": {
@@ -91,19 +94,16 @@
     ".": {
       "types": "./dist/types/main.d.ts",
       "import": "./dist/esm/main.js",
-      "require": "./dist/cjs/main.js"
+      "require": "./dist/cjs/main.cjs"
     }
   },
-  "main": "./dist/cjs/main.js",
+  "main": "./dist/cjs/main.cjs",
   "types": "./dist/types/main.d.ts",
   "bugs": {
     "url": "https://github.com/AdmiralDS/date-picker/issues"
   },
   "files": [
-    "dist",
-    "lib",
-    "tsconfig.json",
-    "LICENSE"
+    "dist"
   ],
   "keywords": [
     "AdmiralDS",
