@@ -99,9 +99,14 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/types/main.d.ts",
-      "import": "./dist/esm/main.js",
-      "require": "./dist/cjs/main.cjs"
+      "import": {
+        "types": "./dist/types/main.d.ts",
+        "default": "./dist/esm/main.js"
+      },
+      "require": {
+        "types": "./dist/types/main.d.cts",
+        "default": "./dist/cjs/main.cjs"
+      }
     }
   },
   "main": "./dist/cjs/main.cjs",

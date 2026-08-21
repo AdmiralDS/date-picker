@@ -1,4 +1,5 @@
 import { resolve } from 'node:path';
+import { copyFile } from 'node:fs/promises';
 import pkg from './package.json';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -34,7 +35,15 @@ export default defineConfig({
     dts({
       tsconfigPath: resolve(__dirname, 'tsconfig.build.json'),
       outDir: './dist/types',
+      rollupTypes: true,
     }),
+    {
+      name: 'copy-cjs-declarations',
+      enforce: 'post',
+      async closeBundle() {
+        await copyFile(resolve(__dirname, 'dist/types/main.d.ts'), resolve(__dirname, 'dist/types/main.d.cts'));
+      },
+    },
   ],
   build: {
     sourcemap: true,

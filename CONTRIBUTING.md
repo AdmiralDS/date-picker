@@ -97,16 +97,16 @@ npm run test:storybook:ci
 
 ## Сборка
 
-| Команда                     | Результат                                            |
-| --------------------------- | ---------------------------------------------------- |
-| `npm run typecheck`         | Проверить типы TypeScript без создания файлов        |
-| `npm run build:app`         | Собрать демонстрационное Vite-приложение             |
-| `npm run preview`           | Локально открыть собранное Vite-приложение           |
-| `npm run build:storybook`   | Собрать Storybook в `docs/current`                   |
-| `npm run preview:storybook` | Локально открыть собранный Storybook                 |
-| `npm run build:lib`         | Проверить типы, очистить `dist` и собрать npm-пакет  |
-| `npm run test:package`      | Проверить entrypoints и содержимое собранного пакета |
-| `npm run clean`             | Очистить результаты сборки библиотеки                |
+| Команда                     | Результат                                                       |
+| --------------------------- | --------------------------------------------------------------- |
+| `npm run typecheck`         | Проверить типы TypeScript без создания файлов                   |
+| `npm run build:app`         | Собрать демонстрационное Vite-приложение                        |
+| `npm run preview`           | Локально открыть собранное Vite-приложение                      |
+| `npm run build:storybook`   | Собрать Storybook в `docs/current`                              |
+| `npm run preview:storybook` | Локально открыть собранный Storybook                            |
+| `npm run build:lib`         | Проверить типы, очистить `dist` и собрать npm-пакет             |
+| `npm run test:package`      | Проверить npm tarball в ESM, CJS и TypeScript consumer-проектах |
+| `npm run clean`             | Очистить результаты сборки библиотеки                           |
 
 Скрипт `prepare` автоматически выполняется npm при локальной установке пакета и вызывает `build:lib`.
 
@@ -127,6 +127,8 @@ npm run check:full
 5. Сборку библиотеки.
 6. Проверку собранного npm-пакета.
 
+`test:package` создаёт настоящий tarball через `npm pack`, проверяет publish-состав и все targets из `package.json#exports`, устанавливает пакет в изолированный consumer-проект, компилирует ESM/CJS TypeScript-импорты и собирает оба JavaScript-формата через Vite. Проверка выполняется по содержимому tarball, а не по package self-reference рабочего репозитория.
+
 Storybook browser-тесты не входят в `check:full`, поскольку им требуется установленный Chromium. Для полного воспроизведения CI локально выполните:
 
 ```shell
@@ -134,7 +136,6 @@ npm ci
 npm run check:full
 npx playwright install chromium
 npm run test:storybook:ci
-npm pack --dry-run --ignore-scripts
 ```
 
 ## CI и публикация Storybook
@@ -148,7 +149,7 @@ Workflow CI запускается для каждого pull request и при 
 5. Установку Chromium и Storybook browser-тесты.
 6. Загрузку сборки Storybook как GitHub Pages artifact.
 7. Сборку и проверку npm-пакета.
-8. Проверку состава публикации через `npm pack --dry-run`.
+8. Проверку publish-состава и consumer-сборок фактического npm tarball.
 
 После успешного CI в ветке `main` Storybook автоматически публикуется в GitHub Pages. Для pull request выполняются проверки и создаётся artifact, но публикация в GitHub Pages не запускается.
 
@@ -165,7 +166,6 @@ npm ci
 npm run check:full
 npx playwright install chromium
 npm run test:storybook:ci
-npm pack --dry-run --ignore-scripts
 git status --short
 ```
 

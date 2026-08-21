@@ -27,3 +27,4 @@ export * from './components/YearRangePicker';
 export * from './components/Calendar';
 export * from './dateFormatters';
 export * from './dateTimestampUtils';
+export type { DateRange } from './types';

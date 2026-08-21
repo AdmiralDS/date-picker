@@ -54,11 +54,8 @@ jobs:
       - name: Build package
         run: npm run build:lib
 
-      - name: Verify package entrypoints
+      - name: Verify publishable package
         run: npm run test:package
-
-      - name: Inspect publishable files
-        run: npm pack --dry-run --ignore-scripts
 
   deploy-pages:
     needs: quality-gate

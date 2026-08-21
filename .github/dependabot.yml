@@ -1,19 +1,19 @@
 version: 2
 
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "daily"
-    versioning-strategy: "increase"
+      interval: 'daily'
+    versioning-strategy: 'increase'
     allow:
-      - dependency-name: "@admiral-ds/react-ui"
-      - dependency-name: "@admiral-ds/icons"
-      - dependency-name: "@admiral-ds/fonts"
-      - dependency-name: "@admiral-ds/web"
+      - dependency-name: '@admiral-ds/react-ui'
+      - dependency-name: '@admiral-ds/icons'
+      - dependency-name: '@admiral-ds/fonts'
+      - dependency-name: '@admiral-ds/web'
     cooldown:
       exclude:
-        - "@admiral-ds/react-ui"
-        - "@admiral-ds/icons"
-        - "@admiral-ds/fonts"
-        - "@admiral-ds/web"
+        - '@admiral-ds/react-ui'
+        - '@admiral-ds/icons'
+        - '@admiral-ds/fonts'
+        - '@admiral-ds/web'
