@@ -28,6 +28,14 @@ const STORYBOOK_SOFT_OVERRIDES = {
   rules: {
     'import/named': 'warn',
   },
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx', '.js', '.jsx'],
+    },
+    'import/resolver': {
+      typescript: {},
+    },
+  },
 };
 
 export default defineConfig([

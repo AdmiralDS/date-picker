@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Preview } from '@storybook/react';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
-import { DocsContainer } from '@storybook/addon-docs';
-import { useGlobals, addons } from '@storybook/preview-api';
-import { themes } from '@storybook/theming';
+import { DocsContainer } from '@storybook/addon-docs/blocks';
+import { useGlobals, addons } from 'storybook/preview-api';
+import { themes } from 'storybook/theming';
 import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
 import { lightThemeClassName, darkThemeClassName, vars } from '@admiral-ds/web';
 
@@ -35,9 +35,7 @@ const GlobalStyles = createGlobalStyle`
     }
 `;
 
-// create a component that uses the dark mode hook
 function ThemeWrapper(props: { CSSCustomProps: boolean; children: React.ReactNode }) {
-  // this example uses hook but you can also use class component as well
   const isDark = useDarkMode();
 
   useEffect(() => {
@@ -101,7 +99,7 @@ const preview: Preview = {
       }, []);
 
       return (
-        <ThemeWrapper CSSCustomProps={CSSCustomProps as boolean}>
+        <ThemeWrapper CSSCustomProps={CSSCustomProps === true || CSSCustomProps === 'true'}>
           <GlobalStyles />
           <DropdownProvider rootRef={refDropdown}>
             <StoryContainer id={'story-container'}>{renderStory()}</StoryContainer>
@@ -122,8 +120,8 @@ const preview: Preview = {
       toolbar: {
         title: 'CSS Custom Props',
         items: [
-          { value: true, title: 'Enable css custom props', icon: 'passed' },
-          { value: false, title: 'Disable css custom props', icon: 'failed' },
+          { value: 'true', title: 'Enable css custom props', icon: 'passed' },
+          { value: 'false', title: 'Disable css custom props', icon: 'failed' },
         ],
       },
     },
