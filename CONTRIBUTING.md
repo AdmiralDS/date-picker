@@ -127,7 +127,7 @@ npm run check:full
 5. Сборку библиотеки.
 6. Проверку собранного npm-пакета.
 
-`test:package` создаёт настоящий tarball через `npm pack`, проверяет publish-состав и все targets из `package.json#exports`, устанавливает пакет в изолированный consumer-проект, компилирует ESM/CJS TypeScript-импорты и собирает оба JavaScript-формата через Vite. Проверка выполняется по содержимому tarball, а не по package self-reference рабочего репозитория.
+`test:package` создаёт настоящий tarball через `npm pack`, проверяет publish-состав и все targets из `package.json#exports`, устанавливает пакет в изолированный consumer-проект, компилирует ESM/CJS TypeScript-импорты и собирает через Vite отдельные consumers с ESM `import` и CJS `require()`. Проверка выполняется по содержимому tarball, а не по package self-reference рабочего репозитория.
 
 Storybook browser-тесты не входят в `check:full`, поскольку им требуется установленный Chromium. Для полного воспроизведения CI локально выполните:
 

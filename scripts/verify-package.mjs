@@ -7,24 +7,47 @@ import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'vite';
 
+// Все пути вычисляются относительно расположения скрипта, чтобы проверка одинаково
+// работала из npm scripts, CI и при ручном запуске из другого каталога.
 const rootDir = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const packageJson = JSON.parse(await readFile(join(rootDir, 'package.json'), 'utf8'));
 const packageName = packageJson.name;
+
+// Consumer создаётся внутри корневого node_modules. Благодаря этому установленный
+// tarball изолирован от package self-reference, но может разрешать peer dependencies
+// из node_modules проекта без их повторной установки и обращения к npm registry.
 const temporaryRoot = join(rootDir, 'node_modules', '.tmp');
+
+// package.json#files разрешает публиковать dist. Дополнительный allowlist защищает
+// от случайного расширения publish-состава при будущих изменениях manifest или npm.
 const allowedPackageFiles = new Set(['README.md', 'license', 'package.json']);
 const forbiddenPathParts = ['/__snapshots__/', '.test.', '.stories.', '.template.'];
+
+// Небольшой набор стабильных runtime-экспортов используется во всех consumer fixtures.
+// Он проверяет основные семейства компонентов, не дублируя полный публичный API вручную.
 const expectedPublicExports = ['DatePicker', 'DateRangePicker', 'MonthPicker', 'YearPicker'];
 
 const formatProjectPath = (filePath) => relative(rootDir, filePath) || '.';
 
-/** Возвращает все строковые targets из вложенного package.json#exports. */
+/**
+ * Возвращает все строковые targets из package.json#exports.
+ *
+ * Обход рекурсивный, потому что root export содержит вложенные import/require,
+ * а внутри каждой ветви находятся отдельные types/default conditions.
+ */
 const collectExportTargets = (value) => {
   if (typeof value === 'string') return [value];
   if (!value || typeof value !== 'object') return [];
   return Object.values(value).flatMap(collectExportTargets);
 };
 
-/** Проверяет фактический publish-состав, сформированный npm pack. */
+/**
+ * Проверяет фактический publish-состав, сформированный npm pack.
+ *
+ * Проверки локальной файловой системы недостаточно: файл может существовать в dist,
+ * но не попасть в tarball из-за package.json#files или npm ignore rules. Поэтому и
+ * allowlist, и export targets сверяются со списком packageInfo.files от самого npm.
+ */
 const validatePackContents = (packageInfo) => {
   const packageFiles = new Set(packageInfo.files.map(({ path }) => path.replaceAll('\\', '/')));
   const errors = [];
@@ -48,7 +71,7 @@ const validatePackContents = (packageInfo) => {
   return errors;
 };
 
-/** Собирает список файлов с указанным расширением рекурсивно. */
+/** Собирает список сгенерированных файлов с указанным расширением рекурсивно. */
 const findFiles = async (directory, extension) => {
   const entries = await readdir(directory, { withFileTypes: true });
   const nestedFiles = await Promise.all(
@@ -60,7 +83,14 @@ const findFiles = async (directory, extension) => {
   return nestedFiles.flat();
 };
 
-/** Проверяет расширения и существование всех локальных imports/requires собранного графа. */
+/**
+ * Проверяет расширения и существование локальных imports/requires собранного графа.
+ *
+ * ESM-файлы должны ссылаться на .js, CJS-файлы — на .cjs. Это предотвращает
+ * регрессию, при которой Rollup создаёт корректный main entrypoint, но один из
+ * сохранённых внутренних модулей содержит ссылку на файл другого формата.
+ * Внешние package imports здесь не проверяются: они валидируются consumer-сборкой.
+ */
 const validateInternalModuleGraph = async (directory, extension, pattern) => {
   const errors = [];
   const files = await findFiles(directory, extension);
@@ -86,6 +116,13 @@ const validateInternalModuleGraph = async (directory, extension, pattern) => {
 };
 
 const runTypeScriptConsumerCheck = (consumerRoot, fixturePaths) => {
+  // NodeNext выбирает conditions по расширению consumer-файла: .mts должен получить
+  // ESM main.d.ts, а .cts — CJS main.d.cts. Таким образом один запуск проверяет обе
+  // type-ветви package.json#exports и наличие заявленных публичных типов.
+  //
+  // skipLibCheck необходим из-за деклараций peer dependencies: например,
+  // @admiral-ds/react-ui ссылается на опциональные внешние типы. Разрешение entrypoint
+  // и проверка импортируемых контрактов пакета при этом продолжают выполняться.
   execFileSync(
     join(rootDir, 'node_modules', 'typescript', 'bin', 'tsc'),
     [
@@ -107,7 +144,13 @@ const runTypeScriptConsumerCheck = (consumerRoot, fixturePaths) => {
 };
 
 const buildConsumerEntrypoint = async (consumerRoot, entry, format) => {
+  // Peer dependencies не включаются в синтетический bundle. Задача этой проверки —
+  // подтвердить разрешение и преобразование опубликованного кода date-picker, а не
+  // повторно собрать React и Admiral DS. Subpath imports тоже считаются external.
   const peerDependencies = Object.keys(packageJson.peerDependencies ?? {});
+
+  // write:false оставляет проверку без артефактов: успешное завершение Rollup означает,
+  // что весь доступный module graph consumer-а разрешён и может быть собран.
   await build({
     configFile: false,
     root: consumerRoot,
@@ -127,6 +170,8 @@ await mkdir(temporaryRoot, { recursive: true });
 const consumerRoot = await mkdtemp(join(temporaryRoot, 'package-check-'));
 
 try {
+  // Первый pack работает в dry-run режиме: он быстро и без создания tgz возвращает
+  // точный список файлов, размер и metadata будущей публикации.
   const dryRunOutput = execFileSync('npm', ['pack', '--dry-run', '--json', '--ignore-scripts'], {
     cwd: rootDir,
     encoding: 'utf8',
@@ -135,6 +180,8 @@ try {
   const packageInfo = JSON.parse(dryRunOutput).at(0);
   if (!packageInfo) throw new Error('npm pack --dry-run did not return package metadata.');
 
+  // Ошибки состава и обоих module graphs накапливаются, чтобы один запуск показывал
+  // все найденные проблемы, а не останавливался на первом отсутствующем файле.
   const graphErrors = [
     ...validatePackContents(packageInfo),
     ...(await validateInternalModuleGraph(
@@ -158,6 +205,9 @@ try {
     'utf8',
   );
 
+  // Второй pack создаёт настоящий tgz. Именно его получает consumer ниже, поэтому
+  // дальнейшие проверки не могут случайно разрешить исходники через tsconfig paths
+  // или package self-reference текущего рабочего репозитория.
   const packOutput = execFileSync('npm', ['pack', '--json', '--ignore-scripts', '--pack-destination', consumerRoot], {
     cwd: rootDir,
     encoding: 'utf8',
@@ -166,6 +216,9 @@ try {
   const packedFileName = JSON.parse(packOutput).at(0)?.filename;
   if (!packedFileName) throw new Error('npm pack did not return the generated tarball name.');
 
+  // --legacy-peer-deps не устанавливает peers внутрь временного consumer-а. Они
+  // разрешаются из родительского node_modules, а lockfile рабочего проекта не меняется.
+  // --ignore-scripts гарантирует, что проверяется уже собранный tarball без prepare.
   execFileSync(
     'npm',
     [
@@ -185,6 +238,9 @@ try {
   const installedPackageJson = JSON.parse(await readFile(join(installedPackageDir, 'package.json'), 'utf8'));
   const esmTarget = resolve(installedPackageDir, installedPackageJson.exports['.'].import.default);
   const cjsTarget = resolve(installedPackageDir, installedPackageJson.exports['.'].require.default);
+
+  // Простого наличия target недостаточно для CJS: createRequire.resolve подтверждает,
+  // что Node condition resolver действительно выбирает require.default, а не ESM branch.
   await Promise.all([access(esmTarget), access(cjsTarget)]);
   const consumerRequire = createRequire(join(consumerRoot, 'package.json'));
   if (consumerRequire.resolve(packageName) !== cjsTarget) {
@@ -192,13 +248,33 @@ try {
   }
 
   const esmFixture = join(consumerRoot, 'consumer.mjs');
+  const cjsFixtureDirectory = join(consumerRoot, 'node_modules', 'date-picker-cjs-consumer');
+  const cjsFixture = join(cjsFixtureDirectory, 'index.cjs');
   const esmTypeFixture = join(consumerRoot, 'consumer.mts');
   const cjsTypeFixture = join(consumerRoot, 'consumer.cts');
+
+  // Vite преобразует CommonJS dependencies из node_modules. Размещение CJS fixture
+  // в синтетическом package внутри node_modules моделирует реальную CJS-зависимость,
+  // которая вызывает require('@admiral-ds/date-picker'), и заставляет bundler пройти
+  // через require condition и опубликованный CJS graph целиком.
+  await mkdir(cjsFixtureDirectory, { recursive: true });
+
+  // Runtime fixtures используют импорты в выражении console.log, чтобы Rollup не мог
+  // удалить их как неиспользуемые и был вынужден разрешить соответствующий graph.
   await writeFile(
     esmFixture,
     `import { ${expectedPublicExports.join(', ')} } from '${packageName}';\nconsole.log(${expectedPublicExports.join(', ')});\n`,
     'utf8',
   );
+
+  await writeFile(
+    cjsFixture,
+    `const { ${expectedPublicExports.join(', ')} } = require('${packageName}');\nconsole.log(${expectedPublicExports.join(', ')});\n`,
+    'utf8',
+  );
+
+  // Type fixtures отдельно проверяют value и type exports. CJS использует import =
+  // require, поэтому TypeScript обязан выбрать main.d.cts из require.types.
   await writeFile(
     esmTypeFixture,
     `import { DatePicker, type DatePickerProps } from '${packageName}';\nconst component: typeof DatePicker = DatePicker;\nconst props = {} as DatePickerProps;\nconsole.log(component, props);\n`,
@@ -212,11 +288,12 @@ try {
 
   runTypeScriptConsumerCheck(consumerRoot, [esmTypeFixture, cjsTypeFixture]);
   await buildConsumerEntrypoint(consumerRoot, esmFixture, 'ESM');
-  await buildConsumerEntrypoint(consumerRoot, cjsTarget, 'CJS');
+  await buildConsumerEntrypoint(consumerRoot, cjsFixture, 'CJS require()');
 
   console.log(
     `Package verification passed: ${packageInfo.files.length} files, ${(packageInfo.unpackedSize / 1024).toFixed(1)} KiB unpacked.`,
   );
 } finally {
+  // Временный consumer и tgz удаляются как после успеха, так и при ошибке любой проверки.
   await rm(consumerRoot, { recursive: true, force: true });
 }
