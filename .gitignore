@@ -9,6 +9,7 @@ dist-ssr
 *.log
 .idea
 storybook-static
+plans.md
 .npmrc
 admiral-ds-date-picker-*.tgz
 tsconfig.tsbuildinfo

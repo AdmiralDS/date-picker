@@ -20,10 +20,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -40,6 +40,11 @@ jobs:
       - name: Build Storybook
         run: npm run build:storybook
 
+      - name: Upload Docs Artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: docs/current
+
       - name: Build package
         run: npm run build:lib
 
@@ -48,3 +53,24 @@ jobs:
 
       - name: Inspect publishable files
         run: npm pack --dry-run --ignore-scripts
+
+  deploy-pages:
+    needs: quality-gate
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+      pages: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
