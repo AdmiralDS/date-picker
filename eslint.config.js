@@ -19,7 +19,7 @@ const SOFT_MIGRATION_RULES = {
   '@typescript-eslint/no-dynamic-delete': 'warn',
   '@typescript-eslint/consistent-type-imports': 'warn',
   'import/named': 'warn',
-  'import/no-duplicates': 'warn',
+  'import/no-duplicates': ['warn', { considerQueryString: true }],
   'import/export': 'warn',
 };
 
