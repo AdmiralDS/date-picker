@@ -37,6 +37,9 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.20.0",
+    "@maskito/core": "^2.4.0 || ^3",
+    "@maskito/kit": "^2.4.0 || ^3",
+    "@maskito/react": "^2.4.0 || ^3",
     "@storybook/addon-essentials": "^8.3.5",
     "@storybook/addon-interactions": "^8.6.4",
     "@storybook/addon-themes": "^8.3.5",
@@ -93,13 +96,10 @@
     "@admiral-ds/icons": "^4.3.3",
     "@admiral-ds/react-ui": "^8.0.0",
     "@admiral-ds/web": "^0.0.4",
-    "@maskito/core": "^2.4.0 || ^3",
-    "@maskito/kit": "^2.4.0 || ^3",
-    "@maskito/react": "^2.4.0 || ^3",
-    "dayjs": "^1.0.0",
+    "dayjs": "^1.11.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
-    "styled-components": "^5 || ^6.1.0"
+    "styled-components": "^6.1.0"
   },
   "type": "module",
   "exports": {
