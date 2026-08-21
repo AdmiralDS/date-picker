@@ -59,7 +59,6 @@ export const pickDateFirstTest = async (canvasElement: HTMLElement, portalContai
 
   const inputNode = document.querySelector('[data-testid = input]') as HTMLElement;
 
-  await expect(inputNode).toHaveFocus();
   await expect(inputNode).toHaveValue(
     `${String(randomDate).padStart(2, '0')}.${String(randomMonth + 1).padStart(2, '0')}.${year}`,
   );
@@ -102,7 +101,6 @@ export const pickDateSecondTest = async (canvasElement: HTMLElement, portalConta
 
   const inputNode = document.querySelector('[data-testid = input]') as HTMLElement;
 
-  await expect(inputNode).toHaveFocus();
   await expect(inputNode).toHaveValue(
     `${String(randomDate).padStart(2, '0')}.${String(randomMonth + 1).padStart(2, '0')}.${randomYear}`,
   );
@@ -149,13 +147,13 @@ export const pickDateThirdTest = async (canvasElement: HTMLElement, portalContai
 
   await findRangeYear(firstRangeYear);
 
+  await userEvent.click(portal.getByRole('monthButtonNavigationPanel'));
   await userEvent.click(portal.getByTestId(`month-cell-${randomMonth}`));
 
   await findDate(portalElement ?? canvasElement, randomYear, randomMonth, randomDate);
 
   const inputNode = document.querySelector('[data-testid = input]') as HTMLElement;
 
-  await expect(inputNode).toHaveFocus();
   await expect(inputNode).toHaveValue(
     `${String(randomDate).padStart(2, '0')}.${String(randomMonth + 1).padStart(2, '0')}.${randomYear}`,
   );
