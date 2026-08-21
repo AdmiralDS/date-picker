@@ -29,6 +29,32 @@ const expectedPublicExports = ['DatePicker', 'DateRangePicker', 'MonthPicker', '
 
 const formatProjectPath = (filePath) => relative(rootDir, filePath) || '.';
 
+// npm 10 может запускать prepare для npm pack даже с --ignore-scripts и добавлять
+// вывод сборки перед JSON. Берём последний корректный JSON-массив из stdout, чтобы
+// проверка одинаково работала с npm 10 и npm 11.
+const parsePackOutput = (output) => {
+  const jsonStarts = [0];
+  let nextJsonStart = output.indexOf('\n[');
+
+  while (nextJsonStart >= 0) {
+    jsonStarts.push(nextJsonStart + 1);
+    nextJsonStart = output.indexOf('\n[', nextJsonStart + 2);
+  }
+
+  for (const jsonStart of jsonStarts.reverse()) {
+    const candidate = output.slice(jsonStart).trim();
+    try {
+      const parsedOutput = JSON.parse(candidate);
+      if (Array.isArray(parsedOutput)) return parsedOutput;
+    } catch {
+      // Текущая позиция может указывать на строку лога, начинающуюся с `[`. Ищем
+      // предыдущий массив, пока не дойдём до JSON metadata от npm pack.
+    }
+  }
+
+  throw new Error('npm pack did not return valid JSON metadata.');
+};
+
 /**
  * Возвращает все строковые targets из package.json#exports.
  *
@@ -177,7 +203,7 @@ try {
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'pipe'],
   });
-  const packageInfo = JSON.parse(dryRunOutput).at(0);
+  const packageInfo = parsePackOutput(dryRunOutput).at(0);
   if (!packageInfo) throw new Error('npm pack --dry-run did not return package metadata.');
 
   // Ошибки состава и обоих module graphs накапливаются, чтобы один запуск показывал
@@ -213,7 +239,7 @@ try {
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'pipe'],
   });
-  const packedFileName = JSON.parse(packOutput).at(0)?.filename;
+  const packedFileName = parsePackOutput(packOutput).at(0)?.filename;
   if (!packedFileName) throw new Error('npm pack did not return the generated tarball name.');
 
   // --legacy-peer-deps не устанавливает peers внутрь временного consumer-а. Они
