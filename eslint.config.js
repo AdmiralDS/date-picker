@@ -38,6 +38,14 @@ const STORYBOOK_SOFT_OVERRIDES = {
   },
 };
 
+const STYLED_COMPONENTS_DECLARATION_OVERRIDES = {
+  files: ['**/styled.d.ts'],
+  rules: {
+    // DefaultTheme must remain an interface so styled-components can augment it.
+    '@typescript-eslint/no-empty-object-type': 'off',
+  },
+};
+
 export default defineConfig([
   globalIgnores(['src/disabledStories/**', ...excludedComponents]),
   ...configs.strict,
@@ -101,5 +109,6 @@ export default defineConfig([
     ],
   },
   STORYBOOK_SOFT_OVERRIDES,
+  STYLED_COMPONENTS_DECLARATION_OVERRIDES,
   eslintPluginPrettierRecommended,
 ]);

@@ -295,6 +295,7 @@ export const DefaultCell = ({
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface DefaultCellProps extends Omit<CellProps, 'width' | 'height' | 'cellMixin'> {}
 
 const getDefaultDateCellMixin = (
