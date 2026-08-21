@@ -39,7 +39,6 @@ const getYearCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Rec
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DefaultYearCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const yearCellMixin = getDefaultYearCellMixin(
     props.selected,

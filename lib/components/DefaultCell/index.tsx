@@ -488,7 +488,6 @@ const getMonthCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Re
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DefaultMonthCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const monthCellMixin = getDefaultMonthCellMixin(
     props.selected,
@@ -535,7 +534,7 @@ const getMonthRangeCellDataAttributes = (
     'data-is-end-of-week-cell': isEndOfRow ? isEndOfRow : undefined,
   };
 };
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 export const DefaultMonthRangeCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const monthCellMixin = getDefaultMonthRangeCellMixin(
     props.selected,
@@ -612,7 +611,6 @@ const getYearCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Rec
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DefaultYearCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const yearCellMixin = getDefaultYearCellMixin(
     props.selected,
@@ -660,7 +658,6 @@ const getYearRangeCellDataAttributes = (
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DefaultYearRangeCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const yearCellMixin = getDefaultYearRangeCellMixin(
     props.selected,
