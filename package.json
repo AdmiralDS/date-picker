@@ -8,6 +8,7 @@
     "url": "https://github.com/AdmiralDS/date-picker"
   },
   "scripts": {
+    "check:full": "npm run lint && npm run typecheck && npm run test && npm run build:storybook && npm run build:lib && npm run test:package",
     "prepare": "npm run build:lib",
     "clean": "node scripts/clean.mjs",
     "dev": "vite",
