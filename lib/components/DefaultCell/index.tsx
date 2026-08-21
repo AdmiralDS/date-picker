@@ -481,7 +481,7 @@ const getDefaultMonthRangeCellMixin = (
   return baseMonthCellMixin;
 };
 
-const getMonthCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
+const getMonthCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Record<string, boolean | undefined> => {
   return {
     'data-is-current-month': isCurrent ? isCurrent : undefined,
     'data-is-active-month': isActive ? isActive : undefined,
@@ -605,7 +605,7 @@ const getDefaultYearRangeCellMixin = (
   return baseYearCellMixin;
 };
 
-const getYearCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
+const getYearCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Record<string, boolean | undefined> => {
   return {
     'data-is-current-year': isCurrent ? isCurrent : undefined,
     'data-is-active-year': isActive ? isActive : undefined,
