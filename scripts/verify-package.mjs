@@ -20,7 +20,7 @@ const temporaryRoot = join(rootDir, 'node_modules', '.tmp');
 
 // package.json#files разрешает публиковать dist. Дополнительный allowlist защищает
 // от случайного расширения publish-состава при будущих изменениях manifest или npm.
-const allowedPackageFiles = new Set(['README.md', 'license', 'package.json']);
+const allowedPackageFiles = new Set(['readme.md', 'license', 'package.json']);
 const forbiddenPathParts = ['/__snapshots__/', '.test.', '.stories.', '.template.'];
 
 // Небольшой набор стабильных runtime-экспортов используется во всех consumer fixtures.
@@ -79,10 +79,11 @@ const validatePackContents = (packageInfo) => {
   const errors = [];
 
   for (const packagePath of packageFiles) {
-    if (!allowedPackageFiles.has(packagePath) && !packagePath.startsWith('dist/')) {
+    const normalizedPackagePath = packagePath.toLowerCase();
+    if (!allowedPackageFiles.has(normalizedPackagePath) && !normalizedPackagePath.startsWith('dist/')) {
       errors.push(`${packagePath} is outside the allowed publish roots.`);
     }
-    if (forbiddenPathParts.some((part) => packagePath.includes(part))) {
+    if (forbiddenPathParts.some((part) => normalizedPackagePath.includes(part))) {
       errors.push(`${packagePath} is a development or test artifact.`);
     }
   }
