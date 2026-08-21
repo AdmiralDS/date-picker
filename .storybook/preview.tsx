@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { Preview } from '@storybook/react';
-import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { createGlobalStyle, styled, ThemeProvider } from 'styled-components';
 import { useGlobals } from 'storybook/preview-api';
 import { lightThemeClassName, darkThemeClassName, vars } from '@admiral-ds/web';
 
