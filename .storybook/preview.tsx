@@ -1,10 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import type { Preview } from '@storybook/react';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
-import { DocsContainer } from '@storybook/addon-docs/blocks';
-import { useGlobals, addons } from 'storybook/preview-api';
-import { themes } from 'storybook/theming';
-import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
+import { useGlobals } from 'storybook/preview-api';
 import { lightThemeClassName, darkThemeClassName, vars } from '@admiral-ds/web';
 
 import {
@@ -16,18 +13,8 @@ import {
   DarkThemeCssVars,
 } from '@admiral-ds/react-ui';
 
-const channel = addons.getChannel();
-
-function useDarkMode() {
-  const [isDark, setDark] = useState<boolean>(false);
-
-  useEffect(() => {
-    channel.on(DARK_MODE_EVENT_NAME, setDark);
-    return () => channel.off(DARK_MODE_EVENT_NAME, setDark);
-  }, []);
-
-  return isDark;
-}
+import { DocsThemeContainer } from './DocsThemeContainer';
+import { isStorybookTheme, type StorybookTheme } from './storybookThemes';
 
 const GlobalStyles = createGlobalStyle`
     body {
@@ -35,8 +22,8 @@ const GlobalStyles = createGlobalStyle`
     }
 `;
 
-function ThemeWrapper(props: { CSSCustomProps: boolean; children: React.ReactNode }) {
-  const isDark = useDarkMode();
+function ThemeWrapper(props: { theme: StorybookTheme; CSSCustomProps: boolean; children: React.ReactNode }) {
+  const isDark = props.theme === 'dark';
 
   useEffect(() => {
     // document.body refers to body tag inside iframe#storybook-preview-iframe
@@ -73,15 +60,13 @@ const preview: Preview = {
     actions: { disabled: true },
     controls: { matchers: { color: /(background|color)$/i, date: /Date$/ } },
     docs: {
-      container: (props: React.ComponentProps<typeof DocsContainer>) => {
-        const theme = useDarkMode() ? themes.dark : themes.normal;
-        return <DocsContainer {...props} theme={theme} />;
-      },
+      container: DocsThemeContainer,
     },
   },
   decorators: [
     (renderStory, context) => {
-      const [{ CSSCustomProps }] = useGlobals();
+      const [{ CSSCustomProps, theme }] = useGlobals();
+      const selectedTheme = isStorybookTheme(theme) ? theme : 'light';
 
       const refDropdown = useRef<HTMLDivElement | null>(null);
 
@@ -99,7 +84,7 @@ const preview: Preview = {
       }, []);
 
       return (
-        <ThemeWrapper CSSCustomProps={CSSCustomProps === true || CSSCustomProps === 'true'}>
+        <ThemeWrapper theme={selectedTheme} CSSCustomProps={CSSCustomProps === true || CSSCustomProps === 'true'}>
           <GlobalStyles />
           <DropdownProvider rootRef={refDropdown}>
             <StoryContainer id={'story-container'}>{renderStory()}</StoryContainer>
@@ -114,7 +99,22 @@ const preview: Preview = {
       </>
     ),
   ],
+  initialGlobals: {
+    theme: 'light',
+  },
   globalTypes: {
+    theme: {
+      description: 'Preview theme',
+      toolbar: {
+        title: 'Theme',
+        icon: 'mirror',
+        items: [
+          { value: 'light', title: 'Light' },
+          { value: 'dark', title: 'Dark' },
+        ],
+        dynamicTitle: true,
+      },
+    },
     CSSCustomProps: {
       defaultValue: false,
       toolbar: {
