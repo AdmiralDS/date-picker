@@ -38,6 +38,14 @@ const STORYBOOK_SOFT_OVERRIDES = {
   },
 };
 
+const STORY_TEMPLATE_OVERRIDES = {
+  files: ['src/stories/**/*.template.tsx'],
+  rules: {
+    // Story examples intentionally log interaction results for developers.
+    'no-console': 'off',
+  },
+};
+
 const STYLED_COMPONENTS_DECLARATION_OVERRIDES = {
   files: ['**/styled.d.ts'],
   rules: {
@@ -109,6 +117,7 @@ export default defineConfig([
     ],
   },
   STORYBOOK_SOFT_OVERRIDES,
+  STORY_TEMPLATE_OVERRIDES,
   STYLED_COMPONENTS_DECLARATION_OVERRIDES,
   eslintPluginPrettierRecommended,
 ]);
