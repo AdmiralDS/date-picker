@@ -31,14 +31,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
+      - name: Check formatting
+        run: npm run format
 
       - name: Test
         run: npm test
 
       - name: Build Storybook
         run: npm run build:storybook
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Test Storybook
+        run: npm run test:storybook:ci
 
       - name: Upload Docs Artifact
         uses: actions/upload-pages-artifact@v5
