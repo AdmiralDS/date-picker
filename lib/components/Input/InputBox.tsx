@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { vars, textValues } from '@admiral-ds/web';
-import { InputDimension } from './types';
+import type { InputDimension } from './types';
 
 const sSizeMixin = css`
   padding-inline-start: 12px;

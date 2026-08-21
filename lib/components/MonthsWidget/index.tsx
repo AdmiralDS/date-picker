@@ -1,7 +1,9 @@
 import { createElement, memo, useMemo } from 'react';
-import styled, { DataAttributes } from 'styled-components';
+import type { DataAttributes } from 'styled-components';
+import styled from 'styled-components';
 import 'dayjs/locale/ru';
-import dayjs, { Dayjs } from 'dayjs';
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 import { vars, textValues } from '@admiral-ds/web';
 import type { BaseWidgetProps } from '#lib/widgetInterfaces.ts';
@@ -23,9 +25,9 @@ import {
   getSelectedDateRange,
   setNoon,
 } from '#lib/utils';
-import { DateRange } from 'lib/types';
-import { DateAttributes } from '#lib/DefaultCell';
-import { CalendarLocaleProps } from '#lib/calendarInterfaces';
+import type { DateRange } from 'lib/types';
+import type { DateAttributes } from '#lib/DefaultCell';
+import type { CalendarLocaleProps } from '#lib/calendarInterfaces';
 
 export interface MonthsWidgetProps<T extends object> extends BaseWidgetProps {
   monthsWidgetContainerPropsConfig?: (

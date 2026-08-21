@@ -1,7 +1,8 @@
 import styled, { type DataAttributes } from 'styled-components';
 import { forwardRef } from 'react';
-import { InputLine, InputLineProps } from '@admiral-ds/react-ui';
-import { DimensionInterface, InputDimension } from './types';
+import type { InputLineProps } from '@admiral-ds/react-ui';
+import { InputLine } from '@admiral-ds/react-ui';
+import type { DimensionInterface, InputDimension } from './types';
 
 function getInputWidth(dimension: InputDimension, width?: string | number) {
   if (width) {

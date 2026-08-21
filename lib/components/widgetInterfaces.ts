@@ -5,7 +5,7 @@ import type { CalendarLocaleProps, CalendarViewMode, DateCellProps } from '#lib/
 import type { DateAttributes } from '#lib/DefaultCell';
 import type { IconPlacementProps, TooltipHocProps } from '@admiral-ds/react-ui';
 import type { DateRange } from 'lib/types';
-import { DataAttributes } from 'styled-components';
+import type { DataAttributes } from 'styled-components';
 
 export interface BaseWidgetProps extends HTMLAttributes<HTMLDivElement> {
   /** Дата */
