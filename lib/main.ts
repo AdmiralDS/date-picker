@@ -9,7 +9,6 @@ export * from './components/DateCalendar';
 export * from './components/DateRangeCalendar';
 export * from './components/MonthCalendar';
 export * from './components/MonthPicker';
-export * from './components/MonthPickerCalendar';
 export * from './components/MonthRangeCalendar';
 export * from './components/YearCalendar';
 export * from './components/YearPicker';
