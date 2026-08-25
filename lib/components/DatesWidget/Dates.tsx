@@ -1,6 +1,8 @@
 import { createElement, memo, useMemo } from 'react';
-import styled, { DataAttributes } from 'styled-components';
-import dayjs, { Dayjs } from 'dayjs';
+import type { DataAttributes } from 'styled-components';
+import styled from 'styled-components';
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 import {
   arrayFormatter,
@@ -16,10 +18,10 @@ import {
   setNoon,
 } from '#lib/utils';
 import { ruLocale } from '#lib/calendarConstants.ts';
-import { BaseWidgetProps } from '#lib/widgetInterfaces';
-import { DateRange } from 'lib/types';
-import { CalendarLocaleProps } from '#lib/calendarInterfaces';
-import { DateAttributes } from '#lib/DefaultCell';
+import type { BaseWidgetProps } from '#lib/widgetInterfaces';
+import type { DateRange } from 'lib/types';
+import type { CalendarLocaleProps } from '#lib/calendarInterfaces';
+import type { DateAttributes } from '#lib/DefaultCell';
 
 export const DATES_ON_SCREEN = 42;
 

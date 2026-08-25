@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { vars } from '@admiral-ds/web';
-import { InputDimension } from './types';
+import type { InputDimension } from './types';
 
 function getInputSeparatorWidth(dimension: InputDimension) {
   switch (dimension) {

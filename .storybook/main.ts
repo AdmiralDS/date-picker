@@ -1,16 +1,11 @@
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/!(disabledStories)/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../src/!(disabledStories)/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   core: {
     disableTelemetry: true, // 👈 Disables telemetry
   },
-  addons: [
-    '@storybook/addon-essentials',
-    '@storybook/addon-themes',
-    '@storybook/addon-interactions',
-    'storybook-dark-mode',
-  ],
+  addons: ['@storybook/addon-docs'],
   framework: {
     name: '@storybook/react-vite',
     options: {},
@@ -18,6 +13,8 @@ const config: StorybookConfig = {
   typescript: {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
+      include: ['lib/**/*.tsx'],
+      exclude: ['lib/**/*.test.tsx'],
       // Filter out third-party props from node_modules except typings.
       propFilter: (prop) => (prop.parent ? !/node_modules\/?@types/.test(prop.parent.fileName) : true),
     },

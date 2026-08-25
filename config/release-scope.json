@@ -1,0 +1,7 @@
+{
+  "excludedComponents": [
+    "DateRangeDoublePickerCalendar",
+    "MonthRangeDoublePickerCalendar",
+    "YearRangeDoublePickerCalendar"
+  ]
+}

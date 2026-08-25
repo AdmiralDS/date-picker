@@ -109,7 +109,8 @@ export const DatePickerCalendarBlockPanelArrowsTemplate = () => {
           Выбор даты
         </T>
         <T font="Body/Body 2 Long" as="div">
-          При необходимости можно блокировать кнопки панели
+          При необходимости можно блокировать кнопки панели. В примере навигация доступна с января текущего года по
+          декабрь +10 лет. Остальные кнопки неактивны.
         </T>
       </WrapperVertical>
     </WrapperHorizontal>

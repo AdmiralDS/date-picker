@@ -32,14 +32,13 @@ const getDefaultYearCellMixin = (
   return baseYearCellMixin;
 };
 
-const getYearCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
+const getYearCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Record<string, boolean | undefined> => {
   return {
     'data-is-current-year': isCurrent ? isCurrent : undefined,
     'data-is-active-year': isActive ? isActive : undefined,
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DefaultYearCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const yearCellMixin = getDefaultYearCellMixin(
     props.selected,

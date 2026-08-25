@@ -21,4 +21,5 @@ export interface DayNameCellProps extends HTMLAttributes<HTMLDivElement> {
 export interface DatesOfMonthWidgetProps extends BaseWidgetProps {
   dayNamesProps: DayNameCellProps;
 }
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface DatesProps extends BaseWidgetProps {}

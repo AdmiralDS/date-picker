@@ -1,7 +1,11 @@
+import { readFileSync } from 'node:fs';
 import { configs } from 'typescript-eslint';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import importPlugin from 'eslint-plugin-import';
+
+const releaseScope = JSON.parse(readFileSync(new URL('./config/release-scope.json', import.meta.url), 'utf8'));
+const excludedComponents = releaseScope.excludedComponents.map((componentName) => `lib/components/${componentName}/**`);
 
 // Временный блок для мягкого перехода.
 // Для новых проектов: все правила из этого блока должны быть выставлены в `error`.
@@ -15,7 +19,7 @@ const SOFT_MIGRATION_RULES = {
   '@typescript-eslint/no-dynamic-delete': 'warn',
   '@typescript-eslint/consistent-type-imports': 'warn',
   'import/named': 'warn',
-  'import/no-duplicates': 'warn',
+  'import/no-duplicates': ['warn', { considerQueryString: true }],
   'import/export': 'warn',
 };
 
@@ -24,9 +28,34 @@ const STORYBOOK_SOFT_OVERRIDES = {
   rules: {
     'import/named': 'warn',
   },
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx', '.js', '.jsx'],
+    },
+    'import/resolver': {
+      typescript: {},
+    },
+  },
+};
+
+const STORY_TEMPLATE_OVERRIDES = {
+  files: ['src/stories/**/*.template.tsx'],
+  rules: {
+    // Story examples intentionally log interaction results for developers.
+    'no-console': 'off',
+  },
+};
+
+const STYLED_COMPONENTS_DECLARATION_OVERRIDES = {
+  files: ['**/styled.d.ts'],
+  rules: {
+    // DefaultTheme must remain an interface so styled-components can augment it.
+    '@typescript-eslint/no-empty-object-type': 'off',
+  },
 };
 
 export default defineConfig([
+  globalIgnores(['src/disabledStories/**', ...excludedComponents]),
   ...configs.strict,
   importPlugin.flatConfigs.recommended,
   {
@@ -79,6 +108,8 @@ export default defineConfig([
       'storybook-static/**',
       'build/**',
       'coverage/**',
+      'src/disabledStories/**',
+      ...excludedComponents,
       '.mock/**',
       '.test/**',
       '.storybook/**',
@@ -86,5 +117,7 @@ export default defineConfig([
     ],
   },
   STORYBOOK_SOFT_OVERRIDES,
+  STORY_TEMPLATE_OVERRIDES,
+  STYLED_COMPONENTS_DECLARATION_OVERRIDES,
   eslintPluginPrettierRecommended,
 ]);

@@ -1,4 +1,4 @@
-import { userEvent, within, expect } from '@storybook/test';
+import { userEvent, within, expect } from 'storybook/test';
 import dayjs from 'dayjs';
 
 export const pickYearTest = async (canvasElement: HTMLElement, portalContainerId: string) => {

@@ -22,8 +22,8 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     // "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
     "paths": {
+      "lib/*": ["./lib/*"],
       "#lib/*": ["./lib/components/*"],
       "#src/*": ["./src/*"],
       "@admiral-ds/date-picker": ["./lib/main"],
@@ -32,5 +32,6 @@
     "types": ["vitest/globals", "vite-plugin-svgr/client", "vite/client", "@testing-library/jest-dom"],
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
-  "include": ["src", "lib", "public", "./.vitest/*", "./.storybook/*", "*.ts", "eslint.config.js"]
+  "include": ["src", "lib", "public", "./.vitest/*", "./.storybook/*", "*.ts", "eslint.config.js"],
+  "exclude": ["src/disabledStories", "lib/components/*RangeDoublePickerCalendar"]
 }

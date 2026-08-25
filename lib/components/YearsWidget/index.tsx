@@ -1,6 +1,8 @@
 import { createElement, memo, useMemo } from 'react';
-import styled, { DataAttributes } from 'styled-components';
-import dayjs, { Dayjs } from 'dayjs';
+import type { DataAttributes } from 'styled-components';
+import styled from 'styled-components';
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 import {
   arrayFormatter,
@@ -21,8 +23,8 @@ import {
 import type { BaseWidgetProps } from '#lib/widgetInterfaces.ts';
 import { ruLocale } from '#lib/calendarConstants';
 import { textValues, vars } from '@admiral-ds/web';
-import { DateAttributes } from '#lib/DefaultCell';
-import { DateRange } from 'lib/types';
+import type { DateAttributes } from '#lib/DefaultCell';
+import type { DateRange } from 'lib/types';
 
 export interface YearsWidgetProps<T extends object> extends BaseWidgetProps {
   yearsOnScreen?: number;

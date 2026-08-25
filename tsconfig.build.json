@@ -14,5 +14,6 @@
     "sourceMap": true
   },
   "extends": "./tsconfig.json",
-  "include": ["lib"]
+  "include": ["lib"],
+  "exclude": ["lib/**/*.test.tsx", "lib/**/__snapshots__/**", "lib/components/*RangeDoublePickerCalendar"]
 }

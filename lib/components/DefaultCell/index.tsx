@@ -295,6 +295,7 @@ export const DefaultCell = ({
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface DefaultCellProps extends Omit<CellProps, 'width' | 'height' | 'cellMixin'> {}
 
 const getDefaultDateCellMixin = (
@@ -480,14 +481,13 @@ const getDefaultMonthRangeCellMixin = (
   return baseMonthCellMixin;
 };
 
-const getMonthCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
+const getMonthCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Record<string, boolean | undefined> => {
   return {
     'data-is-current-month': isCurrent ? isCurrent : undefined,
     'data-is-active-month': isActive ? isActive : undefined,
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DefaultMonthCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const monthCellMixin = getDefaultMonthCellMixin(
     props.selected,
@@ -534,7 +534,7 @@ const getMonthRangeCellDataAttributes = (
     'data-is-end-of-week-cell': isEndOfRow ? isEndOfRow : undefined,
   };
 };
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 export const DefaultMonthRangeCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const monthCellMixin = getDefaultMonthRangeCellMixin(
     props.selected,
@@ -604,14 +604,13 @@ const getDefaultYearRangeCellMixin = (
   return baseYearCellMixin;
 };
 
-const getYearCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Record<string, any> => {
+const getYearCellDataAttributes = (isCurrent?: boolean, isActive?: boolean): Record<string, boolean | undefined> => {
   return {
     'data-is-current-year': isCurrent ? isCurrent : undefined,
     'data-is-active-year': isActive ? isActive : undefined,
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DefaultYearCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const yearCellMixin = getDefaultYearCellMixin(
     props.selected,
@@ -659,7 +658,6 @@ const getYearRangeCellDataAttributes = (
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DefaultYearRangeCell = ({ isCurrent, isHoliday, ...props }: DefaultCellProps) => {
   const yearCellMixin = getDefaultYearRangeCellMixin(
     props.selected,
